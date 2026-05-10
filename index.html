@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Youssef McCarthy — Digital Analytics Strategist</title>
+  <meta name="description" content="Portfolio of Youssef McCarthy — 14+ years driving measurable marketing performance through digital analytics, CRO, and customer journey optimization.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="particles"></canvas>
+  <div class="bg-grid"></div>
+  <div class="bg-orbs"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
+
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <div class="nav-logo"><span>YM</span></div>
+    <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about" class="active">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero" id="hero">
+      <div class="hero-content">
+        <div class="hero-badge"><span class="dot"></span> Open to Opportunities</div>
+        <h1>Youssef M.<br><span class="gradient">McCarthy</span></h1>
+        <p class="hero-subtitle">Digital Analytics Strategist & CRO Expert — 14+ years optimizing customer journeys, driving A/B experimentation, and turning data into measurable growth.</p>
+        <div class="hero-stats">
+          <div class="stat"><div class="stat-number" data-count="14">0</div><div class="stat-label">Years Experience</div></div>
+          <div class="stat"><div class="stat-number" data-count="2400" data-suffix="x">0</div><div class="stat-label">ROI Multiplier</div></div>
+          <div class="stat"><div class="stat-number" data-count="5">0</div><div class="stat-label">Major Projects</div></div>
+        </div>
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn-primary">✉ Contact Me</a>
+          <a href="#experience" class="btn btn-outline">↓ View Experience</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <div class="hero-photo-wrapper">
+          <div class="hero-photo-ring"></div>
+          <img src="profile.png" alt="Youssef McCarthy" />
+        </div>
+        <div class="hero-float-card card-1"><span class="icon">📊</span> A/B Testing Expert</div>
+        <div class="hero-float-card card-2"><span class="icon">🚀</span> 2,400x ROI</div>
+        <div class="hero-float-card card-3"><span class="icon">🎯</span> CRO Specialist</div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about">
+      <div class="section-header reveal">
+        <div class="section-label">About Me</div>
+        <h2 class="section-title">Blending Technical Rigor<br>with Creative Storytelling</h2>
+      </div>
+      <div class="about-grid">
+        <div class="reveal">
+          <p class="about-text">Hi, I'm Youssef McCarthy — a digital analytics specialist and strategist with over 14 years of experience optimizing customer journeys and driving measurable marketing performance.</p>
+          <p class="about-text">I've led the full experiment lifecycle — from A/B testing to advanced multivariate analysis — while building dashboards and insights that empower decision-makers. Beyond analytics, I believe in elevating teams: at EmblemHealth, I not only delivered ROI-driven strategies but also introduced quarterly educational opportunities across the company, ensuring colleagues stayed ahead on digital trends and tools.</p>
+          <p class="about-text">My passion is blending technical rigor with creative storytelling to unlock growth, and I'm excited to bring that mix of expertise and mentorship to my next role.</p>
+        </div>
+        <div class="about-highlights reveal reveal-delay-2">
+          <div class="highlight-card"><div class="h-icon">🧪</div><div class="h-title">Experimentation</div><div class="h-desc">A/B & multivariate testing across the full lifecycle</div></div>
+          <div class="highlight-card"><div class="h-icon">📈</div><div class="h-title">Data Visualization</div><div class="h-desc">Dynamic dashboards & automated reporting</div></div>
+          <div class="highlight-card"><div class="h-icon">🎓</div><div class="h-title">Team Mentorship</div><div class="h-desc">Quarterly company-wide digital education</div></div>
+          <div class="highlight-card"><div class="h-icon">🔄</div><div class="h-title">Journey Optimization</div><div class="h-desc">End-to-end funnel analysis & CRO</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section id="experience">
+      <div class="section-header reveal">
+        <div class="section-label">Career Timeline</div>
+        <h2 class="section-title">Professional Experience</h2>
+        <p class="section-subtitle">Click each role to expand full details</p>
+      </div>
+      <div class="timeline">
+        <!-- EmblemHealth -->
+        <div class="timeline-item" data-year="2022">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card" onclick="toggleTimeline(this)">
+            <div class="timeline-header">
+              <div class="timeline-role">Digital Analytics Specialist — Marketing Intelligence</div>
+              <div class="timeline-date">Nov 2022 — Feb 2025</div>
+            </div>
+            <div class="timeline-company">EmblemHealth</div>
+            <ul class="timeline-bullets">
+              <li>Designed and deployed advanced analytical reports and dynamic dashboards for digital marketing performance</li>
+              <li>Leveraged historical campaign data to forecast ROI and optimize resource allocation</li>
+            </ul>
+            <div class="timeline-expand">
+              <ul class="timeline-bullets">
+                <li>Conducted rigorous SEM/SEO performance evaluations across multiple brands, informing customer journey optimization</li>
+                <li>Oversaw data validation and analysis for website optimization projects ensuring statistical significance for A/B testing</li>
+                <li>Introduced quarterly educational opportunities across the company on digital trends and tools</li>
+              </ul>
+            </div>
+            <button class="timeline-toggle">Show more ↓</button>
+          </div>
+        </div>
+        <!-- C-4 Analytics -->
+        <div class="timeline-item" data-year="2021">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card" onclick="toggleTimeline(this)">
+            <div class="timeline-header">
+              <div class="timeline-role">Digital Marketing Account Manager</div>
+              <div class="timeline-date">Nov 2021 — Aug 2022</div>
+            </div>
+            <div class="timeline-company">C-4 Analytics</div>
+            <ul class="timeline-bullets">
+              <li>Directed optimization and performance analysis of high-value digital advertising campaigns, maximizing ROAS</li>
+              <li>Architected comprehensive analytics tracking frameworks for multi-touch attribution</li>
+            </ul>
+            <div class="timeline-expand">
+              <ul class="timeline-bullets">
+                <li>Cultivated long-term stakeholder relationships through consistent strategic consultation</li>
+                <li>Partnered with operations to iterate on campaign creative and structure, optimizing conversion pathways</li>
+                <li>Analyzed real-time cross-channel performance for strategic campaign alterations improving retention rates</li>
+                <li>Presented data-driven performance narratives as a core component of retention strategy</li>
+              </ul>
+            </div>
+            <button class="timeline-toggle">Show more ↓</button>
+          </div>
+        </div>
+        <!-- Adtaxi -->
+        <div class="timeline-item" data-year="2018">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card" onclick="toggleTimeline(this)">
+            <div class="timeline-header">
+              <div class="timeline-role">Lead Digital Account Strategist</div>
+              <div class="timeline-date">Aug 2018 — Apr 2020</div>
+            </div>
+            <div class="timeline-company">Adtaxi</div>
+            <ul class="timeline-bullets">
+              <li>Collaborated with Digital Sales Leaders to analyze high-potential prospects, maximizing pipeline volume</li>
+              <li>Acted as analytical SME during client consultations to frame solution opportunities</li>
+            </ul>
+            <div class="timeline-expand">
+              <ul class="timeline-bullets">
+                <li>Developed robust campaign architecture and conceptual frameworks for high-value pitches</li>
+                <li>Directed optimization across a portfolio of top-tier digital advertising campaigns</li>
+                <li>Applied real-time cross-channel insights to propose creative and structural campaign adjustments</li>
+                <li>Configured advanced analytics for conversion attribution models (post-click/post-view) and full ROAS</li>
+              </ul>
+            </div>
+            <button class="timeline-toggle">Show more ↓</button>
+          </div>
+        </div>
+        <!-- Potpourri -->
+        <div class="timeline-item" data-year="2016">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card" onclick="toggleTimeline(this)">
+            <div class="timeline-header">
+              <div class="timeline-role">eCommerce UserTesting Specialist</div>
+              <div class="timeline-date">Aug 2016 — Dec 2016</div>
+            </div>
+            <div class="timeline-company">Potpourri Group</div>
+            <ul class="timeline-bullets">
+              <li>Executed comprehensive usability testing across eCommerce platforms for UX optimization insights</li>
+              <li>Developed a daily analytics holiday tracker monitoring real-time product performance trends</li>
+            </ul>
+            <div class="timeline-expand">
+              <ul class="timeline-bullets">
+                <li>Compiled end-of-month KPI reports identifying critical improvement opportunities for digital merchandising</li>
+                <li>Generated product performance and projection reports informing merchandising strategies</li>
+              </ul>
+            </div>
+            <button class="timeline-toggle">Show more ↓</button>
+          </div>
+        </div>
+        <!-- Google -->
+        <div class="timeline-item" data-year="2011">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card" onclick="toggleTimeline(this)">
+            <div class="timeline-header">
+              <div class="timeline-role">Monetization Specialist</div>
+              <div class="timeline-date">Feb 2011 — May 2015</div>
+            </div>
+            <div class="timeline-company">Google</div>
+            <ul class="timeline-bullets">
+              <li>Developed and executed complex monetization strategies for high-volume digital content across YouTube</li>
+              <li>Collaborated with cross-functional engineering and product teams on social media traffic acquisition</li>
+            </ul>
+            <div class="timeline-expand">
+              <ul class="timeline-bullets">
+                <li>Streamlined website creation workflows, driving significant increases in qualified traffic volume</li>
+                <li>Applied foundational digital analytics principles to scale platform monetization and KPI tracking</li>
+              </ul>
+            </div>
+            <button class="timeline-toggle">Show more ↓</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects">
+      <div class="section-header reveal">
+        <div class="section-label">Case Studies</div>
+        <h2 class="section-title">Featured Projects</h2>
+        <p class="section-subtitle">Real-world impact — click to explore each initiative</p>
+      </div>
+      <div class="projects-grid">
+        <!-- Project 1: Essential Plan -->
+        <div class="project-card reveal" onclick="toggleProject(this)">
+          <span class="project-badge impact">High Impact</span>
+          <div class="project-title">Essential Plan Digital Transformation: UX, SEO & SEM Strategy</div>
+          <div class="project-company">EmblemHealth · 2022 — 2025</div>
+          <p class="project-desc">Spearheaded digital strategy and UX overhaul for the "Essential Plan" — a $0 premium health program for low- to moderate-income NY State residents. Maximized high-quality leads by aligning SEM, organic SEO, and a frictionless user journey on the conversion landing page.</p>
+          <div class="project-details">
+            <div class="project-detail-section">
+              <h4>Data-Driven Strategy & Cross-Functional Collaboration</h4>
+              <ul>
+                <li>Partnered with Project Manager Aaron Brickman for agile execution and closed-loop feedback</li>
+                <li>Collaborated with call center managers to secure end-to-end analytical data bridging digital and call outcomes</li>
+                <li>Worked with UX/UI Designer Jennifer Wien and developers Anano Nadareishvili & Kevin Mitchell to revamp the conversion page</li>
+                <li>Teamed with Content Specialist Dana Linett-Silber on targeted SEO updates for high-intent organic traffic</li>
+                <li>Restructured SEM campaigns to drive high-value traffic, lowering bounce rates and improving ad quality scores</li>
+              </ul>
+            </div>
+            <div class="project-result">🏆 2,400x Multiplier Return on Call Volume Monthly</div>
+          </div>
+          <div class="project-tags">
+            <span class="project-tag">SEM</span><span class="project-tag">SEO</span><span class="project-tag">CRO</span>
+            <span class="project-tag">UX Optimization</span><span class="project-tag">A/B Testing</span>
+          </div>
+          <button class="project-toggle">Expand Case Study →</button>
+        </div>
+        <!-- Project 2: ACP -->
+        <div class="project-card reveal" onclick="toggleProject(this)">
+          <span class="project-badge ux">UX Transformation</span>
+          <div class="project-title">Digital Experience Revamp for AdvantageCare Physicians</div>
+          <div class="project-company">EmblemHealth · Jun 2023 — Jun 2025</div>
+          <p class="project-desc">Transformed the AdvantageCare Physicians digital patient journey from a traditional, high-friction appointment process to a highly intuitive, "ZocDoc-like" platform empowering patients to seamlessly find care and schedule appointments online.</p>
+          <div class="project-details">
+            <div class="project-detail-section">
+              <h4>Key Strategic Actions</h4>
+              <ul>
+                <li>Launched real-time, self-service scheduling with transparent availability — Jennifer Wien (UI/UX Designer) crafted the clean, accessible interface</li>
+                <li>Optimized the find-a-provider experience with advanced filtering by specialty, location, and insurance</li>
+                <li>Aligned digital transformation with corporate vision alongside Christopher Clarke (AVP of Corporate Marketing)</li>
+                <li>Kyle Nowinski (Senior Analytics Specialist) provided data-backed validation at every stage</li>
+                <li>Aaron Brickman (Project Manager) expertly managed cross-functional timelines and milestones</li>
+              </ul>
+            </div>
+            <div class="project-result">🏆 ZocDoc-Caliber Digital Patient Experience</div>
+          </div>
+          <div class="project-tags">
+            <span class="project-tag">UX Research</span><span class="project-tag">Digital Transformation</span>
+            <span class="project-tag">Healthcare</span><span class="project-tag">Analytics</span>
+          </div>
+          <button class="project-toggle">Expand Case Study →</button>
+        </div>
+        <!-- Project 3: Neighborhood Care -->
+        <div class="project-card reveal" onclick="toggleProject(this)">
+          <span class="project-badge strategy">Strategy</span>
+          <div class="project-title">Transforming EmblemHealth's Neighborhood Care Digital Journey</div>
+          <div class="project-company">EmblemHealth · 2023</div>
+          <p class="project-desc">Led the end-to-end digital experience overhaul for EmblemHealth's "Neighborhood Care" — a network of in-person community service and wellness locations. Modernized the digital journey to seamlessly bridge online engagement with physical, in-person care.</p>
+          <div class="project-details">
+            <div class="project-detail-section">
+              <h4>Key Contributions</h4>
+              <ul>
+                <li>Redesigned the digital discovery journey for community service locations pre-Summer 2023 launch</li>
+                <li>Implemented analytics-driven improvements to scheduling, class registration, and resource accessibility</li>
+                <li>Created seamless bridge between online engagement and in-person care delivery</li>
+                <li>Continuously optimized based on engagement metrics, session data, and conversion tracking</li>
+              </ul>
+            </div>
+            <div class="project-result">🏆 Modernized Community Care Digital Experience</div>
+          </div>
+          <div class="project-tags">
+            <span class="project-tag">UX Strategy</span><span class="project-tag">Community Health</span>
+            <span class="project-tag">Digital Journey</span>
+          </div>
+          <button class="project-toggle">Expand Case Study →</button>
+        </div>
+        <!-- Project 4: Omnichannel Financial -->
+        <div class="project-card reveal" onclick="toggleProject(this)">
+          <span class="project-badge impact">High Impact</span>
+          <div class="project-title">Omnichannel Strategy Overhaul for Financial Institution</div>
+          <div class="project-company">Adtaxi · Nov 2018 — May 2019</div>
+          <p class="project-desc">Spearheaded the turnaround of a critical financial institution account at risk of churning. Architected a multi-point digital strategy overhauling paid omnichannel presence and transforming the customer acquisition funnel.</p>
+          <div class="project-details">
+            <div class="project-detail-section">
+              <h4>Key Contributions</h4>
+              <ul>
+                <li>Conducted deep-dive audit of the end-to-end user journey identifying friction points across all touchpoints</li>
+                <li>Implemented conversion tracking and retargeting framework connecting ad spend to site journey actions</li>
+                <li>Ensured digital promotional material was readily available for delayed-action users who wanted to revisit monetary incentives later</li>
+                <li>Built comprehensive attribution model tracking repeated site visits and downstream conversions</li>
+              </ul>
+            </div>
+            <div class="project-result">🏆 Saved At-Risk Account & Stabilized Performance</div>
+          </div>
+          <div class="project-tags">
+            <span class="project-tag">Omnichannel</span><span class="project-tag">Retargeting</span>
+            <span class="project-tag">Financial Services</span><span class="project-tag">Attribution</span>
+          </div>
+          <button class="project-toggle">Expand Case Study →</button>
+        </div>
+        <!-- Project 5: YouTube -->
+        <div class="project-card reveal" onclick="toggleProject(this)">
+          <span class="project-badge strategy">Monetization</span>
+          <div class="project-title">Video/YouTube Content Monetization at Scale</div>
+          <div class="project-company">Google · Jan 2012 — Jan 2015</div>
+          <p class="project-desc">Managed the implementation and oversight of YouTube's various video content monetization strategies. Deployed software and data-driven recommendations to maximize revenue across high-volume digital content channels.</p>
+          <div class="project-details">
+            <div class="project-detail-section">
+              <h4>Key Contributions</h4>
+              <ul>
+                <li>Developed complex monetization strategies for high-volume digital content across YouTube and social media</li>
+                <li>Streamlined website creation workflows driving significant traffic increases</li>
+                <li>Collaborated with cross-functional engineering teams on traffic acquisition strategies</li>
+                <li>Applied foundational analytics to scale monetization and establish performance measurement frameworks</li>
+              </ul>
+            </div>
+            <div class="project-result">🏆 Scaled Platform Monetization & Traffic Growth</div>
+          </div>
+          <div class="project-tags">
+            <span class="project-tag">YouTube</span><span class="project-tag">Monetization</span>
+            <span class="project-tag">Content Strategy</span><span class="project-tag">Google</span>
+          </div>
+          <button class="project-toggle">Expand Case Study →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills">
+      <div class="section-header reveal">
+        <div class="section-label">Expertise</div>
+        <h2 class="section-title">Skills & Proficiencies</h2>
+      </div>
+      <div class="skills-categories">
+        <div class="skill-category reveal" id="skillCat1">
+          <div class="skill-cat-icon">🧪</div>
+          <div class="skill-cat-title">Experimentation & CRO</div>
+          <div class="skill-item"><div class="skill-name"><span>A/B & Multivariate Testing</span><span>95%</span></div><div class="skill-bar"><div class="skill-fill blue" data-width="95"></div></div></div>
+          <div class="skill-item"><div class="skill-name"><span>Adobe Target / Optimizely</span><span>90%</span></div><div class="skill-bar"><div class="skill-fill blue" data-width="90"></div></div></div>
+          <div class="skill-item"><div class="skill-name"><span>Google Optimize</span><span>92%</span></div><div class="skill-bar"><div class="skill-fill blue" data-width="92"></div></div></div>
+          <div class="skill-item"><div class="skill-name"><span>UX Optimization</span><span>88%</span></div><div class="skill-bar"><div class="skill-fill blue" data-width="88"></div></div></div>
+        </div>
+        <div class="skill-category reveal reveal-delay-1" id="skillCat2">
+          <div class="skill-cat-icon">📊</div>
+          <div class="skill-cat-title">Analytics & Reporting</div>
+          <div class="skill-item"><div class="skill-name"><span>Adobe Analytics</span><span>93%</span></div><div class="skill-bar"><div class="skill-fill purple" data-width="93"></div></div></div>
+          <div class="skill-item"><div class="skill-name"><span>Google Analytics</span><span>95%</span></div><div class="skill-bar"><div class="skill-fill purple" data-width="95"></div></div></div>
+          <div class="skill-item"><div class="skill-name"><span>Power BI / Tableau</span><span>88%</span></div><div class="skill-bar"><div class="skill-fill purple" data-width="88"></div></div></div>
+          <div class="skill-item"><div class="skill-name"><span>ContentSquare</span><span>85%</span></div><div class="skill-bar"><div class="skill-fill purple" data-width="85"></div></div></div>
+        </div>
+        <div class="skill-category reveal reveal-delay-2" id="skillCat3">
+          <div class="skill-cat-icon">🚀</div>
+          <div class="skill-cat-title">Digital Marketing & Strategy</div>
+          <div class="skill-item"><div class="skill-name"><span>SEM / Google Ads</span><span>92%</span></div><div class="skill-bar"><div class="skill-fill cyan" data-width="92"></div></div></div>
+          <div class="skill-item"><div class="skill-name"><span>SEO Strategy</span><span>88%</span></div><div class="skill-bar"><div class="skill-fill cyan" data-width="88"></div></div></div>
+          <div class="skill-item"><div class="skill-name"><span>HubSpot / Salesforce</span><span>80%</span></div><div class="skill-bar"><div class="skill-fill cyan" data-width="80"></div></div></div>
+          <div class="skill-item"><div class="skill-name"><span>Attribution Modeling</span><span>90%</span></div><div class="skill-bar"><div class="skill-fill cyan" data-width="90"></div></div></div>
+        </div>
+        <div class="skill-category reveal reveal-delay-3" id="skillCat4">
+          <div class="skill-cat-icon">⚙️</div>
+          <div class="skill-cat-title">Technical & Operational</div>
+          <div class="skill-item"><div class="skill-name"><span>Google Tag Manager</span><span>94%</span></div><div class="skill-bar"><div class="skill-fill blue" data-width="94"></div></div></div>
+          <div class="skill-item"><div class="skill-name"><span>Hotjar / SEMrush</span><span>86%</span></div><div class="skill-bar"><div class="skill-fill blue" data-width="86"></div></div></div>
+          <div class="skill-item"><div class="skill-name"><span>Agile / Kanban / Sprints</span><span>85%</span></div><div class="skill-bar"><div class="skill-fill blue" data-width="85"></div></div></div>
+          <div class="skill-item"><div class="skill-name"><span>Tag/Pixel Implementation</span><span>92%</span></div><div class="skill-bar"><div class="skill-fill blue" data-width="92"></div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education -->
+    <section id="education">
+      <div class="section-header reveal">
+        <div class="section-label">Education</div>
+        <h2 class="section-title">Academic Background</h2>
+      </div>
+      <div class="edu-card reveal">
+        <div class="edu-icon">🎓</div>
+        <div>
+          <div class="edu-degree">Bachelor's Degree in Business Administration</div>
+          <div class="edu-school">University of Massachusetts</div>
+          <div class="edu-year">Graduated May 2017</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+      <div class="section-header reveal">
+        <div class="section-label">Let's Connect</div>
+        <h2 class="section-title">Get In Touch</h2>
+        <p class="section-subtitle">I'm currently open to new opportunities in digital analytics and optimization</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info reveal">
+          <a href="mailto:youssefmccarthy@gmail.com" class="contact-item">
+            <div class="contact-icon">✉</div>
+            <div><div class="contact-label">Email</div><div class="contact-value">youssefmccarthy@gmail.com</div></div>
+          </a>
+          <a href="tel:978-967-7997" class="contact-item">
+            <div class="contact-icon">📱</div>
+            <div><div class="contact-label">Phone</div><div class="contact-value">978-967-7997</div></div>
+          </a>
+          <a href="https://www.linkedin.com/in/youssef-mccarthy/" target="_blank" class="contact-item">
+            <div class="contact-icon">💼</div>
+            <div><div class="contact-label">LinkedIn</div><div class="contact-value">linkedin.com/in/youssef-mccarthy</div></div>
+          </a>
+          <div class="contact-item">
+            <div class="contact-icon">📍</div>
+            <div><div class="contact-label">Location</div><div class="contact-value">Lowell, Massachusetts</div></div>
+          </div>
+        </div>
+        <form class="contact-form reveal reveal-delay-2" onsubmit="handleSubmit(event)">
+          <div class="form-group"><input type="text" placeholder="Your Name" required></div>
+          <div class="form-group"><input type="email" placeholder="Your Email" required></div>
+          <div class="form-group"><input type="text" placeholder="Subject"></div>
+          <div class="form-group"><textarea rows="5" placeholder="Your Message" required></textarea></div>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Send Message →</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© 2026 Youssef M. McCarthy — Built with precision and purpose.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
