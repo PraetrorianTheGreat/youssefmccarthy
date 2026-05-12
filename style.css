@@ -421,6 +421,21 @@ section { padding: 100px 40px; max-width: 1200px; margin: 0 auto; }
 .form-group input:focus, .form-group textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
 .form-group input::placeholder, .form-group textarea::placeholder { color: var(--text-muted); }
 
+/* CRO Form Styles */
+.service-dropdown {
+  width: 100%; padding: 16px 20px; border-radius: var(--radius-sm);
+  background: var(--bg-glass); border: 1px solid var(--border-glass);
+  color: var(--text-primary); font-family: inherit; font-size: 0.95rem;
+  transition: var(--transition); outline: none; appearance: none;
+  cursor: pointer;
+}
+.service-dropdown:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+.trust-seal {
+  text-align: center; font-size: 0.8rem; color: var(--text-muted);
+  margin-top: 4px; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.trust-seal i { color: var(--success); font-size: 0.85rem; }
+
 /* ── Footer ── */
 .footer {
   text-align: center; padding: 40px;
