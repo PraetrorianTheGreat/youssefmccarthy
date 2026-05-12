@@ -419,9 +419,15 @@ section { padding: 100px 40px; max-width: 1200px; margin: 0 auto; }
 }
 .offer-content h3 { font-size: 1.6rem; font-weight: 900; margin-bottom: 14px; letter-spacing: -0.5px; }
 .offer-content p { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 28px; }
-.offer-features { display: flex; flex-direction: column; gap: 14px; margin-bottom: 32px; }
-.offer-features span { display: flex; align-items: flex-start; gap: 10px; font-weight: 600; font-size: 0.9rem; line-height: 1.5; }
-.offer-features i { color: var(--success); font-size: 1rem; margin-top: 2px; }
+.offer-features { display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px; }
+.feature-item {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 14px 16px; border-radius: 12px;
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
+}
+.feature-item i { color: var(--accent-light); font-size: 1rem; margin-top: 3px; flex-shrink: 0; }
+.feature-item strong { display: block; font-size: 0.9rem; font-weight: 700; margin-bottom: 3px; }
+.feature-item span { display: block; font-size: 0.82rem; color: var(--text-muted); font-weight: 400; line-height: 1.5; }
 
 /* ── Mega CTA Buttons (Animated Glow) ── */
 .cta-stack { margin-top: auto; display: flex; flex-direction: column; gap: 12px; width: 100%; }
