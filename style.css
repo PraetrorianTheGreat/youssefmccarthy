@@ -852,3 +852,8 @@ body.light-theme .hero-float-card { background: rgba(255,255,255,0.95); }
 body.light-theme .form-group input, body.light-theme .form-group textarea { background: rgba(255,255,255,0.8); }
 body.light-theme .skill-bar { background: rgba(0,0,0,0.06); }
 body.light-theme ::-webkit-scrollbar-track { background: #f8fafc; }
+body.light-theme .service-dropdown { background-color: rgba(255,255,255,0.8); border-color: rgba(0,0,0,0.12); color: #0f172a; }
+body.light-theme .service-dropdown option { background: #f8fafc; color: #0f172a; }
+body.light-theme .service-dropdown optgroup { background: #f1f5f9; color: #334155; }
+body.light-theme .feature-item { background: rgba(0,0,0,0.03); border-color: rgba(0,0,0,0.06); }
+body.light-theme .path-card { background: rgba(255,255,255,0.9); }
