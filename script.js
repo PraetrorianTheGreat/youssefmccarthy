@@ -41,38 +41,38 @@ const UISounds = (() => {
   }
 
   return {
-    // Soft warm click — nav links, general buttons
-    click: () => play(880, 0.15, 'sine', 0.2),
-    // Gentle ascending chime — primary CTA buttons
+    // Warm tap — nav links, general buttons (C4 note)
+    click: () => play(262, 0.18, 'sine', 0.15),
+    // Gentle two-note chime — page load (C4 → E4)
     chime: () => {
-      play(523, 0.2, 'sine', 0.18);
-      setTimeout(() => play(659, 0.2, 'sine', 0.15), 80);
+      play(262, 0.25, 'sine', 0.14);
+      setTimeout(() => play(330, 0.25, 'sine', 0.11), 100);
     },
-    // Soft toggle snap
-    toggle: () => play(740, 0.12, 'sine', 0.2, 5),
-    // Card expand — gentle opening swoosh
+    // Mellow toggle snap (D4)
+    toggle: () => play(294, 0.14, 'sine', 0.15, 3),
+    // Card expand — warm rising interval (G3 → C4)
     expand: () => {
-      play(392, 0.25, 'sine', 0.15);
-      setTimeout(() => play(523, 0.22, 'sine', 0.12), 100);
+      play(196, 0.3, 'sine', 0.12);
+      setTimeout(() => play(262, 0.25, 'sine', 0.1), 120);
     },
-    // Card collapse
+    // Card collapse — gentle descend (C4 → G3)
     collapse: () => {
-      play(523, 0.18, 'sine', 0.15);
-      setTimeout(() => play(392, 0.22, 'sine', 0.12), 80);
+      play(262, 0.2, 'sine', 0.12);
+      setTimeout(() => play(196, 0.25, 'sine', 0.1), 100);
     },
-    // Copy confirmation — bright double-tap
+    // Copy confirmation — soft double chime (E4 → G4)
     confirm: () => {
-      play(784, 0.12, 'sine', 0.18);
-      setTimeout(() => play(1047, 0.18, 'sine', 0.15), 100);
+      play(330, 0.15, 'sine', 0.14);
+      setTimeout(() => play(392, 0.2, 'sine', 0.11), 110);
     },
-    // Back to top — ascending glide
+    // Back to top — ascending C major triad (C4 → E4 → G4)
     ascend: () => {
-      play(440, 0.15, 'sine', 0.15);
-      setTimeout(() => play(587, 0.15, 'sine', 0.12), 90);
-      setTimeout(() => play(784, 0.2, 'sine', 0.1), 180);
+      play(262, 0.18, 'sine', 0.12);
+      setTimeout(() => play(330, 0.18, 'sine', 0.1), 100);
+      setTimeout(() => play(392, 0.22, 'sine', 0.08), 200);
     },
-    // Testimonial slide — soft tick
-    slide: () => play(660, 0.1, 'sine', 0.18),
+    // Testimonial slide — gentle tick (A3)
+    slide: () => play(220, 0.12, 'sine', 0.13),
   };
 })();
 
