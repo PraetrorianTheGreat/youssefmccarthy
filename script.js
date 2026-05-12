@@ -1,7 +1,94 @@
-// ── Particle System ──
+// ── Premium UI Sound Engine (Microsoft Fluent-Inspired) ──
+const UISounds = (() => {
+  let ctx;
+  const getCtx = () => {
+    if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if (ctx.state === 'suspended') ctx.resume();
+    return ctx;
+  };
+
+  // Resume audio on first user interaction (browser autoplay policy)
+  const unlock = () => {
+    getCtx();
+    document.removeEventListener('click', unlock);
+    document.removeEventListener('touchstart', unlock);
+  };
+  document.addEventListener('click', unlock);
+  document.addEventListener('touchstart', unlock);
+
+  function play(freq, duration, type = 'sine', vol = 0.25, detune = 0) {
+    try {
+      const c = getCtx();
+      if (c.state === 'suspended') c.resume();
+      const osc = c.createOscillator();
+      const gain = c.createGain();
+      const filter = c.createBiquadFilter();
+      osc.type = type;
+      osc.frequency.value = freq;
+      osc.detune.value = detune;
+      filter.type = 'lowpass';
+      filter.frequency.value = 3000;
+      filter.Q.value = 0.7;
+      gain.gain.setValueAtTime(0, c.currentTime);
+      gain.gain.linearRampToValueAtTime(vol, c.currentTime + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, c.currentTime + duration);
+      osc.connect(filter);
+      filter.connect(gain);
+      gain.connect(c.destination);
+      osc.start(c.currentTime);
+      osc.stop(c.currentTime + duration);
+    } catch(e) {}
+  }
+
+  return {
+    // Soft warm click — nav links, general buttons
+    click: () => play(880, 0.15, 'sine', 0.2),
+    // Gentle ascending chime — primary CTA buttons
+    chime: () => {
+      play(523, 0.2, 'sine', 0.18);
+      setTimeout(() => play(659, 0.2, 'sine', 0.15), 80);
+    },
+    // Soft toggle snap
+    toggle: () => play(740, 0.12, 'sine', 0.2, 5),
+    // Card expand — gentle opening swoosh
+    expand: () => {
+      play(392, 0.25, 'sine', 0.15);
+      setTimeout(() => play(523, 0.22, 'sine', 0.12), 100);
+    },
+    // Card collapse
+    collapse: () => {
+      play(523, 0.18, 'sine', 0.15);
+      setTimeout(() => play(392, 0.22, 'sine', 0.12), 80);
+    },
+    // Copy confirmation — bright double-tap
+    confirm: () => {
+      play(784, 0.12, 'sine', 0.18);
+      setTimeout(() => play(1047, 0.18, 'sine', 0.15), 100);
+    },
+    // Back to top — ascending glide
+    ascend: () => {
+      play(440, 0.15, 'sine', 0.15);
+      setTimeout(() => play(587, 0.15, 'sine', 0.12), 90);
+      setTimeout(() => play(784, 0.2, 'sine', 0.1), 180);
+    },
+    // Testimonial slide — soft tick
+    slide: () => play(660, 0.1, 'sine', 0.18),
+  };
+})();
+
+// ── Page Loader ──
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('pageLoader').classList.add('hidden');
+    UISounds.chime();
+  }, 1400);
+});
+
+// ── Particle System (Mouse-Reactive) ──
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 let particles = [];
+let mouse = { x: -1000, y: -1000 };
 
 function resizeCanvas() {
   canvas.width = window.innerWidth;
@@ -10,6 +97,11 @@ function resizeCanvas() {
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
 
+document.addEventListener('mousemove', (e) => {
+  mouse.x = e.clientX;
+  mouse.y = e.clientY;
+});
+
 class Particle {
   constructor() {
     this.reset();
@@ -17,12 +109,24 @@ class Particle {
   reset() {
     this.x = Math.random() * canvas.width;
     this.y = Math.random() * canvas.height;
+    this.baseX = this.x;
+    this.baseY = this.y;
     this.size = Math.random() * 2 + 0.5;
     this.speedX = (Math.random() - 0.5) * 0.3;
     this.speedY = (Math.random() - 0.5) * 0.3;
     this.opacity = Math.random() * 0.4 + 0.1;
   }
   update() {
+    // Mouse repulsion
+    const dx = mouse.x - this.x;
+    const dy = mouse.y - this.y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    const maxDist = 150;
+    if (dist < maxDist) {
+      const force = (maxDist - dist) / maxDist;
+      this.x -= dx * force * 0.03;
+      this.y -= dy * force * 0.03;
+    }
     this.x += this.speedX;
     this.y += this.speedY;
     if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
@@ -56,6 +160,14 @@ function animateParticles() {
       }
     }
   }
+  // Mouse glow
+  if (mouse.x > 0 && mouse.y > 0) {
+    const gradient = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 100);
+    gradient.addColorStop(0, 'rgba(59, 130, 246, 0.04)');
+    gradient.addColorStop(1, 'rgba(59, 130, 246, 0)');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(mouse.x - 100, mouse.y - 100, 200, 200);
+  }
   requestAnimationFrame(animateParticles);
 }
 animateParticles();
@@ -82,23 +194,51 @@ window.addEventListener('scroll', () => {
 // Mobile menu
 document.getElementById('mobileToggle').addEventListener('click', () => {
   document.getElementById('navLinks').classList.toggle('open');
+  UISounds.click();
 });
 // Close mobile menu on link click
 document.querySelectorAll('.nav-links a').forEach(link => {
-  link.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
+  link.addEventListener('click', () => {
+    document.getElementById('navLinks').classList.remove('open');
+    UISounds.click();
+  });
 });
 
-// ── Scroll Reveal Animations ──
+// ── Theme Toggle ──
+const themeToggle = document.getElementById('themeToggle');
+const savedTheme = localStorage.getItem('portfolio-theme');
+if (savedTheme === 'light') {
+  document.body.classList.add('light-theme');
+  themeToggle.checked = true;
+} else {
+  document.body.classList.remove('light-theme');
+  themeToggle.checked = false;
+  localStorage.setItem('portfolio-theme', 'dark');
+}
+themeToggle.addEventListener('change', () => {
+  document.body.classList.toggle('light-theme', themeToggle.checked);
+  localStorage.setItem('portfolio-theme', themeToggle.checked ? 'light' : 'dark');
+  UISounds.toggle();
+});
+
+// ── Scroll Reveal Animations (Staggered) ──
 const revealElements = document.querySelectorAll('.reveal, .timeline-item');
 const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
+  entries.forEach((entry, i) => {
     if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
+      // Stagger children within the same parent
+      const delay = entry.target.dataset.revealDelay || 0;
+      setTimeout(() => {
+        entry.target.classList.add('visible');
+      }, delay * 100);
     }
   });
 }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
 
-revealElements.forEach(el => revealObserver.observe(el));
+revealElements.forEach((el, i) => {
+  el.dataset.revealDelay = i % 5;
+  revealObserver.observe(el);
+});
 
 // ── Animated Counters ──
 const statNumbers = document.querySelectorAll('.stat-number');
@@ -148,7 +288,8 @@ function toggleTimeline(card) {
   const toggle = card.querySelector('.timeline-toggle');
   const isOpen = expand.classList.contains('open');
   expand.classList.toggle('open');
-  toggle.textContent = isOpen ? 'Show more ↓' : 'Show less ↑';
+  toggle.textContent = isOpen ? 'Show more \u2193' : 'Show less \u2191';
+  isOpen ? UISounds.collapse() : UISounds.expand();
 }
 
 // ── Project Toggle ──
@@ -157,26 +298,73 @@ function toggleProject(card) {
   const toggle = card.querySelector('.project-toggle');
   const isOpen = details.classList.contains('open');
   details.classList.toggle('open');
-  toggle.textContent = isOpen ? 'Expand Case Study →' : 'Collapse ↑';
+  toggle.textContent = isOpen ? 'Expand Case Study \u2192' : 'Collapse \u2191';
+  isOpen ? UISounds.collapse() : UISounds.expand();
 }
 
-// ── Contact Form ──
-function handleSubmit(e) {
-  e.preventDefault();
-  const btn = e.target.querySelector('button[type="submit"]');
-  btn.textContent = '✓ Message Sent!';
-  btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
-  setTimeout(() => {
-    btn.textContent = 'Send Message →';
-    btn.style.background = '';
-    e.target.reset();
-  }, 3000);
+// ── Testimonial Carousel ──
+let currentTestimonial = 0;
+const testimonialCards = document.querySelectorAll('.testimonial-card');
+const dotsContainer = document.getElementById('testimonialDots');
+
+// Create dots
+if (dotsContainer) {
+  testimonialCards.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'testimonial-dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', () => goToTestimonial(i));
+    dotsContainer.appendChild(dot);
+  });
 }
+
+function goToTestimonial(index) {
+  testimonialCards.forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.testimonial-dot').forEach(d => d.classList.remove('active'));
+  currentTestimonial = index;
+  testimonialCards[currentTestimonial].classList.add('active');
+  document.querySelectorAll('.testimonial-dot')[currentTestimonial].classList.add('active');
+}
+
+function changeTestimonial(dir, manual) {
+  let next = currentTestimonial + dir;
+  if (next < 0) next = testimonialCards.length - 1;
+  if (next >= testimonialCards.length) next = 0;
+  goToTestimonial(next);
+  if (manual) UISounds.slide();
+}
+
+// Auto-rotate testimonials (silent)
+setInterval(() => changeTestimonial(1, false), 6000);
+
+// ── Copy to Clipboard ──
+function copyText(text, btn) {
+  navigator.clipboard.writeText(text).then(() => {
+    UISounds.confirm();
+    const original = btn.textContent;
+    btn.textContent = '\u2713';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = original;
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
+// ── Back to Top ──
+const backToTop = document.getElementById('backToTop');
+window.addEventListener('scroll', () => {
+  backToTop.classList.toggle('visible', window.scrollY > 500);
+});
+backToTop.addEventListener('click', () => {
+  UISounds.ascend();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
 
 // ── Smooth scroll for nav links ──
 document.querySelectorAll('a[href^="#"]').forEach(link => {
   link.addEventListener('click', e => {
     e.preventDefault();
+    UISounds.click();
     const target = document.querySelector(link.getAttribute('href'));
     if (target) target.scrollIntoView({ behavior: 'smooth' });
   });

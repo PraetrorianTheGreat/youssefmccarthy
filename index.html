@@ -5,9 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Youssef McCarthy — Digital Analytics Strategist</title>
   <meta name="description" content="Portfolio of Youssef McCarthy — 14+ years driving measurable marketing performance through digital analytics, CRO, and customer journey optimization.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%230a0e1a' width='100' height='100' rx='20'/%3E%3Ctext y='72' x='10' font-size='60' font-family='Arial' font-weight='900' fill='%233b82f6'%3EYM%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="page-loader" id="pageLoader">
+    <div class="loader-content">
+      <div class="loader-logo">YM</div>
+      <div class="loader-bar"><div class="loader-progress"></div></div>
+    </div>
+  </div>
+
   <canvas id="particles"></canvas>
   <div class="bg-grid"></div>
   <div class="bg-orbs"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
@@ -15,7 +23,15 @@
   <!-- Navigation -->
   <nav class="nav" id="nav">
     <div class="nav-logo"><span>YM</span></div>
-    <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">☰</button>
+    <div class="theme-switch-wrapper">
+      <span class="theme-icon">&#9790; Dark</span>
+      <label class="theme-switch" for="themeToggle">
+        <input type="checkbox" id="themeToggle">
+        <span class="slider"></span>
+      </label>
+      <span class="theme-icon">&#9788; Light</span>
+    </div>
+    <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">&#9776;</button>
     <ul class="nav-links" id="navLinks">
       <li><a href="#about" class="active">About</a></li>
       <li><a href="#experience">Experience</a></li>
@@ -32,15 +48,15 @@
       <div class="hero-content">
         <div class="hero-badge"><span class="dot"></span> Open to Opportunities</div>
         <h1>Youssef M.<br><span class="gradient">McCarthy</span></h1>
-        <p class="hero-subtitle">Digital Analytics Strategist & CRO Expert — 14+ years optimizing customer journeys, driving A/B experimentation, and turning data into measurable growth.</p>
+        <p class="hero-subtitle">Digital Analytics Strategist & CRO Expert — 14+ years optimizing customer journeys, driving A/B experimentation, and leveraging AI agents to automate insight-to-action workflows at scale.</p>
         <div class="hero-stats">
           <div class="stat"><div class="stat-number" data-count="14">0</div><div class="stat-label">Years Experience</div></div>
-          <div class="stat"><div class="stat-number" data-count="2400" data-suffix="x">0</div><div class="stat-label">ROI Multiplier</div></div>
-          <div class="stat"><div class="stat-number" data-count="5">0</div><div class="stat-label">Major Projects</div></div>
+          <div class="stat"><div class="stat-number" data-count="5" data-suffix="+">0</div><div class="stat-label">Major Projects</div></div>
         </div>
         <div class="hero-actions">
-          <a href="#contact" class="btn btn-primary">✉ Contact Me</a>
-          <a href="#experience" class="btn btn-outline">↓ View Experience</a>
+          <a href="#contact" class="btn btn-primary">&#9993; Contact Me</a>
+          <a href="#experience" class="btn btn-outline">&#8595; View Experience</a>
+          <a href="Youssef_McCarthy_Resume.pdf" download class="btn btn-outline">&#128196; Download CV</a>
         </div>
       </div>
       <div class="hero-image">
@@ -48,8 +64,8 @@
           <div class="hero-photo-ring"></div>
           <img src="profile.png" alt="Youssef McCarthy" />
         </div>
-        <div class="hero-float-card card-1"><span class="icon">📊</span> A/B Testing Expert</div>
-        <div class="hero-float-card card-2"><span class="icon">🚀</span> 2,400x ROI</div>
+        <div class="hero-float-card card-1"><span class="icon">🤖</span> AI Agent Builder</div>
+        <div class="hero-float-card card-2"><span class="icon">📊</span> A/B Testing Expert</div>
         <div class="hero-float-card card-3"><span class="icon">🎯</span> CRO Specialist</div>
       </div>
     </section>
@@ -63,13 +79,13 @@
       <div class="about-grid">
         <div class="reveal">
           <p class="about-text">Hi, I'm Youssef McCarthy — a digital analytics specialist and strategist with over 14 years of experience optimizing customer journeys and driving measurable marketing performance.</p>
-          <p class="about-text">I've led the full experiment lifecycle — from A/B testing to advanced multivariate analysis — while building dashboards and insights that empower decision-makers. Beyond analytics, I believe in elevating teams: at EmblemHealth, I not only delivered ROI-driven strategies but also introduced quarterly educational opportunities across the company, ensuring colleagues stayed ahead on digital trends and tools.</p>
-          <p class="about-text">My passion is blending technical rigor with creative storytelling to unlock growth, and I'm excited to bring that mix of expertise and mentorship to my next role.</p>
+          <p class="about-text">I've led the full experiment lifecycle — from A/B testing to advanced multivariate analysis — while building dashboards and insights that empower decision-makers. I'm deeply invested in AI agents and agentic workflows, actively building with and evaluating frontier models (Claude, Gemini, GPT, Llama) based on task-specific efficiency to automate research, reporting, and optimization pipelines.</p>
+          <p class="about-text">My passion is blending technical rigor with creative storytelling to unlock growth — and using AI agents to do it faster, smarter, and at scale. I'm excited to bring that mix of expertise and mentorship to my next role.</p>
         </div>
         <div class="about-highlights reveal reveal-delay-2">
+          <div class="highlight-card"><div class="h-icon">🤖</div><div class="h-title">AI Agents & Automation</div><div class="h-desc">Building agentic workflows with frontier LLMs to automate analytics & reporting</div></div>
           <div class="highlight-card"><div class="h-icon">🧪</div><div class="h-title">Experimentation</div><div class="h-desc">A/B & multivariate testing across the full lifecycle</div></div>
           <div class="highlight-card"><div class="h-icon">📈</div><div class="h-title">Data Visualization</div><div class="h-desc">Dynamic dashboards & automated reporting</div></div>
-          <div class="highlight-card"><div class="h-icon">🎓</div><div class="h-title">Team Mentorship</div><div class="h-desc">Quarterly company-wide digital education</div></div>
           <div class="highlight-card"><div class="h-icon">🔄</div><div class="h-title">Journey Optimization</div><div class="h-desc">End-to-end funnel analysis & CRO</div></div>
         </div>
       </div>
@@ -341,7 +357,15 @@
         <h2 class="section-title">Skills & Proficiencies</h2>
       </div>
       <div class="skills-categories">
-        <div class="skill-category reveal" id="skillCat1">
+        <div class="skill-category reveal" id="skillCat0">
+          <div class="skill-cat-icon">🤖</div>
+          <div class="skill-cat-title">AI Agents & Automation</div>
+          <div class="skill-item"><div class="skill-name"><span>Agentic AI Workflows</span><span>92%</span></div><div class="skill-bar"><div class="skill-fill cyan" data-width="92"></div></div></div>
+          <div class="skill-item"><div class="skill-name"><span>Prompt Engineering</span><span>94%</span></div><div class="skill-bar"><div class="skill-fill cyan" data-width="94"></div></div></div>
+          <div class="skill-item"><div class="skill-name"><span>Multi-Model Orchestration</span><span>90%</span></div><div class="skill-bar"><div class="skill-fill cyan" data-width="90"></div></div></div>
+          <div class="skill-item"><div class="skill-name"><span>Claude / Gemini / GPT / Llama</span><span>93%</span></div><div class="skill-bar"><div class="skill-fill cyan" data-width="93"></div></div></div>
+        </div>
+        <div class="skill-category reveal reveal-delay-1" id="skillCat1">
           <div class="skill-cat-icon">🧪</div>
           <div class="skill-cat-title">Experimentation & CRO</div>
           <div class="skill-item"><div class="skill-name"><span>A/B & Multivariate Testing</span><span>95%</span></div><div class="skill-bar"><div class="skill-fill blue" data-width="95"></div></div></div>
@@ -349,7 +373,7 @@
           <div class="skill-item"><div class="skill-name"><span>Google Optimize</span><span>92%</span></div><div class="skill-bar"><div class="skill-fill blue" data-width="92"></div></div></div>
           <div class="skill-item"><div class="skill-name"><span>UX Optimization</span><span>88%</span></div><div class="skill-bar"><div class="skill-fill blue" data-width="88"></div></div></div>
         </div>
-        <div class="skill-category reveal reveal-delay-1" id="skillCat2">
+        <div class="skill-category reveal reveal-delay-2" id="skillCat2">
           <div class="skill-cat-icon">📊</div>
           <div class="skill-cat-title">Analytics & Reporting</div>
           <div class="skill-item"><div class="skill-name"><span>Adobe Analytics</span><span>93%</span></div><div class="skill-bar"><div class="skill-fill purple" data-width="93"></div></div></div>
@@ -357,7 +381,7 @@
           <div class="skill-item"><div class="skill-name"><span>Power BI / Tableau</span><span>88%</span></div><div class="skill-bar"><div class="skill-fill purple" data-width="88"></div></div></div>
           <div class="skill-item"><div class="skill-name"><span>ContentSquare</span><span>85%</span></div><div class="skill-bar"><div class="skill-fill purple" data-width="85"></div></div></div>
         </div>
-        <div class="skill-category reveal reveal-delay-2" id="skillCat3">
+        <div class="skill-category reveal reveal-delay-3" id="skillCat3">
           <div class="skill-cat-icon">🚀</div>
           <div class="skill-cat-title">Digital Marketing & Strategy</div>
           <div class="skill-item"><div class="skill-name"><span>SEM / Google Ads</span><span>92%</span></div><div class="skill-bar"><div class="skill-fill cyan" data-width="92"></div></div></div>
@@ -365,7 +389,7 @@
           <div class="skill-item"><div class="skill-name"><span>HubSpot / Salesforce</span><span>80%</span></div><div class="skill-bar"><div class="skill-fill cyan" data-width="80"></div></div></div>
           <div class="skill-item"><div class="skill-name"><span>Attribution Modeling</span><span>90%</span></div><div class="skill-bar"><div class="skill-fill cyan" data-width="90"></div></div></div>
         </div>
-        <div class="skill-category reveal reveal-delay-3" id="skillCat4">
+        <div class="skill-category reveal reveal-delay-4" id="skillCat4">
           <div class="skill-cat-icon">⚙️</div>
           <div class="skill-cat-title">Technical & Operational</div>
           <div class="skill-item"><div class="skill-name"><span>Google Tag Manager</span><span>94%</span></div><div class="skill-bar"><div class="skill-fill blue" data-width="94"></div></div></div>
@@ -390,6 +414,42 @@
           <div class="edu-year">Graduated May 2017</div>
         </div>
       </div>
+    <!-- Testimonials -->
+    <section id="testimonials">
+      <div class="section-header reveal">
+        <div class="section-label">Recommendations</div>
+        <h2 class="section-title">What Leaders Say</h2>
+      </div>
+      <div class="testimonials-carousel" id="testimonialCarousel">
+        <div class="testimonial-track">
+          <div class="testimonial-card active">
+            <div class="testimonial-quote">&ldquo;Youssef possesses a rare blend of attributes: technical expertise, a strategic mindset, and an ability to convey complex concepts to non-technical leaders. He routinely stepped in as the voice of reason and clarity when projects had become unfocused.&rdquo;</div>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">CC</div>
+              <div><div class="testimonial-name">Christopher Clarke</div><div class="testimonial-role">AVP, Corporate Marketing &middot; EmblemHealth</div></div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-quote">&ldquo;Youssef came into a complex environment across the healthcare system and was able to quickly bring his skills to make a significant impact. Not only did he lead important overhauls, but he was a strong team player who brought confidence and accountability.&rdquo;</div>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">CE</div>
+              <div><div class="testimonial-name">Cate Engerrand</div><div class="testimonial-role">Director, Marketing Intelligence &middot; EmblemHealth</div></div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-quote">&ldquo;His input was always welcomed and sought after on everything from new projects to routine reporting. The strategies he helped craft are still in use at EmblemHealth. He is a joy to work with and would be a valued asset at any company.&rdquo;</div>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">KN</div>
+              <div><div class="testimonial-name">Kyle Nowinski</div><div class="testimonial-role">Senior Analytics Specialist &middot; EmblemHealth</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-controls">
+          <button class="testimonial-btn" onclick="changeTestimonial(-1,true)">&larr;</button>
+          <div class="testimonial-dots" id="testimonialDots"></div>
+          <button class="testimonial-btn" onclick="changeTestimonial(1,true)">&rarr;</button>
+        </div>
+      </div>
     </section>
 
     <!-- Contact -->
@@ -402,36 +462,41 @@
       <div class="contact-grid">
         <div class="contact-info reveal">
           <a href="mailto:youssefmccarthy@gmail.com" class="contact-item">
-            <div class="contact-icon">✉</div>
+            <div class="contact-icon">&#9993;</div>
             <div><div class="contact-label">Email</div><div class="contact-value">youssefmccarthy@gmail.com</div></div>
+            <button class="copy-btn" onclick="event.preventDefault();copyText('youssefmccarthy@gmail.com',this)" title="Copy">&#128203;</button>
           </a>
           <a href="tel:978-967-7997" class="contact-item">
-            <div class="contact-icon">📱</div>
+            <div class="contact-icon">&#128241;</div>
             <div><div class="contact-label">Phone</div><div class="contact-value">978-967-7997</div></div>
+            <button class="copy-btn" onclick="event.preventDefault();copyText('978-967-7997',this)" title="Copy">&#128203;</button>
           </a>
           <a href="https://www.linkedin.com/in/youssef-mccarthy/" target="_blank" class="contact-item">
-            <div class="contact-icon">💼</div>
+            <div class="contact-icon">&#128188;</div>
             <div><div class="contact-label">LinkedIn</div><div class="contact-value">linkedin.com/in/youssef-mccarthy</div></div>
           </a>
           <div class="contact-item">
-            <div class="contact-icon">📍</div>
+            <div class="contact-icon">&#128205;</div>
             <div><div class="contact-label">Location</div><div class="contact-value">Lowell, Massachusetts</div></div>
           </div>
         </div>
-        <form class="contact-form reveal reveal-delay-2" onsubmit="handleSubmit(event)">
-          <div class="form-group"><input type="text" placeholder="Your Name" required></div>
-          <div class="form-group"><input type="email" placeholder="Your Email" required></div>
-          <div class="form-group"><input type="text" placeholder="Subject"></div>
-          <div class="form-group"><textarea rows="5" placeholder="Your Message" required></textarea></div>
-          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Send Message →</button>
+        <form class="contact-form reveal reveal-delay-2" action="https://formsubmit.co/youssefmccarthy@gmail.com" method="POST">
+          <input type="hidden" name="_next" value="https://PraetrorianTheGreat.github.io/youssefmccarthy/#contact">
+          <input type="hidden" name="_subject" value="New Portfolio Contact!">
+          <div class="form-group"><input type="text" name="name" placeholder="Your Name" required></div>
+          <div class="form-group"><input type="email" name="email" placeholder="Your Email" required></div>
+          <div class="form-group"><textarea name="message" rows="5" placeholder="Your Message" required></textarea></div>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Send Message &rarr;</button>
         </form>
       </div>
     </section>
   </main>
 
   <footer class="footer">
-    <p>© 2026 Youssef M. McCarthy — Built with precision and purpose.</p>
+    <p>&copy; 2026 Youssef M. McCarthy &mdash; Built with precision and purpose.</p>
   </footer>
+
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">&uarr;</button>
 
   <script src="script.js"></script>
 </body>
