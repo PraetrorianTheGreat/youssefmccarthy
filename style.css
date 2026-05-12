@@ -388,6 +388,8 @@ section { padding: 100px 40px; max-width: 1200px; margin: 0 auto; }
 .recruiter-badge { background: var(--success) !important; box-shadow: 0 4px 15px rgba(16,185,129,0.4) !important; }
 .recruiter-btn { background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important; box-shadow: 0 8px 25px rgba(16,185,129,0.3) !important; }
 .recruiter-btn:hover { box-shadow: 0 12px 30px rgba(16,185,129,0.5) !important; }
+.smb-btn { background: var(--gradient-3) !important; box-shadow: 0 8px 25px rgba(236,72,153,0.3) !important; }
+.smb-btn:hover { box-shadow: 0 12px 30px rgba(236,72,153,0.5) !important; }
 .offer-content { display: flex; flex-direction: column; height: 100%; width: 100%; }
 .offer-badge {
   background: var(--accent); color: white;
