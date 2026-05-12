@@ -76,6 +76,13 @@ const UISounds = (() => {
   };
 })();
 
+// ── Google Analytics Event Tracking ──
+const trackEvent = (name, params = {}) => {
+  if (typeof gtag === 'function') {
+    gtag('event', name, params);
+  }
+};
+
 // ── Page Loader ──
 window.addEventListener('load', () => {
   setTimeout(() => {
@@ -216,9 +223,11 @@ if (savedTheme === 'light') {
   localStorage.setItem('portfolio-theme', 'dark');
 }
 themeToggle.addEventListener('change', () => {
-  document.body.classList.toggle('light-theme', themeToggle.checked);
-  localStorage.setItem('portfolio-theme', themeToggle.checked ? 'light' : 'dark');
+  const isLight = themeToggle.checked;
+  document.body.classList.toggle('light-theme', isLight);
+  localStorage.setItem('portfolio-theme', isLight ? 'light' : 'dark');
   UISounds.toggle();
+  trackEvent('theme_change', { theme: isLight ? 'light' : 'dark' });
 });
 
 // ── Scroll Reveal Animations (Staggered) ──
@@ -290,6 +299,10 @@ function toggleTimeline(card) {
   expand.classList.toggle('open');
   toggle.textContent = isOpen ? 'Show more \u2193' : 'Show less \u2191';
   isOpen ? UISounds.collapse() : UISounds.expand();
+  trackEvent('experience_toggle', { 
+    company: card.querySelector('.timeline-company').textContent,
+    action: isOpen ? 'collapse' : 'expand' 
+  });
 }
 
 // ── Project Toggle ──
@@ -300,6 +313,10 @@ function toggleProject(card) {
   details.classList.toggle('open');
   toggle.textContent = isOpen ? 'Expand Case Study \u2192' : 'Collapse \u2191';
   isOpen ? UISounds.collapse() : UISounds.expand();
+  trackEvent('project_toggle', { 
+    project: card.querySelector('.project-title').textContent,
+    action: isOpen ? 'collapse' : 'expand' 
+  });
 }
 
 // ── Testimonial Carousel ──
@@ -340,6 +357,7 @@ setInterval(() => changeTestimonial(1, false), 6000);
 function copyText(text, btn) {
   navigator.clipboard.writeText(text).then(() => {
     UISounds.confirm();
+    trackEvent('copy_to_clipboard', { value: text });
     const original = btn.textContent;
     btn.textContent = '\u2713';
     btn.classList.add('copied');
@@ -357,6 +375,7 @@ window.addEventListener('scroll', () => {
 });
 backToTop.addEventListener('click', () => {
   UISounds.ascend();
+  trackEvent('back_to_top');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
@@ -365,7 +384,16 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
   link.addEventListener('click', e => {
     e.preventDefault();
     UISounds.click();
-    const target = document.querySelector(link.getAttribute('href'));
+    const href = link.getAttribute('href');
+    trackEvent('nav_click', { target: href });
+    const target = document.querySelector(href);
     if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// ── CV Download Tracking ──
+document.querySelectorAll('a[download]').forEach(link => {
+  link.addEventListener('click', () => {
+    trackEvent('cv_download', { file_name: link.getAttribute('href') });
   });
 });
