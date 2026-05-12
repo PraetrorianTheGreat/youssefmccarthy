@@ -304,6 +304,12 @@ section { padding: 100px 40px; max-width: 1200px; margin: 0 auto; }
 .project-badge.impact { background: rgba(16,185,129,0.15); color: var(--success); }
 .project-badge.strategy { background: rgba(139,92,246,0.15); color: var(--accent-2); }
 .project-badge.ux { background: rgba(6,182,212,0.15); color: var(--accent-3); }
+.project-badge.innovation { 
+  background: rgba(6, 182, 212, 0.2); 
+  color: #06b6d4; 
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  box-shadow: 0 0 15px rgba(6, 182, 212, 0.15);
+}
 .project-title { font-size: 1.4rem; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.5px; }
 .project-company { font-size: 0.9rem; color: var(--accent-light); font-weight: 600; margin-bottom: 16px; }
 .project-desc { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 20px; line-height: 1.8; }
@@ -331,6 +337,53 @@ section { padding: 100px 40px; max-width: 1200px; margin: 0 auto; }
   color: var(--accent-light); font-size: 0.85rem; font-weight: 600;
   cursor: pointer; font-family: inherit;
   display: flex; align-items: center; gap: 6px;
+}
+
+/* ── Editorials Section ── */
+.editorials-list { display: flex; flex-direction: column; gap: 32px; }
+.editorial-card {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: var(--transition);
+  cursor: pointer;
+}
+.editorial-card:hover { 
+  transform: translateY(-4px); 
+  border-color: var(--accent);
+  box-shadow: var(--shadow-glow);
+}
+.editorial-image {
+  background: var(--gradient-1);
+  position: relative;
+  min-height: 200px;
+}
+.editorial-tag {
+  position: absolute; top: 16px; left: 16px;
+  padding: 4px 12px; border-radius: 4px;
+  background: var(--accent); color: var(--navy);
+  font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
+}
+.editorial-content { padding: 32px; display: flex; flex-direction: column; }
+.editorial-meta { 
+  font-size: 0.75rem; font-weight: 700; color: var(--accent-light); 
+  letter-spacing: 1px; margin-bottom: 12px; 
+}
+.editorial-title { font-size: 1.6rem; font-weight: 800; margin-bottom: 12px; }
+.editorial-excerpt { color: var(--text-secondary); line-height: 1.8; margin-bottom: 24px; }
+.editorial-footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
+.view-article { font-weight: 700; color: var(--accent); font-size: 0.9rem; }
+.audio-badge {
+  font-size: 0.75rem; font-weight: 600; color: var(--text-muted);
+  background: rgba(255,255,255,0.05); padding: 4px 12px; border-radius: 100px;
+}
+
+@media (max-width: 768px) {
+  .editorial-card { grid-template-columns: 1fr; }
+  .editorial-image { min-height: 160px; }
 }
 
 /* ── Skills Section ── */

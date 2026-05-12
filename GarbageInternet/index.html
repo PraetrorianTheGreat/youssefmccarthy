@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Building the Garbage Internet — The Slop Era</title>
+  <meta name="description" content="How overproduction, AI slop, and algorithmic noise are creating a permanent class of information have-nots, forever trapped in a degraded digital landfill.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Reading Progress -->
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- Masthead -->
+  <header class="masthead">
+    <div class="masthead__inner">
+      <div class="masthead__title">The Garbage Internet</div>
+      <div class="masthead__tag">The Slop Era &mdash; Essay</div>
+    </div>
+  </header>
+
+  <!-- Hero Header -->
+  <section class="hero fade-in">
+    <div class="hero__label">The Slop Era</div>
+    <h1 class="hero__headline">The Garbage Internet: The Systematic Decline of Human Knowledge in the Slop Era</h1>
+    <p class="hero__subtitle">Inside the &lsquo;Slop Era&rsquo;: How overproduction, algorithm-first filler, and automated noise are creating a permanent class of information have-nots, forever trapped in a degraded digital landfill.</p>
+    <div class="hero__meta">
+      <span>Written by <strong>The Editorial Collective</strong></span>
+      <span>May 2026</span>
+      <button class="audio-trigger" id="audioTrigger">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+        Listen to Article
+      </button>
+    </div>
+  </section>
+
+  <!-- Audio Control Bar -->
+  <div class="audio-player" id="audioPlayer">
+    <div class="audio-player__inner">
+      <div class="audio-player__info">
+        <div class="audio-player__status">Now Reading <span id="voiceStatus" style="color:var(--accent); font-weight:700; font-size:0.6rem; margin-left:8px; border:1px solid var(--accent); padding:1px 4px; border-radius:4px;">Neural AI HQ</span></div>
+        <div class="audio-player__title" id="audioTitle">The Garbage Internet</div>
+        <div class="audio-player__progress-container" id="audioProgressContainer" style="display:none; width:100%; height:4px; background:rgba(255,255,255,0.1); margin-top:8px; border-radius:2px; cursor:pointer;">
+          <div class="audio-player__progress-bar" id="audioProgressBar" style="height:100%; background:var(--accent); width:0%; border-radius:2px;"></div>
+        </div>
+      </div>
+      <div class="audio-player__controls">
+        <button id="audioRewind" title="Back 10s"><svg viewBox="0 0 24 24" width="18"><path fill="currentColor" d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button>
+        <button id="audioToggle" class="main-btn" title="Play/Pause"><svg id="playIcon" viewBox="0 0 24 24" width="24"><path fill="currentColor" d="M8 5v14l11-7z"/></svg><svg id="pauseIcon" style="display:none" viewBox="0 0 24 24" width="24"><path fill="currentColor" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg></button>
+        <button id="audioForward" title="Forward 10s"><svg viewBox="0 0 24 24" width="18"><path fill="currentColor" d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button>
+      </div>
+    </div>
+    <audio id="hqAudio" src="images/narration.mp3" style="display:none"></audio>
+    <!-- Settings Menu -->
+    <div class="audio-settings" id="audioSettings">
+      <div class="audio-settings__group">
+        <label>Narrator Source</label>
+        <div class="audio-settings__toggle-group" style="display:flex; background:#1a2b3c; border-radius:6px; padding:2px;">
+          <button id="srcAI" class="toggle-btn active" style="flex:1; border:none; background:none; color:var(--white); font-family:var(--font-sans); font-size:0.6rem; padding:6px; cursor:pointer; border-radius:4px;">✨ AI</button>
+          <button id="srcHuman" class="toggle-btn" style="flex:1; border:none; background:none; color:var(--white); font-family:var(--font-sans); font-size:0.6rem; padding:6px; cursor:pointer; border-radius:4px;">👤 HUMAN</button>
+        </div>
+      </div>
+      <div class="audio-settings__group" id="voiceGroup">
+        <label>AI Voice Profile</label>
+        <select id="voiceSelect"></select>
+      </div>
+      <div class="audio-settings__group">
+        <label>Reading Speed</label>
+        <input type="range" id="speedRange" min="0.5" max="2" step="0.1" value="0.9">
+        <div style="display:flex; justify-content:space-between; margin-top:5px;">
+          <span style="font-size:0.6rem; color:var(--text-muted);">AI Narrator</span>
+          <span id="speedVal" style="font-weight:700; color:var(--accent);">0.9x</span>
+          <span style="font-size:0.6rem; color:var(--text-muted);">Fast Scan</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero Image -->
+  <div class="hero-image fade-in">
+    <figure>
+      <img src="images/hero.png" alt="A person sitting alone at a cluttered desk surrounded by screens of digital noise" loading="eager">
+      <figcaption>A growing isolation: For many, the modern internet has become an obstacle rather than a tool.</figcaption>
+    </figure>
+  </div>
+
+  <!-- Article Body -->
+  <article class="article">
+
+    <!-- Lede -->
+    <p class="lead-in fade-in">
+      Even as tech workers and corporations congratulate themselves on an explosion of content, the average user finds themselves drowning in a sea of noise. This deluge of what we might call &ldquo;AI slop&rdquo;&mdash;low-quality, filler content prioritizing speed over quality&mdash;is not merely an annoyance; it is an active degradation of the digital landscape. We are witnessing the birth of an internet designed not for humans to read, but for bots to index, a recursive loop of automated mediocrity.
+    </p>
+
+    <!-- Landfill image — floated left -->
+    <figure class="inline-image inline-image--left fade-in">
+      <img src="images/landfill.png" alt="Abstract visualization of digital waste accumulating in layers">
+      <figcaption>Digital landfill: truth diluted beneath layers of automated noise.</figcaption>
+    </figure>
+
+    <p class="fade-in">
+      The result is a fractured internet, where a sophisticated elite can discern value through expensive subscriptions and curated silos, while the most vulnerable populations&mdash;the elderly, the less tech-savvy&mdash;are trapped in a garbage internet that offers endless choice but no clarity. They are forced to navigate a labyrinth of clickbait, predatory ads, and hallucinated facts, where basic digital competence is no longer enough to stay afloat.
+    </p>
+
+    <p class="fade-in">
+      This is the era of the &ldquo;Slop Web,&rdquo; where the cost of verification has become higher than the value of the information itself. For the average person, the web has transitioned from a library of human knowledge to a digital landfill where the signal is permanently lost to the noise.
+    </p>
+
+    <p class="fade-in clearfix">
+      We are witnessing the unchecked accumulation of societal junk data&mdash;a digital landfill of trivialities, automated noise, and half-truths preserved forever in the cloud. This is not just a problem of quantity; it is a structural failure of our information architecture. In this landscape, truth is not actively censored; it is simply diluted until it becomes functionally invisible.
+    </p>
+
+    <!-- Pull Quote -->
+    <div class="pull-quote fade-in">
+      <blockquote>
+        Truth is not actively censored; it is simply diluted until it becomes functionally invisible.
+      </blockquote>
+    </div>
+
+    <p class="fade-in">
+      Ultimately, those who participate in creating these extravagant AI agentic models risk becoming trapped by their own creation. By prioritizing sheer volume, they force the creation of fragmented, self-selecting micro-realities. They will eventually find themselves stuck with an audience that is pre-filtered to inhabit their particular brand of digital decline.
+    </p>
+
+    <!-- ════════════ SECTION: CLASS DIVIDED ════════════ -->
+    <div class="section-break fade-in">
+      <h2>A Class Divided: The New Information Ghetto</h2>
+    </div>
+
+    <p class="fade-in">
+      This process creates a permanent class of information haves and have-nots. While the digitally savvy can navigate these polluted waters through ad-blockers, custom search engines, and private communities, those with limited time or digital literacy are left stranded on an island of irrelevance.
+    </p>
+
+    <!-- Divide image — floated right -->
+    <figure class="inline-image inline-image--right fade-in">
+      <img src="images/divide.png" alt="Two people at a table with diverging digital experiences">
+      <figcaption>A widening gap: Access is no longer the issue&mdash;quality is.</figcaption>
+    </figure>
+
+    <p class="fade-in">
+      The tech elite, ironically, become the gatekeepers of quality, while their automated systems push everyone else deeper into the &ldquo;garbage internet.&rdquo; We are witnessing the privatization of the functional internet, where safety and clarity are premium services hidden behind paywalls.
+    </p>
+
+    <p class="fade-in">
+      Over time, these two digital worlds may cease to interact entirely, leading to a truly segregated internet where society is divided into isolated echo chambers. One half lives in a world of high-fidelity, verified data, while the other is relegated to a digital ghetto where information is unreliable and predatory behavior is the norm.
+    </p>
+
+    <p class="emphasis fade-in clearfix">
+      We can view this as the digital ghettoization of our most vulnerable populations.
+    </p>
+
+    <!-- ════════════ SECTION: ALGORITHMIC CAGE ════════════ -->
+    <div class="section-break fade-in">
+      <h2>The Algorithmic Cage: How Creators Trap Themselves</h2>
+    </div>
+
+    <p class="fade-in">
+      Tech-savvy individuals are becoming silent witnesses to the daily frustrations of their loved ones. They watch parents, friends, or elderly relatives struggle to accomplish basic online tasks&mdash;like booking a flight or finding medical advice&mdash;only to be constantly blocked by walls of deceptive, low-quality, or entirely automated filler.
+    </p>
+
+    <!-- Echo image — floated left -->
+    <figure class="inline-image inline-image--left fade-in">
+      <img src="images/echo.png" alt="A figure trapped inside a sphere of recursive digital echoes">
+      <figcaption>In isolation: Churning out noise for an audience of echoes.</figcaption>
+    </figure>
+
+    <p class="fade-in">
+      What makes this shift particularly insidious is how it mimics a decline in health faculties. The constant cognitive load of sorting through &ldquo;slop&rdquo; acts like a chronic stressor, wearing down an individual&rsquo;s confidence and capability. This is a form of induced digital aging.
+    </p>
+
+    <p class="fade-in">
+      It is the final outcome of this trend that is the most tragic. The tech creators, frantically churning out content, will eventually be marooned&mdash;stuck with an audience that&rsquo;s pre-filtered to inhabit their particular brand of digital decline, speaking only to themselves in an echo chamber of their own making.
+    </p>
+
+    <p class="fade-in clearfix">
+      By flooding the ecosystem with automated filler, these creators are accelerating the decline of human critical thought, fostering a digital landscape that supports only the selective breeding of convenient clich&eacute;s.
+    </p>
+
+    <!-- ════════════ SECTION: STEWARDSHIP ════════════ -->
+    <div class="section-break fade-in">
+      <h2>A Mandate for Digital Stewardship</h2>
+    </div>
+
+    <p class="fade-in">
+      As the digital landscape continues to be flooded by automated filler, the argument for sensible AI regulation has moved from the fringes of academia to a central necessity for consumer protection. To address this, we propose a formal framework of government regulations designed to restore the integrity of our information ecosystems:
+    </p>
+
+    <ol class="regulation-list fade-in">
+      <li>
+        <strong>The Information Integrity Act</strong>
+        <p>Mandatory, standardized disclosure for all algorithmically-generated content. Similar to food nutrition labels, every significant block of automated text must carry a &ldquo;Provenance Signature&rdquo; certifying its origin.</p>
+      </li>
+      <li>
+        <strong>Platform Responsibility Standards</strong>
+        <p>Holding distribution networks accountable for the massive proliferation of deceptive &ldquo;slop.&rdquo; Platforms must implement &ldquo;Quality Floors&rdquo; that prevent automated filler from dominating public indices.</p>
+      </li>
+      <li>
+        <strong>Digital Heritage Protection</strong>
+        <p>Establishment of protected public archives&mdash;digital &ldquo;National Parks&rdquo;&mdash;where content is strictly human-verified and shielded from the recursive loops of AI-to-AI data generation.</p>
+      </li>
+    </ol>
+
+    <p class="fade-in">
+      These are not radical constraints, but necessary updates to our consumer protection laws. By implementing common-sense stewardship, we can ensure that the next generation of the web is defined by its utility and clarity, rather than its capacity for automated confusion.
+    </p>
+
+    <!-- ════════════ SECTION: CONCLUSION ════════════ -->
+    <div class="section-break fade-in">
+      <h2>Understanding the Tool, or Perish</h2>
+    </div>
+
+    <p class="fade-in">
+      The late Steve Jobs famously described the computer as &ldquo;a bicycle for the mind.&rdquo; An intellectual tool that, like a bicycle, amplifies human effort. But a bicycle requires a rider with direction. Without that, it is just inert metal.
+    </p>
+
+    <p class="fade-in">
+      AI, in its current trajectory, is the bicycle without a rider. It is an amplifier of noise, a generator of volume without substance. The great irony of the &ldquo;Slop Era&rdquo; is that we have built the most powerful information tool in human history and then filled it with garbage.
+    </p>
+
+    <p class="fade-in">
+      The path forward requires a fundamental shift in how we value digital content. We must move from a model that rewards volume to one that rewards veracity. The internet was built as a commons; it is our collective responsibility to ensure it does not become a digital wasteland.
+    </p>
+
+    <!-- End Mark -->
+    <div class="end-mark">&diams; &diams; &diams;</div>
+
+    <!-- Final CTA -->
+    <div class="article-cta fade-in">
+      <div class="article-cta__card">
+        <div class="article-cta__label">About the Author</div>
+        <h3>Youssef McCarthy</h3>
+        <p>This essay is a demonstration of AI-human collaborative strategy. I help businesses navigate the "Slop Era" by building authentic, high-fidelity digital experiences and agentic workflows.</p>
+        <a href="../index.html" class="cta-button">
+          <span>Explore My Full Portfolio</span>
+          <svg viewBox="0 0 24 24" width="20"><path fill="currentColor" d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+        </a>
+      </div>
+    </div>
+
+  </article>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer__brand">THE GARBAGE INTERNET</div>
+    <p class="footer__copy">&copy; 2026 The Editorial Collective &mdash; Digital Anthropology Essay</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Reading progress bar
+    window.addEventListener('scroll', () => {
+      const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const progress = (scrollTop / scrollHeight) * 100;
+      document.getElementById('progressBar').style.width = progress + '%';
+    });
+
+    // Scroll-triggered fade-in animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // --- Audio Narrative Engine (Hybrid Dual-Track) ---
+    const synth = window.speechSynthesis;
+    const hqAudio = document.getElementById('hqAudio');
+    const audioTrigger = document.getElementById('audioTrigger');
+    const audioPlayer = document.getElementById('audioPlayer');
+    const audioToggle = document.getElementById('audioToggle');
+    const audioRewind = document.getElementById('audioRewind');
+    const audioForward = document.getElementById('audioForward');
+    const voiceStatus = document.getElementById('voiceStatus');
+    const voiceSelect = document.getElementById('voiceSelect');
+    const voiceGroup = document.getElementById('voiceGroup');
+    const speedRange = document.getElementById('speedRange');
+    const speedVal = document.getElementById('speedVal');
+    const progressContainer = document.getElementById('audioProgressContainer');
+    const progressBar = document.getElementById('audioProgressBar');
+    const playIcon = document.getElementById('playIcon');
+    const pauseIcon = document.getElementById('pauseIcon');
+    const srcAI = document.getElementById('srcAI');
+    const srcHuman = document.getElementById('srcHuman');
+
+    let isPlaying = false;
+    let mode = 'tts'; // 'hq', 'tts', or 'human'
+    let textChunks = [];
+    let currentChunkIndex = 0;
+    let currentVoice = null;
+    let currentSpeed = 0.9;
+    let hasHuman = false;
+
+    // Source Paths
+    const AI_MP3 = 'images/narration.mp3';
+    const HUMAN_MP3 = 'images/human_narration.mp3';
+
+    // Detection Logic
+    function checkSources() {
+      const cacheBust = '?t=' + Date.now();
+      
+      // Check for Human MP3 with cache busting
+      fetch(HUMAN_MP3 + cacheBust).then(res => {
+        if (res.ok) {
+          hasHuman = true;
+          srcHuman.style.opacity = '1';
+          // Auto-switch to Human if found
+          switchToHuman();
+        } else {
+          srcHuman.style.opacity = '0.3';
+          checkAI();
+        }
+      }).catch(() => checkAI());
+    }
+
+    function checkAI() {
+      fetch(AI_MP3).then(res => {
+        if (res.ok) {
+          mode = 'hq';
+          hqAudio.src = AI_MP3;
+          voiceStatus.innerText = '✨ Neural AI HQ';
+          progressContainer.style.display = 'block';
+        } else {
+          mode = 'tts';
+          progressContainer.style.display = 'none';
+          populateVoices();
+        }
+      });
+    }
+
+    function switchToHuman() {
+      mode = 'human';
+      hqAudio.src = HUMAN_MP3;
+      srcHuman.classList.add('active');
+      srcAI.classList.remove('active');
+      voiceStatus.innerText = '✨ Gemini AI Voice';
+      voiceGroup.style.display = 'none';
+      progressContainer.style.display = 'block';
+    }
+
+    srcAI.addEventListener('click', () => {
+      stopReading();
+      mode = 'hq';
+      hqAudio.src = AI_MP3;
+      srcAI.classList.add('active');
+      srcHuman.classList.remove('active');
+      voiceStatus.innerText = '✨ Neural AI HQ';
+      voiceGroup.style.display = 'block';
+    });
+
+    srcHuman.addEventListener('click', () => {
+      if (hasHuman) {
+        stopReading();
+        switchToHuman();
+      } else {
+        alert("Looking for 'images/human_narration.mp3'...");
+        checkSources();
+      }
+    });
+
+    // HQ / Human Audio Progress
+    hqAudio.addEventListener('timeupdate', () => {
+      if (mode === 'hq' || mode === 'human') {
+        const percent = (hqAudio.currentTime / hqAudio.duration) * 100;
+        progressBar.style.width = percent + '%';
+      }
+    });
+
+    progressContainer.addEventListener('click', (e) => {
+      if (mode === 'hq' || mode === 'human') {
+        const rect = progressContainer.getBoundingClientRect();
+        const pos = (e.clientX - rect.left) / rect.width;
+        hqAudio.currentTime = pos * hqAudio.duration;
+      }
+    });
+
+    audioRewind.addEventListener('click', () => {
+      if (mode === 'hq' || mode === 'human') hqAudio.currentTime -= 10;
+    });
+
+    audioForward.addEventListener('click', () => {
+      if (mode === 'hq' || mode === 'human') hqAudio.currentTime += 10;
+    });
+
+    function populateVoices() {
+      const voices = synth.getVoices();
+      voiceSelect.innerHTML = '';
+      const sortedVoices = voices.filter(v => v.lang.startsWith('en')).sort((a,b) => b.name.includes('Neural') - a.name.includes('Neural'));
+      sortedVoices.forEach(v => {
+        const option = document.createElement('option');
+        const isAI = v.name.includes('Neural') || v.name.includes('Google');
+        option.textContent = `${isAI ? '✨ ' : ''}${v.name}`;
+        option.value = v.name;
+        if (!currentVoice && isAI) { currentVoice = v; updateVoiceStatus(v.name); }
+        voiceSelect.appendChild(option);
+      });
+    }
+
+    function updateVoiceStatus(name) {
+      if (mode === 'hq' || mode === 'human') return;
+      const isAI = name.includes('Neural') || name.includes('Online') || name.includes('Google');
+      voiceStatus.innerText = (isAI ? '✨ AI ' : '') + name.split(' ')[0];
+    }
+
+    voiceSelect.addEventListener('change', () => {
+      const voices = synth.getVoices();
+      currentVoice = voices.find(v => v.name === voiceSelect.value);
+      updateVoiceStatus(currentVoice.name);
+      if (isPlaying && mode === 'tts') { synth.cancel(); playNextChunk(); }
+    });
+
+    speedRange.addEventListener('input', () => {
+      currentSpeed = parseFloat(speedRange.value);
+      speedVal.innerText = currentSpeed + 'x';
+      if (mode === 'hq' || mode === 'human') hqAudio.playbackRate = currentSpeed;
+      if (isPlaying && mode === 'tts') { synth.cancel(); playNextChunk(); }
+    });
+
+    function prepareText() {
+      const chunks = [];
+      chunks.push({ text: document.querySelector('.hero__headline').innerText, type: 'headline' });
+      chunks.push({ text: document.querySelector('.hero__subtitle').innerText, type: 'subtitle' });
+      const content = document.querySelectorAll('.article p, .article h2, .article li, .pull-quote blockquote');
+      content.forEach(el => {
+        if (!el.closest('figcaption')) {
+          const sentences = el.innerText.match(/[^\.!\?]+[\.!\?]+/g) || [el.innerText];
+          sentences.forEach(s => chunks.push({ text: s.trim(), type: el.tagName.toLowerCase() }));
+        }
+      });
+      return chunks;
+    }
+
+    function playNextChunk() {
+      if (currentChunkIndex >= textChunks.length) { stopReading(); return; }
+      const chunk = textChunks[currentChunkIndex];
+      const utterance = new SpeechSynthesisUtterance(chunk.text);
+      const variance = (Math.random() * 0.12) - 0.06; 
+      utterance.rate = currentSpeed + (variance * 0.5);
+      utterance.pitch = (chunk.type === 'headline' || chunk.type === 'h2') ? 0.85 : (0.95 + variance);
+      if (currentVoice) utterance.voice = currentVoice;
+      utterance.onend = () => {
+        if (isPlaying) {
+          currentChunkIndex++;
+          setTimeout(playNextChunk, chunk.text.endsWith(',') ? 180 : 450); 
+        }
+      };
+      synth.speak(utterance);
+    }
+
+    function toggleReading() {
+      if (!isPlaying) {
+        if (mode === 'hq' || mode === 'human') {
+          hqAudio.playbackRate = currentSpeed;
+          hqAudio.play();
+        } else {
+          synth.cancel();
+          textChunks = prepareText();
+          currentChunkIndex = 0;
+          playNextChunk();
+        }
+        isPlaying = true;
+        audioPlayer.classList.add('active');
+        playIcon.style.display = 'none';
+        pauseIcon.style.display = 'block';
+      } else {
+        if (mode === 'hq' || mode === 'human') hqAudio.pause(); else synth.pause();
+        isPlaying = false;
+        playIcon.style.display = 'block';
+        pauseIcon.style.display = 'none';
+      }
+    }
+
+    function stopReading() {
+      if (mode === 'hq' || mode === 'human') { hqAudio.pause(); hqAudio.currentTime = 0; } else synth.cancel();
+      isPlaying = false;
+      currentChunkIndex = 0;
+      audioPlayer.classList.remove('active');
+      playIcon.style.display = 'block';
+      pauseIcon.style.display = 'none';
+    }
+
+    audioTrigger.addEventListener('click', toggleReading);
+    audioToggle.addEventListener('click', toggleReading);
+    
+    checkSources();
+    if (speechSynthesis.onvoiceschanged !== undefined) speechSynthesis.onvoiceschanged = populateVoices;
+    populateVoices();
+  </script>
+
+</body>
+</html>
