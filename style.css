@@ -366,44 +366,95 @@ section { padding: 100px 40px; max-width: 1200px; margin: 0 auto; }
 .edu-school { color: var(--accent-light); font-weight: 600; font-size: 0.95rem; }
 .edu-year { color: var(--text-muted); font-size: 0.85rem; }
 
-/* ── Contact Section ── */
-.contact-header { text-align: center; margin-bottom: 48px; }
-.engagement-paths { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 60px; }
-.special-offer-card {
-  margin: 0; padding: 40px;
-  background: var(--bg-card); border: 1px solid rgba(59,130,246,0.3);
-  border-radius: 24px; position: relative; overflow: hidden;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+/* ── Engagement Zone (Visually Distinct) ── */
+.engagement-zone {
+  padding: 0 !important; max-width: 100% !important; margin: 80px 0;
+  position: relative;
+}
+.zone-divider {
+  height: 1px; width: 100%;
+  background: linear-gradient(90deg, transparent 0%, var(--accent) 30%, var(--accent-2) 70%, transparent 100%);
+  opacity: 0.4;
+}
+.zone-inner { max-width: 1200px; margin: 0 auto; padding: 80px 40px; }
+.zone-header { text-align: center; margin-bottom: 56px; }
+.zone-label {
+  display: inline-block; font-size: 0.75rem; font-weight: 800;
+  letter-spacing: 3px; color: var(--accent-light); margin-bottom: 16px;
+}
+.zone-title {
+  font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 900; letter-spacing: -1px;
+}
+
+.engagement-paths { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.path-card {
+  padding: 44px; border-radius: 28px; position: relative; overflow: hidden;
+  background: var(--bg-card); border: 1px solid var(--border-glass);
   display: flex; flex-direction: column; align-items: flex-start;
   height: 100%; transition: var(--transition);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.08);
 }
-.special-offer-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(0,0,0,0.12); }
-.special-offer-card::before {
-  content: ''; position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(59,130,246,0.08) 0%, rgba(139,92,246,0.05) 100%);
-  pointer-events: none;
+.path-card:hover { transform: translateY(-6px); box-shadow: 0 25px 60px rgba(0,0,0,0.15); }
+.path-card::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
 }
-.full-time-card { border-color: rgba(16,185,129,0.3); }
-.full-time-card::before { background: linear-gradient(135deg, rgba(16,185,129,0.08) 0%, rgba(6,182,212,0.05) 100%); }
-.recruiter-badge { background: var(--success) !important; box-shadow: 0 4px 15px rgba(16,185,129,0.4) !important; }
-.recruiter-btn { background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important; box-shadow: 0 8px 25px rgba(16,185,129,0.3) !important; }
-.recruiter-btn:hover { box-shadow: 0 12px 30px rgba(16,185,129,0.5) !important; }
-.smb-btn { background: var(--gradient-3) !important; box-shadow: 0 8px 25px rgba(236,72,153,0.3) !important; }
-.smb-btn:hover { box-shadow: 0 12px 30px rgba(236,72,153,0.5) !important; }
+.path-icon { font-size: 2.8rem; margin-bottom: 20px; }
+
+/* Full-Time Card */
+.full-time-card { border-color: rgba(16,185,129,0.25); }
+.full-time-card::before { background: linear-gradient(160deg, rgba(16,185,129,0.06) 0%, transparent 60%); }
+.recruiter-badge { background: linear-gradient(135deg, #10b981, #059669) !important; box-shadow: 0 4px 20px rgba(16,185,129,0.4) !important; }
+
+/* Consulting Card */
+.consulting-card { border-color: rgba(139,92,246,0.25); }
+.consulting-card::before { background: linear-gradient(160deg, rgba(139,92,246,0.06) 0%, transparent 60%); }
+.smb-badge { background: var(--gradient-3) !important; box-shadow: 0 4px 20px rgba(236,72,153,0.4) !important; }
+
 .offer-content { display: flex; flex-direction: column; height: 100%; width: 100%; }
 .offer-badge {
   background: var(--accent); color: white;
-  padding: 5px 14px; border-radius: 100px;
-  font-size: 0.75rem; font-weight: 800; letter-spacing: 1.5px;
+  padding: 6px 16px; border-radius: 100px;
+  font-size: 0.7rem; font-weight: 800; letter-spacing: 1.5px;
   margin-bottom: 20px; box-shadow: 0 4px 15px var(--accent-glow);
 }
-.offer-content h3 { font-size: 1.8rem; font-weight: 900; margin-bottom: 16px; letter-spacing: -0.5px; }
-.offer-content p { font-size: 1.05rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 32px; max-width: 650px; }
-.offer-features { display: flex; flex-wrap: wrap; gap: 24px; margin-bottom: 32px; }
-.offer-features span { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 0.95rem; }
-.offer-features i { color: var(--success); font-size: 1.2rem; }
-.cta-stack { display: flex; flex-direction: column; gap: 12px; }
-.cta-subtext { font-size: 0.8rem; color: var(--text-muted); padding-left: 4px; font-weight: 500; }
+.offer-content h3 { font-size: 1.6rem; font-weight: 900; margin-bottom: 14px; letter-spacing: -0.5px; }
+.offer-content p { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 28px; }
+.offer-features { display: flex; flex-direction: column; gap: 14px; margin-bottom: 32px; }
+.offer-features span { display: flex; align-items: flex-start; gap: 10px; font-weight: 600; font-size: 0.9rem; line-height: 1.5; }
+.offer-features i { color: var(--success); font-size: 1rem; margin-top: 2px; }
+
+/* ── Mega CTA Buttons (Animated Glow) ── */
+.cta-stack { margin-top: auto; display: flex; flex-direction: column; gap: 12px; width: 100%; }
+.mega-cta {
+  position: relative; display: flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%; padding: 18px 28px; border-radius: 16px;
+  font-size: 1rem; font-weight: 700; color: white; text-decoration: none;
+  cursor: pointer; border: none; font-family: inherit;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden; z-index: 1;
+}
+.mega-cta .cta-pulse {
+  position: absolute; inset: 0; border-radius: 16px; z-index: -1;
+  animation: ctaGlow 2.5s ease-in-out infinite;
+}
+.mega-cta:hover { transform: translateY(-2px); filter: brightness(1.1); }
+
+.recruiter-cta { background: linear-gradient(135deg, #10b981 0%, #059669 100%); box-shadow: 0 8px 30px rgba(16,185,129,0.35); }
+.recruiter-cta .cta-pulse { box-shadow: 0 0 30px rgba(16,185,129,0.5), 0 0 60px rgba(16,185,129,0.2); }
+.recruiter-cta:hover { box-shadow: 0 12px 40px rgba(16,185,129,0.5); }
+
+.smb-cta { background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%); box-shadow: 0 8px 30px rgba(139,92,246,0.35); }
+.smb-cta .cta-pulse { box-shadow: 0 0 30px rgba(139,92,246,0.5), 0 0 60px rgba(236,72,153,0.2); }
+.smb-cta:hover { box-shadow: 0 12px 40px rgba(139,92,246,0.5); }
+
+@keyframes ctaGlow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.cta-subtext { font-size: 0.8rem; color: var(--text-muted); text-align: center; font-weight: 500; }
+
+/* ── Contact Section ── */
 .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
 .contact-info { display: flex; flex-direction: column; gap: 20px; }
 .contact-item {
@@ -606,15 +657,17 @@ section { padding: 100px 40px; max-width: 1200px; margin: 0 auto; }
   .hero-actions { gap: 10px; }
   .hero-actions .btn { padding: 12px 20px; font-size: 0.85rem; width: 100%; justify-content: center; }
 
-  /* Contact Section mobile */
-  .contact-header { margin-bottom: 24px; }
+  /* Engagement Zone mobile */
+  .zone-inner { padding: 48px 16px; }
+  .zone-label { font-size: 0.65rem; letter-spacing: 2px; }
+  .zone-title { font-size: 1.5rem; }
   .engagement-paths { grid-template-columns: 1fr; gap: 20px; }
-  .special-offer-card { padding: 30px 20px; border-radius: 20px; margin-bottom: 0; }
-  .offer-content h3 { font-size: 1.4rem; }
-  .offer-content p { font-size: 0.9rem; margin-bottom: 24px; }
-  .offer-features { gap: 12px; }
-  .offer-features span { font-size: 0.85rem; }
-  .offer-btn { width: 100%; display: flex; justify-content: center; }
+  .path-card { padding: 28px 20px; border-radius: 20px; }
+  .path-icon { font-size: 2.2rem; margin-bottom: 14px; }
+  .offer-content h3 { font-size: 1.3rem; }
+  .offer-content p { font-size: 0.88rem; margin-bottom: 20px; }
+  .offer-features span { font-size: 0.82rem; }
+  .mega-cta { padding: 16px 20px; font-size: 0.9rem; border-radius: 14px; }
 
   /* Section headers */
   .section-header { margin-bottom: 36px; }
