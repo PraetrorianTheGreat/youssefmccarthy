@@ -402,6 +402,59 @@ body {
   transform: translateX(5px);
 }
 
+/* ── Sticky CTA ───────────────────────────────── */
+.sticky-cta {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(10, 14, 26, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(197, 168, 124, 0.3);
+  padding: 10px 20px 10px 10px;
+  border-radius: 50px;
+  text-decoration: none;
+  color: var(--white);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.85rem;
+  z-index: 2000;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: slideInUp 0.8s ease-out;
+}
+
+.sticky-cta:hover {
+  transform: translateY(-5px);
+  border-color: var(--accent);
+  box-shadow: 0 15px 40px rgba(197, 168, 124, 0.2);
+}
+
+.sticky-cta__icon {
+  width: 32px;
+  height: 32px;
+  background: var(--accent);
+  color: var(--navy);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 0.75rem;
+}
+
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+  .sticky-cta__text { display: none; }
+  .sticky-cta { padding: 10px; right: 20px; bottom: 20px; }
+}
+
 /* ── Hero Image ───────────────────────────────── */
 .hero-image {
   max-width: var(--wide-max);
