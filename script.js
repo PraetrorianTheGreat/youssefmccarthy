@@ -76,11 +76,13 @@ const UISounds = (() => {
   };
 })();
 
-// ── Google Analytics Event Tracking ──
+// ── Google Analytics / GTM Event Tracking ──
 const trackEvent = (name, params = {}) => {
-  if (typeof gtag === 'function') {
-    gtag('event', name, params);
-  }
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: name,
+    ...params
+  });
 };
 
 // ── Page Loader ──
