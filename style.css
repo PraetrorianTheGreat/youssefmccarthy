@@ -368,18 +368,27 @@ section { padding: 100px 40px; max-width: 1200px; margin: 0 auto; }
 
 /* ── Contact Section ── */
 .contact-header { text-align: center; margin-bottom: 48px; }
+.engagement-paths { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 60px; }
 .special-offer-card {
-  max-width: 850px; margin: 0 auto 60px; padding: 40px;
+  margin: 0; padding: 40px;
   background: var(--bg-card); border: 1px solid rgba(59,130,246,0.3);
   border-radius: 24px; position: relative; overflow: hidden;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.08);
   display: flex; flex-direction: column; align-items: flex-start;
+  height: 100%; transition: var(--transition);
 }
+.special-offer-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(0,0,0,0.12); }
 .special-offer-card::before {
   content: ''; position: absolute; inset: 0;
   background: linear-gradient(135deg, rgba(59,130,246,0.08) 0%, rgba(139,92,246,0.05) 100%);
   pointer-events: none;
 }
+.full-time-card { border-color: rgba(16,185,129,0.3); }
+.full-time-card::before { background: linear-gradient(135deg, rgba(16,185,129,0.08) 0%, rgba(6,182,212,0.05) 100%); }
+.recruiter-badge { background: var(--success) !important; box-shadow: 0 4px 15px rgba(16,185,129,0.4) !important; }
+.recruiter-btn { background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important; box-shadow: 0 8px 25px rgba(16,185,129,0.3) !important; }
+.recruiter-btn:hover { box-shadow: 0 12px 30px rgba(16,185,129,0.5) !important; }
+.offer-content { display: flex; flex-direction: column; height: 100%; width: 100%; }
 .offer-badge {
   background: var(--accent); color: white;
   padding: 5px 14px; border-radius: 100px;
@@ -595,7 +604,8 @@ section { padding: 100px 40px; max-width: 1200px; margin: 0 auto; }
 
   /* Contact Section mobile */
   .contact-header { margin-bottom: 24px; }
-  .special-offer-card { padding: 30px 20px; border-radius: 20px; margin-bottom: 40px; }
+  .engagement-paths { grid-template-columns: 1fr; gap: 20px; }
+  .special-offer-card { padding: 30px 20px; border-radius: 20px; margin-bottom: 0; }
   .offer-content h3 { font-size: 1.4rem; }
   .offer-content p { font-size: 0.9rem; margin-bottom: 24px; }
   .offer-features { gap: 12px; }
