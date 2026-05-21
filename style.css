@@ -282,13 +282,25 @@ section { padding: 100px 40px; max-width: 1200px; margin: 0 auto; }
 }
 
 /* ── Projects Section ── */
-.projects-grid { display: grid; grid-template-columns: 1fr; gap: 32px; }
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  align-items: start;
+}
 .project-card {
-  padding: 40px; border-radius: var(--radius);
+  padding: 28px; border-radius: var(--radius);
   background: var(--bg-card); border: 1px solid var(--border-glass);
   backdrop-filter: blur(10px);
   transition: var(--transition); position: relative; overflow: hidden;
   cursor: pointer;
+  /* Make tiles equal height within a row */
+  display: flex;
+  flex-direction: column;
+}
+/* Card 5 spans both columns — featured anchor */
+.projects-grid .project-card:last-child {
+  grid-column: 1 / -1;
 }
 .project-card::before {
   content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
@@ -770,8 +782,12 @@ section { padding: 100px 40px; max-width: 1200px; margin: 0 auto; }
   .timeline-toggle { font-size: 0.8rem; }
 
   /* Projects */
-  .projects-grid { gap: 20px; }
-  .project-card { padding: 24px; }
+  .projects-grid { gap: 16px; }
+  .project-card { padding: 20px; }
+  .project-cover {
+    width: calc(100% + 40px);
+    margin: -20px -20px 16px -20px;
+  }
   .project-badge { font-size: 0.65rem; margin-bottom: 12px; }
   .project-title { font-size: 1.15rem; }
   .project-company { font-size: 0.8rem; }
@@ -922,3 +938,398 @@ body.light-theme .service-dropdown { background-color: rgba(255,255,255,0.8); bo
 body.light-theme .service-dropdown option { background: #f8fafc; color: #0f172a; }
 body.light-theme .feature-item { background: rgba(0,0,0,0.03); border-color: rgba(0,0,0,0.06); }
 body.light-theme .path-card { background: rgba(255,255,255,0.9); }
+
+/* --- TRUST BANNER --- */
+.ds-trust-banner {
+    width: 100%;
+    padding: 20px 0;
+    background: rgba(0, 0, 0, 0.03); /* Subtle blend with your existing bg */
+    border-top: 1px solid rgba(0,0,0,0.05);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    text-align: center;
+    margin-bottom: 40px;
+}
+.ds-trust-title {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #666; /* Adjust to match your existing text colors */
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+.ds-trust-badges {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    font-size: 0.95rem;
+    color: #333;
+    font-weight: 500;
+}
+.ds-dot {
+    color: #aaa;
+}
+
+/* --- FLOATING CTA --- */
+.ds-floating-cta {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #0056b3; /* Change this hex to match your brand's primary color */
+    color: #ffffff;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 1rem;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 15px rgba(0, 86, 179, 0.3);
+    z-index: 9999;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+.ds-floating-cta.ds-visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+.ds-floating-cta:hover {
+    background-color: #004494;
+    box-shadow: 0 6px 20px rgba(0, 86, 179, 0.4);
+    transform: translateY(-2px);
+    color: #ffffff;
+}
+
+/* ═══════════════════════════════════════════════════
+   PDF UPGRADE: Ghost Button (SMB Hero CTA)
+═══════════════════════════════════════════════════ */
+.btn-ghost {
+  background: transparent;
+  color: var(--accent-light);
+  border: 2px solid var(--accent);
+  padding: 13px 28px;
+}
+.btn-ghost:hover {
+  background: rgba(59, 130, 246, 0.1);
+  border-color: var(--accent-light);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px var(--accent-glow);
+}
+
+/* ═══════════════════════════════════════════════════
+   PDF UPGRADE: Consulting & Advisory Section
+═══════════════════════════════════════════════════ */
+.consulting-section { position: relative; }
+
+/* 4-Column deliverables grid */
+.consulting-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  margin-bottom: 60px;
+}
+
+.consulting-card-item {
+  padding: 32px 28px;
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  backdrop-filter: blur(10px);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+.consulting-card-item::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--gradient-2);
+  opacity: 0;
+  transition: var(--transition);
+}
+.consulting-card-item:hover::before { opacity: 1; }
+.consulting-card-item:hover {
+  border-color: rgba(6, 182, 212, 0.35);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(6, 182, 212, 0.1);
+}
+
+.consulting-card-icon {
+  font-size: 2.2rem;
+  margin-bottom: 14px;
+}
+.consulting-card-label {
+  font-size: 1.05rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+  letter-spacing: -0.3px;
+}
+.consulting-card-desc {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  margin-bottom: 16px;
+}
+.consulting-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.consulting-card-tags span {
+  padding: 3px 10px;
+  border-radius: 5px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.25);
+  color: var(--accent-3);
+}
+
+/* Flat-fee CTA Block */
+.consulting-cta-block {
+  margin-top: 16px;
+}
+.consulting-cta-inner {
+  padding: 56px 60px;
+  border-radius: 28px;
+  background: var(--bg-card);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+.consulting-cta-inner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(59, 130, 246, 0.08) 0%, transparent 65%);
+  pointer-events: none;
+}
+.consulting-cta-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent-3);
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  padding: 6px 18px;
+  border-radius: 100px;
+  margin-bottom: 20px;
+}
+.consulting-cta-headline {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 900;
+  letter-spacing: -1px;
+  margin-bottom: 14px;
+  background: var(--gradient-1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.consulting-cta-sub {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  max-width: 580px;
+  margin: 0 auto 32px;
+  line-height: 1.8;
+}
+.consulting-cta-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.consulting-cta-note {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* GitHub Callout (inside consulting CTA block) */
+.github-callout {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 28px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-glass);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.github-callout-icon { font-size: 1.1rem; }
+.github-callout a {
+  color: var(--accent-light);
+  font-weight: 700;
+  text-decoration: none;
+  transition: var(--transition);
+}
+.github-callout a:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+/* GitHub Callout (inside AI Skills card) */
+.github-skill-callout {
+  margin-top: 18px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: rgba(59, 130, 246, 0.05);
+  border: 1px solid rgba(59, 130, 246, 0.15);
+  font-size: 0.78rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+}
+.github-skill-callout a {
+  color: var(--accent-light);
+  font-weight: 600;
+  text-decoration: none;
+  transition: var(--transition);
+}
+.github-skill-callout a:hover { color: var(--accent); text-decoration: underline; }
+
+/* Social Proof above form submit */
+.social-proof-cta {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 10px 16px;
+  background: rgba(16, 185, 129, 0.07);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: 8px;
+  line-height: 1.6;
+}
+.social-proof-cta strong { color: var(--success); }
+
+/* ── Consulting responsive ── */
+@media (max-width: 900px) {
+  .consulting-grid { grid-template-columns: repeat(2, 1fr); }
+  .consulting-cta-inner { padding: 40px 32px; }
+}
+@media (max-width: 600px) {
+  .consulting-grid { grid-template-columns: 1fr; }
+  .consulting-cta-inner { padding: 32px 20px; }
+  .consulting-cta-headline { font-size: 1.4rem; }
+  .github-callout { flex-direction: column; text-align: center; }
+}
+
+/* ════════════════════════════════════════════════
+   VISUALS UPGRADE: Experience Company Logos
+════════════════════════════════════════════════ */
+.timeline-company-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 0 16px;
+}
+
+/* White logo badge (LinkedIn-style) */
+.company-logo-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
+.company-logo {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  display: block;
+}
+
+.company-logo-fallback {
+  font-size: 1.4rem;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Stacked name + location */
+.company-logo-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.company-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.2px;
+}
+
+.company-chip-location {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+
+/* ════════════════════════════════════════════════
+   VISUALS UPGRADE: Project Cover Images
+════════════════════════════════════════════════ */
+.project-cover {
+  position: relative;
+  width: calc(100% + 56px);
+  margin: -28px -28px 20px -28px;
+  height: 280px;
+  overflow: hidden;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+/* Tablet: stack to 1 column */
+@media (max-width: 1024px) {
+  .projects-grid { grid-template-columns: 1fr; }
+  .projects-grid .project-card:last-child { grid-column: auto; }
+  .project-cover { height: 240px; }
+}
+
+.project-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  display: block;
+}
+
+.project-card:hover .project-cover img {
+  transform: scale(1.05);
+}
+
+.project-cover-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 14, 26, 0) 0%,
+    rgba(10, 14, 26, 0.3) 60%,
+    rgba(10, 14, 26, 0.85) 100%
+  );
+}
+
+/* On mobile, slightly reduce cover height */
+@media (max-width: 600px) {
+  .project-cover { height: 180px; }
+  .company-chip { font-size: 0.75rem; padding: 4px 10px; }
+}
