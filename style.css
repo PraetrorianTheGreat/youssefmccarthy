@@ -974,8 +974,8 @@ body.light-theme .path-card { background: rgba(255,255,255,0.9); }
 /* --- FLOATING CTA --- */
 .ds-floating-cta {
     position: fixed;
-    bottom: 30px;
-    right: 30px;
+    bottom: 100px;
+    right: 32px;
     background-color: #0056b3; /* Change this hex to match your brand's primary color */
     color: #ffffff;
     padding: 12px 24px;
