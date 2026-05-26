@@ -151,6 +151,11 @@ section { padding: 100px 40px; max-width: 1200px; margin: 0 auto; }
   box-shadow: 0 4px 15px var(--accent-glow);
 }
 .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px var(--accent-glow); }
+.btn-secondary {
+  background: transparent; color: var(--accent-light);
+  border: 2px solid var(--accent);
+}
+.btn-secondary:hover { background: rgba(59,130,246,0.1); border-color: var(--accent-light); transform: translateY(-2px); box-shadow: 0 6px 20px var(--accent-glow); }
 .btn-outline {
   background: transparent; color: var(--text-primary);
   border: 1px solid var(--border-glass);
@@ -957,7 +962,7 @@ body.light-theme .path-card { background: rgba(255,255,255,0.9); }
 /* --- FLOATING CTA --- */
 .ds-floating-cta {
     position: fixed;
-    bottom: 100px;
+    bottom: 32px;
     right: 32px;
     background-color: #0056b3; /* Change this hex to match your brand's primary color */
     color: #ffffff;
