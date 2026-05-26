@@ -17,7 +17,7 @@
   <meta name="description" content="Youssef McCarthy — 14+ years of proven digital analytics, agentic AI strategy, and CRO leadership. Available for Director-level roles and enterprise SMB consulting. Multi-model AI orchestration, Adobe & GA4 expert, and experimentation specialist based in Massachusetts.">
   <meta name="keywords" content="Digital Analytics AI Strategist, Agentic AI Workflow Consultant, CRO Experimentation Lead, Enterprise Data Analytics Boston, Adobe Target GA4 Architect, Multi-Model AI Orchestration, Remote Digital Analytics Director">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%230a0e1a' width='100' height='100' rx='20'/%3E%3Ctext y='72' x='10' font-size='60' font-family='Arial' font-weight='900' fill='%233b82f6'%3EYM%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=2">
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
@@ -70,10 +70,13 @@
           <div class="stat"><div class="stat-number" data-count="14">0</div><div class="stat-label">Years Experience</div></div>
           <div class="stat"><div class="stat-number" data-count="5" data-suffix="+">0</div><div class="stat-label">Major Projects</div></div>
         </div>
-        <div class="hero-actions">
-          <a href="#contact-form" class="btn btn-primary" id="hero-w2-btn">&#128188; Let's Talk (W2)</a>
-          <a href="#consulting" class="btn btn-ghost" id="hero-smb-btn">&#129309; SMB AI Consulting</a>
-          <a href="Youssef McCarthy Resume.pdf" download class="btn btn-outline">&#128196; Download CV</a>
+        <div class="cta-container">
+          <a href="Youssef McCarthy Resume.pdf" id="download_resume_btn" class="btn-primary" download>
+              Download Resume
+          </a>
+          <a href="#contact-form" id="contact_me_btn" class="btn-secondary">
+              Let's Talk
+          </a>
         </div>
       </div>
       <div class="hero-image">
@@ -863,5 +866,52 @@
       }
   });
   </script>
+<!-- TEAM RECOMMENDATIONS: GA4 Tracking -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // 1. Track Resume Downloads
+    const resumeBtn = document.getElementById("download_resume_btn");
+    if(resumeBtn) {
+        resumeBtn.addEventListener("click", function() {
+            if(typeof gtag === 'function') {
+                gtag('event', 'file_download', {
+                    'file_name': 'youssef_mccarthy_resume.pdf',
+                    'file_extension': 'pdf',
+                    'event_category': 'engagement',
+                    'event_label': 'Resume Download'
+                });
+            }
+        });
+    }
+
+    // 2. Track Contact Clicks
+    const contactBtn = document.getElementById("contact_me_btn");
+    if(contactBtn) {
+        contactBtn.addEventListener("click", function() {
+            if(typeof gtag === 'function') {
+                gtag('event', 'generate_lead', {
+                    'event_category': 'conversion',
+                    'event_label': 'Contact Button Clicked'
+                });
+            }
+        });
+    }
+
+    // 3. Track Project Card Interactions
+    const projectCards = document.querySelectorAll('.project-card');
+    projectCards.forEach(card => {
+        card.addEventListener('click', function() {
+            let titleEl = this.querySelector('.project-title');
+            let projectName = titleEl ? titleEl.innerText : 'Project';
+            if(typeof gtag === 'function') {
+                gtag('event', 'select_content', {
+                    'content_type': 'project',
+                    'item_id': projectName
+                });
+            }
+        });
+    });
+});
+</script>
 </body>
 </html>
