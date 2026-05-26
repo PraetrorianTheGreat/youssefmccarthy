@@ -370,16 +370,6 @@ function copyText(text, btn) {
   });
 }
 
-// ── Back to Top ──
-const backToTop = document.getElementById('backToTop');
-window.addEventListener('scroll', () => {
-  backToTop.classList.toggle('visible', window.scrollY > 500);
-});
-backToTop.addEventListener('click', () => {
-  UISounds.ascend();
-  trackEvent('back_to_top');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
 
 // ── Smooth scroll for nav links ──
 document.querySelectorAll('a[href^="#"]').forEach(link => {
