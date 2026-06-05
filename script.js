@@ -389,3 +389,76 @@ document.querySelectorAll('a[download]').forEach(link => {
     trackEvent('cv_download', { file_name: link.getAttribute('href') });
   });
 });
+
+// ── Reading Progress Bar ──
+window.addEventListener('scroll', () => {
+  const progressBar = document.getElementById('readingProgressBar');
+  if (progressBar) {
+    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const progress = (scrollTop / scrollHeight) * 100;
+    progressBar.style.width = progress + '%';
+  }
+});
+
+// ── AI Chat Assistant Logic ──
+const aiToggleBtn = document.getElementById('aiToggleBtn');
+const aiChatWindow = document.getElementById('aiChatWindow');
+const aiCloseBtn = document.getElementById('aiCloseBtn');
+const aiChatBody = document.getElementById('aiChatBody');
+const aiPrompts = document.querySelectorAll('.ai-prompt-btn');
+
+if (aiToggleBtn && aiChatWindow) {
+  // Toggle Window
+  aiToggleBtn.addEventListener('click', () => {
+    aiChatWindow.classList.toggle('open');
+    UISounds.click();
+    trackEvent('ai_widget_toggle', { action: aiChatWindow.classList.contains('open') ? 'open' : 'close' });
+  });
+
+  aiCloseBtn.addEventListener('click', () => {
+    aiChatWindow.classList.remove('open');
+    UISounds.collapse();
+  });
+
+  // Pre-written Responses Database
+  const aiResponses = {
+    'ga4': "Youssef is highly proficient in GA4. He has conducted enterprise-level audits, managed event taxonomy migrations from Universal Analytics, and set up advanced attribution modeling. He's also certified by Google in Analytics and Performance Ads.",
+    'cro': "When it comes to CRO, Youssef takes a hypothesis-driven approach. He has led rigorous A/B and multivariate testing lifecycles using Adobe Target and Google Optimize, specifically focusing on friction-point audits and journey optimization.",
+    'ai': "Youssef is currently building agentic workflows using frontier models like Claude, Gemini, and GPT. He automates research, reporting, and lead qualification pipelines, essentially combining his deep analytics background with state-of-the-art AI orchestration."
+  };
+
+  // Handle Prompt Clicks
+  aiPrompts.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const query = e.target.dataset.query;
+      const text = e.target.innerText;
+      
+      // Hide prompts after first interaction to keep it clean
+      document.querySelector('.ai-chat-prompts').style.display = 'none';
+
+      // 1. Add User Message
+      const userMsg = document.createElement('div');
+      userMsg.className = 'ai-message ai-user';
+      userMsg.innerText = text;
+      aiChatBody.appendChild(userMsg);
+      UISounds.click();
+
+      // Scroll to bottom
+      aiChatBody.scrollTop = aiChatBody.scrollHeight;
+
+      // 2. Simulate AI Typing delay, then add Response
+      setTimeout(() => {
+        const aiMsg = document.createElement('div');
+        aiMsg.className = 'ai-message ai-system';
+        aiMsg.innerText = aiResponses[query] || "I don't have information on that specific topic, but I recommend checking the Experience section or downloading his resume!";
+        aiChatBody.appendChild(aiMsg);
+        
+        UISounds.chime();
+        aiChatBody.scrollTop = aiChatBody.scrollHeight;
+        
+        trackEvent('ai_prompt_click', { query: query });
+      }, 800); // 800ms "thinking" delay
+    });
+  });
+}
