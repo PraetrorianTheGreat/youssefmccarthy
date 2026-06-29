@@ -36,7 +36,7 @@
   }
   </script>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%230a0e1a' width='100' height='100' rx='20'/%3E%3Ctext y='72' x='10' font-size='60' font-family='Arial' font-weight='900' fill='%233b82f6'%3EYM%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="style.css?v=4">
+  <link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
@@ -75,6 +75,7 @@
       <li><a href="#about" class="active">About</a></li>
       <li><a href="#experience">Experience</a></li>
       <li><a href="#projects">Projects</a></li>
+      <li><a href="analytics.html">Live Dashboard</a></li>
       <li><a href="#editorials">Editorials</a></li>
       <li><a href="#consulting">Consulting</a></li>
       <li><a href="#skills">Skills</a></li>
@@ -465,11 +466,134 @@
               </ul>
             </div>
             <div class="project-result">🏆 Scaled Platform Monetization & Traffic Growth</div>
+          </div>
           <div class="project-tags">
             <span class="project-tag">YouTube</span><span class="project-tag">Monetization</span>
             <span class="project-tag">Content Strategy</span><span class="project-tag">Google</span>
           </div>
           <button class="project-toggle">Expand Case Study →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Live Analytics Hub Teaser Section -->
+    <section id="dashboard-teaser" class="dashboard-teaser-section">
+      <div class="section-header reveal">
+        <div class="section-label">Interactive Experience</div>
+        <h2 class="section-title">Live Marketing Intelligence Showcase</h2>
+        <p class="section-subtitle">Explore a real-time production analytics model tracking Google's GA4 e-commerce stream, conversion pathways, and landing page ROIs.</p>
+      </div>
+
+      <div class="dashboard-teaser-container reveal">
+        <!-- Left Column: Page Navigator Tabs -->
+        <div class="teaser-navigator">
+          <div class="teaser-nav-header">
+            <h4>Select Dashboard Page</h4>
+            <p>Click below to preview live telemetry diagnostics</p>
+          </div>
+          <div class="teaser-nav-tabs">
+            <button class="teaser-tab active" data-page="1">
+              <span class="tab-num">01</span>
+              <span class="tab-name">Google Analytics Overview</span>
+            </button>
+            <button class="teaser-tab" data-page="2">
+              <span class="tab-num">02</span>
+              <span class="tab-name">Website Demographics</span>
+            </button>
+            <button class="teaser-tab" data-page="3">
+              <span class="tab-num">03</span>
+              <span class="tab-name">Geography</span>
+            </button>
+            <button class="teaser-tab" data-page="4">
+              <span class="tab-num">04</span>
+              <span class="tab-name">World Map</span>
+            </button>
+            <button class="teaser-tab" data-page="5">
+              <span class="tab-num">05</span>
+              <span class="tab-name">Cart Process & Revenue</span>
+            </button>
+            <button class="teaser-tab" data-page="6">
+              <span class="tab-num">06</span>
+              <span class="tab-name">Revenue Sources</span>
+            </button>
+            <button class="teaser-tab" data-page="7">
+              <span class="tab-num">07</span>
+              <span class="tab-name">Google Ads Keyword Analysis</span>
+            </button>
+            <button class="teaser-tab" data-page="8">
+              <span class="tab-num">08</span>
+              <span class="tab-name">Item Analysis</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Right Column: Interactive Teaser Terminal -->
+        <div class="teaser-terminal">
+          <!-- Glass Header Bar -->
+          <div class="terminal-header">
+            <div class="terminal-status">
+              <span class="live-dot-pulse"></span>
+              <span class="status-text">LIVE GA4 STREAM TELEMETRY</span>
+            </div>
+            <div class="terminal-metric-pill" id="teaserMetricPill">
+              Telemetry Status: Active
+            </div>
+          </div>
+
+          <!-- Display Body (Content Cross-fades here) -->
+          <div class="terminal-body" id="teaserTerminalBody">
+            <div class="terminal-content-wrap">
+              <div class="terminal-main-row">
+                <div class="terminal-info">
+                  <h3 class="terminal-page-title" id="teaserPageTitle">Page 1: Google Analytics Overview</h3>
+                  <p class="terminal-page-desc" id="teaserPageDesc">The primary control panel of the dashboard. It delivers a high-level, consolidated diagnostic pulse of total user traffic, engagement rate, transaction velocity, and overall revenue yield at a glance.</p>
+                  
+                  <div class="terminal-kpis" id="teaserKPIs">
+                    <div class="kpi-pill"><strong>Users:</strong> <span class="kpi-num">89,615</span></div>
+                    <div class="kpi-pill"><strong>Sessions:</strong> <span class="kpi-num">105,601</span></div>
+                    <div class="kpi-pill"><strong>Conv. Rate:</strong> <span class="kpi-num">1.03%</span></div>
+                    <div class="kpi-pill"><strong>Revenue:</strong> <span class="kpi-num">$186,587</span></div>
+                  </div>
+                  
+                  <div class="terminal-takeaway-box">
+                    <div class="takeaway-label">Strategic CRO Diagnostic:</div>
+                    <p class="terminal-takeaway" id="teaserTakeaway">Uncovers critical traffic drops and transactional deviations. Despite solid traffic, the low conversion rate (1.03%) highlights a major checkout abandonment bottleneck that requires immediate form-field optimization.</p>
+                  </div>
+                </div>
+
+                <div class="terminal-visualization" id="teaserVisualization">
+                  <!-- Custom CSS-Rendered Mini Visualization Specific to Active Tab -->
+                  <div class="mini-chart chart-container">
+                    <svg viewBox="0 0 300 150">
+                      <defs>
+                        <linearGradient id="chartGlow1" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.35"/>
+                          <stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/>
+                        </linearGradient>
+                      </defs>
+                      <line x1="0" y1="30" x2="300" y2="30" stroke="rgba(255,255,255,0.04)" />
+                      <line x1="0" y1="75" x2="300" y2="75" stroke="rgba(255,255,255,0.04)" />
+                      <line x1="0" y1="120" x2="300" y2="120" stroke="rgba(255,255,255,0.04)" />
+                      <path d="M 0,130 Q 50,40 100,90 T 200,50 T 300,30 L 300,150 L 0,150 Z" fill="url(#chartGlow1)" />
+                      <path d="M 0,130 Q 50,40 100,90 T 200,50 T 300,30" fill="none" stroke="#3b82f6" stroke-width="3.5" stroke-linecap="round" />
+                      <circle cx="300" cy="30" r="5" fill="#3b82f6" />
+                      <circle cx="300" cy="30" r="10" fill="none" stroke="#3b82f6" stroke-width="2" style="animation: pulseGlow 1.5s infinite ease-out;" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Glass Blur Teaser Mask with Launch Button -->
+          <div class="terminal-blur-mask">
+            <div class="mask-content">
+              <p>Fully simulated Looker Studio interactive view. Engage with the live multi-channel data stream.</p>
+              <a href="analytics.html" class="btn btn-primary teaser-cta-btn" id="launchDashboardBtn">
+                Launch Full Interactive Hub &rarr;
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -542,10 +666,12 @@
         </div>
 
         <!-- Deliverable 4 -->
-        <div class="consulting-card-item">
+        <div class="consulting-card-item" onclick="location.href='analytics.html'" style="cursor:pointer">
           <div class="consulting-card-icon">&#128202;</div>
-          <div class="consulting-card-label">Executive Dashboard Setup</div>
-          <p class="consulting-card-desc">Looker Studio or Power BI dashboard connected to your live data sources. Includes KPI scorecards, acquisition matrix, and conversion funnel visualization.</p>
+          <div class="consulting-card-label" style="display:flex; justify-content:space-between; align-items:center;">
+            Executive Dashboard Setup <span style="font-size:0.75rem; font-weight:700; color:var(--accent-light);">Demo &rarr;</span>
+          </div>
+          <p class="consulting-card-desc">Looker Studio or Power BI dashboard connected to your live data sources. Includes KPI scorecards, acquisition matrix, and conversion funnel visualization. Click to view a live interactive showcase.</p>
           <div class="consulting-card-tags">
             <span>Looker Studio</span><span>Power BI</span><span>Data Viz</span>
           </div>
@@ -643,6 +769,8 @@
           <div class="edu-year">Graduated May 2017</div>
         </div>
       </div>
+    </section>
+
     <!-- Testimonials -->
     <section id="testimonials">
       <div class="section-header reveal">
@@ -964,6 +1092,6 @@ document.addEventListener("DOMContentLoaded", function() {
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=5"></script>
 </body>
 </html>

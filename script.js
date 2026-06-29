@@ -194,10 +194,22 @@ window.addEventListener('scroll', () => {
     const top = section.offsetTop - 150;
     if (window.scrollY >= top) current = section.getAttribute('id');
   });
+
+  // Find Live Dashboard nav link
+  const liveDashboardLink = Array.from(document.querySelectorAll('.nav-links a')).find(link => link.getAttribute('href') === 'analytics.html');
+
   navLinks.forEach(link => {
     link.classList.remove('active');
     if (link.getAttribute('href') === '#' + current) link.classList.add('active');
   });
+
+  if (liveDashboardLink) {
+    if (current === 'dashboard-teaser') {
+      liveDashboardLink.classList.add('live-active');
+    } else {
+      liveDashboardLink.classList.remove('live-active');
+    }
+  }
 });
 
 // Mobile menu
@@ -462,3 +474,350 @@ if (aiToggleBtn && aiChatWindow) {
     });
   });
 }
+
+// ── Live Marketing Intelligence Showcase Teaser Module ──
+(function() {
+  const tabs = document.querySelectorAll('.teaser-tab');
+  const metricPill = document.getElementById('teaserMetricPill');
+  const terminalBody = document.getElementById('teaserTerminalBody');
+  const pageTitle = document.getElementById('teaserPageTitle');
+  const pageDesc = document.getElementById('teaserPageDesc');
+  const kpisContainer = document.getElementById('teaserKPIs');
+  const takeawayText = document.getElementById('teaserTakeaway');
+  const visualizationContainer = document.getElementById('teaserVisualization');
+
+  if (!tabs.length || !terminalBody) return;
+
+  // Pages Data Dictionary matching live analytics dashboard details
+  const pagesData = {
+    "1": {
+      pill: "Telemetry Status: Active",
+      title: "Page 1: Google Analytics Overview",
+      desc: "The primary control panel of the dashboard. It delivers a high-level, consolidated diagnostic pulse of total user traffic, engagement rate, transaction velocity, and overall revenue yield at a glance.",
+      kpis: [
+        { label: "Users", num: "89,615" },
+        { label: "Sessions", num: "105,601" },
+        { label: "Conv. Rate", num: "1.03%" },
+        { label: "Revenue", num: "$186,587" }
+      ],
+      takeaway: "Uncovers critical traffic drops and transactional deviations. Despite solid traffic, the low conversion rate (1.03%) highlights a major checkout abandonment bottleneck that requires immediate form-field optimization.",
+      svg: `<div class="mini-chart chart-container">
+              <svg viewBox="0 0 300 150">
+                <defs>
+                  <linearGradient id="chartGlow1" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.35"/>
+                    <stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/>
+                  </linearGradient>
+                  <linearGradient id="chartGlow1-rev" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#a78bfa" stop-opacity="0.25"/>
+                    <stop offset="100%" stop-color="#a78bfa" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <line x1="0" y1="30" x2="300" y2="30" stroke="rgba(255,255,255,0.04)" />
+                <line x1="0" y1="75" x2="300" y2="75" stroke="rgba(255,255,255,0.04)" />
+                <line x1="0" y1="120" x2="300" y2="120" stroke="rgba(255,255,255,0.04)" />
+                <path d="M 0,130 Q 50,40 100,90 T 200,50 T 300,30 L 300,150 L 0,150 Z" fill="url(#chartGlow1)" />
+                <path d="M 0,140 Q 60,70 120,110 T 240,65 T 300,45 L 300,150 L 0,150 Z" fill="url(#chartGlow1-rev)" />
+                <path d="M 0,130 Q 50,40 100,90 T 200,50 T 300,30" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" />
+                <path d="M 0,140 Q 60,70 120,110 T 240,65 T 300,45" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round" stroke-dasharray="4,4" />
+                <circle cx="300" cy="30" r="5" fill="#3b82f6" />
+                <circle cx="300" cy="30" r="10" fill="none" stroke="#3b82f6" stroke-width="2" style="transform-origin: 300px 30px; animation: pulseGlow 1.5s infinite ease-out;" />
+                <circle cx="300" cy="45" r="4.5" fill="#a78bfa" />
+              </svg>
+            </div>`
+    },
+    "2": {
+      pill: "Cohort Segment Analysis",
+      title: "Page 2: Website Demographics",
+      desc: "Demystifies the store's user cohorts by dissecting demographic profiles, device preferences, browser ecosystems, and temporal engagement patterns.",
+      kpis: [
+        { label: "Mobile Users", num: "62,431" },
+        { label: "Desktop Users", num: "44,879" },
+        { label: "Chrome Users", num: "77,035" },
+        { label: "Safari Users", num: "4,863" }
+      ],
+      takeaway: "Mobile sessions massively dominate desktop, yet Safari browser traffic accounts for only 4,863 users compared to Chrome's 77,035. This massive gap points to potential Safari rendering bugs or Safari-pay checkout errors that need to be audited.",
+      svg: `<div class="mini-chart chart-container">
+              <svg viewBox="0 0 300 150">
+                <line x1="40" y1="10" x2="40" y2="120" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+                <line x1="40" y1="120" x2="280" y2="120" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+                <g>
+                  <!-- Chrome (Mobile) -->
+                  <rect x="65" y="30" width="22" height="90" rx="2" fill="#3b82f6" style="transform-origin: bottom; animation: growBar 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;" />
+                  <text x="76" y="132" fill="rgba(255,255,255,0.5)" font-size="7.5" font-family="'JetBrains Mono', monospace" text-anchor="middle">Chrome</text>
+                  
+                  <!-- Safari (Mobile) -->
+                  <rect x="115" y="105" width="22" height="15" rx="2" fill="#a78bfa" style="transform-origin: bottom; animation: growBar 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;" />
+                  <text x="126" y="132" fill="rgba(255,255,255,0.5)" font-size="7.5" font-family="'JetBrains Mono', monospace" text-anchor="middle">Safari</text>
+                  
+                  <!-- Chrome (Desktop) -->
+                  <rect x="165" y="50" width="22" height="70" rx="2" fill="#10b981" style="transform-origin: bottom; animation: growBar 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;" />
+                  <text x="176" y="132" fill="rgba(255,255,255,0.5)" font-size="7.5" font-family="'JetBrains Mono', monospace" text-anchor="middle">Chrome Desk</text>
+
+                  <!-- Edge (Desktop) -->
+                  <rect x="215" y="95" width="22" height="25" rx="2" fill="#f59e0b" style="transform-origin: bottom; animation: growBar 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;" />
+                  <text x="226" y="132" fill="rgba(255,255,255,0.5)" font-size="7.5" font-family="'JetBrains Mono', monospace" text-anchor="middle">Edge Desk</text>
+                </g>
+              </svg>
+            </div>`
+    },
+    "3": {
+      pill: "Spatial Valuation",
+      title: "Page 3: Geography",
+      desc: "Exposes the spatial distribution of your traffic, cross-referencing user density with local monetary value to identify geographic zones with the highest return on investment.",
+      kpis: [
+        { label: "US Share", num: "50.9%" },
+        { label: "India Share", num: "15.1%" },
+        { label: "SF Valuation", num: "$16.73" },
+        { label: "Toronto Value", num: "$12.73" }
+      ],
+      takeaway: "California and Ontario yield premium valuations (e.g., $16.73 per user in San Francisco and $12.73 in Toronto). Conversely, India holds a high user volume (15.1% of total) but yields $0.00 revenue, signaling localized shipping limits or payment gateway integration gaps.",
+      svg: `<div class="mini-chart chart-container">
+              <svg viewBox="0 0 300 150">
+                <circle cx="50" cy="80" r="2.5" fill="rgba(255,255,255,0.06)" />
+                <circle cx="70" cy="60" r="2.5" fill="rgba(255,255,255,0.06)" />
+                <circle cx="100" cy="50" r="2.5" fill="rgba(255,255,255,0.06)" />
+                <circle cx="120" cy="90" r="2.5" fill="rgba(255,255,255,0.06)" />
+                <circle cx="150" cy="110" r="2.5" fill="rgba(255,255,255,0.06)" />
+                <circle cx="180" cy="70" r="2.5" fill="rgba(255,255,255,0.06)" />
+                <circle cx="210" cy="80" r="2.5" fill="rgba(255,255,255,0.06)" />
+                <circle cx="240" cy="60" r="2.5" fill="rgba(255,255,255,0.06)" />
+                <circle cx="260" cy="100" r="2.5" fill="rgba(255,255,255,0.06)" />
+                <g>
+                  <line x1="80" y1="55" x2="135" y2="35" stroke="rgba(59, 130, 246, 0.4)" stroke-width="1" stroke-dasharray="3,3" />
+                  <circle cx="80" cy="55" r="4.5" fill="#3b82f6" />
+                  <circle cx="80" cy="55" r="11" fill="none" stroke="#3b82f6" stroke-width="1.5" style="transform-origin: 80px 55px; animation: pulseGlow 1.8s infinite ease-out;" />
+                  <text x="140" y="38" fill="#3b82f6" font-size="7.5" font-family="'JetBrains Mono', monospace" font-weight="700">SF: $16.73</text>
+                </g>
+                <g>
+                  <line x1="110" y1="65" x2="165" y2="55" stroke="rgba(167, 139, 250, 0.4)" stroke-width="1" stroke-dasharray="3,3" />
+                  <circle cx="110" cy="65" r="4" fill="#a78bfa" />
+                  <circle cx="110" cy="65" r="9" fill="none" stroke="#a78bfa" stroke-width="1.5" style="transform-origin: 110px 65px; animation: pulseGlow 1.8s infinite ease-out; animation-delay: 0.5s;" />
+                  <text x="170" y="58" fill="#a78bfa" font-size="7.5" font-family="'JetBrains Mono', monospace" font-weight="700">Toronto: $12.73</text>
+                </g>
+                <g>
+                  <circle cx="225" cy="85" r="4" fill="#ef4444" />
+                  <circle cx="225" cy="85" r="8" fill="none" stroke="#ef4444" stroke-width="1" style="transform-origin: 225px 85px; animation: pulseGlow 1.5s infinite ease-out; animation-delay: 1s;" />
+                  <text x="225" y="103" fill="#ef4444" font-size="7" font-weight="700" text-anchor="middle">India: High Vol / $0 Revenue</text>
+                </g>
+              </svg>
+            </div>`
+    },
+    "4": {
+      pill: "Spatial High-Precision Logistics",
+      title: "Page 4: World Map",
+      desc: "A full-screen, high-precision spatial mapping interface designed to track physical store locations, popup events, or regional warehouse shipping distributions.",
+      kpis: [
+        { label: "Points Indexed", num: "142" },
+        { label: "Regional Hubs", num: "8" },
+        { label: "Core POS Hubs", num: "3" },
+        { label: "GPS Precision", num: "High" }
+      ],
+      takeaway: "Allows for hyper-localized offline promotions and geo-fenced search ad campaigns within a 5-mile radius of pins showing high physical sales volume.",
+      svg: `<div class="mini-chart chart-container">
+              <svg viewBox="0 0 300 150">
+                <defs>
+                  <radialGradient id="radarGlow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.18"/>
+                    <stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/>
+                  </radialGradient>
+                </defs>
+                <path d="M15 0 L15 150 M60 0 L60 150 M105 0 L105 150 M150 0 L150 150 M195 0 L195 150 M240 0 L240 150 M285 0 L285 150" stroke="rgba(255,255,255,0.015)" stroke-width="0.75" />
+                <path d="M0 20 L300 20 M0 55 L300 55 M0 90 L300 90 M0 125 L300 125" stroke="rgba(255,255,255,0.015)" stroke-width="0.75" />
+                <circle cx="150" cy="75" r="55" fill="url(#radarGlow)" stroke="rgba(59, 130, 246, 0.15)" stroke-width="1" stroke-dasharray="2,2" />
+                <line x1="150" y1="5" x2="150" y2="145" stroke="rgba(59, 130, 246, 0.1)" stroke-width="0.5" />
+                <line x1="5" y1="75" x2="295" y2="75" stroke="rgba(59, 130, 246, 0.1)" stroke-width="0.5" />
+                <g style="transform-origin: 175px 55px; animation: pulseTarget 2.5s infinite ease-in-out;">
+                  <circle cx="175" cy="55" r="5" fill="none" stroke="#10b981" stroke-width="1.5" />
+                  <path d="M167 55 L171 55 M183 55 L179 55 M175 47 L175 51 M175 63 L175 59" stroke="#10b981" stroke-width="1.25" />
+                  <text x="186" y="58" fill="#10b981" font-size="7" font-family="'JetBrains Mono', monospace" font-weight="700">POS.HUB_03</text>
+                </g>
+              </svg>
+            </div>`
+    },
+    "5": {
+      pill: "Conversion Funnel Diagnostics",
+      title: "Page 5: Cart Process & Revenue",
+      desc: "The ultimate checkout health-monitor. This screen compares cart additions, checkouts, and transactional yields against the previous year to identify friction leaks in the purchase journey.",
+      kpis: [
+        { label: "Cart Adds", num: "11,682 (-20%)" },
+        { label: "Checkouts", num: "3,808 (-18%)" },
+        { label: "YoY Rev Chg", num: "-17%" },
+        { label: "Rev Yield", num: "$186,587" }
+      ],
+      takeaway: "A severe drop-off is visible between Cart Adds (11,682) and Checkouts (3,808). Mitigate this by introducing slide-out cart drawers, mini-cart reminders, or automated recovery triggers to convert cart-adders.",
+      svg: `<div class="mini-chart chart-container">
+              <svg viewBox="0 0 300 150">
+                <defs>
+                  <linearGradient id="funnelGrad" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.8"/>
+                    <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0.8"/>
+                  </linearGradient>
+                  <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#ef4444" />
+                  </marker>
+                </defs>
+                <polygon points="50,15 250,15 225,40 75,40" fill="url(#funnelGrad)" opacity="0.9" />
+                <text x="150" y="27" fill="#fff" font-size="7.5" font-weight="800" text-anchor="middle">Product Views (100%)</text>
+                
+                <polygon points="77,44 223,44 200,69 100,69" fill="url(#funnelGrad)" opacity="0.75" />
+                <text x="150" y="56" fill="#fff" font-size="7.5" font-weight="800" text-anchor="middle">Add To Carts: 11,682 (11.0%)</text>
+                
+                <path d="M215,56 L235,56 L235,80" fill="none" stroke="#ef4444" stroke-width="1.25" marker-end="url(#arrow)" stroke-dasharray="3,3" />
+                <text x="240" y="71" fill="#ef4444" font-size="6.5" font-weight="700">-67% Abandon</text>
+                
+                <polygon points="102,73 198,73 180,98 120,98" fill="url(#funnelGrad)" opacity="0.6" />
+                <text x="150" y="85" fill="#fff" font-size="7.5" font-weight="800" text-anchor="middle">Checkouts: 3,808 (3.6%)</text>
+                
+                <polygon points="122,102 178,102 165,127 135,127" fill="url(#funnelGrad)" opacity="0.45" />
+                <text x="150" y="114" fill="#fff" font-size="7.5" font-weight="800" text-anchor="middle">Purchases (1.03%)</text>
+              </svg>
+            </div>`
+    },
+    "6": {
+      pill: "Attribution & Acquisition Audit",
+      title: "Page 6: Revenue Sources",
+      desc: "Audits the financial yield of marketing channels, isolating revenue from direct links, paid ads, organic channels, and referring domains to optimize acquisition budgets.",
+      kpis: [
+        { label: "Direct Rev", num: "$96,803 (51.9%)" },
+        { label: "Referral Rev", num: "$15,285 (+10%)" },
+        { label: "CPC Share", num: "11.1%" },
+        { label: "Organic Rev", num: "$53,651" }
+      ],
+      takeaway: "Direct traffic dominates revenue (51.9%, $96,803), while referral channels display strong positive growth (+10%, $15,285) led by domains like art-analytics.appspot.com ($8,848). Partnerships and cross-promotions with these high-converting referral sources should be prioritized.",
+      svg: `<div class="mini-chart chart-container">
+              <svg viewBox="0 0 300 150">
+                <g transform="translate(100, 75)">
+                  <circle r="42" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="12" />
+                  <circle r="42" fill="none" stroke="#3b82f6" stroke-width="12" stroke-dasharray="137 264" stroke-dashoffset="0" transform="rotate(-90)" />
+                  <circle r="42" fill="none" stroke="#a78bfa" stroke-width="12" stroke-dasharray="40 264" stroke-dashoffset="-137" transform="rotate(-90)" />
+                  <circle r="42" fill="none" stroke="#10b981" stroke-width="12" stroke-dasharray="87 264" stroke-dashoffset="-177" transform="rotate(-90)" />
+                  <text x="0" y="3.5" fill="#fff" font-size="8" font-family="'JetBrains Mono', monospace" font-weight="700" text-anchor="middle">CHANNELS</text>
+                </g>
+                <g transform="translate(185, 45)">
+                  <rect x="0" y="0" width="8" height="8" rx="1.5" fill="#3b82f6" />
+                  <text x="14" y="7" fill="rgba(255,255,255,0.7)" font-size="7.5" font-weight="700">Direct: 51.9%</text>
+                  
+                  <rect x="0" y="16" width="8" height="8" rx="1.5" fill="#a78bfa" />
+                  <text x="14" y="23" fill="rgba(255,255,255,0.7)" font-size="7.5" font-weight="700">Referrals: 15%</text>
+                  
+                  <rect x="0" y="32" width="8" height="8" rx="1.5" fill="#10b981" />
+                  <text x="14" y="39" fill="rgba(255,255,255,0.7)" font-size="7.5" font-weight="700">Organic/CPC</text>
+                </g>
+              </svg>
+            </div>`
+    },
+    "7": {
+      pill: "Search Query Integrity",
+      title: "Page 7: Google Ads Keyword Analysis",
+      desc: "Connects search query intent directly with marketing spend. It audits Google Ads keywords to verify which search queries drive e-commerce revenue and which waste budget.",
+      kpis: [
+        { label: "Branded Clicks", num: "784" },
+        { label: "Avg. Ad CPC", num: "$0.30" },
+        { label: "Paid Revenue", num: "$20,739" },
+        { label: "Untracked Rev", num: "$19,183 (92%)" }
+      ],
+      takeaway: "Branded search drives high clicks (784) at a low CPC ($0.30). However, a massive portion of ads revenue ($19,183 of $20,739) is labeled as (not set), indicating a severe auto-tagging or parameter-tracking bug that needs to be resolved immediately.",
+      svg: `<div class="mini-chart chart-container">
+              <svg viewBox="0 0 300 150">
+                <line x1="40" y1="20" x2="40" y2="120" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+                <line x1="40" y1="120" x2="280" y2="120" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+                <rect x="58" y="90" width="14" height="30" fill="rgba(239, 68, 68, 0.35)" rx="1.5" />
+                <rect x="108" y="80" width="14" height="40" fill="rgba(239, 68, 68, 0.35)" rx="1.5" />
+                <rect x="158" y="70" width="14" height="50" fill="rgba(239, 68, 68, 0.35)" rx="1.5" />
+                <rect x="208" y="105" width="14" height="15" fill="rgba(239, 68, 68, 0.35)" rx="1.5" />
+                <rect x="248" y="95" width="14" height="25" fill="rgba(239, 68, 68, 0.35)" rx="1.5" />
+                <text x="14" y="70" fill="#ef4444" font-size="6" font-weight="700" transform="rotate(-90, 14, 70)">AD COST</text>
+                
+                <path d="M 65,105 Q 115,45 165,35 T 255,95" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" />
+                <circle cx="165" cy="35" r="4" fill="#10b981" />
+                <circle cx="165" cy="35" r="9" fill="none" stroke="#10b981" stroke-width="1.5" style="transform-origin: 165px 35px; animation: pulseGlow 1.5s infinite ease-out;" />
+                <text x="175" y="32" fill="#10b981" font-size="7.5" font-family="'JetBrains Mono', monospace" font-weight="700">Not Set: $19.1K</text>
+                <text x="292" y="100" fill="#10b981" font-size="6" font-weight="700" transform="rotate(-90, 292, 100)">REVENUE</text>
+              </svg>
+            </div>`
+    },
+    "8": {
+      pill: "Catalog & E-commerce Deep-Dive",
+      title: "Page 8: Item Analysis",
+      desc: "A granular audit of product performance. It tracks views, purchase volume, and sales revenue for individual items to isolate catalog performance and high-appeal items.",
+      kpis: [
+        { label: "Tote Views", num: "445 (High)" },
+        { label: "Tote Sales", num: "Low (Friction)" },
+        { label: "Sticker Sales", num: "784 (Massive)" },
+        { label: "Sticker Rev", num: "$3,136 (Cross-sell)" }
+      ],
+      takeaway: "The Google Regatta Tote has high details views (445) but low transactions, indicating that pricing, photos, or descriptions on the product page are causing friction. Conversely, low-friction add-ons like the Google Bike Party Sticker sell in massive quantities (784 items purchased, $3,136 revenue) with almost zero detail views, indicating they should be promoted as checkout cross-sells.",
+      svg: `<div class="mini-chart chart-container">
+              <svg viewBox="0 0 300 150">
+                <line x1="85" y1="15" x2="85" y2="135" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+                <text x="10" y="35" fill="rgba(255,255,255,0.5)" font-size="7" font-weight="700">Regatta Tote</text>
+                <rect x="90" y="26" width="130" height="10" rx="1.5" fill="#3b82f6" opacity="0.8" style="transform-origin: left; animation: growBarHoriz 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;" />
+                <text x="226" y="34" fill="#3b82f6" font-size="7" font-family="'JetBrains Mono', monospace" font-weight="700">445 Views</text>
+                <rect x="90" y="40" width="15" height="3" rx="0.75" fill="#ef4444" />
+                <text x="110" y="44" fill="#ef4444" font-size="6" font-weight="700">Friction Bottleneck</text>
+                
+                <text x="10" y="85" fill="rgba(255,255,255,0.5)" font-size="7" font-weight="700">Bike Sticker</text>
+                <rect x="90" y="76" width="25" height="10" rx="1.5" fill="#3b82f6" opacity="0.8" style="transform-origin: left; animation: growBarHoriz 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;" />
+                <text x="120" y="84" fill="#3b82f6" font-size="7" font-family="'JetBrains Mono', monospace" font-weight="700">35 Views</text>
+                <rect x="90" y="90" width="170" height="3" rx="0.75" fill="#10b981" />
+                <text x="266" y="94" fill="#10b981" font-size="6.5" font-family="'JetBrains Mono', monospace" font-weight="700">784 Sales (100% Cross-sell)</text>
+              </svg>
+            </div>`
+    }
+  };
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      if (tab.classList.contains('active')) return;
+
+      const pageId = tab.getAttribute('data-page');
+      const data = pagesData[pageId];
+      if (!data) return;
+
+      // Toggle active classes on tabs
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      // Play interaction feedback sound
+      if (typeof UISounds !== 'undefined' && UISounds.click) {
+        UISounds.click();
+      }
+
+      // Event tracking
+      trackEvent('dashboard_teaser_tab_click', {
+        page_index: pageId,
+        page_title: data.title
+      });
+
+      // Smooth opacity cross-fade
+      terminalBody.style.opacity = '0';
+      terminalBody.style.transform = 'translateY(8px)';
+
+      setTimeout(() => {
+        // Update details while invisible
+        metricPill.textContent = data.pill;
+        pageTitle.textContent = data.title;
+        pageDesc.textContent = data.desc;
+        takeawayText.textContent = data.takeaway;
+
+        // Build and inject KPI elements
+        kpisContainer.innerHTML = '';
+        data.kpis.forEach(kpi => {
+          const kpiPill = document.createElement('div');
+          kpiPill.className = 'kpi-pill';
+          kpiPill.innerHTML = `<strong>${kpi.label}:</strong> <span class="kpi-num">${kpi.num}</span>`;
+          kpisContainer.appendChild(kpiPill);
+        });
+
+        // Inject visualization
+        visualizationContainer.innerHTML = data.svg;
+
+        // Fade back in smoothly
+        terminalBody.style.opacity = '1';
+        terminalBody.style.transform = 'translateY(0)';
+      }, 220); // Sync with CSS transition
+    });
+  });
+})();
+

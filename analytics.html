@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-M686VJGG');</script>
+  <!-- End Google Tag Manager -->
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Youssef McCarthy | Interactive Analytics Dashboard & Strategy</title>
+  
+  <meta name="description" content="Explore Youssef McCarthy's interactive Looker Studio Analytics Dashboard. Real-time data optimization, GA4 integration, funnel metrics, and ROI optimization insights.">
+  
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%230a0e1a' width='100' height='100' rx='20'/%3E%3Ctext y='72' x='10' font-size='60' font-family='Arial' font-weight='900' fill='%233b82f6'%3EYM%3C/text%3E%3C/svg%3E">
+  
+  <link rel="stylesheet" href="style.css?v=5">
+  <link rel="stylesheet" href="analytics-style.css?v=5">
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M686VJGG"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  
+  <!-- Reading Progress Bar -->
+  <div class="reading-progress-container">
+    <div class="reading-progress-bar" id="readingProgressBar"></div>
+  </div>
+
+  <!-- Particles and Background Grid Reused for Consistency -->
+  <canvas id="particles"></canvas>
+  <div class="bg-grid"></div>
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <div class="nav-logo" onclick="location.href='index.html'" style="cursor:pointer"><span>YM</span></div>
+    <div class="theme-switch-wrapper">
+      <span class="theme-icon">&#9790; Dark</span>
+      <label class="theme-switch" for="themeToggle">
+        <input type="checkbox" id="themeToggle">
+        <span class="slider"></span>
+      </label>
+      <span class="theme-icon">&#9788; Light</span>
+    </div>
+    <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">&#9776;</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#experience">Experience</a></li>
+      <li><a href="index.html#projects">Projects</a></li>
+      <li><a href="analytics.html" class="active">Live Dashboard</a></li>
+      <li><a href="index.html#editorials">Editorials</a></li>
+      <li><a href="index.html#consulting">Consulting</a></li>
+      <li><a href="index.html#skills">Skills</a></li>
+      <li><a href="index.html#contact-form" class="nav-cta">Get In Touch</a></li>
+    </ul>
+  </nav>
+
+  <main class="analytics-main">
+    <!-- Hero Header -->
+    <header class="analytics-hero">
+      <div class="hero-badge"><span class="dot live"></span> Live Multi-Channel Dashboard</div>
+      <h1>Interactive Marketing <span class="gradient">Intelligence</span></h1>
+      <p class="analytics-subtitle">Translating raw cross-channel data stream into actionable business strategies and CRO breakthroughs.</p>
+      
+      <!-- Google Merchandise Store Source Banner -->
+      <div class="data-source-banner">
+        <div class="source-banner-icon">
+          <svg viewBox="0 0 24 24" width="22" height="22" style="display: block;">
+            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+            <path d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l3.66-2.84z" fill="#FBBC05"/>
+            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/>
+          </svg>
+        </div>
+        <div class="source-banner-text">
+          <span>E-Commerce Sandbox: <strong>Google Merchandise Store</strong></span>
+          <p>The interactive reports on this page model live GA4 telemetry from Google's official merchandise shop. Visit the store to explore the live customer environment.</p>
+        </div>
+        <a href="https://shop.googlemerchandisestore.com/" target="_blank" rel="noopener noreferrer" class="btn-source-link" onclick="trackEvent('source_link_click', { destination: 'google_merchandise_store' })">
+          Explore Google Store
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-left: 4px;">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6m4-3h6v6m-11 5L21 3"></path>
+          </svg>
+        </a>
+      </div>
+    </header>
+
+    <!-- Core Grid Layout -->
+    <div class="analytics-grid">
+      
+      <!-- Left Panel: Iframe Dashboard Room -->
+      <section class="dashboard-boardroom" id="dashboardBoardroom">
+        <div class="dashboard-card">
+          <!-- Glass Action Header Bar -->
+          <div class="dashboard-action-bar">
+            <div class="action-bar-left">
+              <span class="live-dot-pulse"></span>
+              <span class="dashboard-status-text">LIVE DEMO INGESTION</span>
+            </div>
+            <div class="action-bar-right">
+              <button class="control-btn" id="reloadBtn" title="Refresh Dashboard Data">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+                </svg>
+                Refresh
+              </button>
+              <button class="control-btn" id="fullscreenBtn" title="Toggle Fullscreen Mode">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+                </svg>
+                Fullscreen
+              </button>
+              <a href="https://datastudio.google.com/s/i09OFL6DmTk" target="_blank" class="control-btn" id="outboundBtn" title="Open in Looker Studio">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6m4-3h6v6m-11 5L21 3"></path>
+                </svg>
+                External
+              </a>
+            </div>
+          </div>
+
+          <!-- Iframe Container with Custom Skeleton preloader -->
+          <div class="iframe-viewport-wrapper">
+            <div class="skeleton-loader" id="skeletonLoader">
+              <div class="loader-chime">
+                <div class="pulse-ring"></div>
+                <div class="loading-icon">📊</div>
+                <p class="loading-text">Calibrating Analytics Engines...</p>
+                <p class="loading-subtext">Fetching Looker Studio Secure Embed Stream</p>
+              </div>
+            </div>
+            <iframe 
+              id="dashboardIframe" 
+              src="https://lookerstudio.google.com/embed/reporting/eda4702e-7391-4cb1-ae2e-fb650596f33c?s=i09OFL6DmTk" 
+              frameborder="0" 
+              style="border:0" 
+              allowfullscreen 
+              sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
+            </iframe>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Panel: Strategic Insight & Context Accordions -->
+      <section class="insights-sidebar">
+        <!-- Strategy Details Accordion -->
+        <div class="sidebar-section-header" style="margin-top: 5px; margin-bottom: 15px;">
+          <h4 style="font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--accent-light); margin-bottom: 4px;">Dashboard Page Explorer</h4>
+          <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.4;">An in-depth breakdown of the visuals, data endpoints, and CRO strategies modeled across each dashboard page from Google's Merchandise Store GA4 stream.</p>
+        </div>
+
+        <div class="strategy-accordion">
+          <!-- Page 1 -->
+          <div class="accordion-item active">
+            <button class="accordion-header" aria-expanded="true">
+              <span class="accordion-number">01</span>
+              <h3>Page 1: Google Analytics Overview</h3>
+              <span class="accordion-icon">&#9662;</span>
+            </button>
+            <div class="accordion-content">
+              <p>The primary control panel of the dashboard. It delivers a high-level, consolidated diagnostic pulse of total user traffic, engagement rate, transaction velocity, and overall revenue yield at a glance.</p>
+              <ul>
+                <li><strong>Visuals & Charts:</strong> Dual-metric <em>Traffic Over Time</em> line chart (Sessions vs. Total Revenue), channel distribution pie chart (Direct, Organic, CPC, Referral), landing page table, and a detailed <em>Traffic by User/Pageviews</em> daily bar chart.</li>
+                <li><strong>Data Discovery & Logic:</strong> Sums total e-commerce events and processes aggregate metrics including <em>Total Users (89,615)</em>, <em>Sessions (105,601)</em>, <em>Views (336,327)</em>, and <em>Conversion Rate (1.03%)</em>, dynamically mapping GTM triggers against GA4 stream parameters.</li>
+                <li><strong>CRO Strategy Playbook:</strong> Uncovers critical traffic drops and transactional deviations. Despite solid traffic, the low conversion rate (1.03%) highlights a major checkout abandonment bottleneck that requires immediate form-field optimization.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Page 2 -->
+          <div class="accordion-item">
+            <button class="accordion-header" aria-expanded="false">
+              <span class="accordion-number">02</span>
+              <h3>Page 2: Website Demographics</h3>
+              <span class="accordion-icon">&#9662;</span>
+            </button>
+            <div class="accordion-content">
+              <p>Demystifies the store's user cohorts by dissecting demographic profiles, device preferences, browser ecosystems, and temporal engagement patterns.</p>
+              <ul>
+                <li><strong>Visuals & Charts:</strong> Hourly and day-of-week engagement charts, demographic age brackets (dominated by 18-24 and 25-34 groups), gender splits (62.1% Male / 37.9% Female), device category bars, and operating system / browser breakdown tables.</li>
+                <li><strong>Data Discovery & Logic:</strong> Extracts demographic and system segments from browser user-agent strings and Google Signals, mapping sessions to variables like <code>device.category</code>, <code>device.operating_system</code>, and <code>device.web_info.browser</code>.</li>
+                <li><strong>CRO Strategy Playbook:</strong> Mobile sessions (62,431) massively dominate desktop (44,879), yet Safari browser traffic accounts for only 4,863 users (compared to Chrome's 77,035). This massive gap points to potential Safari rendering bugs or Safari-pay checkout errors that need to be audited.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Page 3 -->
+          <div class="accordion-item">
+            <button class="accordion-header" aria-expanded="false">
+              <span class="accordion-number">03</span>
+              <h3>Page 3: Geography</h3>
+              <span class="accordion-icon">&#9662;</span>
+            </button>
+            <div class="accordion-content">
+              <p>Exposes the spatial distribution of your traffic, cross-referencing user density with local monetary value to identify geographic zones with the highest return on investment.</p>
+              <ul>
+                <li><strong>Visuals & Charts:</strong> Donut charts tracking <em>Top Country by User</em> (led by United States at 50.9% and India at 15.1%) and <em>Top Region by User</em> (California leading at 41.7%), paired with an interactive world map and regional ledger.</li>
+                <li><strong>Data Discovery & Logic:</strong> Computes <em>Per User Valuation</em> (<code>Total Revenue / Total Users</code>) and <em>Average Purchase Revenue</em> (<code>Total Revenue / Transactions</code>) using IP-to-location geo-lookups.</li>
+                <li><strong>CRO Strategy Playbook:</strong> California and Ontario yield premium valuations (e.g., $16.73 per user in San Francisco and $12.73 in Toronto). Conversely, India holds a high user volume (15.1% of total) but yields $0.00 revenue, signaling localized shipping limits or payment gateway integration gaps.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Page 4 -->
+          <div class="accordion-item">
+            <button class="accordion-header" aria-expanded="false">
+              <span class="accordion-number">04</span>
+              <h3>Page 4: World Map</h3>
+              <span class="accordion-icon">&#9662;</span>
+            </button>
+            <div class="accordion-content">
+              <p>A full-screen, high-precision spatial mapping interface designed to track physical store locations, popup events, or regional warehouse shipping distributions.</p>
+              <ul>
+                <li><strong>Visuals & Charts:</strong> A highly interactive Google Maps component supporting satellite overlays, embedded with custom pins highlighting high-density transaction coordinates (e.g., Grand Indonesia, Thamrin Nine, and Bundaran HI).</li>
+                <li><strong>Data Discovery & Logic:</strong> Dynamically loads precise coordinate values (latitude and longitude arrays) mapped from shipping address inputs or physical point-of-sale (POS) terminal uploads.</li>
+                <li><strong>CRO Strategy Playbook:</strong> Allows for hyper-localized offline promotions and geo-fenced search ad campaigns within a 5-mile radius of pins showing high physical sales volume.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Page 5 -->
+          <div class="accordion-item">
+            <button class="accordion-header" aria-expanded="false">
+              <span class="accordion-number">05</span>
+              <h3>Page 5: Cart Process & Revenue</h3>
+              <span class="accordion-icon">&#9662;</span>
+            </button>
+            <div class="accordion-content">
+              <p>The ultimate checkout health-monitor. This screen compares cart additions, checkouts, and transactional yields against the previous year to identify friction leaks in the purchase journey.</p>
+              <ul>
+                <li><strong>Visuals & Charts:</strong> Five comparative Year-over-Year (YoY) line charts (Add to Carts, Checkouts, Transactions, Shipping, and Revenue) paired with circular, trend-tracking diagnostic indicators.</li>
+                <li><strong>Data Discovery & Logic:</strong> Traces e-commerce event successions—from <code>add_to_cart</code> to <code>begin_checkout</code> to <code>purchase</code>—calculating period-over-period percentage variances (e.g., <em>Add to Carts: 11,682, -20%</em>; <em>Revenue: $186,587, -17%</em>).</li>
+                <li><strong>CRO Strategy Playbook:</strong> A severe drop-off is visible between Cart Adds (11,682) and Checkouts (3,808). Mitigate this by introducing slide-out cart drawers, mini-cart reminders, or automated recovery triggers to convert cart-adders.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Page 6 -->
+          <div class="accordion-item">
+            <button class="accordion-header" aria-expanded="false">
+              <span class="accordion-number">06</span>
+              <h3>Page 6: Revenue Sources</h3>
+              <span class="accordion-icon">&#9662;</span>
+            </button>
+            <div class="accordion-content">
+              <p>Audits the financial yield of marketing channels, isolating revenue from direct links, paid ads, organic channels, and referring domains to optimize acquisition budgets.</p>
+              <ul>
+                <li><strong>Visuals & Charts:</strong> YoY channel trend charts, revenue-share donut charts, and a detailed <em>Source / Medium</em> ledger detailing referral contributions.</li>
+                <li><strong>Data Discovery & Logic:</strong> Isolates transaction streams using attribution modeling, joining purchase values with <code>traffic_source.source</code> and <code>traffic_source.medium</code> parameters.</li>
+                <li><strong>CRO Strategy Playbook:</strong> Direct traffic dominates revenue (51.9%, $96,803), while referral channels display strong positive growth (+10%, $15,285) led by domains like <code>art-analytics.appspot.com</code> ($8,848). Partnerships and cross-promotions with these high-converting referral sources should be prioritized.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Page 7 -->
+          <div class="accordion-item">
+            <button class="accordion-header" aria-expanded="false">
+              <span class="accordion-number">07</span>
+              <h3>Page 7: Google Ads Keyword Analysis</h3>
+              <span class="accordion-icon">&#9662;</span>
+            </button>
+            <div class="accordion-content">
+              <p>Connects search query intent directly with marketing spend. It audits Google Ads keywords to verify which search queries drive e-commerce revenue and which waste budget.</p>
+              <ul>
+                <li><strong>Visuals & Charts:</strong> Daily Ad Cost vs. Revenue trend charts, a keyword click performance ledger (mapping impressions, clicks, CPC, and ad cost), and a keyword-level revenue yield ledger.</li>
+                <li><strong>Data Discovery & Logic:</strong> Integrates Google Ads and GA4 datasets using GCLID parameters, grouping ads performance metrics directly with checkout <code>purchase</code> revenue.</li>
+                <li><strong>CRO Strategy Playbook:</strong> Branded search (<code>google merchandise store</code>) drives high clicks (784) at a low CPC ($0.30). However, a massive portion of ads revenue ($19,183 of $20,739) is labeled as <code>(not set)</code>, indicating a severe auto-tagging or parameter-tracking bug that needs to be resolved immediately.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Page 8 -->
+          <div class="accordion-item">
+            <button class="accordion-header" aria-expanded="false">
+              <span class="accordion-number">08</span>
+              <h3>Page 8: Item Analysis</h3>
+              <span class="accordion-icon">&#9662;</span>
+            </button>
+            <div class="accordion-content">
+              <p>A granular audit of product performance. It tracks views, purchase volume, and sales revenue for individual items to isolate catalog performance and high-appeal items.</p>
+              <ul>
+                <li><strong>Visuals & Charts:</strong> An item ledger showing Items Viewed, % change, Items Purchased, and Item Revenue, accompanied by daily purchase volume dual bars and purchase velocity line graphs.</li>
+                <li><strong>Data Discovery & Logic:</strong> Parses GA4 product-scoped e-commerce dimensions within the <code>items</code> array, pulling and aggregating parameters like <code>item_name</code>, <code>quantity</code>, and <code>item_revenue</code>.</li>
+                <li><strong>CRO Strategy Playbook:</strong> The <em>Google Regatta Tote</em> has high details views (445) but low transactions, indicating that pricing, photos, or descriptions on the product page are causing friction. Conversely, low-friction add-ons like the <em>Google Bike Party Sticker</em> sell in massive quantities (784 items purchased, $3,136 revenue) with almost zero detail views, indicating they should be promoted as checkout cross-sells.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Personal Signature Note -->
+        <div class="signature-card">
+          <div class="sig-header">
+            <span class="sig-badge">📊 Analytics Director Perspective</span>
+          </div>
+          <p class="sig-body">"Data without an integrated narrative is merely noise. My goal when designing and implementing dashboards is to empower marketing leaders to identify conversion leaks immediately and back up multi-million dollar resource allocations with mathematical certainty. I hope this live asset demonstrates my technical rigor and strategic perspective."</p>
+          <div class="sig-footer">
+            <div class="sig-author">Youssef M. McCarthy</div>
+            <div class="sig-title">Digital Analytics & AI Strategist</div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Youssef M. McCarthy &mdash; Built with precision and purpose.</p>
+  </footer>
+
+  <!-- Floating Sticky CTA Back to Home -->
+  <a href="index.html#contact-form" id="ds-floating-cta" class="ds-floating-cta ds-visible">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+    </svg>
+    Book a Consulting Call
+  </a>
+
+  <!-- Audio Feedback & Page Interactions JS -->
+  <script src="analytics-script.js?v=5"></script>
+</body>
+</html>
