@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UX/UI & Analytics Collaboration | Youssef McCarthy</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%230a0e1a' width='100' height='100' rx='20'/%3E%3Ctext y='72' x='10' font-size='60' font-family='Arial' font-weight='900' fill='%233b82f6'%3EYM%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="collaboration-style.css">
+</head>
+<body class="theme-glass">
+  <canvas id="particles"></canvas>
+  <div class="bg-grid"></div>
+  <div class="bg-orbs"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
+
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <div class="nav-logo"><span>YM</span></div>
+    
+    <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">&#9776;</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Back to Portfolio</a></li>
+      <li><a href="index.html#contact-form" class="nav-cta">Get In Touch</a></li>
+    </ul>
+  </nav>
+
+  <!-- Global Theme Switcher -->
+  <div class="global-theme-switcher">
+    <span class="switcher-label">Select UI Theme:</span>
+    <button class="theme-btn active" data-theme="glass">Apple Glassmorphism</button>
+    <button class="theme-btn" data-theme="fluent">Windows 11 Fluent</button>
+    <button class="theme-btn" data-theme="neu">Neumorphism</button>
+    <button class="theme-btn" data-theme="brutal">Brutalism</button>
+  </div>
+
+  <main class="collab-main">
+    <section class="hero collab-hero">
+      <div class="hero-content text-center">
+        <div class="hero-badge"><span class="dot"></span> Design Meets Data</div>
+        <h1><span class="gradient">Data-Driven</span> Design</h1>
+        <p class="hero-subtitle">How a Digital Strategist and a UX/UI Designer collaborate to build experiences that look beautiful and convert effectively. Switch the theme above to see how global UI paradigms shift the experience.</p>
+      </div>
+    </section>
+
+    <!-- Collaborative Workflow Section -->
+    <section class="collab-section">
+      <div class="section-header reveal">
+        <div class="section-label">The Workflow</div>
+        <h2 class="section-title">A Continuous Feedback Loop</h2>
+      </div>
+      
+      <div class="workflow-grid reveal reveal-delay-1">
+        <div class="workflow-card">
+          <div class="workflow-icon">📊</div>
+          <h3>1. The Strategist Analyzes</h3>
+          <p>The strategist reviews analytics data and identifies a friction point: a 40% drop-off rate on the mobile checkout flow. They set a KPI to reduce cart abandonment and provide hypotheses based on user behavior.</p>
+        </div>
+        <div class="workflow-arrow">→</div>
+        <div class="workflow-card">
+          <div class="workflow-icon">🎨</div>
+          <h3>2. The Designer Ideates</h3>
+          <p>The UX/UI designer takes the hypotheses and designs solutions. They implement an accordion-style form to reduce cognitive load and apply the brand's visual hierarchy to guide the user's eye towards the primary CTA.</p>
+        </div>
+        <div class="workflow-arrow">→</div>
+        <div class="workflow-card">
+          <div class="workflow-icon">🧪</div>
+          <h3>3. The Team Tests</h3>
+          <p>The new design is launched as an A/B test. The strategist monitors the live data, measuring the impact of the designer's work. The winning variant yields a 15% lift in conversions, and the insights inform the next iteration.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- A/B Test Simulator -->
+    <section class="collab-section">
+      <div class="section-header reveal">
+        <div class="section-label">A/B Testing Example</div>
+        <h2 class="section-title">Color Psychology in Action</h2>
+        <p class="section-subtitle">Simulate a test analyzing how changing an "Add to Cart" button color impacts conversions.</p>
+      </div>
+
+      <div class="ab-simulator-container reveal reveal-delay-2">
+        <div class="variants-row">
+          <div class="variant-card" id="variant-a">
+            <div class="variant-header">Variant A (Control)</div>
+            <div class="variant-preview">
+              <div class="product-mock">
+                <div class="product-img"></div>
+                <h4>Premium Wireless Headphones</h4>
+                <p>$299.00</p>
+                <button class="add-to-cart-btn btn-control">Add to Cart</button>
+              </div>
+            </div>
+            <div class="variant-stats">
+              <div class="stat-row">
+                <span>Visitors:</span> <span class="val-visitors">0</span>
+              </div>
+              <div class="stat-row">
+                <span>Conversions:</span> <span class="val-conversions">0</span>
+              </div>
+              <div class="stat-row highlight">
+                <span>Conv. Rate:</span> <span class="val-rate">0.00%</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="variant-card" id="variant-b">
+            <div class="variant-header">Variant B (Challenger)</div>
+            <div class="variant-preview">
+              <div class="product-mock">
+                <div class="product-img"></div>
+                <h4>Premium Wireless Headphones</h4>
+                <p>$299.00</p>
+                <button class="add-to-cart-btn btn-challenger">Add to Cart</button>
+              </div>
+            </div>
+            <div class="variant-stats">
+              <div class="stat-row">
+                <span>Visitors:</span> <span class="val-visitors">0</span>
+              </div>
+              <div class="stat-row">
+                <span>Conversions:</span> <span class="val-conversions">0</span>
+              </div>
+              <div class="stat-row highlight">
+                <span>Conv. Rate:</span> <span class="val-rate">0.00%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="simulator-controls">
+          <button id="runTestBtn" class="primary-action-btn">▶ Run A/B Test</button>
+          <div class="progress-bar-container">
+            <div class="progress-bar" id="testProgress"></div>
+          </div>
+          <div class="test-results" id="testResults">
+            <!-- Results will be injected here -->
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <h3>YM</h3>
+        <p>Digital Analytics & AI Strategy</p>
+      </div>
+      <div class="footer-links">
+        <a href="https://linkedin.com/in/youssefmccarthy" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:youssef.mccarthy@example.com">Email</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Youssef McCarthy. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="collaboration-script.js"></script>
+</body>
+</html>
