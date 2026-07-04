@@ -908,6 +908,7 @@ section { padding: 100px 40px; max-width: 1200px; margin: 0 auto; }
   box-shadow: 0 2px 8px rgba(139,92,246,0.4);
 }
 .theme-switch .slider:hover { border-color: var(--accent); }
+.theme-switch input:disabled + .slider { opacity: 0.5; cursor: not-allowed; }
 
 /* ── Light Theme ── */
 body.light-theme { --bg-primary: #f8fafc; --bg-secondary: #e2e8f0; --bg-card: rgba(255,255,255,0.85); --bg-glass: rgba(0,0,0,0.03); --border-glass: rgba(0,0,0,0.1); --text-primary: #0f172a; --text-secondary: #475569; --text-muted: #94a3b8; }
