@@ -22,9 +22,25 @@ function initGlobalThemes() {
       // Remove all theme classes first
       body.classList.remove('theme-glass', 'theme-fluent', 'theme-neu', 'theme-brutal', 'theme-default');
       
+      const themeToggle = document.getElementById('themeToggle');
+
       // Add the selected theme class if it's not the default
       if (theme !== 'default') {
         body.classList.add(`theme-${theme}`);
+        
+        // Force the dark/light mode toggle to off (dark) for the specialized themes so they render correctly
+        body.classList.remove('light-theme');
+        if (themeToggle) {
+          themeToggle.checked = false;
+          themeToggle.disabled = true; // Disable the dark/light toggle when a specific theme is active
+        }
+      } else {
+        // If "Default" is selected, respect the state of the dark/light switch
+        if (themeToggle) {
+          themeToggle.disabled = false;
+          const isLight = themeToggle.checked;
+          document.body.classList.toggle('light-theme', isLight);
+        }
       }
       
       // Update theme info box
