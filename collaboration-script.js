@@ -18,7 +18,11 @@ function initGlobalThemes() {
 
       // Change body theme class
       const theme = btn.getAttribute('data-theme');
-      body.className = `theme-${theme}`;
+      
+      // Remove all theme classes first
+      body.classList.remove('theme-glass', 'theme-fluent', 'theme-neu', 'theme-brutal');
+      // Add the selected theme class
+      body.classList.add(`theme-${theme}`);
     });
   });
 }
