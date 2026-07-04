@@ -23,6 +23,11 @@ function initGlobalThemes() {
       body.classList.remove('theme-glass', 'theme-fluent', 'theme-neu', 'theme-brutal');
       // Add the selected theme class
       body.classList.add(`theme-${theme}`);
+      
+      // Update theme info box
+      document.querySelectorAll('.theme-info').forEach(info => info.classList.remove('active'));
+      const activeInfo = document.getElementById(`info-${theme}`);
+      if (activeInfo) activeInfo.classList.add('active');
     });
   });
 }
