@@ -20,9 +20,12 @@ function initGlobalThemes() {
       const theme = btn.getAttribute('data-theme');
       
       // Remove all theme classes first
-      body.classList.remove('theme-glass', 'theme-fluent', 'theme-neu', 'theme-brutal');
-      // Add the selected theme class
-      body.classList.add(`theme-${theme}`);
+      body.classList.remove('theme-glass', 'theme-fluent', 'theme-neu', 'theme-brutal', 'theme-default');
+      
+      // Add the selected theme class if it's not the default
+      if (theme !== 'default') {
+        body.classList.add(`theme-${theme}`);
+      }
       
       // Update theme info box
       document.querySelectorAll('.theme-info').forEach(info => info.classList.remove('active'));
