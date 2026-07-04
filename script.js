@@ -88,28 +88,34 @@ const trackEvent = (name, params = {}) => {
 // ── Page Loader ──
 window.addEventListener('load', () => {
   setTimeout(() => {
-    document.getElementById('pageLoader').classList.add('hidden');
+    const loader = document.getElementById('pageLoader');
+    if (loader) {
+      loader.classList.add('hidden');
+    }
     UISounds.chime();
   }, 1400);
 });
 
 // ── Particle System (Mouse-Reactive) ──
 const canvas = document.getElementById('particles');
-const ctx = canvas.getContext('2d');
+let ctx;
 let particles = [];
 let mouse = { x: -1000, y: -1000 };
 
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
+if (canvas) {
+  ctx = canvas.getContext('2d');
 
-document.addEventListener('mousemove', (e) => {
-  mouse.x = e.clientX;
-  mouse.y = e.clientY;
-});
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  document.addEventListener('mousemove', (e) => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  });
 
 class Particle {
   constructor() {
@@ -148,38 +154,39 @@ class Particle {
   }
 }
 
-for (let i = 0; i < 60; i++) particles.push(new Particle());
+  for (let i = 0; i < 60; i++) particles.push(new Particle());
 
-function animateParticles() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  particles.forEach(p => { p.update(); p.draw(); });
-  // Draw connections
-  for (let i = 0; i < particles.length; i++) {
-    for (let j = i + 1; j < particles.length; j++) {
-      const dx = particles[i].x - particles[j].x;
-      const dy = particles[i].y - particles[j].y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < 120) {
-        ctx.beginPath();
-        ctx.moveTo(particles[i].x, particles[i].y);
-        ctx.lineTo(particles[j].x, particles[j].y);
-        ctx.strokeStyle = `rgba(59, 130, 246, ${0.06 * (1 - dist / 120)})`;
-        ctx.lineWidth = 0.5;
-        ctx.stroke();
+  function animateParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => { p.update(); p.draw(); });
+    // Draw connections
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 120) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(59, 130, 246, ${0.06 * (1 - dist / 120)})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
       }
     }
+    // Mouse glow
+    if (mouse.x > 0 && mouse.y > 0) {
+      const gradient = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 100);
+      gradient.addColorStop(0, 'rgba(59, 130, 246, 0.04)');
+      gradient.addColorStop(1, 'rgba(59, 130, 246, 0)');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(mouse.x - 100, mouse.y - 100, 200, 200);
+    }
+    requestAnimationFrame(animateParticles);
   }
-  // Mouse glow
-  if (mouse.x > 0 && mouse.y > 0) {
-    const gradient = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 100);
-    gradient.addColorStop(0, 'rgba(59, 130, 246, 0.04)');
-    gradient.addColorStop(1, 'rgba(59, 130, 246, 0)');
-    ctx.fillStyle = gradient;
-    ctx.fillRect(mouse.x - 100, mouse.y - 100, 200, 200);
-  }
-  requestAnimationFrame(animateParticles);
+  animateParticles();
 }
-animateParticles();
 
 // ── Navigation ──
 const nav = document.getElementById('nav');
@@ -227,22 +234,24 @@ document.querySelectorAll('.nav-links a').forEach(link => {
 
 // ── Theme Toggle ──
 const themeToggle = document.getElementById('themeToggle');
-const savedTheme = localStorage.getItem('portfolio-theme');
-if (savedTheme === 'light') {
-  document.body.classList.add('light-theme');
-  themeToggle.checked = true;
-} else {
-  document.body.classList.remove('light-theme');
-  themeToggle.checked = false;
-  localStorage.setItem('portfolio-theme', 'dark');
+if (themeToggle) {
+  const savedTheme = localStorage.getItem('portfolio-theme');
+  if (savedTheme === 'light') {
+    document.body.classList.add('light-theme');
+    themeToggle.checked = true;
+  } else {
+    document.body.classList.remove('light-theme');
+    themeToggle.checked = false;
+    localStorage.setItem('portfolio-theme', 'dark');
+  }
+  themeToggle.addEventListener('change', () => {
+    const isLight = themeToggle.checked;
+    document.body.classList.toggle('light-theme', isLight);
+    localStorage.setItem('portfolio-theme', isLight ? 'light' : 'dark');
+    UISounds.toggle();
+    trackEvent('theme_change', { theme: isLight ? 'light' : 'dark' });
+  });
 }
-themeToggle.addEventListener('change', () => {
-  const isLight = themeToggle.checked;
-  document.body.classList.toggle('light-theme', isLight);
-  localStorage.setItem('portfolio-theme', isLight ? 'light' : 'dark');
-  UISounds.toggle();
-  trackEvent('theme_change', { theme: isLight ? 'light' : 'dark' });
-});
 
 // ── Scroll Reveal Animations (Staggered) ──
 const revealElements = document.querySelectorAll('.reveal, .timeline-item');
@@ -357,6 +366,7 @@ function goToTestimonial(index) {
 }
 
 function changeTestimonial(dir, manual) {
+  if (testimonialCards.length === 0) return;
   let next = currentTestimonial + dir;
   if (next < 0) next = testimonialCards.length - 1;
   if (next >= testimonialCards.length) next = 0;
@@ -365,7 +375,9 @@ function changeTestimonial(dir, manual) {
 }
 
 // Auto-rotate testimonials (silent)
-setInterval(() => changeTestimonial(1, false), 6000);
+if (testimonialCards.length > 0) {
+  setInterval(() => changeTestimonial(1, false), 6000);
+}
 
 // ── Copy to Clipboard ──
 function copyText(text, btn) {
