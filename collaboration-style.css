@@ -1,0 +1,423 @@
+/* Base Layout & Utilities */
+.collab-main {
+  padding-top: calc(var(--nav-height) + 60px);
+  min-height: 100vh;
+  transition: background 0.5s ease, color 0.5s ease;
+}
+
+.collab-hero {
+  min-height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+}
+
+.collab-section {
+  padding: 5rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Global Theme Switcher */
+.global-theme-switcher {
+  position: fixed;
+  top: var(--nav-height);
+  left: 0;
+  width: 100%;
+  background: var(--theme-panel-bg, rgba(255,255,255,0.9));
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--theme-border, #e2e8f0);
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  z-index: 90;
+  flex-wrap: wrap;
+  transition: all 0.3s ease;
+}
+
+.switcher-label {
+  font-weight: 600;
+  color: var(--theme-text, #1e293b);
+}
+
+.theme-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  border: 1px solid var(--theme-border, #cbd5e1);
+  background: var(--theme-btn-bg, transparent);
+  color: var(--theme-text, #475569);
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.theme-btn.active {
+  background: var(--theme-accent, #3b82f6);
+  color: #fff;
+  border-color: var(--theme-accent, #3b82f6);
+}
+
+/* Workflow Grid */
+.workflow-grid {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 3rem;
+}
+
+.workflow-card {
+  flex: 1;
+  padding: 2rem;
+  border-radius: var(--theme-radius, 16px);
+  background: var(--theme-card-bg, #fff);
+  border: var(--theme-card-border, 1px solid #e2e8f0);
+  box-shadow: var(--theme-card-shadow, 0 10px 30px rgba(0,0,0,0.05));
+  text-align: center;
+  transition: all 0.3s ease;
+  min-height: 280px;
+}
+
+.workflow-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.workflow-card h3 {
+  margin-bottom: 1rem;
+  color: var(--theme-heading, #0f172a);
+}
+
+.workflow-card p {
+  color: var(--theme-text-muted, #64748b);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.workflow-arrow {
+  font-size: 2rem;
+  color: var(--theme-text-muted, #94a3b8);
+}
+
+@media (max-width: 900px) {
+  .workflow-grid {
+    flex-direction: column;
+  }
+  .workflow-arrow {
+    transform: rotate(90deg);
+  }
+}
+
+/* A/B Simulator */
+.ab-simulator-container {
+  margin-top: 3rem;
+}
+
+.variants-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+  .variants-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.variant-card {
+  background: var(--theme-card-bg, #fff);
+  border: var(--theme-card-border, 1px solid #e2e8f0);
+  border-radius: var(--theme-radius, 16px);
+  overflow: hidden;
+  box-shadow: var(--theme-card-shadow, 0 10px 30px rgba(0,0,0,0.05));
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.variant-card.winner {
+  border-color: var(--theme-success, #10b981);
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+  transform: scale(1.02);
+}
+
+.variant-header {
+  padding: 1rem;
+  background: var(--theme-header-bg, #f8fafc);
+  border-bottom: var(--theme-card-border, 1px solid #e2e8f0);
+  font-weight: 600;
+  text-align: center;
+  color: var(--theme-heading, #0f172a);
+}
+
+.variant-card.winner .variant-header {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--theme-success, #10b981);
+}
+
+.variant-preview {
+  padding: 3rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--theme-preview-bg, #f1f5f9);
+  border-bottom: var(--theme-card-border, 1px solid #e2e8f0);
+}
+
+.product-mock {
+  background: var(--theme-card-bg, #fff);
+  padding: 1.5rem;
+  border-radius: var(--theme-radius-inner, 12px);
+  box-shadow: var(--theme-inner-shadow, 0 4px 6px rgba(0,0,0,0.05));
+  text-align: center;
+  width: 100%;
+  max-width: 250px;
+}
+
+.product-img {
+  height: 120px;
+  background: #cbd5e1;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.product-mock h4 {
+  font-size: 1rem;
+  margin: 0 0 0.5rem 0;
+  color: var(--theme-heading, #1e293b);
+}
+
+.product-mock p {
+  color: var(--theme-text-muted, #64748b);
+  margin: 0 0 1rem 0;
+  font-weight: 600;
+}
+
+.add-to-cart-btn {
+  width: 100%;
+  padding: 0.75rem;
+  border: none;
+  border-radius: var(--theme-btn-radius, 6px);
+  font-weight: 600;
+  color: #fff;
+  cursor: default;
+  transition: all 0.3s ease;
+  box-shadow: var(--theme-btn-shadow, 0 2px 4px rgba(0,0,0,0.1));
+}
+
+.btn-control {
+  background: #94a3b8; /* Neutral grey */
+}
+
+.btn-challenger {
+  background: #ef4444; /* High contrast red */
+}
+
+.variant-stats {
+  padding: 1.5rem;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+  color: var(--theme-text-muted, #64748b);
+}
+
+.stat-row.highlight {
+  font-weight: 700;
+  color: var(--theme-text, #0f172a);
+  font-size: 1.1rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--theme-border, #cbd5e1);
+}
+
+.simulator-controls {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.primary-action-btn {
+  padding: 1rem 2.5rem;
+  background: var(--theme-accent, #3b82f6);
+  color: white;
+  border: none;
+  border-radius: var(--theme-radius, 30px);
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+  transition: all 0.3s ease;
+}
+
+.primary-action-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.progress-bar-container {
+  height: 8px;
+  background: var(--theme-border, #e2e8f0);
+  border-radius: 4px;
+  margin: 1.5rem 0;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: var(--theme-accent, #3b82f6);
+  transition: width 0.1s linear;
+}
+
+.test-results {
+  min-height: 60px;
+  font-weight: 600;
+  color: var(--theme-text, #0f172a);
+}
+
+
+/* =========================================
+   THEMES
+========================================= */
+
+/* 1. Apple Glassmorphism */
+body.theme-glass {
+  background: linear-gradient(135deg, #e0e7ff 0%, #f3e8ff 100%);
+  color: #1e293b;
+
+  --theme-panel-bg: rgba(255, 255, 255, 0.7);
+  --theme-card-bg: rgba(255, 255, 255, 0.6);
+  --theme-header-bg: rgba(255, 255, 255, 0.4);
+  --theme-preview-bg: rgba(255, 255, 255, 0.3);
+  --theme-border: rgba(255, 255, 255, 0.5);
+  --theme-card-border: 1px solid rgba(255, 255, 255, 0.8);
+  --theme-radius: 24px;
+  --theme-radius-inner: 16px;
+  --theme-btn-radius: 12px;
+  --theme-card-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+  --theme-inner-shadow: 0 4px 16px 0 rgba(31, 38, 135, 0.05);
+  --theme-heading: #0f172a;
+  --theme-text: #334155;
+  --theme-text-muted: #64748b;
+  --theme-accent: #8b5cf6;
+  --theme-success: #10b981;
+}
+body.theme-glass .workflow-card, body.theme-glass .variant-card {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* 2. Windows 11 Fluent */
+body.theme-fluent {
+  background: #f3f3f3;
+  color: #202020;
+  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+
+  --theme-panel-bg: rgba(243, 243, 243, 0.85);
+  --theme-card-bg: #ffffff;
+  --theme-header-bg: #fbfbfb;
+  --theme-preview-bg: #f3f3f3;
+  --theme-border: #e5e5e5;
+  --theme-card-border: 1px solid #e5e5e5;
+  --theme-radius: 8px;
+  --theme-radius-inner: 4px;
+  --theme-btn-radius: 4px;
+  --theme-card-shadow: 0 4px 8px rgba(0,0,0,0.04), 0 0 2px rgba(0,0,0,0.06);
+  --theme-inner-shadow: 0 2px 4px rgba(0,0,0,0.04);
+  --theme-heading: #000000;
+  --theme-text: #202020;
+  --theme-text-muted: #616161;
+  --theme-accent: #0067c0;
+  --theme-success: #0f7b0f;
+}
+body.theme-fluent .workflow-card, body.theme-fluent .variant-card {
+  border-top: 1px solid #ffffff; /* Fluent light top edge */
+}
+
+/* 3. Neumorphism */
+body.theme-neu {
+  background: #e0e5ec;
+  color: #2d3748;
+
+  --theme-panel-bg: #e0e5ec;
+  --theme-card-bg: #e0e5ec;
+  --theme-header-bg: #e0e5ec;
+  --theme-preview-bg: #e0e5ec;
+  --theme-border: transparent;
+  --theme-card-border: none;
+  --theme-radius: 20px;
+  --theme-radius-inner: 15px;
+  --theme-btn-radius: 10px;
+  --theme-card-shadow: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px rgba(255,255,255, 0.5);
+  --theme-inner-shadow: 5px 5px 10px rgb(163,177,198,0.6), -5px -5px 10px rgba(255,255,255, 0.5);
+  --theme-heading: #1a202c;
+  --theme-text: #4a5568;
+  --theme-text-muted: #718096;
+  --theme-accent: #3182ce;
+  --theme-success: #38a169;
+}
+body.theme-neu .variant-header {
+  box-shadow: inset 0 -2px 5px rgba(163,177,198,0.2);
+}
+body.theme-neu .variant-preview {
+  box-shadow: inset 5px 5px 10px rgb(163,177,198,0.4), inset -5px -5px 10px rgba(255,255,255, 0.3);
+  border-bottom: none;
+}
+body.theme-neu .theme-btn.active {
+  box-shadow: inset 3px 3px 6px rgb(163,177,198,0.6), inset -3px -3px 6px rgba(255,255,255, 0.5);
+  background: #e0e5ec;
+  color: var(--theme-accent);
+}
+
+/* 4. Brutalism */
+body.theme-brutal {
+  background: #ffffff;
+  color: #000000;
+  font-family: "Courier New", Courier, monospace;
+
+  --theme-panel-bg: #ffffff;
+  --theme-card-bg: #ffffff;
+  --theme-header-bg: #e2e8f0;
+  --theme-preview-bg: #f8fafc;
+  --theme-border: #000000;
+  --theme-card-border: 4px solid #000000;
+  --theme-radius: 0px;
+  --theme-radius-inner: 0px;
+  --theme-btn-radius: 0px;
+  --theme-card-shadow: 8px 8px 0px #000000;
+  --theme-inner-shadow: 4px 4px 0px #000000;
+  --theme-heading: #000000;
+  --theme-text: #000000;
+  --theme-text-muted: #000000;
+  --theme-accent: #fbbf24; /* yellow */
+  --theme-success: #34d399; /* green */
+}
+body.theme-brutal h1, body.theme-brutal h2, body.theme-brutal h3 {
+  text-transform: uppercase;
+  letter-spacing: -1px;
+}
+body.theme-brutal .theme-btn.active {
+  background: #000000;
+  color: #ffffff;
+  box-shadow: 4px 4px 0px var(--theme-accent);
+}
+body.theme-brutal .primary-action-btn {
+  background: #000000;
+  box-shadow: 8px 8px 0px var(--theme-accent);
+}
+body.theme-brutal .btn-challenger {
+  background: #000000;
+  color: #fff;
+}
+body.theme-brutal .btn-control {
+  background: #fff;
+  color: #000;
+  border: 2px solid #000;
+}
