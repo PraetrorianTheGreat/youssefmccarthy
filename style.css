@@ -1550,6 +1550,8 @@ body.light-theme .path-card { background: rgba(255,255,255,0.9); }
   padding: 0 40px;
   position: relative;
   z-index: 2;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .dashboard-teaser-container {
@@ -1558,6 +1560,9 @@ body.light-theme .path-card { background: rgba(255,255,255,0.9); }
   gap: 30px;
   align-items: stretch;
   margin-top: 40px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 /* Page Navigator Panel */
@@ -1569,6 +1574,11 @@ body.light-theme .path-card { background: rgba(255,255,255,0.9); }
   backdrop-filter: blur(16px);
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .teaser-nav-header {
@@ -1659,6 +1669,10 @@ body.light-theme .path-card { background: rgba(255,255,255,0.9); }
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .teaser-terminal .terminal-header {
@@ -1930,6 +1944,9 @@ body.light-theme .teaser-terminal .terminal-blur-mask {
     gap: 8px;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
   
   .teaser-tab {

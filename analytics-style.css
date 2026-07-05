@@ -8,6 +8,8 @@
   padding: 0 40px;
   position: relative;
   z-index: 1;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .analytics-hero {
@@ -39,6 +41,9 @@
   grid-template-columns: 1fr 400px;
   gap: 30px;
   align-items: start;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 /* ── Dashboard Boardroom (Left Panel) ── */
@@ -48,6 +53,10 @@
   padding: 0;
   margin: 0;
   max-width: none;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .dashboard-boardroom::before {
@@ -261,6 +270,10 @@
   padding: 0;
   margin: 0;
   max-width: none;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 /* Quick Metrics Cards */
@@ -644,6 +657,7 @@ body.light-theme .signature-card {
   
   .iframe-viewport-wrapper {
     height: auto;
+    aspect-ratio: 4 / 3;
   }
   
   .metric-widget-grid {
@@ -660,7 +674,33 @@ body.light-theme .signature-card {
   .flow-step-arrow {
     display: none;
   }
+
+  /* Dashboard Boardroom Stacked Action Bar */
+  .dashboard-action-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 12px 16px;
+  }
+
+  .action-bar-left {
+    justify-content: center;
+  }
+
+  .action-bar-right {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .control-btn {
+    flex: 1 1 auto;
+    justify-content: center;
+    padding: 8px 12px;
+    font-size: 0.7rem;
+  }
 }
+
 
 /* ── Data Source Banner ── */
 .data-source-banner {
@@ -668,6 +708,7 @@ body.light-theme .signature-card {
   align-items: center;
   justify-content: space-between;
   gap: 20px;
+  width: 100%;
   max-width: 800px;
   margin: 30px auto 0 auto;
   padding: 16px 24px;
@@ -680,6 +721,7 @@ body.light-theme .signature-card {
   text-align: left;
   position: relative;
   overflow: hidden;
+  box-sizing: border-box;
   transition: all 0.3s ease;
 }
 
@@ -799,4 +841,77 @@ body.light-theme .btn-source-link:hover {
     justify-content: center;
   }
 }
+
+/* Compact Mobile Responsiveness (480px and under) */
+@media (max-width: 480px) {
+  .dashboard-action-bar {
+    padding: 10px 12px;
+    gap: 10px;
+  }
+  
+  .action-bar-right {
+    display: flex;
+    width: 100%;
+    gap: 6px;
+  }
+  
+  .control-btn {
+    padding: 6px 8px;
+    font-size: 0.65rem;
+    gap: 4px;
+  }
+  
+  .control-btn svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .iframe-viewport-wrapper {
+    aspect-ratio: 1 / 1;
+  }
+
+  .accordion-header {
+    padding: 12px 15px;
+  }
+
+  .accordion-header h3 {
+    font-size: 0.85rem;
+  }
+
+  .accordion-number {
+    font-size: 0.75rem;
+    margin-right: 10px;
+  }
+
+  .accordion-content {
+    padding: 0 15px;
+  }
+
+  .accordion-item.active .accordion-content {
+    padding: 0 15px 15px 15px;
+  }
+
+  .accordion-content p, 
+  .accordion-content li {
+    font-size: 0.8rem;
+  }
+
+  .signature-card {
+    padding: 20px;
+  }
+
+  .sig-body {
+    font-size: 0.8rem;
+    line-height: 1.6;
+  }
+
+  .sig-author {
+    font-size: 0.9rem;
+  }
+
+  .sig-title {
+    font-size: 0.7rem;
+  }
+}
+
 
