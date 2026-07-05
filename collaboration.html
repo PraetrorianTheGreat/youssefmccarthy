@@ -5,22 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>UX/UI & Analytics Collaboration | Youssef McCarthy</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%230a0e1a' width='100' height='100' rx='20'/%3E%3Ctext y='72' x='10' font-size='60' font-family='Arial' font-weight='900' fill='%233b82f6'%3EYM%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Comfortaa:wght@400;700&family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="collaboration-style.css">
 </head>
-<body class="theme-glass">
+<body>
   <!-- Page Loader -->
-  <div class="loader-wrapper" id="pageLoader">
-    <div class="spinner"></div>
+  <div class="page-loader" id="pageLoader">
+    <div class="loader-content">
+      <div class="loader-logo">YM</div>
+      <div class="loader-bar"><div class="loader-progress"></div></div>
+    </div>
   </div>
 
   <canvas id="particles"></canvas>
   <div class="bg-grid"></div>
   <div class="bg-orbs"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
 
-  <!-- Navigation -->
   <nav class="nav" id="nav">
-    <div class="nav-logo"><span>YM</span></div>
+    <div class="nav-logo" onclick="location.href='index.html'" style="cursor:pointer"><span>YM</span></div>
     
     <div class="theme-switch-wrapper">
       <span class="theme-icon">&#9790; Dark</span>
@@ -33,27 +38,102 @@
 
     <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">&#9776;</button>
     <ul class="nav-links" id="navLinks">
-      <li><a href="index.html">Back to Portfolio</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#experience">Experience</a></li>
+      <li><a href="index.html#projects">Projects</a></li>
+      <li><a href="analytics.html">Live Dashboard</a></li>
+      <li><a href="collaboration.html" class="active">UX Collaboration</a></li>
+      <li><a href="index.html#editorials">Editorials</a></li>
+      <li><a href="index.html#consulting">Consulting</a></li>
+      <li><a href="index.html#skills">Skills</a></li>
+      <li><a href="index.html#education">Education</a></li>
       <li><a href="index.html#contact-form" class="nav-cta">Get In Touch</a></li>
     </ul>
   </nav>
 
-  <!-- Global Theme Switcher -->
+  <!-- Onboarding Bubble Notification -->
+  <div class="theme-onboarding-bubble" id="themeOnboardingBubble">
+    <div class="bubble-content">
+      <span class="bubble-sparkle">✨</span>
+      <p>Try selecting different UI themes below—Cyber Neon, Apple Glass, Fluent UI, Neumorphic, or Brutalist—to watch the entire page transform instantly!</p>
+    </div>
+    <button class="bubble-close" id="closeOnboardingBtn" aria-label="Close onboarding tooltip">&times;</button>
+    <div class="bubble-arrow"></div>
+  </div>
+
+  <!-- visionOS Glass Lens Interactive Playground -->
+  <div class="glass-playground-card" id="glassLens">
+    <div class="glass-playground-header" id="glassLensHeader">
+      <div class="glass-dots">
+        <span class="dot-red"></span>
+        <span class="dot-yellow"></span>
+        <span class="dot-green"></span>
+      </div>
+      <span class="glass-title">visionOS Glass Lens</span>
+      <div class="drag-handle">☰</div>
+    </div>
+    <div class="glass-playground-body">
+      <p class="playground-intro">Observe real-time pass-through refraction. Drag this card over images and text to see the frosted glass distort them.</p>
+      <div class="playground-controls">
+        <div class="control-group">
+          <label>Glass Blur (<span id="blurVal">30</span>px)</label>
+          <input type="range" id="blurSlider" min="0" max="60" value="30">
+        </div>
+        <div class="control-group">
+          <label>Saturate (<span id="satVal">180</span>%)</label>
+          <input type="range" id="satSlider" min="100" max="300" value="180">
+        </div>
+        <div class="control-group">
+          <label>Backdrop Orb Lights</label>
+          <div class="color-presets">
+            <button class="preset-btn active" data-preset="aurora">Aurora</button>
+            <button class="preset-btn" data-preset="sunset">Sunset</button>
+            <button class="preset-btn" data-preset="emerald">Mint</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="global-theme-switcher">
-    <span class="switcher-label">Select UI Theme:</span>
-    <button class="theme-btn" data-theme="default">Default</button>
-    <button class="theme-btn active" data-theme="glass">Apple Glassmorphism</button>
-    <button class="theme-btn" data-theme="fluent">Windows 11 Fluent</button>
-    <button class="theme-btn" data-theme="neu">Neumorphism</button>
-    <button class="theme-btn" data-theme="brutal">Brutalism</button>
+    <div class="switcher-header">
+      <svg class="switcher-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path>
+        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+        <path d="M2 12h20"></path>
+      </svg>
+      <span class="switcher-label">UI Themes</span>
+    </div>
+    <div class="theme-buttons-container">
+      <button class="theme-btn active" data-theme="default" data-tooltip="Cyber Neon">
+        <span class="theme-dot default"></span>
+        <span class="theme-btn-text">Cyber Neon</span>
+      </button>
+      <button class="theme-btn" data-theme="glass" data-tooltip="Apple Glass">
+        <span class="theme-dot glass"></span>
+        <span class="theme-btn-text">Apple Glass</span>
+      </button>
+      <button class="theme-btn" data-theme="fluent" data-tooltip="Fluent UI">
+        <span class="theme-dot fluent"></span>
+        <span class="theme-btn-text">Fluent UI</span>
+      </button>
+      <button class="theme-btn" data-theme="neu" data-tooltip="Neumorphic">
+        <span class="theme-dot neu"></span>
+        <span class="theme-btn-text">Neumorphic</span>
+      </button>
+      <button class="theme-btn" data-theme="brutal" data-tooltip="Brutalist">
+        <span class="theme-dot brutal"></span>
+        <span class="theme-btn-text">Brutalist</span>
+      </button>
+    </div>
   </div>
   
   <div class="theme-info-container">
-    <div class="theme-info" id="info-default">
+    <div class="theme-info active" id="info-default">
       <h3>Default Global Theme</h3>
       <p>This is the base aesthetic of the entire portfolio. It uses a high-contrast dark mode with neon gradients, deep space backgrounds, and subtle blur effects to create a futuristic, professional look.</p>
     </div>
-    <div class="theme-info active" id="info-glass">
+    <div class="theme-info" id="info-glass">
       <h3>Apple Glassmorphism</h3>
       <p>Characterized by translucent, frosted-glass effects, subtle shadows, and vibrant background colors shining through. It emphasizes depth and a clean, modern aesthetic.</p>
     </div>
@@ -69,13 +149,20 @@
       <h3>Brutalism</h3>
       <p>A bold, raw, and unapologetic style. It features high contrast, stark borders, monospace typography, and a deliberate departure from traditional "polished" design rules.</p>
     </div>
+  </div>
 
   <main class="collab-main">
     <section class="hero collab-hero">
-      <div class="hero-content text-center">
-        <div class="hero-badge"><span class="dot"></span> Design Meets Data</div>
-        <h1><span class="gradient">Data-Driven</span> Design</h1>
-        <p class="hero-subtitle">How a Digital Strategist and a UX/UI Designer collaborate to build experiences that look beautiful and convert effectively. Switch the theme above to see how global UI paradigms shift the experience.</p>
+      <div class="hero-columns">
+        <div class="hero-content text-left">
+          <div class="hero-badge"><span class="dot"></span> Design Meets Data</div>
+          <h1><span class="gradient">Data-Driven</span> Design</h1>
+          <p class="hero-subtitle">How a Digital Strategist and a UX/UI Designer collaborate to build experiences that look beautiful and convert effectively. Switch the theme above to see how global UI paradigms shift the experience.</p>
+        </div>
+        <div class="hero-visual-container">
+          <div class="hero-visual-glow"></div>
+          <img src="img/collab_hero.png" alt="Data-Driven Design Collaboration" class="hero-visual-img" id="heroVisualImg">
+        </div>
       </div>
     </section>
 
@@ -107,58 +194,276 @@
       </div>
     </section>
 
+    <!-- Collaborative Strategy & Design Narrative Section -->
+    <section class="collab-section narrative-section reveal">
+      <div class="section-header reveal">
+        <div class="section-label">Behind The Scenes</div>
+        <h2 class="section-title">The Strategy & Design Intersection</h2>
+        <p class="section-subtitle">How Youssef McCarthy combines conversion science with aesthetic engineering to build experiences that inspire trust and drive performance.</p>
+      </div>
+      
+      <div class="narrative-grid">
+        <div class="narrative-column strategist-column">
+          <div class="narrative-icon-header">
+            <span class="narrative-badge bg-strat">📊 STRATEGIC ENGINEERING</span>
+          </div>
+          <h3>The Digital Strategist's Lens</h3>
+          <p class="narrative-intro">Decisions are governed by telemetry, mathematical models, and behavioral psychology.</p>
+          <div class="narrative-list">
+            <div class="narrative-item">
+              <div class="item-number">01</div>
+              <div class="item-text">
+                <h4>Friction Point Mapping</h4>
+                <p>We analyze user funnels, find drop-offs (like a 40% bounce on registration pages), and formulate data-backed optimization hypotheses.</p>
+              </div>
+            </div>
+            <div class="narrative-item">
+              <div class="item-number">02</div>
+              <div class="item-text">
+                <h4>Mathematical Models</h4>
+                <p>We run rigorous A/B simulations using binomial distribution models to guarantee statistical significance, avoiding false positives.</p>
+              </div>
+            </div>
+            <div class="narrative-item">
+              <div class="item-number">03</div>
+              <div class="item-text">
+                <h4>Cognitive Load Reduction</h4>
+                <p>We apply Hick's Law and Miller's Law to trim input fields, streamline navigation paths, and remove purchase friction.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="narrative-column designer-column">
+          <div class="narrative-icon-header">
+            <span class="narrative-badge bg-design">🎨 AESTHETIC CRAFTSMANSHIP</span>
+          </div>
+          <h3>The UX/UI Designer's Lens</h3>
+          <p class="narrative-intro">Experiences are built using emotional connection, visual hierarchy, and haptic feedback.</p>
+          <div class="narrative-list">
+            <div class="narrative-item">
+              <div class="item-number">01</div>
+              <div class="item-text">
+                <h4>Global Design Tokens</h4>
+                <p>We maintain pixel-perfect harmony. Switching themes morphs global color variables, type scales, and spacing models dynamically.</p>
+              </div>
+            </div>
+            <div class="narrative-item">
+              <div class="item-number">02</div>
+              <div class="item-text">
+                <h4>Tactile Feedback & Haptics</h4>
+                <p>We build emotional rhythm. Custom AudioContext synthesis provides subtle micro-chimes that validate user actions and guide pathways.</p>
+              </div>
+            </div>
+            <div class="narrative-item">
+              <div class="item-number">03</div>
+              <div class="item-text">
+                <h4>Hardware-Accelerated Depth</h4>
+                <p>We leverage native CSS backdrop filters, glassmorphic refraction, and cubic-bezier motion curves to make pages feel incredibly premium.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="collaboration-conclusion">
+        <div class="synergy-card">
+          <div class="synergy-layout">
+            <div class="synergy-content">
+              <div class="synergy-header">
+                <span class="synergy-icon">🤖</span>
+                <h4>How This Page Was Built</h4>
+              </div>
+              <p class="synergy-para">
+                This page was built through a direct, live conversation between a human and an AI. The <strong>designer</strong> of this entire experience was actually an <strong>AI Agent</strong> (Antigravity), who designed and engineered all layouts, vector mockups, haptic chimes, and the 5 dynamic theme systems based on interactive instructions. Everything shown in the simulator is a live representation of this collaborative intelligence.
+              </p>
+              <p class="synergy-para sub">
+                Furthermore, the rest of this entire portfolio website was also designed and refined with the assistance of an AI designer, seamlessly guided by the precise vision, strategic alignment, and expert orchestration of <strong>Youssef McCarthy</strong>, acting as the digital strategist.
+              </p>
+            </div>
+            <div class="synergy-visual">
+              <div class="orchestration-map">
+                <div class="node human-node">
+                  <div class="node-avatar"><img src="profile.png" alt="Youssef McCarthy" /></div>
+                  <div class="node-meta">
+                    <span class="node-label">Youssef McCarthy</span>
+                    <span class="node-role">Digital Strategist</span>
+                  </div>
+                </div>
+                
+                <div class="pulse-pipe">
+                  <div class="pulse-line"></div>
+                  <span class="pipe-label label-above">Strategic Vision</span>
+                  <span class="pipe-label label-below">AI Design Assets</span>
+                </div>
+                
+                <div class="node ai-node">
+                  <div class="node-avatar ai-glow">AI</div>
+                  <div class="node-meta">
+                    <span class="node-label">Antigravity</span>
+                    <span class="node-role">AI Design Agent</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- A/B Test Simulator -->
     <section class="collab-section">
       <div class="section-header reveal">
         <div class="section-label">A/B Testing Example</div>
-        <h2 class="section-title">Color Psychology in Action</h2>
-        <p class="section-subtitle">Simulate a test analyzing how changing an "Add to Cart" button color impacts conversions.</p>
+        <h2 class="section-title" id="ab-section-title">Homepage Hero Layout</h2>
+        <p class="section-subtitle" id="ab-section-subtitle">Simulate an A/B test measuring how replacing a standard left-aligned text-heavy layout (Control) with an interactive split isometric CTA page (Challenger) affects user conversions.</p>
       </div>
 
       <div class="ab-simulator-container reveal reveal-delay-2">
+        <!-- A/B Test Selector Capsule -->
+        <div class="ab-test-selector-nav">
+          <button class="ab-nav-btn active" data-test="color">⚡ Homepage Hero</button>
+          <button class="ab-nav-btn" data-test="copy">💳 Pricing Tiers</button>
+          <button class="ab-nav-btn" data-test="trust">🛒 Express Checkout</button>
+        </div>
+
         <div class="variants-row">
           <div class="variant-card" id="variant-a">
-            <div class="variant-header">Variant A (Control)</div>
+            <div class="winner-ribbon">🏆 Winner</div>
+            <div class="variant-header">
+              <span class="header-badge">Control</span>
+              Variant A
+            </div>
             <div class="variant-preview">
-              <div class="product-mock">
-                <div class="product-img"></div>
-                <h4>Premium Wireless Headphones</h4>
-                <p>$299.00</p>
-                <button class="add-to-cart-btn btn-control">Add to Cart</button>
+              <div class="website-hero-mock control-hero">
+                <div class="hero-web-header">
+                  <div class="web-dots">
+                    <span class="web-dot red"></span>
+                    <span class="web-dot yellow"></span>
+                    <span class="web-dot green"></span>
+                  </div>
+                  <div class="web-url">https://legacy.cloudscale.io</div>
+                </div>
+                <div class="hero-web-body">
+                  <div class="hero-mock-left">
+                    <div class="mock-title-bars">
+                      <div class="mock-bar bar-long"></div>
+                      <div class="mock-bar bar-medium"></div>
+                    </div>
+                    <div class="mock-desc-bars">
+                      <div class="mock-bar bar-short"></div>
+                      <div class="mock-bar bar-short"></div>
+                      <div class="mock-bar bar-short-mid"></div>
+                    </div>
+                    <button class="add-to-cart-btn btn-control mock-btn-flat" onclick="UISounds.click(); return false;">Read Whitepaper</button>
+                  </div>
+                  <div class="hero-mock-right">
+                    <div class="flat-mock-image">
+                      <div class="flat-image-frame">
+                        <svg class="flat-img-svg" viewBox="0 0 24 24" width="20" height="24" fill="none" stroke="currentColor" stroke-width="1.5">
+                          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                          <line x1="3" y1="3" x2="21" y2="21"></line>
+                          <line x1="21" y1="3" x2="3" y2="21"></line>
+                        </svg>
+                        <span class="flat-image-label">Static Image</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="variant-stats">
-              <div class="stat-row">
-                <span>Visitors:</span> <span class="val-visitors">0</span>
+            <div class="variant-stats-grid">
+              <div class="stat-card" id="stat-a-visitors">
+                <div class="stat-icon">👥</div>
+                <div class="stat-info">
+                  <span class="stat-label">Visitors</span>
+                  <span class="stat-val val-visitors">0</span>
+                </div>
               </div>
-              <div class="stat-row">
-                <span>Conversions:</span> <span class="val-conversions">0</span>
+              <div class="stat-card" id="stat-a-conversions">
+                <div class="stat-icon">🛒</div>
+                <div class="stat-info">
+                  <span class="stat-label">Conversions</span>
+                  <span class="stat-val val-conversions">0</span>
+                </div>
               </div>
-              <div class="stat-row highlight">
-                <span>Conv. Rate:</span> <span class="val-rate">0.00%</span>
+              <div class="stat-card highlight" id="stat-a-rate">
+                <div class="stat-icon">📈</div>
+                <div class="stat-info">
+                  <span class="stat-label">Conv. Rate</span>
+                  <span class="stat-val val-rate">0.00%</span>
+                </div>
               </div>
             </div>
           </div>
 
           <div class="variant-card" id="variant-b">
-            <div class="variant-header">Variant B (Challenger)</div>
+            <div class="winner-ribbon">🏆 Winner</div>
+            <div class="variant-header">
+              <span class="header-badge challenger">Challenger</span>
+              Variant B
+            </div>
             <div class="variant-preview">
-              <div class="product-mock">
-                <div class="product-img"></div>
-                <h4>Premium Wireless Headphones</h4>
-                <p>$299.00</p>
-                <button class="add-to-cart-btn btn-challenger">Add to Cart</button>
+              <div class="website-hero-mock challenger-hero">
+                <div class="hero-web-header">
+                  <div class="web-dots">
+                    <span class="web-dot red"></span>
+                    <span class="web-dot yellow"></span>
+                    <span class="web-dot green"></span>
+                  </div>
+                  <div class="web-url text-accent">https://next.cloudscale.io</div>
+                </div>
+                <div class="hero-web-body">
+                  <div class="hero-mock-left">
+                    <span class="mock-mini-badge highlight-pulse">● LIVE 14k Clusters</span>
+                    <div class="mock-title-bars challenger">
+                      <div class="mock-bar gradient-bar-1"></div>
+                      <div class="mock-bar gradient-bar-2"></div>
+                    </div>
+                    <div class="mock-desc-bars challenger">
+                      <div class="mock-bar"></div>
+                      <div class="mock-bar"></div>
+                    </div>
+                    <button class="add-to-cart-btn btn-challenger pulsing mock-btn-gradient" onclick="UISounds.confirm(); return false;">Launch Free Cluster ⚡</button>
+                  </div>
+                  <div class="hero-mock-right">
+                    <div class="isometric-scene">
+                      <div class="iso-layers-group">
+                        <div class="iso-layer layer-1"></div>
+                        <div class="iso-layer layer-2"></div>
+                        <div class="iso-layer layer-3">
+                          <div class="iso-chart-bar column-1"></div>
+                          <div class="iso-chart-bar column-2"></div>
+                          <div class="iso-chart-bar column-3"></div>
+                          <div class="iso-floating-sphere"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="variant-stats">
-              <div class="stat-row">
-                <span>Visitors:</span> <span class="val-visitors">0</span>
+            <div class="variant-stats-grid">
+              <div class="stat-card" id="stat-b-visitors">
+                <div class="stat-icon">👥</div>
+                <div class="stat-info">
+                  <span class="stat-label">Visitors</span>
+                  <span class="stat-val val-visitors">0</span>
+                </div>
               </div>
-              <div class="stat-row">
-                <span>Conversions:</span> <span class="val-conversions">0</span>
+              <div class="stat-card" id="stat-b-conversions">
+                <div class="stat-icon">🛒</div>
+                <div class="stat-info">
+                  <span class="stat-label">Conversions</span>
+                  <span class="stat-val val-conversions">0</span>
+                </div>
               </div>
-              <div class="stat-row highlight">
-                <span>Conv. Rate:</span> <span class="val-rate">0.00%</span>
+              <div class="stat-card highlight" id="stat-b-rate">
+                <div class="stat-icon">📈</div>
+                <div class="stat-info">
+                  <span class="stat-label">Conv. Rate</span>
+                  <span class="stat-val val-rate">0.00%</span>
+                </div>
               </div>
             </div>
           </div>
@@ -166,6 +471,10 @@
 
         <div class="simulator-controls">
           <button id="runTestBtn" class="primary-action-btn">▶ Run A/B Test</button>
+          <div class="progress-label-row">
+            <span class="progress-title">Simulation Progress</span>
+            <span class="progress-days" id="testDays">Day 0 of 14</span>
+          </div>
           <div class="progress-bar-container">
             <div class="progress-bar" id="testProgress"></div>
           </div>
@@ -176,6 +485,7 @@
       </div>
     </section>
   </main>
+
 
   <!-- Footer -->
   <footer class="footer">
