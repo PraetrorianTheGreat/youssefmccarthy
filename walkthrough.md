@@ -332,4 +332,49 @@ We have optimized the responsiveness of the **Live Marketing Intelligence Showca
     -   **Single-Column Terminal Body**: `.terminal-main-row` reorganizes into a clean single vertical stack (`grid-template-columns: 1fr;`), giving the KPI cards and SVGs generous breathing room.
     -   **Perfect Spatial Harmony**: Eliminates any visual clipping, overlapping text, or squishing, ensuring a premium high-contrast responsive experience on all tablet and mobile screens.
 
+---
 
+## 📱 July 2026 Update: Live Analytics Page Mobile Responsiveness Overhaul
+
+We have successfully overhauled the styling system of the **Live Multi-Channel Analytics Dashboard Page (`analytics.html` / `analytics-style.css`)** to deliver an flawless, mobile-optimized experience with **zero horizontal scrolling or layout bleed-out** on screens down to **320px** wide.
+
+### Key Refinements Completed:
+
+1.  **Stacked and Fluid Dashboard Control Bar**:
+    -   **The Problem**: The horizontal control bar (`.dashboard-action-bar`) containing the `LIVE DEMO INGESTION` status and three control buttons (`Refresh`, `Fullscreen`, and `External`) required at least `550px` of width. On mobile viewports under `480px`, this forced the entire boardroom block to stretch wide, creating massive horizontal overflow.
+    -   **The Solution**: Inside the `768px` tablet media query, we stacked the bar vertically (`flex-direction: column`) with stretch alignment, giving elements perfect breathing room. Under `480px` (compact mobile), we minimized the button paddings (`6px 8px`), typography (`0.65rem`), and svg icon sizing to create a compact, app-like control interface that fits within any standard smartphone width.
+2.  **Taller Aspect Ratio Mapping**:
+    -   Adjusted the looker studio iframe container wrapper (`.iframe-viewport-wrapper`) aspect ratio dynamically based on screen size:
+        -   **Desktop**: `16 / 10` ratio.
+        -   **Tablet (<768px)**: `4 / 3` ratio to provide a taller canvas for visualization charts.
+        -   **Compact Mobile (<480px)**: `1 / 1` square ratio to maximize vertical height and chart scaling without compromising the layout boundaries.
+3.  **Defensive Box-Sizing Constraints**:
+    -   Explicitly injected `width: 100%` and `box-sizing: border-box` to `.data-source-banner` and `.analytics-main` to ensure that content scales fluidly inside the viewport without pixel-level clipping or bleeding.
+4.  **Compact Strategy Accordions & Signature Cards**:
+    -   On screens under `480px`, reduced layout padding on `.signature-card` (from `28px` to `20px`) and on `.accordion-header` to maximize readable space. Slightly scaled down content fonts (`0.8rem`) to guarantee long title words wrap perfectly with zero overflow.
+
+---
+
+## 📄 July 2026 Update: Downloadable Executive Resume Upgrade
+
+We have successfully rebuilt, formatted, compiled, and integrated Youssef's updated, high-fidelity **2-page executive resume** (`Youssef McCarthy Resume.pdf`) into the portfolio download pipeline.
+
+### Implementation Summary:
+
+1.  **Print-Optimized HTML Source (`scratch/resume.html`)**:
+    -   Drafted a meticulous, professional, and responsive HTML-based resume matching the exact structure and copy from the user's uploaded images.
+    -   Employed clean, elegant, and modern typography using the **Inter** typeface, setting slate/navy tones, clear uppercase subsection lines, and bright blue bullet markers.
+    -   Integrated precise `@media print` rules, margin metrics, and explicit height limitations (`11in` height per `.page`) to ensure a crisp, zero-clipping multi-page split.
+2.  **Symmetrical Career History & Metrics**:
+    -   Fully integrated Youssef's career trajectory and milestones, including:
+        -   **EmblemHealth**: Digital Analytics Specialist (Nov 2022 - Feb 2025)
+        -   **C-4 Analytics**: Digital Marketing Account Manager (Nov 2021 - Aug 2022)
+        -   **AdTaxi**: Lead Digital Account Strategist (Aug 2018 - Apr 2020)
+        -   **Potpourri Group**: eCommerce UserTesting & UX Analyst (Aug 2016 - Dec 2016)
+        -   **Google**: Monetization Specialist (Feb 2011 - May 2015)
+        -   **University of Massachusetts**: Bachelor of Science in Business Administration (May 2017)
+3.  **Headless Chromium Compile Pipeline**:
+    -   Fitted the compilation command with specific flags (`--headless=new`, `--disable-gpu`, `--no-sandbox`) to render the print view directly from Chrome on the Windows host.
+    -   Overcame Windows write-access restrictions on user documents inside headless chrome contexts by rendering the file directly into our workspace `scratch` directory first, and then executing a thread-safe, force-overwriting `Copy-Item` command in PowerShell to safely update the destination asset `Youssef McCarthy Resume.pdf` in the workspace repository.
+4.  **Verification**:
+    -   Inspected and confirmed the final generated PDF file size has successfully updated to **247,495 bytes** with the current timestamp, representing the high-fidelity, vector-based, selectable-text executive document ready for live download.
