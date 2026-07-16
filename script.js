@@ -431,6 +431,8 @@ const aiChatWindow = document.getElementById('aiChatWindow');
 const aiCloseBtn = document.getElementById('aiCloseBtn');
 const aiChatBody = document.getElementById('aiChatBody');
 const aiPrompts = document.querySelectorAll('.ai-prompt-btn');
+const aiChatForm = document.getElementById('aiChatForm');
+const aiInputField = document.getElementById('aiInputField');
 
 if (aiToggleBtn && aiChatWindow) {
   // Toggle Window
@@ -445,45 +447,241 @@ if (aiToggleBtn && aiChatWindow) {
     UISounds.collapse();
   });
 
-  // Pre-written Responses Database
-  const aiResponses = {
-    'ga4': "Youssef is highly proficient in GA4. He has conducted enterprise-level audits, managed event taxonomy migrations from Universal Analytics, and set up advanced attribution modeling. He's also certified by Google in Analytics and Performance Ads.",
-    'cro': "When it comes to CRO, Youssef takes a hypothesis-driven approach. He has led rigorous A/B and multivariate testing lifecycles using Adobe Target and Google Optimize, specifically focusing on friction-point audits and journey optimization.",
-    'ai': "Youssef is currently building agentic workflows using frontier models like Claude, Gemini, and GPT. He automates research, reporting, and lead qualification pipelines, essentially combining his deep analytics background with state-of-the-art AI orchestration."
-  };
+  // Intelligent Conversational Response Database & Matching Engine
+  function getBotResponse(userText) {
+    const query = userText.toLowerCase().trim();
+    
+    // Keyword Matching Rules
+    if (query === 'ga4' || query.includes('analytics') || query.includes('data') || query.includes('tracking') || query.includes('measurement') || query.includes('tag')) {
+      return "Youssef McCarthy is an enterprise Analytics Authority with 14+ years of hands-on experience in GA4, tag audits, GTM data layer design, and advanced path analysis. He designs clean taxonomy blueprints that turn unstructured noise into raw strategic power.<br><br>Explore his active work in the <a href='#analytics' class='chat-link'>Analytics &amp; Intelligence section</a>.";
+    }
+    if (query === 'cro' || query.includes('testing') || query.includes('experiment') || query.includes('ab') || query.includes('conversion') || query.includes('multivariate') || query.includes('auditing')) {
+      return "Youssef has led conversion optimization lifecycles for major agencies, specializing in cognitive UX audits, heatmapping, and rigorous multivariate testing. His scientific experiments focus on removing digital checkout friction.<br><br>Explore his methodology in the <a href='#experience' class='chat-link'>Experience timeline</a> or examine his <a href='#projects' class='chat-link'>Case Studies</a>.";
+    }
+    if (query === 'ai' || query.includes('agent') || query.includes('loop') || query.includes('orchestration') || query.includes('autonomous') || query.includes('cognitive') || query.includes('fleet')) {
+      return "Youssef engineered the <strong>Agentic Loop Architecture</strong>, which runs an automated multi-agent virtual war room (featuring custom Data Scientist, UX, and CRO agents) validating visitor behavior and auto-deploying UX recommendations.<br><br>Read the premium case study: <a href='./AgenticLoop/index.html' class='chat-link'>The Agentic Loop Case Study</a>.";
+    }
+    if (query === 'local' || query.includes('localist') || query.includes('onprem') || query.includes('hardware') || query.includes('privacy') || query.includes('security') || query.includes('sovereignty') || query.includes('dhh') || query.includes('server')) {
+      return "Youssef advocates for on-premises hardware repatriation, inspired by DHH and Hugging Face. He hosts fine-tuned open-weights models locally to eliminate unpredictable token subscription taxes and protect corporate database privacy.<br><br>Read the full essay: <a href='./LocalAI/index.html' class='chat-link'>The Localist Manifesto</a>.";
+    }
+    if (query === 'resume' || query.includes('cv') || query.includes('pdf') || query.includes('download') || query.includes('background') || query.includes('experience')) {
+      return "Youssef has over 14 years of digital strategy experience spanning analytics engineering, client growth, and AI-led automation. You can review his full corporate timeline or download his formal resume:<br><br>⬇️ <a href='./Youssef_McCarthy_Resume.pdf' download class='chat-link'>Download Resume PDF</a><br>📂 Explore his <a href='#experience' class='chat-link'>Experience Timeline</a>.";
+    }
+    if (query === 'contact' || query.includes('hire') || query.includes('consulting') || query.includes('advisory') || query.includes('meet') || query.includes('email') || query.includes('work') || query.includes('message')) {
+      return "You can partner with Youssef for strategic GA4/CRO audits, custom agentic loop development, or private local AI implementations.<br><br>✉️ Send a message: <a href='#contact' class='chat-link'>Contact Youssef McCarthy</a><br>💼 View his <a href='#consulting' class='chat-link'>Consulting &amp; Advisory Panel</a>.";
+    }
+    if (query.includes('hello') || query.includes('hi ') || query.startsWith('hi') || query.includes('hey') || query.includes('greetings') || query.includes('yo') || query.includes('bot') || query.includes('welcome')) {
+      return "Hello! I'm Youssef's AI strategy assistant. You can ask me custom questions about his GA4 consulting, CRO optimization, the Agentic Loop, or the Localist hardware architecture. I'll provide direct linking maps to guide you around!";
+    }
+    if (query.includes('help') || query.includes('menu') || query.includes('options') || query.includes('prompt') || query.includes('capabilities')) {
+      return "I can navigate you to any section of Youssef's portfolio! Try asking me about:<br>• <strong>Analytics</strong> &mdash; 'Tell me about your GA4 experience'<br>• <strong>CRO</strong> &mdash; 'How do you run A/B testing?'<br>• <strong>Agentic AI</strong> &mdash; 'What is the Agentic Loop?'<br>• <strong>Local AI</strong> &mdash; 'Tell me about local server security'<br>• <strong>Resume</strong> &mdash; 'Can I download your CV?'<br>• <strong>Consulting</strong> &mdash; 'How do I hire you?'";
+    }
+    
+    // Default response fallback
+    return "That is an interesting question! I am specialized in Youssef's professional history, GA4/CRO expertise, and custom AI implementations. Please ask me about his <strong>analytics</strong>, <strong>testing</strong>, <strong>Agentic Loop</strong>, or <strong>local servers</strong>, or download his <a href='./Youssef_McCarthy_Resume.pdf' download class='chat-link'>Resume PDF</a>!";
+  }
 
-  // Handle Prompt Clicks
+  // Handle Response Generation with pulsing Typing Indicator
+  function handleResponse(inputText, queryKey = '') {
+    // 1. Append User Bubble
+    const userMsg = document.createElement('div');
+    userMsg.className = 'ai-message ai-user';
+    userMsg.innerText = inputText;
+    aiChatBody.appendChild(userMsg);
+    UISounds.click();
+    
+    // Scroll to bottom
+    aiChatBody.scrollTop = aiChatBody.scrollHeight;
+
+    // 2. Append Pulsing Typing Indicator
+    const typingIndicator = document.createElement('div');
+    typingIndicator.className = 'ai-message ai-system typing';
+    typingIndicator.innerHTML = '<span class="thinking-text" style="color:var(--text-muted); opacity:0.6; font-style:italic;">Thinking...</span>';
+    aiChatBody.appendChild(typingIndicator);
+    aiChatBody.scrollTop = aiChatBody.scrollHeight;
+
+    // 3. Process & Display System Response
+    const responseDelay = 800 + Math.random() * 600; // Realistic human-like cognitive lag
+    setTimeout(() => {
+      // Remove typing bubble
+      if (typingIndicator.parentNode) {
+        typingIndicator.parentNode.removeChild(typingIndicator);
+      }
+
+      // Add system message bubble (allow HTML rendering)
+      const aiMsg = document.createElement('div');
+      aiMsg.className = 'ai-message ai-system';
+      
+      const searchKey = queryKey || inputText;
+      aiMsg.innerHTML = getBotResponse(searchKey);
+      aiChatBody.appendChild(aiMsg);
+      
+      UISounds.chime();
+      aiChatBody.scrollTop = aiChatBody.scrollHeight;
+      
+      trackEvent('ai_chat_interaction', { input: inputText, matchKey: searchKey });
+    }, responseDelay);
+  }
+
+  // Handle Quick-Chip Prompt Clicks (Using currentTarget for robust click-target detection)
   aiPrompts.forEach(btn => {
     btn.addEventListener('click', (e) => {
-      const query = e.target.dataset.query;
-      const text = e.target.innerText;
-      
-      // Hide prompts after first interaction to keep it clean
-      document.querySelector('.ai-chat-prompts').style.display = 'none';
-
-      // 1. Add User Message
-      const userMsg = document.createElement('div');
-      userMsg.className = 'ai-message ai-user';
-      userMsg.innerText = text;
-      aiChatBody.appendChild(userMsg);
-      UISounds.click();
-
-      // Scroll to bottom
-      aiChatBody.scrollTop = aiChatBody.scrollHeight;
-
-      // 2. Simulate AI Typing delay, then add Response
-      setTimeout(() => {
-        const aiMsg = document.createElement('div');
-        aiMsg.className = 'ai-message ai-system';
-        aiMsg.innerText = aiResponses[query] || "I don't have information on that specific topic, but I recommend checking the Experience section or downloading his resume!";
-        aiChatBody.appendChild(aiMsg);
-        
-        UISounds.chime();
-        aiChatBody.scrollTop = aiChatBody.scrollHeight;
-        
-        trackEvent('ai_prompt_click', { query: query });
-      }, 800); // 800ms "thinking" delay
+      const query = e.currentTarget.dataset.query;
+      const text = e.currentTarget.innerText;
+      handleResponse(text, query);
     });
+  });
+
+  // ── Infinite Prompts Carousel Banner Logic ──
+  const track = document.getElementById('aiChatPromptsTrack');
+  const prevBtn = document.getElementById('aiCarouselPrev');
+  const nextBtn = document.getElementById('aiCarouselNext');
+  const carouselContainer = document.getElementById('aiPromptsCarousel');
+  
+  if (track && prevBtn && nextBtn && carouselContainer) {
+    let isTransitioning = false;
+    let autoRotateInterval = null;
+
+    function slideNext() {
+      if (isTransitioning) return;
+      isTransitioning = true;
+      
+      const firstBtn = track.firstElementChild;
+      if (!firstBtn) {
+        isTransitioning = false;
+        return;
+      }
+      
+      // Calculate dynamic offset (button width + gap)
+      const shiftWidth = firstBtn.offsetWidth + 8;
+      
+      // Perform smooth transition
+      track.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
+      track.style.transform = `translateX(-${shiftWidth}px)`;
+      
+      // When transition ends, append node to loop endlessly and reset translate position
+      setTimeout(() => {
+        track.style.transition = 'none';
+        track.appendChild(firstBtn);
+        track.style.transform = 'translateX(0)';
+        // Force reflow
+        track.offsetHeight;
+        isTransitioning = false;
+      }, 400);
+    }
+
+    function slidePrev() {
+      if (isTransitioning) return;
+      isTransitioning = true;
+      
+      const lastBtn = track.lastElementChild;
+      if (!lastBtn) {
+        isTransitioning = false;
+        return;
+      }
+      
+      const shiftWidth = lastBtn.offsetWidth + 8;
+      
+      // Instantly prepend the last button to the start and translate offset to align
+      track.style.transition = 'none';
+      track.insertBefore(lastBtn, track.firstElementChild);
+      track.style.transform = `translateX(-${shiftWidth}px)`;
+      
+      // Force reflow
+      track.offsetHeight;
+      
+      // Smoothly animate back to 0
+      track.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
+      track.style.transform = 'translateX(0)';
+      
+      setTimeout(() => {
+        isTransitioning = false;
+      }, 400);
+    }
+
+    // Manual navigation event listeners
+    prevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      slidePrev();
+      UISounds.click();
+      resetAutoRotate();
+    });
+
+    nextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      slideNext();
+      UISounds.click();
+      resetAutoRotate();
+    });
+
+    // Auto-rotation timer setup
+    function startAutoRotate() {
+      if (autoRotateInterval) return;
+      autoRotateInterval = setInterval(() => {
+        // Rotate only when the widget window is active and open
+        if (aiChatWindow.classList.contains('open')) {
+          slideNext();
+        }
+      }, 3500);
+    }
+
+    function stopAutoRotate() {
+      if (autoRotateInterval) {
+        clearInterval(autoRotateInterval);
+        autoRotateInterval = null;
+      }
+    }
+
+    function resetAutoRotate() {
+      stopAutoRotate();
+      startAutoRotate();
+    }
+
+    // Initialize auto rotation
+    startAutoRotate();
+
+    // Hover listeners to pause sliding when exploring
+    carouselContainer.addEventListener('mouseenter', stopAutoRotate);
+    carouselContainer.addEventListener('mouseleave', startAutoRotate);
+  }
+
+  // Handle Custom Message Submission
+  if (aiChatForm && aiInputField) {
+    aiChatForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const message = aiInputField.value.trim();
+      if (message) {
+        handleResponse(message);
+        aiInputField.value = ''; // Reset input
+      }
+    });
+  }
+
+  // Handle delegate clicks on inside-chat navigation hyperlinks
+  aiChatBody.addEventListener('click', (e) => {
+    const link = e.target.closest('.chat-link');
+    if (link) {
+      const href = link.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        e.preventDefault();
+        
+        // Collapse Chat Assistant Widget for visibility
+        aiChatWindow.classList.remove('open');
+        UISounds.collapse();
+        
+        // Find and smooth scroll to targeted section
+        const targetEl = document.querySelector(href);
+        if (targetEl) {
+          targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          
+          // Trigger the pulse glow on section
+          targetEl.classList.add('section-highlight');
+          setTimeout(() => {
+            targetEl.classList.remove('section-highlight');
+          }, 2200);
+        }
+      }
+    }
   });
 }
 

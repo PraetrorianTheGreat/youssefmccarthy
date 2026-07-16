@@ -1406,8 +1406,8 @@ body.light-theme .path-card { background: rgba(255,255,255,0.9); }
   position: absolute;
   bottom: 80px;
   left: 0;
-  width: 320px;
-  height: 400px;
+  width: 360px;
+  height: 500px;
   background: rgba(10, 14, 26, 0.95);
   backdrop-filter: blur(20px);
   border: 1px solid var(--border-glass);
@@ -1421,6 +1421,7 @@ body.light-theme .path-card { background: rgba(255,255,255,0.9); }
   transform: translateY(20px) scale(0.95);
   transform-origin: bottom left;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1000;
 }
 
 .ai-chat-window.open {
@@ -1510,15 +1511,67 @@ body.light-theme .path-card { background: rgba(255,255,255,0.9); }
   border-bottom-right-radius: 4px;
 }
 
-.ai-chat-prompts {
-  padding: 12px;
-  border-top: 1px solid var(--border-glass);
+.ai-prompts-carousel-container {
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
+  border-top: 1px solid var(--border-glass);
+  background: rgba(255, 255, 255, 0.02);
+  padding: 8px 6px;
+  user-select: none;
+  position: relative;
+}
+
+.ai-chat-prompts-viewport {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  padding: 4px 0;
+}
+
+.ai-chat-prompts-track {
+  display: flex;
   gap: 8px;
+  will-change: transform;
+  transform: translateX(0);
+}
+
+.ai-carousel-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-glass);
+  border-radius: 50%;
+  color: var(--text-muted);
+  width: 26px;
+  height: 26px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.ai-carousel-btn:hover {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: var(--accent-light);
+  color: var(--text-primary);
+  transform: scale(1.1);
+}
+
+.ai-carousel-btn:active {
+  transform: scale(0.9);
+}
+
+.ai-carousel-btn.prev {
+  margin-right: 4px;
+}
+
+.ai-carousel-btn.next {
+  margin-left: 4px;
 }
 
 .ai-prompt-btn {
+  flex-shrink: 0;
   background: var(--bg-glass);
   border: 1px solid var(--border-glass);
   color: var(--accent-light);
@@ -1536,9 +1589,86 @@ body.light-theme .path-card { background: rgba(255,255,255,0.9); }
   color: var(--text-primary);
 }
 
+/* New Form and Input Component Classes */
+.ai-chat-input-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  border-top: 1px solid var(--border-glass);
+  background: rgba(5, 8, 16, 0.5);
+}
+
+#aiInputField {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-glass);
+  border-radius: 20px;
+  padding: 8px 16px;
+  color: var(--white);
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
+}
+
+#aiInputField:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.15);
+}
+
+#aiSendBtn {
+  background: var(--accent);
+  border: none;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bg);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+#aiSendBtn:hover {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-glow);
+}
+
+#aiSendBtn svg {
+  stroke: var(--bg);
+}
+
+/* Floating navigation hyperlinks */
+.chat-link {
+  color: var(--accent-light);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.chat-link:hover {
+  color: var(--accent);
+}
+
+/* Scroll highlighting target animations */
+@keyframes highlight-glow {
+  0% { box-shadow: 0 0 0px transparent; }
+  50% { box-shadow: 0 0 25px rgba(59, 130, 246, 0.45); border-color: var(--accent); }
+  100% { box-shadow: 0 0 0px transparent; }
+}
+
+.section-highlight {
+  animation: highlight-glow 2.2s ease-in-out;
+}
+
 @media (max-width: 600px) {
   .ai-widget-container { bottom: 20px; left: 20px; }
-  .ai-chat-window { width: calc(100vw - 40px); bottom: 70px; }
+  .ai-chat-window { width: calc(100vw - 40px); bottom: 70px; height: 420px; }
 }
 
 /* ── Live Analytics Teaser Section (Homepage Integration) ── */

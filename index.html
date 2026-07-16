@@ -727,11 +727,45 @@
         <p class="section-subtitle">Deep dives into the intersection of AI, analytics, and digital anthropology</p>
       </div>
       <div class="editorials-list">
-        <!-- Editorial 1: Garbage Internet -->
+        <!-- Editorial 1: The Localist Manifesto -->
+        <div class="editorial-card reveal" onclick="window.location.href='./LocalAI/index.html'">
+          <div class="editorial-image">
+            <img src="./LocalAI/images/local_ai_server.png" alt="Glowing localized bare-metal on-premise compute block mockup" />
+            <div class="editorial-tag">New &amp; Featured Essay</div>
+          </div>
+          <div class="editorial-content">
+            <div class="editorial-meta">12 MIN READ &bull; AI INFRASTRUCTURE &bull; JULY 2026</div>
+            <h3 class="editorial-title">The Localist Manifesto: Why Cloud AI is a Financial Trap</h3>
+            <p class="editorial-excerpt">How proprietary cloud-based AI APIs can become a massive, cost-inefficient bottleneck, and why running localized, open-weights models on-premises is the future of privacy, security, and strategic engineering control.</p>
+            <div class="editorial-footer">
+              <span class="view-article">Read Essay &rarr;</span>
+              <div class="audio-badge">&#128266; AI Narrated</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Editorial 2: The Agentic Loop -->
+        <div class="editorial-card reveal" onclick="window.location.href='./AgenticLoop/index.html'">
+          <div class="editorial-image">
+            <img src="./AgenticLoop/images/agentic_loop.png" alt="Youssef McCarthy Agentic Loop Architecture Blueprint" />
+            <div class="editorial-tag">Featured Case Study</div>
+          </div>
+          <div class="editorial-content">
+            <div class="editorial-meta">12 MIN READ &bull; AI ORCHESTRATION &bull; JULY 2026</div>
+            <h3 class="editorial-title">The Agentic Loop: Replicating Cross-Functional Agency Synergy with AI Teams</h3>
+            <p class="editorial-excerpt">How I engineered a self-optimizing ecosystem that ingests real-time web analytics, orchestrates a collaborative digital war room of specialized AI agents, and deploys code-level UX changes with human-in-the-loop oversight.</p>
+            <div class="editorial-footer">
+              <span class="view-article">Read Case Study &rarr;</span>
+              <div class="audio-badge">&#128266; AI Narrated</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Editorial 3: Garbage Internet -->
         <div class="editorial-card reveal" onclick="window.location.href='./GarbageInternet/index.html'">
           <div class="editorial-image">
             <img src="./GarbageInternet/images/hero.png" alt="Man at a cluttered desk consuming digital news" />
-            <div class="editorial-tag">New &amp; Featured</div>
+            <div class="editorial-tag">Featured Essay</div>
           </div>
           <div class="editorial-content">
             <div class="editorial-meta">15 MIN READ &bull; AI STRATEGY &bull; MAY 2026</div>
@@ -1195,21 +1229,41 @@ document.addEventListener("DOMContentLoaded", function() {
           <span class="ai-header-icon">🤖</span>
           <div>
             <h4>YM Agentic Assistant</h4>
-            <p>Ask about Youssef's experience</p>
+            <p>Direct Interactive Guide</p>
           </div>
         </div>
         <button class="ai-close-btn" id="aiCloseBtn">&times;</button>
       </div>
       <div class="ai-chat-body" id="aiChatBody">
         <div class="ai-message ai-system">
-          <p>Hi! I'm Youssef's AI assistant. How can I help you evaluate his background today?</p>
+          <p>Hi! I'm Youssef's strategic AI guide. Ask me anything about his GA4 metrics, CRO tests, agentic loop architectures, or download his resume directly. I can navigate you across his portfolio using direct jumping links!</p>
         </div>
       </div>
-      <div class="ai-chat-prompts">
-        <button class="ai-prompt-btn" data-query="ga4">Experience with GA4?</button>
-        <button class="ai-prompt-btn" data-query="cro">CRO & A/B Testing</button>
-        <button class="ai-prompt-btn" data-query="ai">Agentic AI Skills</button>
+      <!-- Sliding Prompts Carousel Banner -->
+      <div class="ai-prompts-carousel-container" id="aiPromptsCarousel">
+        <button type="button" class="ai-carousel-btn prev" id="aiCarouselPrev" aria-label="Previous Prompt">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <div class="ai-chat-prompts-viewport" id="aiChatPromptsViewport">
+          <div class="ai-chat-prompts-track" id="aiChatPromptsTrack">
+            <button type="button" class="ai-prompt-btn" data-query="ga4">📊 GA4 &amp; Analytics</button>
+            <button type="button" class="ai-prompt-btn" data-query="cro">📈 CRO Strategy</button>
+            <button type="button" class="ai-prompt-btn" data-query="ai">🤖 Agentic Loop</button>
+            <button type="button" class="ai-prompt-btn" data-query="local">🔒 Localist AI</button>
+            <button type="button" class="ai-prompt-btn" data-query="resume">📄 Download Resume</button>
+            <button type="button" class="ai-prompt-btn" data-query="contact">✉️ Hire Youssef</button>
+          </div>
+        </div>
+        <button type="button" class="ai-carousel-btn next" id="aiCarouselNext" aria-label="Next Prompt">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
       </div>
+      <form class="ai-chat-input-container" id="aiChatForm">
+        <input type="text" id="aiInputField" placeholder="Type a message or click a prompt..." autocomplete="off" required>
+        <button type="submit" id="aiSendBtn" aria-label="Send message">
+          <svg viewBox="0 0 24 24" width="16" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+        </button>
+      </form>
     </div>
   </div>
 

@@ -1,0 +1,525 @@
+<!-- Version 1.0.1 - Agentic Loop Editorial Final -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Agentic Loop: Replicating Agency Synergy with AI Teams — Youssef McCarthy</title>
+  <meta name="description" content="How Youssef McCarthy engineered a self-optimizing loop that ingests real-time web analytics, orchestrates collaboration among specialized AI agents, and automates high-impact UX improvements with human oversight.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,600;1,700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Reading Progress -->
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- Masthead -->
+  <header class="masthead">
+    <div class="masthead__inner">
+      <div class="masthead__title">Youssef McCarthy <span>//</span> Agentic AI</div>
+      <div class="masthead__tag">Strategy &mdash; Case Study</div>
+    </div>
+  </header>
+
+  <!-- Hero Header -->
+  <section class="hero fade-in">
+    <div class="hero__label">Agentic AI &amp; CRO</div>
+    <h1 class="hero__headline">The Agentic Loop: Replicating Cross-Functional Agency Synergy with AI Teams</h1>
+    <p class="hero__subtitle">How I engineered a self-optimizing ecosystem that captures real-time web analytics, orchestrates a collaborative digital war room of specialized AI agents, and deploys code-level UX changes with human-in-the-loop oversight.</p>
+    <div class="hero__meta">
+      <span>By <strong>Youssef McCarthy</strong></span>
+      <span>Digital Analytics &amp; AI Strategist</span>
+      <span>July 2026</span>
+      <button class="audio-trigger" id="audioTrigger">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+        Listen to Case Study
+      </button>
+    </div>
+  </section>
+
+  <!-- Audio Control Bar -->
+  <div class="audio-player" id="audioPlayer">
+    <div class="audio-player__inner">
+      <div class="audio-player__info">
+        <div class="audio-player__status">Reading Assistant <span id="voiceStatus" style="color:var(--accent); font-weight:700; font-size:0.65rem; margin-left:8px; border:1px solid rgba(0, 240, 255, 0.3); padding:1px 6px; border-radius:4px; background:rgba(0, 240, 255, 0.05); font-family:var(--font-sans);">Neural Voice</span></div>
+        <div class="audio-player__title" id="audioTitle">The Agentic Loop Strategy</div>
+        <div class="audio-player__progress-container" id="audioProgressContainer" style="display:none; width:100%; height:4px; background:rgba(255,255,255,0.08); margin-top:8px; border-radius:2px; cursor:pointer;">
+          <div class="audio-player__progress-bar" id="audioProgressBar" style="height:100%; background:var(--accent); width:0%; border-radius:2px; box-shadow:0 0 4px var(--accent);"></div>
+        </div>
+      </div>
+      <div class="audio-player__controls">
+        <button id="audioRewind" title="Back 10s"><svg viewBox="0 0 24 24" width="18"><path fill="currentColor" d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button>
+        <button id="audioToggle" class="main-btn" title="Play/Pause"><svg id="playIcon" viewBox="0 0 24 24" width="24" style="fill:var(--bg);"><path d="M8 5v14l11-7z"/></svg><svg id="pauseIcon" style="display:none; fill:var(--bg);" viewBox="0 0 24 24" width="24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg></button>
+        <button id="audioForward" title="Forward 10s"><svg viewBox="0 0 24 24" width="18"><path fill="currentColor" d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button>
+      </div>
+    </div>
+    <!-- Settings Menu -->
+    <div class="audio-settings" id="audioSettings">
+      <div class="audio-settings__group">
+        <label>Narrator Mode</label>
+        <div class="audio-settings__toggle-group" style="display:flex; background:rgba(255,255,255,0.05); border-radius:8px; padding:2px; border:1px solid rgba(255,255,255,0.08);">
+          <button id="srcAI" class="toggle-btn active" style="flex:1; border:none; background:none; color:var(--white); font-family:var(--font-sans); font-size:0.65rem; padding:6px; cursor:pointer; border-radius:6px; font-weight:700;">✨ SYSTEM AI</button>
+          <button id="srcHuman" class="toggle-btn" style="flex:1; border:none; background:none; color:var(--white); font-family:var(--font-sans); font-size:0.65rem; padding:6px; cursor:pointer; border-radius:6px; font-weight:700; opacity:0.3;">👤 HUMAN MP3</button>
+        </div>
+      </div>
+      <div class="audio-settings__group" id="voiceGroup">
+        <label>AI Voice Profile</label>
+        <select id="voiceSelect"></select>
+      </div>
+      <div class="audio-settings__group">
+        <label>Narrative Speed</label>
+        <input type="range" id="speedRange" min="0.5" max="2" step="0.1" value="0.95">
+        <div style="display:flex; justify-content:space-between; margin-top:6px; font-family:var(--font-sans); font-size:0.65rem;">
+          <span style="color:var(--text-light);">Steady Pace</span>
+          <span id="speedVal" style="font-weight:800; color:var(--accent);">0.95x</span>
+          <span style="color:var(--text-light);">Rapid Scan</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero Image -->
+  <div class="hero-image fade-in">
+    <figure>
+      <img src="images/agentic_loop.png" alt="Youssef McCarthy Agentic Loop Architecture Blueprint" loading="eager">
+      <figcaption>Figure 1: The Youssef McCarthy Agentic Loop Architecture. A continuous, automated data-ingestion, multi-agent collaboration, and execution ecosystem with human-in-the-loop oversight.</figcaption>
+    </figure>
+  </div>
+
+  <!-- Article Body -->
+  <article class="article">
+
+    <!-- Lede -->
+    <p class="lead-in fade-in">
+      Even as digital growth teams congratulate themselves on an explosion of real-time dashboards, the persistent bottleneck of modern conversion rate optimization remains unchanged: raw web analytics sit idle in databases, waiting for human strategists to extract, analyze, and act upon them. In traditional agency models, this is a slow, siloed, and error-prone process. To scale the high-impact synergy of a cross-functional human team, I engineered an automated Agentic Loop Architecture that orchestrates specialized AI agents to continually collect behavior, strategize UX interventions, and execute code improvements with human oversight.
+    </p>
+
+    <!-- Project Team image — floated left -->
+    <figure class="inline-image inline-image--left fade-in">
+      <img src="images/agentic_team_dashboard.png" alt="Sleek dashboard showing collaborative AI agent nodes">
+      <figcaption>The digital war room: Specialised AI agents collaborating in real-time to analyze user friction.</figcaption>
+    </figure>
+
+    <p class="fade-in">
+      The most powerful insights happen when you have a cross-functional team—data scientists, CRO experts, and UX strategists—collaborating and looking at the same data from different angles. However, scaling such human collaboration is immensely expensive and constrained by latency. A data scientist detects an anomaly on Monday, but the UX team doesn't draft a review until Thursday, and the developer doesn't deploy a test until the following month. By then, thousands of visitors have bounced.
+    </p>
+
+    <p class="fade-in">
+      The Agentic Loop solves this structural latency by replacing manual handoffs with a continuous, automated workflow. By leveraging specialized AI agent personas working in a shared digital environment, the system replicates the collaborative strengths of an agency team—analyzing web traffic, identifying structural blockages, drafting visual alternatives, and committing updates to production in a fraction of the time.
+    </p>
+
+    <p class="fade-in clearfix">
+      This is the transition from passive tracking to active orchestration. Instead of looking backward at historical charts, the website behaves as a living, self-optimizing digital asset. The data is not just read—it is acted upon. This establishes a continuous loop of collection, analysis, recommendation, and execution that fuels exponential conversion growth.
+    </p>
+
+    <!-- Pull Quote -->
+    <div class="pull-quote fade-in">
+      <blockquote>
+        We are shifting from passive analytics dashboards to active, self-optimizing ecosystems where data directly triggers structural code improvements.
+      </blockquote>
+    </div>
+
+    <p class="fade-in">
+      Importantly, this is not about removing human control. By acting as the strategic director, the human-in-the-loop ensures brand consistency and visual excellence, while the agentic team handles the heavy lifting of statistical analysis and routine coding. It represents the perfect partnership between human judgment and artificial execution.
+    </p>
+
+    <!-- ════════════ SECTION: INGESTION ════════════ -->
+    <div class="section-break fade-in">
+      <h2>1. Ingestion as a Weekly Catalyst</h2>
+    </div>
+
+    <p class="fade-in">
+      The foundation of any strategic optimization is high-fidelity data. My portfolio site captures real-time visitor behaviors, page views, traffic sources, scroll depth, and form submissions. Historically, this data sits in Google Analytics or Adobe Analytics, waiting for a monthly report.
+    </p>
+
+    <p class="fade-in">
+      In the Agentic Loop Architecture, I engineered a weekly automated trigger. This trigger acts as a scheduler that grabs the raw analytics, structures and formats the behavioral data, and prepares it for ingestion by our AI team. This ensures that the analytical models are always fed with fresh, structured, and relevant performance telemetry without any manual export-import hassle.
+    </p>
+
+    <p class="fade-in">
+      By automating this data collection pipeline, we convert passive tracking into a weekly pulse. The moment the formatted dataset is ready, the system fires an event that awakens the specialized agents, starting the collaboration phase.
+    </p>
+
+    <p class="emphasis fade-in clearfix">
+      Raw data is the fuel of optimization, but scheduled, structured ingestion is the spark.
+    </p>
+
+    <!-- ════════════ SECTION: WAR ROOM ════════════ -->
+    <div class="section-break fade-in">
+      <h2>2. The Digital War Room: The Agentic Analytics Team</h2>
+    </div>
+
+    <p class="fade-in">
+      To recreate the collaborative synergy of agency specialists, the architecture structures a team of specialized AI agents: a Data Scientist Agent, a UX Analyst Agent, and a CRO Strategist Agent. Rather than analyzing data in isolated silos, they operate in a shared digital workspace.
+    </p>
+
+    <!-- Ingestion interface — floated right -->
+    <figure class="inline-image inline-image--right fade-in">
+      <img src="images/executive_approval_ui.png" alt="Clean email interface displaying the approve changes report">
+      <figcaption>Human-in-the-Loop review: A simplified dashboard displaying prioritized, high-impact suggestions with direct execution controls.</figcaption>
+    </figure>
+
+    <p class="fade-in">
+      When the ingestion trigger fires, the collaboration runs as follows:
+    </p>
+
+    <p class="fade-in">
+      The <strong>Data Scientist Agent</strong> runs anomaly detection algorithms. It spots that mobile bounce rates on a key project page have spiked by 15% week-over-week. It immediately posts this statistical anomaly to the shared war room.
+    </p>
+
+    <p class="fade-in">
+      The <strong>UX Analyst Agent</strong> reads this anomaly and immediately references the page's structural layout and load-time metrics. It correlates the bounce rate spike with slow mobile rendering caused by heavy uncompressed assets.
+    </p>
+
+    <p class="fade-in">
+      The <strong>CRO Strategist Agent</strong> synthesizes these insights. It notes that the primary call-to-action button is pushed below the fold on mobile screens due to this slow render. It immediately drafts a recommendation: aggressively compress header images, adjust the CSS to pull the CTA button above the fold, and increase button contrast.
+    </p>
+
+    <p class="fade-in clearfix">
+      This multi-agent conversation allows individual findings to be synthesized into an end-to-end business recommendation. Instead of a developer sorting through page speeds and an analyst reviewing bounce rates, the agents discuss the intersection of both, resulting in a cohesive conversion strategy.
+    </p>
+
+    <!-- The Unconstrained Digital Team Conceptual Expansion -->
+    <h3 class="fade-in" style="font-family:var(--font-sans); color:var(--accent); font-size:0.95rem; margin-top:32px; letter-spacing:1px; text-transform:uppercase; font-weight:700;">Beyond the Front Veil: My Personal Agentic Fleet</h3>
+    <p class="fade-in">
+      It is critical to recognize that while this case study highlights three core agent personas—the Data Scientist, UX Analyst, and CRO Strategist—this trio is merely a representative front veil. It serves as a simplified, human-digestible interface for what is actually occurring under the hood of my setup. In my personal, active deployment of this architecture, the orchestration layer is significantly more expansive, operating far beyond these three foundational roles.
+    </p>
+    <p class="fade-in">
+      The actual AI team I have engineered and run personally leverages a vast, coordinated fleet of specialized sub-agents working in concert. Before any recommendation is compiled for executive review, these agents collaborate, debate, and stress-test strategic hypotheses within a shared cognitive environment. This personal deployment orchestrates specialized, multi-disciplinary agent clusters—ranging from predictive behavioral models, accessibility compliance checkers, and brand copy-tone validators, to micro-performance profiling engines, automated regression-testing loops, and localized personalization layers. Together, they form a highly integrated digital intelligence ecosystem that far exceeds the analytical limits of standard agency frameworks, resolving complex telemetry into clear, human-approved strategic directives.
+    </p>
+
+    <!-- ════════════ SECTION: RECOMMENDATIONS ════════════ -->
+    <div class="section-break fade-in">
+      <h2>3. AI-Driven Strategy Recommendations</h2>
+    </div>
+
+    <p class="fade-in">
+      In most analytic platforms, the output is a set of complicated dashboards that require hours of analysis. The Agentic Loop abstracts this complexity entirely. The output of the multi-agent collaboration is delivered as a clean, prioritized **Weekly Performance Report & Strategy Recommendations** directly to my inbox.
+    </p>
+
+    <p class="fade-in">
+      Instead of complex, dry log files, the system delivers direct, high-impact tactical actions:
+    </p>
+
+    <ul class="regulation-list fade-in" style="list-style:none;">
+      <li style="margin-bottom:24px;">
+        <strong>Anomaly: Mobile Bounce Rate Spike</strong>
+        <p>Recommended Action: Adjust the styling variables of the Hero section in `index.html` to pull the secondary CTA button above the fold for mobile screens, and compress project portfolio images by 40%.</p>
+      </li>
+      <li style="margin-bottom:24px;">
+        <strong>Insight: Engagement Drop on Contact Form</strong>
+        <p>Recommended Action: Reposition the contact form and adjust label padding in `style.css` to increase form visibility and readability on desktop and tablet viewports.</p>
+      </li>
+      <li style="margin-bottom:24px;">
+        <strong>Opportunity: Traffic Increase from LinkedIn</strong>
+        <p>Recommended Action: Deploy an A/B test of a tailored intro paragraph in `index.html` speaking directly to digital marketing and product directors.</p>
+      </li>
+    </ul>
+
+    <p class="fade-in">
+      By prioritizing these actions by estimated impact and technical effort, the system lets the strategist focus on what matters most: assessing the recommendations against brand goals and ensuring high-level alignment.
+    </p>
+
+    <!-- ════════════ SECTION: EXECUTIVE REVIEW ════════════ -->
+    <div class="section-break fade-in">
+      <h2>4. Executive Review & Automated Execution</h2>
+    </div>
+
+    <p class="fade-in">
+      As a strategist, I believe that complete automation without human oversight is dangerous. Brand tone, visual style, and ethical considerations require human judgment. Therefore, the Agentic Loop operates strictly with a **Human-in-the-Loop (HITL)** architecture.
+    </p>
+
+    <p class="fade-in">
+      I act as the executive director. When the Weekly Performance Report arrives, I review the AI's recommendations. If a recommendation aligns with our strategic direction—such as modifying a CTA button's visual design—I simply click **"Approve Changes"** in the dashboard.
+    </p>
+
+    <p class="fade-in">
+      This approval triggers the final stage: **Automated Execution**. The system's code-generation engine writes the exact code updates, runs a local test suite to verify page integrity, and commits the changes directly to my GitHub repository. Within minutes, the updated site is deployed, immediately improving the user experience for the next visitor.
+    </p>
+
+    <p class="fade-in clearfix">
+      This closes the loop. From real-time visitor behavior to collaborative agent analysis, human-approved optimization, and automated code deployment, the website adapts dynamically to user needs.
+    </p>
+
+    <!-- ════════════ SECTION: THE VALUE ════════════ -->
+    <div class="section-break fade-in">
+      <h2>The Value of Digital Stewardship</h2>
+    </div>
+
+    <p class="fade-in">
+      Building this Agentic Loop is not just an exercise in engineering; it is a demonstration of how we can scale conversion rate optimization. By combining the analytical depth of multi-model orchestration with the speed of automated git deployment, we can achieve:
+    </p>
+
+    <ol class="regulation-list fade-in">
+      <li>
+        <strong>Zero Insights Latency</strong>
+        <p>Anomalies are detected, analyzed, and solved in hours, not weeks—preventing traffic loss and protecting marketing ROI.</p>
+      </li>
+      <li>
+        <strong>Cross-Functional Integrity</strong>
+        <p>Decisions are made at the intersection of data science, UX design, and CRO strategy, avoiding myopic or purely technical changes.</p>
+      </li>
+      <li>
+        <strong>Complete Strategic Control</strong>
+        <p>The strategist remains in full command, using AI as an intellectual and operational amplifier rather than a replacement.</p>
+      </li>
+    </ol>
+
+    <p class="fade-in">
+      This loop is a scalable framework that demonstrates my ability to bridge the gap between technical web analytics, AI orchestration, and real-world conversion strategy. This is the exact forward-thinking, automated approach I want to bring to your team's digital marketing and optimization goals.
+    </p>
+
+    <!-- End Mark -->
+    <div class="end-mark">&diams; &diams; &diams;</div>
+
+    <!-- Final CTA -->
+    <div class="article-cta fade-in">
+      <div class="article-cta__card">
+        <div class="article-cta__label">About the Author</div>
+        <h3>Youssef McCarthy</h3>
+        <p>I am a digital strategist and analytics expert with over 14 years of experience leading conversion rate optimization (CRO) and advanced data architectures. I build self-optimizing agentic systems that bridge human creativity and technical automation.</p>
+        <a href="../index.html" class="cta-button">
+          <span>Return to Portfolio</span>
+          <svg viewBox="0 0 24 24" width="20" style="fill:var(--bg);"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        </a>
+      </div>
+    </div>
+
+  </article>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer__brand">THE AGENTIC LOOP <span>//</span> YOUSSEF MCCARTHY</div>
+    <p class="footer__copy">&copy; 2026 Youssef McCarthy &mdash; Agentic AI Orchestration Case Study</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Reading progress bar
+    window.addEventListener('scroll', () => {
+      const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const progress = (scrollTop / scrollHeight) * 100;
+      document.getElementById('progressBar').style.width = progress + '%';
+    });
+
+    // Scroll-triggered fade-in animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // --- Audio Narrative Engine (Hybrid TTS-Focused) ---
+    const synth = window.speechSynthesis;
+    const audioTrigger = document.getElementById('audioTrigger');
+    const audioPlayer = document.getElementById('audioPlayer');
+    const audioToggle = document.getElementById('audioToggle');
+    const audioRewind = document.getElementById('audioRewind');
+    const audioForward = document.getElementById('audioForward');
+    const voiceStatus = document.getElementById('voiceStatus');
+    const voiceSelect = document.getElementById('voiceSelect');
+    const voiceGroup = document.getElementById('voiceGroup');
+    const speedRange = document.getElementById('speedRange');
+    const speedVal = document.getElementById('speedVal');
+    const progressContainer = document.getElementById('audioProgressContainer');
+    const progressBar = document.getElementById('audioProgressBar');
+    const playIcon = document.getElementById('playIcon');
+    const pauseIcon = document.getElementById('pauseIcon');
+    const srcAI = document.getElementById('srcAI');
+    const srcHuman = document.getElementById('srcHuman');
+
+    let isPlaying = false;
+    let mode = 'tts'; // 'tts' (as primary) or 'hq'/'human'
+    let textChunks = [];
+    let currentChunkIndex = 0;
+    let currentVoice = null;
+    let currentSpeed = 0.95;
+
+    // Source Paths (Prepared for future pre-recorded high quality narrative)
+    const AI_MP3 = 'images/narration.mp3';
+    const HUMAN_MP3 = 'images/human_narration.mp3';
+
+    function checkSources() {
+      // In this version, we focus directly on standard Web Speech API TTS.
+      // If a pre-recorded file is detected in the future, it can be loaded.
+      mode = 'tts';
+      progressContainer.style.display = 'none';
+      populateVoices();
+    }
+
+    srcAI.addEventListener('click', () => {
+      stopReading();
+      mode = 'tts';
+      srcAI.classList.add('active');
+      srcHuman.classList.remove('active');
+      voiceStatus.innerText = '✨ AI System Voice';
+      voiceGroup.style.display = 'block';
+      progressContainer.style.display = 'none';
+    });
+
+    srcHuman.addEventListener('click', () => {
+      alert("A pre-recorded high-fidelity MP3 file was not found. Reverting to automated Web Speech TTS.");
+      mode = 'tts';
+    });
+
+    function populateVoices() {
+      if (typeof speechSynthesis === 'undefined') return;
+      const voices = synth.getVoices();
+      voiceSelect.innerHTML = '';
+      const sortedVoices = voices.filter(v => v.lang.startsWith('en')).sort((a,b) => b.name.includes('Neural') - a.name.includes('Neural'));
+      sortedVoices.forEach(v => {
+        const option = document.createElement('option');
+        const isAI = v.name.includes('Neural') || v.name.includes('Google') || v.name.includes('Natural');
+        option.textContent = `${isAI ? '✨ ' : ''}${v.name}`;
+        option.value = v.name;
+        if (!currentVoice && isAI) { 
+          currentVoice = v; 
+          updateVoiceStatus(v.name); 
+        }
+        voiceSelect.appendChild(option);
+      });
+      if (!currentVoice && sortedVoices.length > 0) {
+        currentVoice = sortedVoices[0];
+        updateVoiceStatus(currentVoice.name);
+      }
+    }
+
+    function updateVoiceStatus(name) {
+      if (mode !== 'tts') return;
+      const isAI = name.includes('Neural') || name.includes('Online') || name.includes('Google') || name.includes('Natural');
+      voiceStatus.innerText = (isAI ? '✨ AI ' : '') + name.split(' ')[0];
+    }
+
+    voiceSelect.addEventListener('change', () => {
+      const voices = synth.getVoices();
+      currentVoice = voices.find(v => v.name === voiceSelect.value);
+      updateVoiceStatus(currentVoice.name);
+      if (isPlaying && mode === 'tts') { 
+        synth.cancel(); 
+        playNextChunk(); 
+      }
+    });
+
+    speedRange.addEventListener('input', () => {
+      currentSpeed = parseFloat(speedRange.value);
+      speedVal.innerText = currentSpeed + 'x';
+      if (isPlaying && mode === 'tts') { 
+        synth.cancel(); 
+        playNextChunk(); 
+      }
+    });
+
+    function prepareText() {
+      const chunks = [];
+      chunks.push({ text: document.querySelector('.hero__headline').innerText, type: 'headline' });
+      chunks.push({ text: document.querySelector('.hero__subtitle').innerText, type: 'subtitle' });
+      
+      const content = document.querySelectorAll('.article p, .article h2, .article li, .pull-quote blockquote');
+      content.forEach(el => {
+        if (!el.closest('figcaption')) {
+          const textVal = el.innerText.trim();
+          if (textVal) {
+            // Split into sentences carefully
+            const sentences = textVal.match(/[^\.!\?]+[\.!\?]+/g) || [textVal];
+            sentences.forEach(s => {
+              if (s.trim()) {
+                chunks.push({ text: s.trim(), type: el.tagName.toLowerCase() });
+              }
+            });
+          }
+        }
+      });
+      return chunks;
+    }
+
+    function playNextChunk() {
+      if (currentChunkIndex >= textChunks.length) { 
+        stopReading(); 
+        return; 
+      }
+      const chunk = textChunks[currentChunkIndex];
+      const utterance = new SpeechSynthesisUtterance(chunk.text);
+      
+      // Add minor speed and pitch variation to sound more natural
+      const variance = (Math.random() * 0.1) - 0.05; 
+      utterance.rate = currentSpeed + (variance * 0.3);
+      utterance.pitch = (chunk.type === 'headline' || chunk.type === 'h2') ? 0.88 : (0.98 + variance);
+      
+      if (currentVoice) utterance.voice = currentVoice;
+      
+      utterance.onend = () => {
+        if (isPlaying) {
+          currentChunkIndex++;
+          setTimeout(playNextChunk, chunk.text.endsWith(',') ? 150 : 380); 
+        }
+      };
+      
+      utterance.onerror = (e) => {
+        console.error("TTS generation error:", e);
+        if (isPlaying) {
+          currentChunkIndex++;
+          playNextChunk();
+        }
+      };
+
+      synth.speak(utterance);
+    }
+
+    function toggleReading() {
+      if (!isPlaying) {
+        synth.cancel();
+        textChunks = prepareText();
+        currentChunkIndex = 0;
+        playNextChunk();
+        
+        isPlaying = true;
+        audioPlayer.classList.add('active');
+        playIcon.style.display = 'none';
+        pauseIcon.style.display = 'block';
+      } else {
+        synth.pause();
+        isPlaying = false;
+        playIcon.style.display = 'block';
+        pauseIcon.style.display = 'none';
+      }
+    }
+
+    function stopReading() {
+      synth.cancel();
+      isPlaying = false;
+      currentChunkIndex = 0;
+      audioPlayer.classList.remove('active');
+      playIcon.style.display = 'block';
+      pauseIcon.style.display = 'none';
+    }
+
+    audioTrigger.addEventListener('click', toggleReading);
+    audioToggle.addEventListener('click', toggleReading);
+    
+    checkSources();
+    if (typeof speechSynthesis !== 'undefined' && speechSynthesis.onvoiceschanged !== undefined) {
+      speechSynthesis.onvoiceschanged = populateVoices;
+    }
+    populateVoices();
+  </script>
+
+  <!-- Sticky Portfolio CTA -->
+  <a href="../index.html" class="sticky-cta" aria-label="Back to Portfolio">
+    <div class="sticky-cta__icon">YM</div>
+    <span class="sticky-cta__text">Back to Portfolio</span>
+  </a>
+
+</body>
+</html>

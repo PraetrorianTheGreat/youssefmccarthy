@@ -1,0 +1,448 @@
+<!-- Version 1.0.0 - Localist Manifesto Editorial Final -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Localist Manifesto: Why Cloud AI is a Financial Trap — Youssef McCarthy</title>
+  <meta name="description" content="How cloud AI APIs can become a cost-inefficient bottleneck, and why localized, air-gapped models represent the future of privacy, security, and financial sovereignty for strategic engineers.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,600;1,700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Reading Progress -->
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- Masthead -->
+  <header class="masthead">
+    <div class="masthead__inner">
+      <div class="masthead__title">Youssef McCarthy <span>//</span> Localist Manifesto</div>
+      <div class="masthead__tag">Infrastructure &mdash; Strategy</div>
+    </div>
+  </header>
+
+  <!-- Hero Header -->
+  <section class="hero fade-in">
+    <div class="hero__label">AI Sovereignty &amp; Infrastructure Economics</div>
+    <h1 class="hero__headline">The Localist Manifesto: Why Cloud AI is a Financial Trap</h1>
+    <p class="hero__subtitle">How proprietary cloud-based AI APIs can become a massive, cost-inefficient bottleneck, and why running localized, open-weights models on-premises is the future of privacy, security, and strategic engineering control.</p>
+    <div class="hero__meta">
+      <span>By <strong>Youssef McCarthy</strong></span>
+      <span>Digital Analytics &amp; Infrastructure Strategist</span>
+      <span>July 2026</span>
+      <button class="audio-trigger" id="audioTrigger">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+        Listen to Article
+      </button>
+    </div>
+  </section>
+
+  <!-- Audio Control Bar -->
+  <div class="audio-player" id="audioPlayer">
+    <div class="audio-player__inner">
+      <div class="audio-player__info">
+        <div class="audio-player__status">Reading Assistant <span id="voiceStatus" style="color:var(--accent); font-weight:700; font-size:0.65rem; margin-left:8px; border:1px solid rgba(255, 107, 0, 0.3); padding:1px 6px; border-radius:4px; background:rgba(255, 107, 0, 0.05); font-family:var(--font-sans);">Local Voice</span></div>
+        <div class="audio-player__title" id="audioTitle">The Localist Manifesto</div>
+        <div class="audio-player__progress-container" id="audioProgressContainer" style="display:none; width:100%; height:4px; background:rgba(255,255,255,0.08); margin-top:8px; border-radius:2px; cursor:pointer;">
+          <div class="audio-player__progress-bar" id="audioProgressBar" style="height:100%; background:var(--accent); width:0%; border-radius:2px; box-shadow:0 0 4px var(--accent);"></div>
+        </div>
+      </div>
+      <div class="audio-player__controls">
+        <button id="audioRewind" title="Back 10s"><svg viewBox="0 0 24 24" width="18"><path fill="currentColor" d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg></button>
+        <button id="audioToggle" class="main-btn" title="Play/Pause"><svg id="playIcon" viewBox="0 0 24 24" width="24" style="fill:var(--bg);"><path d="M8 5v14l11-7z"/></svg><svg id="pauseIcon" style="display:none; fill:var(--bg);" viewBox="0 0 24 24" width="24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg></button>
+        <button id="audioForward" title="Forward 10s"><svg viewBox="0 0 24 24" width="18"><path fill="currentColor" d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button>
+      </div>
+    </div>
+    <!-- Settings Menu -->
+    <div class="audio-settings" id="audioSettings">
+      <div class="audio-settings__group">
+        <label>Narrator Mode</label>
+        <div class="audio-settings__toggle-group" style="display:flex; background:rgba(255,255,255,0.05); border-radius:8px; padding:2px; border:1px solid rgba(255,255,255,0.08);">
+          <button id="srcAI" class="toggle-btn active" style="flex:1; border:none; background:none; color:var(--white); font-family:var(--font-sans); font-size:0.65rem; padding:6px; cursor:pointer; border-radius:6px; font-weight:700;">✨ SYSTEM AI</button>
+          <button id="srcHuman" class="toggle-btn" style="flex:1; border:none; background:none; color:var(--white); font-family:var(--font-sans); font-size:0.65rem; padding:6px; cursor:pointer; border-radius:6px; font-weight:700; opacity:0.3;">👤 HUMAN MP3</button>
+        </div>
+      </div>
+      <div class="audio-settings__group" id="voiceGroup">
+        <label>AI Voice Profile</label>
+        <select id="voiceSelect"></select>
+      </div>
+      <div class="audio-settings__group">
+        <label>Narrative Speed</label>
+        <input type="range" id="speedRange" min="0.5" max="2" step="0.1" value="0.95">
+        <div style="display:flex; justify-content:space-between; margin-top:6px; font-family:var(--font-sans); font-size:0.65rem;">
+          <span style="color:var(--text-light);">Steady Pace</span>
+          <span id="speedVal" style="font-weight:800; color:var(--accent);">0.95x</span>
+          <span style="color:var(--text-light);">Rapid Scan</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero Image -->
+  <div class="hero-image fade-in">
+    <figure>
+      <img src="images/local_ai_server.png" alt="Glowing localized bare-metal on-premise compute block mockup" loading="eager">
+      <figcaption>Figure 1: The Localist Architecture. Bare-metal, high-performance local server processing workloads in a secure, isolated space without sending customer data to third-party endpoints.</figcaption>
+    </figure>
+  </div>
+
+  <!-- Article Body -->
+  <article class="article">
+
+    <!-- Lede -->
+    <p class="lead-in fade-in">
+      In the collective rush to integrate artificial intelligence, the modern enterprise has blindly accepted a dangerous default: renting intelligence through central cloud-based APIs. Driven by convenience and aggressive marketing, organizations are routing their most sensitive customer telemetry, database structures, and strategic logic through external servers owned by a small group of model founders. When deployed incorrectly, this cloud-first strategy rapidly decays into a massive, cost-inefficient bottleneck. To build a sustainable digital presence, forward-thinking engineers must reject this dependent rental cycle and reclaim strategic control through localized, on-premise AI models.
+    </p>
+
+    <p class="fade-in">
+      At first glance, cloud-based LLM endpoints seem highly seductive. They offer immediate access to frontier models with plug-and-play APIs, minimal upfront server setup, and zero hardware maintenance. But as an AI system scales, this convenience becomes a structural dependency. For steady-state, continuous workflows, pay-per-token API costs grow exponentially, transforming what should have been a high-leverage developer tool into an unpredictable and bloated ongoing utility tax.
+    </p>
+
+    <p class="fade-in">
+      Moreover, the architectural reality of cloud-based AI is often highly inefficient. Between the user's localized network, the central API gateway, the provider's server queues, and the model's multi-billion parameter compute clusters, requests suffer from severe latency. In many high-velocity applications, routing standard, routine text parsing or validation tasks to a massive cloud endpoint is equivalent to hiring an expensive global consulting firm to format a basic spreadsheet. It represents a fundamental mismatch of scale, budget, and operational efficiency.
+    </p>
+
+    <!-- Pull Quote -->
+    <div class="pull-quote fade-in">
+      <blockquote>
+        Renting cloud-based artificial intelligence is a tax on predictability. For steady-state, repetitive operational workloads, owning bare-metal hardware is the only fiscally responsible path forward.
+      </blockquote>
+    </div>
+
+    <p class="fade-in">
+      This is where the distinction between "renting" and "owning" intelligence becomes critical. If your AI workloads are erratic, seasonal, or highly speculative, renting cloud elasticity makes operational sense. But for core, steady-state workflows—such as our weekly data ingestion, text summarization, continuous user sentiment evaluation, or schema validation—cloud-based API subscriptions form a severe financial sinkhole that locks you into a single provider's arbitrary terms, price changes, and API deprecation cycles.
+    </p>
+
+    <!-- ════════════ SECTION: THE TOKEN TAX ════════════ -->
+    <div class="section-break fade-in">
+      <h2>1. The Token Tax &amp; Cloud Exit Economics</h2>
+    </div>
+
+    <p class="fade-in">
+      The primary financial danger of cloud AI is the pay-per-token rental model. In this setup, every single character processed by the model—both input context and output generation—accumulates costs. While fractions of a cent per token sound trivial, they escalate violently when integrated into automated backend scripts, continuous web analytics engines, or routine agentic orchestration loops that handle thousands of requests an hour.
+    </p>
+
+    <p class="fade-in">
+      This economic reality mirrors the broader cloud infrastructure debates of the past decade. <strong>David Heinemeier Hansson (DHH)</strong>, the CTO of 37signals and creator of Ruby on Rails, famously initiated a massive "cloud exit" by pulling his companies' applications off AWS. DHH documented that by repatriating their steady-state databases and compute workloads to owned bare-metal hardware, 37signals projected to save over <strong>$10 million over five years</strong>.
+    </p>
+
+    <p class="fade-in">
+      DHH argued that the public cloud charges a steep premium for "elasticity" that mature, stable, and predictable businesses simply do not require. "The cloud is great for two extremes," DHH observed, "when you have no idea what your load is going to be, or when you have wild, unpredictable spikes. But for predictable, steady-state workloads, renting hardware is a fiscal disaster." This exact mathematical logic is repeating itself in the AI boom. For continuous, steady-state inference, purchasing dedicated consumer or enterprise GPUs (like the NVIDIA RTX series) can break even against cloud API fees within 3 to 6 months, after which your computational cost drops by 80% or more, reduced merely to the cost of electricity.
+    </p>
+
+    <p class="emphasis fade-in">
+      "For a mature company with steady workloads, the cloud isn't a modern solution; it's a structural markup." — David Heinemeier Hansson (DHH)
+    </p>
+
+    <!-- ════════════ SECTION: SOVEREIGNTY SHIFT ════════════ -->
+    <div class="section-break fade-in">
+      <h2>2. The Sovereignty Shift: Renting vs. Owning</h2>
+    </div>
+
+    <p class="fade-in">
+      Beyond raw economics, the reliance on closed-source cloud APIs represents a severe loss of strategic sovereignty. When an organization integrates a proprietary cloud model, they are completely locked into that provider's ecosystem. If the model founder decides to update the model weights, deprecate an API version, modify their safety filtering, or alter their rate-limiting rules, your entire automated pipeline can break overnight without warning.
+    </p>
+
+    <p class="fade-in">
+      This risk has sparked a major transition in how the tech industry approaches AI deployment. <strong>Clément Delangue</strong>, the CEO and co-founder of Hugging Face, has been a leading advocate for open-source AI, highlighting a rapid enterprise shift from closed cloud systems to local, owned models. Delangue points out that open-source model weights (such as Meta's Llama series, Mistral, or Microsoft's Phi models) are democratizing state-of-the-art capability, allowing businesses to "own" their models rather than renting them forever.
+    </p>
+
+    <p class="fade-in">
+      "We are seeing a massive transition where enterprises start with closed-source APIs for rapid prototyping, but quickly shift to open-weights models run locally as they scale," Delangue has noted. "Owning your model weights means you have complete control over fine-tuning, customization, security, and hosting. It is the only way to avoid absolute vendor lock-in." By running optimized, open-source models on-premises, a company ensures that its strategic core intellectual property is never dependent on the solvency, policy shifts, or pricing whims of a third-party startup.
+    </p>
+
+    <!-- ════════════ SECTION: PRIVACY & SECURITY ════════════ -->
+    <div class="section-break fade-in">
+      <h2>3. Air-Gapped Security &amp; Data Integrity</h2>
+    </div>
+
+    <p class="fade-in">
+      For any modern strategist, data security is not a compliance checklist item; it is a critical competitive boundary. When utilizing cloud-based AI, your company's proprietary data, codebases, internal logs, and customer interactions must be sent over the public internet to be processed on a third-party server. Even with enterprise-grade data agreements and encryption, this creates an active threat surface and potential compliance failures.
+    </p>
+
+    <p class="fade-in">
+      For highly regulated sectors—such as medical data, legal intelligence, financial compliance, and governmental operations—sending proprietary data to external cloud APIs is an absolute deal-breaker. A single data leak or a change in a cloud provider's training-data policy can expose core proprietary strategies or violate severe privacy regulations (such as GDPR, HIPAA, or CCPA).
+    </p>
+
+    <p class="fade-in">
+      Localized AI provides the gold standard: **Air-Gapped Security**. Because the model weights are loaded directly on physical, local hardware, data processing occurs entirely within your own isolated network. The data never leaves your environment; it is never transmitted over external pipelines, never logged on external servers, and never used to train future iterations of a competitor's model. This guarantees absolute compliance, total data sovereignty, and robust defense against external data breaches.
+    </p>
+
+    <!-- ════════════ SECTION: ORCHESTRATOR ACCESSIBILITY ════════════ -->
+    <div class="section-break fade-in">
+      <h2>4. Accessibility in the Hands of the Orchestrator</h2>
+    </div>
+
+    <p class="fade-in">
+      The ultimate benefit of localized AI is the dramatic shift of strategic power. In a cloud-dependent model, the model founders control the keys to the kingdom: they set the context limits, determine which system prompts are allowed, and regulate who can access the models. They hold the ultimate structural leverage over your digital operations.
+    </p>
+
+    <p class="fade-in">
+      By localizing your AI stack, you place total **accessibility, customization, and control in the hands of the orchestrator**—the digital engineer who understands the specific nuances of your digital presence. When you host the model yourself, you can:
+    </p>
+
+    <ol class="regulation-list fade-in">
+      <li>
+        <strong>Tailor the Context Window &amp; Performance</strong>
+        <p>Optimize parameters, system prompts, temperature configurations, and context-caching strategies to perfectly match your specific operational needs without worrying about API rate-limiting blocks.</p>
+      </li>
+      <li>
+        <strong>Execute Continuous Fine-Tuning</strong>
+        <p>Directly train the model on your proprietary codebase, company history, and specific brand guidelines, turning a general-purpose model into a hyper-specialized internal strategic asset.</p>
+      </li>
+      <li>
+        <strong>Ensure Constant, Offline Availability</strong>
+        <p>Bypass external server outages, internet connectivity issues, and international gateway failures, maintaining an uninterrupted, self-reliant digital strategy pipeline 24/7/365.</p>
+      </li>
+    </ol>
+
+    <p class="fade-in">
+      This is the true promise of modern open-source AI: not just saving money, but reclaiming intellectual and operational autonomy. Instead of relying on a distant cloud API, the website, tools, and digital workflows behave as a robust, fully owned, and securely air-gapped machine that adapts instantly and privately to your strategic commands.
+    </p>
+
+    <!-- End Mark -->
+    <div class="end-mark">&diams; &diams; &diams;</div>
+
+    <!-- Final CTA -->
+    <div class="article-cta fade-in">
+      <div class="article-cta__card">
+        <div class="article-cta__label">About the Author</div>
+        <h3>Youssef McCarthy</h3>
+        <p>I am a digital strategist and analytics expert with over 14 years of experience leading conversion rate optimization (CRO) and advanced data architectures. I build secure, self-hosted, and localized AI networks that prioritize privacy and financial sovereignty.</p>
+        <a href="../index.html" class="cta-button">
+          <span>Return to Portfolio</span>
+          <svg viewBox="0 0 24 24" width="20" style="fill:var(--bg);"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        </a>
+      </div>
+    </div>
+
+  </article>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer__brand">THE LOCALIST MANIFESTO <span>//</span> YOUSSEF MCCARTHY</div>
+    <p class="footer__copy">&copy; 2026 Youssef McCarthy &mdash; Local AI &amp; Private Infrastructure Case Study</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Reading progress bar
+    window.addEventListener('scroll', () => {
+      const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const progress = (scrollTop / scrollHeight) * 100;
+      document.getElementById('progressBar').style.width = progress + '%';
+    });
+
+    // Scroll-triggered fade-in animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // --- Audio Narrative Engine (Hybrid TTS-Focused) ---
+    const synth = window.speechSynthesis;
+    const audioTrigger = document.getElementById('audioTrigger');
+    const audioPlayer = document.getElementById('audioPlayer');
+    const audioToggle = document.getElementById('audioToggle');
+    const audioRewind = document.getElementById('audioRewind');
+    const audioForward = document.getElementById('audioForward');
+    const voiceStatus = document.getElementById('voiceStatus');
+    const voiceSelect = document.getElementById('voiceSelect');
+    const voiceGroup = document.getElementById('voiceGroup');
+    const speedRange = document.getElementById('speedRange');
+    const speedVal = document.getElementById('speedVal');
+    const progressContainer = document.getElementById('audioProgressContainer');
+    const progressBar = document.getElementById('audioProgressBar');
+    const playIcon = document.getElementById('playIcon');
+    const pauseIcon = document.getElementById('pauseIcon');
+    const srcAI = document.getElementById('srcAI');
+    const srcHuman = document.getElementById('srcHuman');
+
+    let isPlaying = false;
+    let mode = 'tts'; // 'tts' (as primary) or 'hq'/'human'
+    let textChunks = [];
+    let currentChunkIndex = 0;
+    let currentVoice = null;
+    let currentSpeed = 0.95;
+
+    function checkSources() {
+      mode = 'tts';
+      progressContainer.style.display = 'none';
+      populateVoices();
+    }
+
+    srcAI.addEventListener('click', () => {
+      stopReading();
+      mode = 'tts';
+      srcAI.classList.add('active');
+      srcHuman.classList.remove('active');
+      voiceStatus.innerText = '✨ AI System Voice';
+      voiceGroup.style.display = 'block';
+      progressContainer.style.display = 'none';
+    });
+
+    srcHuman.addEventListener('click', () => {
+      alert("A pre-recorded high-fidelity MP3 file was not found. Reverting to automated Web Speech TTS.");
+      mode = 'tts';
+    });
+
+    function populateVoices() {
+      if (typeof speechSynthesis === 'undefined') return;
+      const voices = synth.getVoices();
+      voiceSelect.innerHTML = '';
+      const sortedVoices = voices.filter(v => v.lang.startsWith('en')).sort((a,b) => b.name.includes('Neural') - a.name.includes('Neural'));
+      sortedVoices.forEach(v => {
+        const option = document.createElement('option');
+        const isAI = v.name.includes('Neural') || v.name.includes('Google') || v.name.includes('Natural');
+        option.textContent = `${isAI ? '✨ ' : ''}${v.name}`;
+        option.value = v.name;
+        if (!currentVoice && isAI) { 
+          currentVoice = v; 
+          updateVoiceStatus(v.name); 
+        }
+        voiceSelect.appendChild(option);
+      });
+      if (!currentVoice && sortedVoices.length > 0) {
+        currentVoice = sortedVoices[0];
+        updateVoiceStatus(currentVoice.name);
+      }
+    }
+
+    function updateVoiceStatus(name) {
+      if (mode !== 'tts') return;
+      const isAI = name.includes('Neural') || name.includes('Online') || name.includes('Google') || name.includes('Natural');
+      voiceStatus.innerText = (isAI ? '✨ AI ' : '') + name.split(' ')[0];
+    }
+
+    voiceSelect.addEventListener('change', () => {
+      const voices = synth.getVoices();
+      currentVoice = voices.find(v => v.name === voiceSelect.value);
+      updateVoiceStatus(currentVoice.name);
+      if (isPlaying && mode === 'tts') { 
+        synth.cancel(); 
+        playNextChunk(); 
+      }
+    });
+
+    speedRange.addEventListener('input', () => {
+      currentSpeed = parseFloat(speedRange.value);
+      speedVal.innerText = currentSpeed + 'x';
+      if (isPlaying && mode === 'tts') { 
+        synth.cancel(); 
+        playNextChunk(); 
+      }
+    });
+
+    function prepareText() {
+      const chunks = [];
+      chunks.push({ text: document.querySelector('.hero__headline').innerText, type: 'headline' });
+      chunks.push({ text: document.querySelector('.hero__subtitle').innerText, type: 'subtitle' });
+      
+      const content = document.querySelectorAll('.article p, .article h2, .article li, .pull-quote blockquote');
+      content.forEach(el => {
+        if (!el.closest('figcaption')) {
+          const textVal = el.innerText.trim();
+          if (textVal) {
+            const sentences = textVal.match(/[^\.!\?]+[\.!\?]+/g) || [textVal];
+            sentences.forEach(s => {
+              if (s.trim()) {
+                chunks.push({ text: s.trim(), type: el.tagName.toLowerCase() });
+              }
+            });
+          }
+        }
+      });
+      return chunks;
+    }
+
+    function playNextChunk() {
+      if (currentChunkIndex >= textChunks.length) { 
+        stopReading(); 
+        return; 
+      }
+      const chunk = textChunks[currentChunkIndex];
+      const utterance = new SpeechSynthesisUtterance(chunk.text);
+      
+      const variance = (Math.random() * 0.1) - 0.05; 
+      utterance.rate = currentSpeed + (variance * 0.3);
+      utterance.pitch = (chunk.type === 'headline' || chunk.type === 'h2') ? 0.85 : (0.95 + variance);
+      
+      if (currentVoice) utterance.voice = currentVoice;
+      
+      utterance.onend = () => {
+        if (isPlaying) {
+          currentChunkIndex++;
+          setTimeout(playNextChunk, chunk.text.endsWith(',') ? 150 : 380); 
+        }
+      };
+      
+      utterance.onerror = (e) => {
+        console.error("TTS generation error:", e);
+        if (isPlaying) {
+          currentChunkIndex++;
+          playNextChunk();
+        }
+      };
+
+      synth.speak(utterance);
+    }
+
+    function toggleReading() {
+      if (!isPlaying) {
+        synth.cancel();
+        textChunks = prepareText();
+        currentChunkIndex = 0;
+        playNextChunk();
+        
+        isPlaying = true;
+        audioPlayer.classList.add('active');
+        playIcon.style.display = 'none';
+        pauseIcon.style.display = 'block';
+      } else {
+        synth.pause();
+        isPlaying = false;
+        playIcon.style.display = 'block';
+        pauseIcon.style.display = 'none';
+      }
+    }
+
+    function stopReading() {
+      synth.cancel();
+      isPlaying = false;
+      currentChunkIndex = 0;
+      audioPlayer.classList.remove('active');
+      playIcon.style.display = 'block';
+      pauseIcon.style.display = 'none';
+    }
+
+    audioTrigger.addEventListener('click', toggleReading);
+    audioToggle.addEventListener('click', toggleReading);
+    
+    checkSources();
+    if (typeof speechSynthesis !== 'undefined' && speechSynthesis.onvoiceschanged !== undefined) {
+      speechSynthesis.onvoiceschanged = populateVoices;
+    }
+    populateVoices();
+  </script>
+
+  <!-- Sticky Portfolio CTA -->
+  <a href="../index.html" class="sticky-cta" aria-label="Back to Portfolio">
+    <div class="sticky-cta__icon">YM</div>
+    <span class="sticky-cta__text">Back to Portfolio</span>
+  </a>
+
+</body>
+</html>
