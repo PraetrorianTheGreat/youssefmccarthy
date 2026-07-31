@@ -1131,25 +1131,20 @@
           });
       }
 
-      // ── 5. GitHub Outbound Links → outbound_click_github ──
-      document.querySelectorAll('#contextual-github-link, #contextual-github-link-skills').forEach(function(link) {
-          link.addEventListener('click', function() {
-              window.dataLayer.push({ 'event': 'outbound_click_github', 'link_text': link.textContent.trim() });
-          });
-      });
 
-      // ── 6. Contact Form Submit → generate_lead ──
+
+      // ── 6. Contact Form Submit → contact_form_submit ──
       const existingForm = document.querySelector('form');
       if (existingForm) {
           existingForm.addEventListener('submit', function() {
-              window.dataLayer.push({ 'event': 'generate_lead', 'lead_source': 'profile_website', 'form_type': 'contact_me' });
+              window.dataLayer.push({ 'event': 'contact_form_submit', 'lead_source': 'profile_website', 'form_id': 'contact_form' });
           });
       }
 
-      // ── 7. Calendly Event Listener → generate_lead ──
+      // ── 7. Calendly Event Listener → calendly_booked ──
       window.addEventListener('message', function(e) {
           if (e.data && e.data.event === 'calendly.event_scheduled') {
-              window.dataLayer.push({ 'event': 'generate_lead', 'lead_source': 'calendly', 'form_type': 'calendly_booking' });
+              window.dataLayer.push({ 'event': 'calendly_booked', 'lead_source': 'calendly', 'booking_type': 'consultation' });
           }
       });
 
@@ -1169,21 +1164,20 @@
       }
   });
   </script>
-<!-- TEAM RECOMMENDATIONS: GA4 Tracking -->
+<!-- TEAM RECOMMENDATIONS: GA4 Tracking (Fixed to dataLayer) -->
 <script>
 document.addEventListener("DOMContentLoaded", function() {
+    window.dataLayer = window.dataLayer || [];
+
     // 1. Track Resume Downloads
     const resumeBtn = document.getElementById("download_resume_btn");
     if(resumeBtn) {
         resumeBtn.addEventListener("click", function() {
-            if(typeof gtag === 'function') {
-                gtag('event', 'file_download', {
-                    'file_name': 'youssef_mccarthy_resume.pdf',
-                    'file_extension': 'pdf',
-                    'event_category': 'engagement',
-                    'event_label': 'Resume Download'
-                });
-            }
+            window.dataLayer.push({
+                'event': 'resume_download',
+                'file_name': 'youssef_mccarthy_resume',
+                'page_section': 'hero'
+            });
         });
     }
 
@@ -1191,12 +1185,12 @@ document.addEventListener("DOMContentLoaded", function() {
     const contactBtn = document.getElementById("contact_me_btn");
     if(contactBtn) {
         contactBtn.addEventListener("click", function() {
-            if(typeof gtag === 'function') {
-                gtag('event', 'generate_lead', {
-                    'event_category': 'conversion',
-                    'event_label': 'Contact Button Clicked'
-                });
-            }
+            window.dataLayer.push({
+                'event': 'cta_click',
+                'cta_name': 'contact_me',
+                'cta_location': 'hero',
+                'page_name': window.location.pathname
+            });
         });
     }
 
@@ -1206,12 +1200,12 @@ document.addEventListener("DOMContentLoaded", function() {
         card.addEventListener('click', function() {
             let titleEl = this.querySelector('.project-title');
             let projectName = titleEl ? titleEl.innerText : 'Project';
-            if(typeof gtag === 'function') {
-                gtag('event', 'select_content', {
-                    'content_type': 'project',
-                    'item_id': projectName
-                });
-            }
+            window.dataLayer.push({
+                'event': 'project_card_click',
+                'project_title': projectName,
+                'project_index': Array.from(projectCards).indexOf(card),
+                'page_section': 'projects'
+            });
         });
     });
 });
