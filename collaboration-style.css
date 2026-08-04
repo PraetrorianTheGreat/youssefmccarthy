@@ -10763,6 +10763,36 @@ body.theme-nordic .global-theme-switcher {
   border: 1px solid rgba(197, 143, 92, 0.2) !important;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8) !important;
 }
+body.theme-nordic .progress-days {
+  color: #c58f5c !important;
+  background: rgba(197, 143, 92, 0.1) !important;
+  border: 1px solid rgba(197, 143, 92, 0.2) !important;
+}
+
+/* Mobile Theme Switcher Capsule Override */
+@media (max-width: 640px) {
+  .global-theme-switcher {
+    bottom: 12px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    max-width: calc(100vw - 16px) !important;
+    padding: 6px 8px !important;
+    border-radius: 24px !important;
+    gap: 4px !important;
+  }
+  .theme-buttons-container {
+    gap: 4px !important;
+  }
+  .theme-btn {
+    height: 32px !important;
+    padding: 0 10px !important;
+    font-size: 0.72rem !important;
+    border-radius: 20px !important;
+  }
+  .theme-btn__label {
+    font-size: 0.72rem !important;
+  }
+}
 body.theme-nordic .theme-info-container {
   background: rgba(18, 18, 20, 0.95) !important;
   border: 1px solid rgba(197, 143, 92, 0.2) !important;

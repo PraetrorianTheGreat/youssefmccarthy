@@ -3218,30 +3218,116 @@ body.light-theme .teaser-terminal .terminal-blur-mask {
   100% { top: 100%; opacity: 0.3; }
 }
 
-/* Responsive Overrides */
+/* Responsive Overrides for Interactive Teaser & Synergy Sections */
 @media (max-width: 1024px) {
   .collab-teaser-grid {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 30px;
   }
 }
 
 @media (max-width: 768px) {
+  .dashboard-teaser-section,
   .collaboration-teaser-section {
-    padding: 0 24px;
-    margin: 80px auto;
+    padding: 0 16px !important;
+    margin: 60px auto !important;
   }
-  
+
+  .collab-telemetry-ribbon {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    padding: 12px 14px !important;
+    border-radius: 12px !important;
+  }
+
+  .collab-telemetry-item {
+    padding: 6px 8px !important;
+    font-size: 0.72rem !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 2px !important;
+  }
+
+  .collab-tabs-list,
+  .collab-view-toolbar {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+
+  .collab-tab {
+    flex: 1 1 calc(50% - 10px) !important;
+    min-width: 120px !important;
+    text-align: center !important;
+    justify-content: center !important;
+    padding: 10px 12px !important;
+    font-size: 0.78rem !important;
+  }
+
+  .collab-teaser-grid,
+  .collab-teaser-grid.view-all,
+  .collab-teaser-grid.view-strategist,
+  .collab-teaser-grid.view-designer,
+  .collab-teaser-grid.view-loop {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+    width: 100% !important;
+  }
+
+  .collab-teaser-grid.view-loop .collab-loop-container {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .collab-loop-step {
+    padding: 20px 16px !important;
+  }
+
   .collab-lenses-container {
-    padding: 30px 20px;
+    padding: 20px 16px !important;
+    border-radius: 16px !important;
   }
-  
+
+  .collab-teaser-pipe {
+    margin: 16px 0 !important;
+    text-align: center !important;
+  }
+
+  .lens-capabilities-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
   .collab-cta-glass-banner {
-    padding: 30px 20px;
+    padding: 24px 18px !important;
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 16px !important;
   }
-  
-  .cta-banner-content h3 {
-    font-size: 1.4rem;
+
+  .collab-primary-btn {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  .teaser-terminal .terminal-body {
+    padding: 16px !important;
+    padding-bottom: 150px !important;
+  }
+
+  .teaser-terminal .terminal-blur-mask {
+    height: auto !important;
+    min-height: 130px !important;
+    padding: 16px !important;
+  }
+
+  .teaser-cta-btn {
+    width: 100% !important;
+    text-align: center !important;
+    justify-content: center !important;
   }
 }
 

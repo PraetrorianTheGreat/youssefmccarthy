@@ -292,7 +292,7 @@ if (themeToggle) {
   });
 }
 
-// ── Scroll Reveal Animations (Staggered) ──
+// ── Scroll Reveal Animations (Staggered with Failsafe) ──
 const revealElements = document.querySelectorAll('.reveal, .timeline-item');
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry, i) => {
@@ -301,15 +301,21 @@ const revealObserver = new IntersectionObserver((entries) => {
       const delay = entry.target.dataset.revealDelay || 0;
       setTimeout(() => {
         entry.target.classList.add('visible');
-      }, delay * 100);
+      }, delay * 80);
+      revealObserver.unobserve(entry.target);
     }
   });
-}, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+}, { threshold: 0.01, rootMargin: '0px 0px 100px 0px' });
 
 revealElements.forEach((el, i) => {
   el.dataset.revealDelay = i % 5;
   revealObserver.observe(el);
 });
+
+// Failsafe to ensure no section stays invisible on mobile or immediate scroll
+setTimeout(() => {
+  document.querySelectorAll('.reveal, .timeline-item').forEach(el => el.classList.add('visible'));
+}, 800);
 
 // ── Animated Counters ──
 const statNumbers = document.querySelectorAll('.stat-number');
