@@ -22,7 +22,7 @@ function initGlobalThemes() {
       const theme = btn.getAttribute('data-theme');
       
       // Remove all theme classes first
-      body.classList.remove('theme-glass', 'theme-fluent', 'theme-neu', 'theme-brutal', 'theme-default');
+      body.classList.remove('theme-glass', 'theme-fluent', 'theme-neu', 'theme-brutal', 'theme-nordic', 'theme-default');
       
       const themeToggle = document.getElementById('themeToggle');
 
@@ -529,6 +529,8 @@ function initABSimulator() {
       return ['#3182ce', '#38a169', '#dd6b20', '#319795', '#a3b1c6'];
     } else if (body.classList.contains('theme-brutal')) {
       return ['#ff007f', '#00ff66', '#000000', '#facc15', '#ffffff'];
+    } else if (body.classList.contains('theme-nordic')) {
+      return ['#c58f5c', '#ffa000', '#ff5a09', '#333333', '#ffffff'];
     } else {
       // Default Theme (Cyber Neon)
       return ['#3b82f6', '#10b981', '#a855f7', '#ec4899', '#ffffff'];

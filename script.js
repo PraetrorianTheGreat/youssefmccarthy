@@ -367,19 +367,211 @@ function toggleTimeline(card) {
   });
 }
 
-// ── Project Toggle ──
-function toggleProject(card) {
+// ── Project Toggle & Controls Controller ──
+function toggleProject(card, e) {
+  // Prevent card expansion if clicking on tags or buttons inside card
+  if (e && e.target && (e.target.closest('.project-tag') || e.target.closest('a'))) {
+    return;
+  }
   const details = card.querySelector('.project-details');
   const toggle = card.querySelector('.project-toggle');
+  if (!details || !toggle) return;
   const isOpen = details.classList.contains('open');
   details.classList.toggle('open');
   toggle.textContent = isOpen ? 'Expand Case Study \u2192' : 'Collapse \u2191';
   isOpen ? UISounds.collapse() : UISounds.expand();
   trackEvent('project_toggle', { 
-    project: card.querySelector('.project-title').textContent,
+    project: card.querySelector('.project-title')?.textContent || 'Project',
     action: isOpen ? 'collapse' : 'expand' 
   });
 }
+
+// ── Interactive Projects Section Controller ──
+(function initProjectsSection() {
+  function setup() {
+    const filterTabs = document.querySelectorAll('#projectFilterTabs .filter-tab');
+    const searchInput = document.getElementById('projectSearchInput');
+    const clearSearchBtn = document.getElementById('clearProjectSearch');
+    const resetFiltersBtn = document.getElementById('resetProjectFiltersBtn');
+    const viewButtons = document.querySelectorAll('.projects-view-toggle .view-btn');
+    const projectsContainer = document.getElementById('projectsContainer');
+    const projectCards = document.querySelectorAll('.project-card');
+    const noProjectsMsg = document.getElementById('noProjectsMessage');
+    const countDisplay = document.getElementById('projectCountDisplay');
+    const tagPills = document.querySelectorAll('.project-tag');
+
+    if (!projectsContainer || !projectCards.length) return;
+
+    let activeCategory = 'all';
+    let searchQuery = '';
+    let activeTag = '';
+
+    // Restore saved view mode preference
+    const savedView = localStorage.getItem('portfolio_project_view') || 'grid';
+    if (savedView === 'list') {
+      projectsContainer.classList.add('is-list-view');
+      viewButtons.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.view === 'list');
+      });
+    }
+
+    function applyFilters() {
+      let visibleCount = 0;
+
+      projectCards.forEach(card => {
+        const category = card.getAttribute('data-category') || '';
+        const company = (card.getAttribute('data-company') || '').toLowerCase();
+        const tags = (card.getAttribute('data-tags') || '').toLowerCase();
+        const title = (card.querySelector('.project-title')?.textContent || '').toLowerCase();
+        const desc = (card.querySelector('.project-desc')?.textContent || '').toLowerCase();
+
+        // Check category tab match
+        const matchesCategory = (activeCategory === 'all' || category === activeCategory);
+
+        // Check search query match
+        const q = searchQuery.toLowerCase().trim();
+        const matchesSearch = !q || (
+          title.includes(q) || 
+          company.includes(q) || 
+          tags.includes(q) || 
+          desc.includes(q)
+        );
+
+        // Check tag match
+        const matchesTag = !activeTag || tags.includes(activeTag.toLowerCase());
+
+        const isVisible = matchesCategory && matchesSearch && matchesTag;
+
+        card.classList.toggle('is-hidden', !isVisible);
+        if (isVisible) visibleCount++;
+      });
+
+      // Update count chip & empty state
+      if (countDisplay) countDisplay.textContent = visibleCount;
+      if (noProjectsMsg) noProjectsMsg.style.display = (visibleCount === 0) ? 'block' : 'none';
+
+      // Update category tab badge counts dynamically if active
+      if (typeof trackEvent === 'function') {
+        trackEvent('projects_filter_update', {
+          category: activeCategory,
+          search: searchQuery,
+          tag: activeTag,
+          visible_count: visibleCount
+        });
+      }
+    }
+
+    // Category Tabs click listeners
+    filterTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        filterTabs.forEach(t => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+        activeCategory = tab.dataset.filter || 'all';
+        activeTag = ''; // clear tag filter when changing tabs
+
+        // Remove active tag styling
+        tagPills.forEach(p => p.classList.remove('active-tag'));
+
+        if (typeof UISounds !== 'undefined' && UISounds.click) UISounds.click();
+        applyFilters();
+      });
+    });
+
+    // Search input listener
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        searchQuery = e.target.value;
+        if (clearSearchBtn) {
+          clearSearchBtn.style.display = searchQuery ? 'block' : 'none';
+        }
+        applyFilters();
+      });
+    }
+
+    // Clear search listener
+    if (clearSearchBtn) {
+      clearSearchBtn.addEventListener('click', () => {
+        if (searchInput) searchInput.value = '';
+        searchQuery = '';
+        clearSearchBtn.style.display = 'none';
+        if (typeof UISounds !== 'undefined' && UISounds.click) UISounds.click();
+        applyFilters();
+      });
+    }
+
+    // Reset all filters listener
+    if (resetFiltersBtn) {
+      resetFiltersBtn.addEventListener('click', () => {
+        activeCategory = 'all';
+        searchQuery = '';
+        activeTag = '';
+        if (searchInput) searchInput.value = '';
+        if (clearSearchBtn) clearSearchBtn.style.display = 'none';
+
+        filterTabs.forEach(t => {
+          const isAll = t.dataset.filter === 'all';
+          t.classList.toggle('active', isAll);
+          t.setAttribute('aria-selected', isAll ? 'true' : 'false');
+        });
+
+        tagPills.forEach(p => p.classList.remove('active-tag'));
+        if (typeof UISounds !== 'undefined' && UISounds.click) UISounds.click();
+        applyFilters();
+      });
+    }
+
+    // View Toggle Buttons listener (Grid vs List)
+    viewButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const viewMode = btn.dataset.view;
+        viewButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        if (viewMode === 'list') {
+          projectsContainer.classList.add('is-list-view');
+        } else {
+          projectsContainer.classList.remove('is-list-view');
+        }
+
+        localStorage.setItem('portfolio_project_view', viewMode);
+        if (typeof UISounds !== 'undefined' && UISounds.click) UISounds.click();
+        if (typeof trackEvent === 'function') {
+          trackEvent('projects_view_change', { mode: viewMode });
+        }
+      });
+    });
+
+    // Tag pills click listener
+    tagPills.forEach(pill => {
+      pill.addEventListener('click', (e) => {
+        e.stopPropagation(); // prevent card expand accordion trigger
+        const clickedTag = pill.getAttribute('data-tag') || pill.textContent.trim();
+
+        if (activeTag === clickedTag) {
+          activeTag = '';
+          pill.classList.remove('active-tag');
+        } else {
+          tagPills.forEach(p => p.classList.remove('active-tag'));
+          pill.classList.add('active-tag');
+          activeTag = clickedTag;
+        }
+
+        if (typeof UISounds !== 'undefined' && UISounds.click) UISounds.click();
+        applyFilters();
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setup);
+  } else {
+    setup();
+  }
+})();
 
 // ── Testimonial Carousel ──
 let currentTestimonial = 0;
@@ -1068,5 +1260,117 @@ if (aiToggleBtn && aiChatWindow) {
       }, 220); // Sync with CSS transition
     });
   });
+
+  // Live Page Search in Teaser Navigator
+  const searchInput = document.getElementById('teaserPageSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      let matchCount = 0;
+      tabs.forEach(tab => {
+        const searchData = (tab.getAttribute('data-search') || '').toLowerCase();
+        const nameText = tab.querySelector('.tab-name')?.textContent.toLowerCase() || '';
+        const matches = !query || nameText.includes(query) || searchData.includes(query);
+        tab.style.display = matches ? 'flex' : 'none';
+        if (matches) matchCount++;
+      });
+      const viewsCountEl = document.getElementById('teaserActiveViewsCount');
+      if (viewsCountEl) viewsCountEl.textContent = `${matchCount} Telemetry Views`;
+    });
+  }
+
+  // Autoplay Cycle Feature
+  const autoplayBtn = document.getElementById('teaserAutoplayBtn');
+  let autoplayTimer = null;
+  if (autoplayBtn) {
+    autoplayBtn.addEventListener('click', () => {
+      if (autoplayTimer) {
+        clearInterval(autoplayTimer);
+        autoplayTimer = null;
+        autoplayBtn.classList.remove('is-playing');
+        const playText = autoplayBtn.querySelector('.play-text');
+        const playIcon = autoplayBtn.querySelector('.play-icon');
+        if (playText) playText.textContent = 'Autoplay';
+        if (playIcon) playIcon.textContent = '▶';
+      } else {
+        autoplayBtn.classList.add('is-playing');
+        const playText = autoplayBtn.querySelector('.play-text');
+        const playIcon = autoplayBtn.querySelector('.play-icon');
+        if (playText) playText.textContent = 'Pause';
+        if (playIcon) playIcon.textContent = '⏸';
+
+        autoplayTimer = setInterval(() => {
+          const visibleTabs = Array.from(tabs).filter(t => t.style.display !== 'none');
+          if (!visibleTabs.length) return;
+          const activeIdx = visibleTabs.findIndex(t => t.classList.contains('active'));
+          const nextIdx = (activeIdx + 1) % visibleTabs.length;
+          visibleTabs[nextIdx].click();
+        }, 3500);
+      }
+    });
+  }
+})();
+
+// ── Strategic UX Synergy Controller ──
+(function initCollaborationTeaserController() {
+  function setup() {
+    const viewTabs = document.querySelectorAll('#collabViewTabs .collab-tab');
+    const lensesContainer = document.getElementById('collabLensesContainer');
+    const loopContainer = document.getElementById('collabLoopContainer');
+    const themePresetBtns = document.querySelectorAll('[data-theme-preset]');
+
+    if (!viewTabs.length) return;
+
+    // View Perspective Switcher
+    viewTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        viewTabs.forEach(t => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+
+        const view = tab.dataset.collabView || 'all';
+
+        const grid = document.getElementById('collabTeaserGrid');
+        if (grid) {
+          grid.classList.remove('view-all', 'view-strategist', 'view-designer', 'view-loop');
+          grid.classList.add(`view-${view}`);
+        }
+
+        if (typeof UISounds !== 'undefined' && UISounds.click) UISounds.click();
+        if (typeof trackEvent === 'function') {
+          trackEvent('collaboration_view_change', { view });
+        }
+      });
+    });
+
+    // Theme Swatch Preset Preview Listener
+    themePresetBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const preset = btn.dataset.themePreset;
+        
+        // Apply pulse feedback glow to designer lens card
+        const mockGlass = document.querySelector('.mock-glass-card');
+        if (mockGlass) {
+          mockGlass.style.boxShadow = `0 0 25px rgba(59, 130, 246, 0.5)`;
+          setTimeout(() => { mockGlass.style.boxShadow = ''; }, 1500);
+        }
+
+        if (typeof UISounds !== 'undefined' && UISounds.click) UISounds.click();
+        if (typeof trackEvent === 'function') {
+          trackEvent('collaboration_preset_preview', { preset });
+        }
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setup);
+  } else {
+    setup();
+  }
 })();
 

@@ -329,16 +329,88 @@
       <div class="section-header reveal">
         <div class="section-label">Case Studies</div>
         <h2 class="section-title">Featured Projects</h2>
-        <p class="section-subtitle">Real-world impact — click to explore each initiative</p>
+        <p class="section-subtitle">Real-world impact — filter, search, or switch layout views to explore each initiative</p>
       </div>
-      <div class="projects-grid">
+
+      <!-- Quick Summary Metrics Bar -->
+      <div class="projects-summary-bar reveal">
+        <div class="summary-chip">
+          <span class="chip-num" id="projectCountDisplay">5</span>
+          <span class="chip-label">Featured Case Studies</span>
+        </div>
+        <div class="summary-chip">
+          <span class="chip-num">2,400x</span>
+          <span class="chip-label">Peak ROI Multiplier</span>
+        </div>
+        <div class="summary-chip">
+          <span class="chip-num">3</span>
+          <span class="chip-label">Core Verticals</span>
+        </div>
+        <div class="summary-chip">
+          <span class="chip-num">100%</span>
+          <span class="chip-label">Data-Driven UX</span>
+        </div>
+      </div>
+
+      <!-- Interactive Controls Toolbar -->
+      <div class="projects-toolbar reveal">
+        <div class="projects-filter-tabs" id="projectFilterTabs" role="tablist" aria-label="Project categories">
+          <button class="filter-tab active" data-filter="all" role="tab" aria-selected="true">
+            All Case Studies <span class="filter-count">5</span>
+          </button>
+          <button class="filter-tab" data-filter="healthcare" role="tab" aria-selected="false">
+            Healthcare & Digital Health <span class="filter-count">3</span>
+          </button>
+          <button class="filter-tab" data-filter="omnichannel" role="tab" aria-selected="false">
+            Omnichannel & Growth <span class="filter-count">1</span>
+          </button>
+          <button class="filter-tab" data-filter="monetization" role="tab" aria-selected="false">
+            Monetization & Tech <span class="filter-count">1</span>
+          </button>
+        </div>
+
+        <div class="projects-toolbar-actions">
+          <div class="projects-search-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="projectSearchInput" placeholder="Search by keyword, tag, company..." aria-label="Search projects">
+            <button id="clearProjectSearch" class="clear-search-btn" title="Clear search" style="display:none;">✕</button>
+          </div>
+          <div class="projects-view-toggle">
+            <button class="view-btn active" data-view="grid" title="Grid View" aria-label="Grid View">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+              <span>Grid</span>
+            </button>
+            <button class="view-btn" data-view="list" title="Compact List View" aria-label="Compact List View">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+              <span>List</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- No Match Message -->
+      <div id="noProjectsMessage" class="no-projects-msg" style="display: none;">
+        <div class="no-projects-icon">🔍</div>
+        <h4>No matching case studies found</h4>
+        <p>Try searching for a different keyword or clear your filter parameters.</p>
+        <button class="btn btn-secondary btn-sm" id="resetProjectFiltersBtn">Reset All Filters</button>
+      </div>
+
+      <div class="projects-grid" id="projectsContainer">
         <!-- Project 1: Essential Plan -->
-        <div class="project-card reveal" onclick="toggleProject(this)">
+        <div class="project-card reveal" 
+             data-category="healthcare" 
+             data-company="emblemhealth"
+             data-tags="sem seo cro ux optimization a/b testing essential plan health emblemhealth"
+             onclick="toggleProject(this, event)">
           <div class="project-cover">
             <img src="img/project_essential_plan.png" alt="Essential Plan Digital Transformation case study visual" loading="lazy" />
             <div class="project-cover-overlay"></div>
           </div>
-          <span class="project-badge impact">High Impact</span>
+          <div class="project-card-header">
+            <span class="project-badge impact">High Impact</span>
+            <div class="project-inline-result">🏆 2,400x Monthly Call Vol Return</div>
+          </div>
           <div class="project-title">Essential Plan Digital Transformation: UX, SEO & SEM Strategy</div>
           <div class="project-company">EmblemHealth · 2022 — 2025</div>
           <p class="project-desc">Spearheaded digital strategy and UX overhaul for the "Essential Plan" — a $0 premium health program for low- to moderate-income NY State residents. Maximized high-quality leads by aligning SEM, organic SEO, and a frictionless user journey on the conversion landing page.</p>
@@ -356,18 +428,29 @@
             <div class="project-result">🏆 2,400x Multiplier Return on Call Volume Monthly</div>
           </div>
           <div class="project-tags">
-            <span class="project-tag">SEM</span><span class="project-tag">SEO</span><span class="project-tag">CRO</span>
-            <span class="project-tag">UX Optimization</span><span class="project-tag">A/B Testing</span>
+            <span class="project-tag" data-tag="sem">SEM</span>
+            <span class="project-tag" data-tag="seo">SEO</span>
+            <span class="project-tag" data-tag="cro">CRO</span>
+            <span class="project-tag" data-tag="ux optimization">UX Optimization</span>
+            <span class="project-tag" data-tag="a/b testing">A/B Testing</span>
           </div>
           <button class="project-toggle">Expand Case Study →</button>
         </div>
+
         <!-- Project 2: ACP -->
-        <div class="project-card reveal" onclick="toggleProject(this)">
+        <div class="project-card reveal" 
+             data-category="healthcare" 
+             data-company="emblemhealth"
+             data-tags="ux research digital transformation healthcare analytics advantagecare physicians zocdoc"
+             onclick="toggleProject(this, event)">
           <div class="project-cover">
             <img src="img/project_acp.png" alt="AdvantageCare Physicians digital experience revamp" loading="lazy" />
             <div class="project-cover-overlay"></div>
           </div>
-          <span class="project-badge ux">UX Transformation</span>
+          <div class="project-card-header">
+            <span class="project-badge ux">UX Transformation</span>
+            <div class="project-inline-result">🏆 ZocDoc-Caliber Platform</div>
+          </div>
           <div class="project-title">Digital Experience Revamp for AdvantageCare Physicians</div>
           <div class="project-company">EmblemHealth · Jun 2023 — Jun 2025</div>
           <p class="project-desc">Transformed the AdvantageCare Physicians digital patient journey from a traditional, high-friction appointment process to a highly intuitive, "ZocDoc-like" platform empowering patients to seamlessly find care and schedule appointments online.</p>
@@ -385,18 +468,28 @@
             <div class="project-result">🏆 ZocDoc-Caliber Digital Patient Experience</div>
           </div>
           <div class="project-tags">
-            <span class="project-tag">UX Research</span><span class="project-tag">Digital Transformation</span>
-            <span class="project-tag">Healthcare</span><span class="project-tag">Analytics</span>
+            <span class="project-tag" data-tag="ux research">UX Research</span>
+            <span class="project-tag" data-tag="digital transformation">Digital Transformation</span>
+            <span class="project-tag" data-tag="healthcare">Healthcare</span>
+            <span class="project-tag" data-tag="analytics">Analytics</span>
           </div>
           <button class="project-toggle">Expand Case Study →</button>
         </div>
+
         <!-- Project 3: Neighborhood Care -->
-        <div class="project-card reveal" onclick="toggleProject(this)">
+        <div class="project-card reveal" 
+             data-category="healthcare" 
+             data-company="emblemhealth"
+             data-tags="ux strategy community health digital journey neighborhood care"
+             onclick="toggleProject(this, event)">
           <div class="project-cover">
             <img src="img/project_neighborhood_care.png" alt="Neighborhood Care digital journey transformation" loading="lazy" />
             <div class="project-cover-overlay"></div>
           </div>
-          <span class="project-badge strategy">Strategy</span>
+          <div class="project-card-header">
+            <span class="project-badge strategy">Strategy</span>
+            <div class="project-inline-result">🏆 Modernized Community Care</div>
+          </div>
           <div class="project-title">Transforming EmblemHealth's Neighborhood Care Digital Journey</div>
           <div class="project-company">EmblemHealth · 2023</div>
           <p class="project-desc">Led the end-to-end digital experience overhaul for EmblemHealth's "Neighborhood Care" — a network of in-person community service and wellness locations. Modernized the digital journey to seamlessly bridge online engagement with physical, in-person care.</p>
@@ -413,18 +506,27 @@
             <div class="project-result">🏆 Modernized Community Care Digital Experience</div>
           </div>
           <div class="project-tags">
-            <span class="project-tag">UX Strategy</span><span class="project-tag">Community Health</span>
-            <span class="project-tag">Digital Journey</span>
+            <span class="project-tag" data-tag="ux strategy">UX Strategy</span>
+            <span class="project-tag" data-tag="community health">Community Health</span>
+            <span class="project-tag" data-tag="digital journey">Digital Journey</span>
           </div>
           <button class="project-toggle">Expand Case Study →</button>
         </div>
+
         <!-- Project 4: Omnichannel Financial -->
-        <div class="project-card reveal" onclick="toggleProject(this)">
+        <div class="project-card reveal" 
+             data-category="omnichannel" 
+             data-company="adtaxi"
+             data-tags="omnichannel retargeting financial services attribution adtaxi"
+             onclick="toggleProject(this, event)">
           <div class="project-cover">
             <img src="img/project_omnichannel.png" alt="Omnichannel financial institution strategy overhaul" loading="lazy" />
             <div class="project-cover-overlay"></div>
           </div>
-          <span class="project-badge impact">High Impact</span>
+          <div class="project-card-header">
+            <span class="project-badge impact">High Impact</span>
+            <div class="project-inline-result">🏆 Turnaround & Account Saved</div>
+          </div>
           <div class="project-title">Omnichannel Strategy Overhaul for Financial Institution</div>
           <div class="project-company">Adtaxi · Nov 2018 — May 2019</div>
           <p class="project-desc">Spearheaded the turnaround of a critical financial institution account at risk of churning. Architected a multi-point digital strategy overhauling paid omnichannel presence and transforming the customer acquisition funnel.</p>
@@ -441,18 +543,28 @@
             <div class="project-result">🏆 Saved At-Risk Account & Stabilized Performance</div>
           </div>
           <div class="project-tags">
-            <span class="project-tag">Omnichannel</span><span class="project-tag">Retargeting</span>
-            <span class="project-tag">Financial Services</span><span class="project-tag">Attribution</span>
+            <span class="project-tag" data-tag="omnichannel">Omnichannel</span>
+            <span class="project-tag" data-tag="retargeting">Retargeting</span>
+            <span class="project-tag" data-tag="financial services">Financial Services</span>
+            <span class="project-tag" data-tag="attribution">Attribution</span>
           </div>
           <button class="project-toggle">Expand Case Study →</button>
         </div>
+
         <!-- Project 5: YouTube -->
-        <div class="project-card reveal" onclick="toggleProject(this)">
+        <div class="project-card reveal" 
+             data-category="monetization" 
+             data-company="google"
+             data-tags="youtube monetization content strategy google video"
+             onclick="toggleProject(this, event)">
           <div class="project-cover">
             <img src="img/project_youtube.png" alt="YouTube content monetization at scale at Google" loading="lazy" />
             <div class="project-cover-overlay"></div>
           </div>
-          <span class="project-badge strategy">Monetization</span>
+          <div class="project-card-header">
+            <span class="project-badge strategy">Monetization</span>
+            <div class="project-inline-result">🏆 Scaled Platform Revenue</div>
+          </div>
           <div class="project-title">Video/YouTube Content Monetization at Scale</div>
           <div class="project-company">Google · Jan 2012 — Jan 2015</div>
           <p class="project-desc">Managed the implementation and oversight of YouTube's various video content monetization strategies. Deployed software and data-driven recommendations to maximize revenue across high-volume digital content channels.</p>
@@ -469,8 +581,10 @@
             <div class="project-result">🏆 Scaled Platform Monetization & Traffic Growth</div>
           </div>
           <div class="project-tags">
-            <span class="project-tag">YouTube</span><span class="project-tag">Monetization</span>
-            <span class="project-tag">Content Strategy</span><span class="project-tag">Google</span>
+            <span class="project-tag" data-tag="youtube">YouTube</span>
+            <span class="project-tag" data-tag="monetization">Monetization</span>
+            <span class="project-tag" data-tag="content strategy">Content Strategy</span>
+            <span class="project-tag" data-tag="google">Google</span>
           </div>
           <button class="project-toggle">Expand Case Study →</button>
         </div>
@@ -485,43 +599,75 @@
         <p class="section-subtitle">Explore a real-time production analytics model tracking Google's GA4 e-commerce stream, conversion pathways, and landing page ROIs.</p>
       </div>
 
+      <!-- Quick Telemetry Status Ribbon -->
+      <div class="dashboard-ribbon-bar reveal">
+        <div class="ribbon-item">
+          <span class="ribbon-dot live-pulse"></span>
+          <span class="ribbon-label">GA4 Stream Health:</span>
+          <span class="ribbon-value text-success">100% Operational</span>
+        </div>
+        <div class="ribbon-item">
+          <span class="ribbon-label">Active Diagnostics:</span>
+          <span class="ribbon-value" id="teaserActiveViewsCount">8 Telemetry Views</span>
+        </div>
+        <div class="ribbon-item">
+          <span class="ribbon-label">Baseline CRO Target:</span>
+          <span class="ribbon-value">1.03% Conv.</span>
+        </div>
+        <div class="ribbon-item">
+          <span class="ribbon-label">Data Mode:</span>
+          <span class="ribbon-value text-accent">Real-Time Stream</span>
+        </div>
+      </div>
+
       <div class="dashboard-teaser-container reveal">
         <!-- Left Column: Page Navigator Tabs -->
         <div class="teaser-navigator">
           <div class="teaser-nav-header">
-            <h4>Select Dashboard Page</h4>
-            <p>Click below to preview live telemetry diagnostics</p>
+            <div>
+              <h4>Select Dashboard Page</h4>
+              <p>Click below to preview live telemetry diagnostics</p>
+            </div>
+            <div class="teaser-nav-controls">
+              <div class="teaser-search-box">
+                <span class="t-search-icon">🔍</span>
+                <input type="text" id="teaserPageSearch" placeholder="Filter pages..." aria-label="Search dashboard pages">
+              </div>
+              <button id="teaserAutoplayBtn" class="teaser-autoplay-btn" title="Toggle automatic page cycling">
+                <span class="play-icon">▶</span> <span class="play-text">Autoplay</span>
+              </button>
+            </div>
           </div>
-          <div class="teaser-nav-tabs">
-            <button class="teaser-tab active" data-page="1">
+          <div class="teaser-nav-tabs" id="teaserNavTabsContainer">
+            <button class="teaser-tab active" data-page="1" data-category="executive" data-search="google analytics overview users sessions conversion rate revenue">
               <span class="tab-num">01</span>
               <span class="tab-name">Google Analytics Overview</span>
             </button>
-            <button class="teaser-tab" data-page="2">
+            <button class="teaser-tab" data-page="2" data-category="demographics" data-search="website demographics age gender users">
               <span class="tab-num">02</span>
               <span class="tab-name">Website Demographics</span>
             </button>
-            <button class="teaser-tab" data-page="3">
+            <button class="teaser-tab" data-page="3" data-category="geo" data-search="geography country city users sessions">
               <span class="tab-num">03</span>
               <span class="tab-name">Geography</span>
             </button>
-            <button class="teaser-tab" data-page="4">
+            <button class="teaser-tab" data-page="4" data-category="geo" data-search="world map global location analytics">
               <span class="tab-num">04</span>
               <span class="tab-name">World Map</span>
             </button>
-            <button class="teaser-tab" data-page="5">
+            <button class="teaser-tab" data-page="5" data-category="ecommerce" data-search="cart process revenue checkout funnel drop-off">
               <span class="tab-num">05</span>
               <span class="tab-name">Cart Process & Revenue</span>
             </button>
-            <button class="teaser-tab" data-page="6">
+            <button class="teaser-tab" data-page="6" data-category="ecommerce" data-search="revenue sources organic paid direct email channel">
               <span class="tab-num">06</span>
               <span class="tab-name">Revenue Sources</span>
             </button>
-            <button class="teaser-tab" data-page="7">
+            <button class="teaser-tab" data-page="7" data-category="ads" data-search="google ads keyword analysis cpc roas clicks">
               <span class="tab-num">07</span>
               <span class="tab-name">Google Ads Keyword Analysis</span>
             </button>
-            <button class="teaser-tab" data-page="8">
+            <button class="teaser-tab" data-page="8" data-category="ads" data-search="item analysis top selling products SKU revenue">
               <span class="tab-num">08</span>
               <span class="tab-name">Item Analysis</span>
             </button>
@@ -607,18 +753,41 @@
         <p class="section-subtitle">How a Digital Strategist and a UX Designer orchestrate experiences that look beautiful, feel premium, and convert effectively.</p>
       </div>
 
-      <div class="collab-teaser-grid reveal">
+      <!-- Lens View Switcher Toolbar -->
+      <div class="collab-view-toolbar reveal">
+        <div class="collab-tabs-list" id="collabViewTabs" role="tablist" aria-label="Synergy view perspectives">
+          <button class="collab-tab active" data-collab-view="all" role="tab" aria-selected="true">
+            <span class="tab-icon">✨</span> Dual Synergy View
+          </button>
+          <button class="collab-tab" data-collab-view="strategist" role="tab" aria-selected="false">
+            <span class="tab-icon">📊</span> Strategist's Lens
+          </button>
+          <button class="collab-tab" data-collab-view="designer" role="tab" aria-selected="false">
+            <span class="tab-icon">🎨</span> Designer's Lens
+          </button>
+          <button class="collab-tab" data-collab-view="loop" role="tab" aria-selected="false">
+            <span class="tab-icon">🔄</span> Continuous Feedback Loop
+          </button>
+        </div>
+      </div>
+
+      <div class="collab-teaser-grid reveal view-all" id="collabTeaserGrid">
         <!-- Left Column: The Dual-Lens Perspective -->
-        <div class="collab-lenses-container">
+        <div class="collab-lenses-container" id="collabLensesContainer">
           <div class="lens-glow-backdrop"></div>
           
           <!-- Lens A: The Strategist -->
-          <div class="collab-teaser-lens strategist-lens">
+          <div class="collab-teaser-lens strategist-lens" id="strategistLensCard">
             <div class="lens-header">
-              <span class="lens-icon">📊</span>
-              <h5>The Strategist's Lens</h5>
+              <div class="lens-header-main">
+                <span class="lens-icon">📊</span>
+                <h5>The Strategist's Lens</h5>
+              </div>
+              <span class="role-badge strategist-badge">Digital Strategist</span>
             </div>
             <div class="lens-body">
+              <p class="lens-role-desc">Architects quantitative CRO frameworks, GA4 telemetry pipelines, SEM/SEO alignment, and attribution models to eliminate checkout friction and maximize revenue yield.</p>
+              
               <div class="strategist-metric-row">
                 <div class="sm-card">
                   <span class="sm-label">Cart Funnel</span>
@@ -638,6 +807,31 @@
                 </svg>
                 <div class="telemetry-scanning-bar"></div>
               </div>
+
+              <!-- Expanded Capabilities Breakdown (Visible in Strategist Focus View) -->
+              <div class="lens-capabilities-grid">
+                <div class="cap-pill">
+                  <span class="cap-icon">📈</span>
+                  <div class="cap-text">
+                    <strong>GA4 Analytics & Telemetry</strong>
+                    <span>Real-time conversion pathways & event instrumentation</span>
+                  </div>
+                </div>
+                <div class="cap-pill">
+                  <span class="cap-icon">🎯</span>
+                  <div class="cap-text">
+                    <strong>CRO & Binomial Testing</strong>
+                    <span>Multivariate checkout experiments & hypothesis validation</span>
+                  </div>
+                </div>
+                <div class="cap-pill">
+                  <span class="cap-icon">💰</span>
+                  <div class="cap-text">
+                    <strong>Attribution & ROAS Modeling</strong>
+                    <span>Connecting multi-touch paid traffic directly to LTV</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -648,17 +842,22 @@
           </div>
 
           <!-- Lens B: The Designer -->
-          <div class="collab-teaser-lens designer-lens">
+          <div class="collab-teaser-lens designer-lens" id="designerLensCard">
             <div class="lens-header">
-              <span class="lens-icon">🎨</span>
-              <h5>The Designer's Lens</h5>
+              <div class="lens-header-main">
+                <span class="lens-icon">🎨</span>
+                <h5>The Designer's Lens</h5>
+              </div>
+              <span class="role-badge designer-badge">UI/UX Designer</span>
             </div>
             <div class="lens-body">
+              <p class="lens-role-desc">Transforms complex data diagnostics into intuitive visual hierarchies, accessible design systems, fluid micro-interactions, and frictionless patient/customer journeys.</p>
+
               <div class="designer-palette-row">
-                <span class="color-swatch sw-1"></span>
-                <span class="color-swatch sw-2"></span>
-                <span class="color-swatch sw-3"></span>
-                <span class="color-swatch sw-4"></span>
+                <span class="color-swatch sw-1" data-theme-preset="neon" title="Cyber Neon Theme"></span>
+                <span class="color-swatch sw-2" data-theme-preset="glass" title="Apple Glass Theme"></span>
+                <span class="color-swatch sw-3" data-theme-preset="fluent" title="Windows Fluent Theme"></span>
+                <span class="color-swatch sw-4" data-theme-preset="brutal" title="Brutalism Theme"></span>
               </div>
               <div class="designer-layout-mock">
                 <div class="mock-nav-bar">
@@ -671,18 +870,51 @@
                   <div class="mock-wire-2"></div>
                 </div>
               </div>
+
+              <!-- Expanded Capabilities Breakdown (Visible in Designer Focus View) -->
+              <div class="lens-capabilities-grid">
+                <div class="cap-pill">
+                  <span class="cap-icon">✨</span>
+                  <div class="cap-text">
+                    <strong>Design Systems & Components</strong>
+                    <span>Scalable UI token libraries across 5 design paradigms</span>
+                  </div>
+                </div>
+                <div class="cap-pill">
+                  <span class="cap-icon">♿</span>
+                  <div class="cap-text">
+                    <strong>WCAG Accessibility</strong>
+                    <span>High-contrast typography, screen-reader flow & focus states</span>
+                  </div>
+                </div>
+                <div class="cap-pill">
+                  <span class="cap-icon">📐</span>
+                  <div class="cap-text">
+                    <strong>High-Fidelity Wireframes</strong>
+                    <span>Frictionless layouts engineered around cognitive load limits</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
         <!-- Right Column: The Continuous Feedback Loop -->
-        <div class="collab-loop-container">
+        <div class="collab-loop-container" id="collabLoopContainer">
+          <div class="loop-overview-header">
+            <span class="role-badge loop-badge">Cross-Functional Ecosystem</span>
+            <p class="loop-section-desc">How quantitative data insights and qualitative design iterations continuously feed into one another to engineer high-converting experiences.</p>
+          </div>
+
           <!-- Step 1 -->
           <div class="collab-loop-card">
             <div class="loop-num-badge">01</div>
             <div class="loop-content">
-              <h4>Analyze & Benchmark</h4>
-              <p>Youssef audits quantitative telemetry data—identifying conversion bottlenecks, drop-off thresholds, and traffic leaks across critical marketing paths.</p>
+              <div class="loop-header-row">
+                <h4>Analyze & Benchmark</h4>
+                <div class="loop-kpi-pill">🏆 -42% Funnel Friction</div>
+              </div>
+              <p>Audits quantitative telemetry data—identifying conversion bottlenecks, drop-off thresholds, and traffic leaks across critical marketing paths.</p>
             </div>
           </div>
           
@@ -690,7 +922,10 @@
           <div class="collab-loop-card">
             <div class="loop-num-badge">02</div>
             <div class="loop-content">
-              <h4>Ideate & Model</h4>
+              <div class="loop-header-row">
+                <h4>Ideate & Model</h4>
+                <div class="loop-kpi-pill">🏆 100% Mobile Hierarchy</div>
+              </div>
               <p>The UX/UI designer leverages these diagnostic insights to model high-impact design layouts, structuring hierarchy, friction-reduction elements, and cognitive workflows.</p>
             </div>
           </div>
@@ -699,7 +934,10 @@
           <div class="collab-loop-card">
             <div class="loop-num-badge">03</div>
             <div class="loop-content">
-              <h4>Validate & Scale</h4>
+              <div class="loop-header-row">
+                <h4>Validate & Scale</h4>
+                <div class="loop-kpi-pill">🏆 +28% Binomial Uplift</div>
+              </div>
               <p>The solution enters a live binomial testing environment to measure quantitative impact. The feedback loop ensures continuous and compounded conversions.</p>
             </div>
           </div>
@@ -712,6 +950,13 @@
         <div class="cta-banner-content">
           <h3>Experience Interactive Multi-Theme Morphing</h3>
           <p>Explore our collaborative live ecosystem page to watch entire layouts seamlessly transform in real-time across five cutting-edge design systems: <strong>Cyber Neon, Apple Glass, Windows Fluent, Neumorphism,</strong> and <strong>Brutalism</strong>.</p>
+          <div class="cta-theme-presets">
+            <button class="preset-chip" data-theme-preset="neon">Cyber Neon</button>
+            <button class="preset-chip" data-theme-preset="glass">Apple Glass</button>
+            <button class="preset-chip" data-theme-preset="fluent">Windows Fluent</button>
+            <button class="preset-chip" data-theme-preset="neumorph">Neumorphism</button>
+            <button class="preset-chip" data-theme-preset="brutal">Brutalism</button>
+          </div>
           <a href="collaboration.html" class="btn btn-primary collab-cta-btn">
             Explore UX Collaboration &rarr;
           </a>

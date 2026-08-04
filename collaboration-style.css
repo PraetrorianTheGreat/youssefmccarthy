@@ -494,6 +494,15 @@ body.light-theme {
 
 }
 
+.theme-dot.nordic {
+
+  background: linear-gradient(135deg, #c58f5c 0%, #ff5a09 100%);
+
+  box-shadow: 0 0 6px rgba(197, 143, 92, 0.4);
+
+}
+
+
 
 
 /* Align active dot rings if required */
@@ -10475,69 +10484,536 @@ body.theme-brutal .human-node .node-avatar {
   color: #000000 !important;
 }
 body.theme-brutal .ai-node .node-avatar {
-  background: #ff007f !important;
-  color: #000000 !important;
+  background: #ff007f !important;
+  color: #000000 !important;
+}
+body.theme-brutal .pulse-line {
+  background: none !important;
+  border-top: 3.5px dashed #000000 !important;
+  height: 0px !important;
+  overflow: visible !important;
+}
+body.theme-brutal .pulse-line::after {
+  content: '▶' !important;
+  background: none !important;
+  color: #000000 !important;
+  font-size: 10px !important;
+  font-weight: 900 !important;
+  width: auto !important;
+  height: auto !important;
+  top: -8px !important;
+  left: -20px;
+  animation: pipeLaserFlow 1.2s steps(6) infinite !important;
+}
+body.theme-brutal .pipe-label {
+  color: #000000 !important;
+  font-family: "JetBrains Mono", monospace !important;
+  font-weight: 900 !important;
+}
+body.theme-brutal .synergy-para.sub {
+  border-left: 2.5px solid #000000 !important;
 }
-body.theme-brutal .pulse-line {
-  background: none !important;
-  border-top: 3.5px dashed #000000 !important;
-  height: 0px !important;
-  overflow: visible !important;
-}
-body.theme-brutal .pulse-line::after {
-  content: '▶' !important;
-  background: none !important;
-  color: #000000 !important;
-  font-size: 10px !important;
-  font-weight: 900 !important;
-  width: auto !important;
-  height: auto !important;
-  top: -8px !important;
-  left: -20px;
-  animation: pipeLaserFlow 1.2s steps(6) infinite !important;
-}
-body.theme-brutal .pipe-label {
-  color: #000000 !important;
-  font-family: "JetBrains Mono", monospace !important;
-  font-weight: 900 !important;
-}
-body.theme-brutal .synergy-para.sub {
-  border-left: 2.5px solid #000000 !important;
-}
-
-/* 4. Fluent UI Theme Overrides */
-body.theme-fluent .synergy-card {
-  background: #f3f3f3 !important;
-  border: 1px solid rgba(0, 0, 0, 0.08) !important;
-  border-radius: 8px !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
-}
-body.theme-fluent .orchestration-map {
-  background: rgba(0, 0, 0, 0.02) !important;
-  border: 1px solid rgba(0, 0, 0, 0.06) !important;
-  border-radius: 6px !important;
-}
-body.theme-fluent .human-node .node-avatar {
-  background: #0078d4 !important;
-  border: 1px solid rgba(0, 0, 0, 0.05) !important;
-  color: #ffffff !important;
-  border-radius: 50% !important;
-}
-body.theme-fluent .ai-node .node-avatar {
-  background: #8660a9 !important;
-  border: 1px solid rgba(0, 0, 0, 0.05) !important;
-  color: #ffffff !important;
-  border-radius: 50% !important;
-}
-body.theme-fluent .pulse-line {
-  background: rgba(0, 0, 0, 0.08) !important;
-}
-body.theme-fluent .pulse-line::after {
-  background: linear-gradient(90deg, transparent, #0078d4, #8660a9, transparent) !important;
-}
-body.theme-fluent .pipe-label {
-  color: #5d5d5d !important;
-}
-body.theme-fluent .synergy-para.sub {
-  border-left: 2px solid #0078d4 !important;
-}
+
+
+/* ==========================================================================
+   HUMAN-AI ORCHESTRATION THEME OVERRIDES
+   ========================================================================== */
+
+/* 1. Apple Glass UI Theme Overrides */
+body.theme-glass .orchestration-map {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1) !important;
+}
+body.theme-glass .human-node .node-avatar {
+  background: rgba(0, 113, 227, 0.15) !important;
+  border: 1.5px solid rgba(0, 113, 227, 0.5) !important;
+  color: #0071e3 !important;
+  box-shadow: 0 4px 15px rgba(0, 113, 227, 0.15) !important;
+}
+body.theme-glass .ai-node .node-avatar {
+  background: rgba(175, 82, 222, 0.15) !important;
+  border: 1.5px solid rgba(175, 82, 222, 0.5) !important;
+  color: #af52de !important;
+  box-shadow: 0 4px 15px rgba(175, 82, 222, 0.15) !important;
+}
+body.theme-glass .pulse-line::after {
+  background: linear-gradient(90deg, transparent, #0071e3, #af52de, transparent) !important;
+}
+body.theme-glass .pipe-label {
+  color: rgba(29, 29, 31, 0.6) !important;
+}
+
+/* 2. Neumorphic UI Theme Overrides */
+body.theme-neu .orchestration-map {
+  background: #e0e5ec !important;
+  border: none !important;
+  box-shadow: inset 3px 3px 6px #a3b1c6, inset -3px -3px 6px #ffffff !important;
+}
+body.theme-neu .node-avatar {
+  background: #e0e5ec !important;
+  box-shadow: 4px 4px 9px #a3b1c6, -4px -4px 9px #ffffff !important;
+}
+body.theme-neu .human-node .node-avatar {
+  border: none !important;
+  color: #3182ce !important;
+}
+body.theme-neu .ai-node .node-avatar {
+  border: none !important;
+  color: #d53f8c !important;
+}
+body.theme-neu .pulse-line {
+  background: #e0e5ec !important;
+  box-shadow: inset 1px 1px 3px #a3b1c6, inset -1px -1px 3px #ffffff !important;
+}
+body.theme-neu .pulse-line::after {
+  background: linear-gradient(90deg, transparent, #3182ce, #d53f8c, transparent) !important;
+}
+body.theme-neu .pipe-label {
+  color: #718096 !important;
+}
+
+/* 3. Brutalist UI Theme Overrides */
+body.theme-brutal .orchestration-map {
+  background: #ffffff !important;
+  border: 3px solid #000000 !important;
+  border-radius: 0px !important;
+  box-shadow: 4px 4px 0px #000000 !important;
+}
+body.theme-brutal .node-avatar {
+  border-radius: 0px !important;
+  border: 2.5px solid #000000 !important;
+  box-shadow: 3px 3px 0px #000000 !important;
+}
+body.theme-brutal .human-node .node-avatar {
+  background: #00ffff !important;
+  color: #000000 !important;
+}
+body.theme-brutal .ai-node .node-avatar {
+  background: #ff007f !important;
+  color: #000000 !important;
+}
+body.theme-brutal .pulse-line {
+  background: none !important;
+  border-top: 3.5px dashed #000000 !important;
+  height: 0px !important;
+  overflow: visible !important;
+}
+body.theme-brutal .pulse-line::after {
+  content: '▶' !important;
+  background: none !important;
+  color: #000000 !important;
+  font-size: 10px !important;
+  font-weight: 900 !important;
+  width: auto !important;
+  height: auto !important;
+  top: -8px !important;
+  left: -20px;
+  animation: pipeLaserFlow 1.2s steps(6) infinite !important;
+}
+body.theme-brutal .pipe-label {
+  color: #000000 !important;
+  font-family: "JetBrains Mono", monospace !important;
+  font-weight: 900 !important;
+}
+body.theme-brutal .synergy-para.sub {
+  border-left: 2.5px solid #000000 !important;
+}
+
+/* 4. Fluent UI Theme Overrides */
+body.theme-fluent .synergy-card {
+  background: #f3f3f3 !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+}
+body.theme-fluent .orchestration-map {
+  background: rgba(0, 0, 0, 0.02) !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+  border-radius: 6px !important;
+}
+body.theme-fluent .human-node .node-avatar {
+  background: #0078d4 !important;
+  border: 1px solid rgba(0, 0, 0, 0.05) !important;
+  color: #ffffff !important;
+  border-radius: 50% !important;
+}
+body.theme-fluent .ai-node .node-avatar {
+  background: #8660a9 !important;
+  border: 1px solid rgba(0, 0, 0, 0.05) !important;
+  color: #ffffff !important;
+  border-radius: 50% !important;
+}
+body.theme-fluent .pulse-line {
+  background: rgba(0, 0, 0, 0.08) !important;
+}
+body.theme-fluent .pulse-line::after {
+  background: linear-gradient(90deg, transparent, #0078d4, #8660a9, transparent) !important;
+}
+body.theme-fluent .pipe-label {
+  color: #5d5d5d !important;
+}
+body.theme-fluent .synergy-para.sub {
+  border-left: 2px solid #0078d4 !important;
+}
+
+/* ── 6. Theme Adaptation: Nordic Obsidian (`body.theme-nordic`) ── */
+
+body.theme-nordic * {
+  font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif !important;
+}
+
+body.theme-nordic {
+  background: #050505 !important;
+  background-image: 
+    radial-gradient(circle at 12% 25%, rgba(197, 143, 92, 0.12) 0%, transparent 45%),
+    radial-gradient(circle at 88% 75%, rgba(255, 90, 9, 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(10, 10, 12, 0.95) 0%, #000000 100%) !important;
+  background-size: cover !important;
+  background-attachment: fixed !important;
+  color: #a1a1aa !important;
+
+  --theme-panel-bg: rgba(18, 18, 20, 0.95);
+  --theme-card-bg: rgba(22, 22, 26, 0.85);
+  --theme-header-bg: rgba(18, 18, 20, 0.6);
+  --theme-preview-bg: rgba(10, 10, 12, 0.9);
+  --theme-border: rgba(197, 143, 92, 0.25);
+  --theme-card-border: 1px solid rgba(197, 143, 92, 0.15);
+  --theme-radius: 12px;
+  --theme-radius-inner: 8px;
+  --theme-btn-radius: 6px;
+  --theme-card-shadow: 0 20px 40px rgba(0, 0, 0, 0.9), 0 0 1px rgba(197, 143, 92, 0.15);
+  --theme-inner-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
+  --theme-heading: #f4f4f7;
+  --theme-text: #a1a1aa;
+  --theme-text-muted: #71717a;
+  --theme-accent: #c58f5c; /* Champagne Bronze */
+  --theme-accent-rgb: 197, 143, 92;
+  --theme-success: #30d158; /* Premium Green */
+}
+
+/* Background elements */
+body.theme-nordic #particles {
+  opacity: 0.15 !important;
+  display: block !important;
+}
+body.theme-nordic .bg-orbs {
+  display: block !important;
+}
+body.theme-nordic .bg-grid {
+  display: block !important;
+  opacity: 0.05 !important;
+  background-image: radial-gradient(rgba(197, 143, 92, 0.15) 1px, transparent 1px) !important;
+  background-size: 24px 24px !important;
+}
+body.theme-nordic .orb-1 { 
+  width: 650px; 
+  height: 650px; 
+  background: rgba(197, 143, 92, 0.12) !important; 
+  filter: blur(120px) !important; 
+}
+body.theme-nordic .orb-2 { 
+  width: 550px; 
+  height: 550px; 
+  background: rgba(255, 90, 9, 0.08) !important; 
+  filter: blur(120px) !important; 
+}
+body.theme-nordic .orb-3 { 
+  width: 450px; 
+  height: 450px; 
+  background: rgba(18, 18, 20, 0.8) !important; 
+  filter: blur(80px) !important; 
+}
+
+/* Nav */
+body.theme-nordic .nav {
+  background: rgba(10, 10, 12, 0.9) !important;
+  border-bottom: 1px solid rgba(197, 143, 92, 0.15) !important;
+  backdrop-filter: blur(16px) !important;
+}
+body.theme-nordic .nav * {
+  color: #a1a1aa !important;
+}
+body.theme-nordic .nav .nav-logo span {
+  color: #c58f5c !important;
+  font-weight: 800 !important;
+}
+body.theme-nordic .nav .nav-links a.active {
+  color: #f4f4f7 !important;
+  border-bottom: 2px solid #c58f5c !important;
+}
+body.theme-nordic .nav .nav-cta {
+  background: transparent !important;
+  border: 1px solid rgba(197, 143, 92, 0.4) !important;
+  color: #c58f5c !important;
+  border-radius: 6px !important;
+  transition: all 0.3s ease !important;
+}
+body.theme-nordic .nav .nav-cta:hover {
+  background: rgba(197, 143, 92, 0.1) !important;
+  border-color: #c58f5c !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Widgets */
+body.theme-nordic .global-theme-switcher {
+  background: rgba(18, 18, 20, 0.95) !important;
+  border: 1px solid rgba(197, 143, 92, 0.2) !important;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8) !important;
+}
+body.theme-nordic .theme-info-container {
+  background: rgba(18, 18, 20, 0.95) !important;
+  border: 1px solid rgba(197, 143, 92, 0.2) !important;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8) !important;
+}
+body.theme-nordic .theme-btn {
+  background: rgba(30, 30, 35, 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  color: #a1a1aa !important;
+}
+body.theme-nordic .theme-btn:hover {
+  background: rgba(197, 143, 92, 0.1) !important;
+  border-color: rgba(197, 143, 92, 0.25) !important;
+  color: #f4f4f7 !important;
+}
+body.theme-nordic .theme-btn.active {
+  background: #c58f5c !important;
+  color: #050505 !important;
+  border-color: #c58f5c !important;
+  font-weight: 700 !important;
+}
+
+/* Components */
+body.theme-nordic .workflow-card, 
+body.theme-nordic .variant-card, 
+body.theme-nordic .theme-info,
+body.theme-nordic .saas-mock,
+body.theme-nordic .form-mock,
+body.theme-nordic .product-mock,
+body.theme-nordic .hero-visual-container {
+  background: rgba(18, 18, 22, 0.9) !important;
+  border: 1px solid rgba(197, 143, 92, 0.15) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6) !important;
+}
+body.theme-nordic .workflow-card:hover {
+  transform: translateY(-5px) !important;
+  border-color: rgba(197, 143, 92, 0.4) !important;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.8), 0 0 15px rgba(197, 143, 92, 0.1) !important;
+}
+
+/* Typography elements */
+body.theme-nordic h1,
+body.theme-nordic h2,
+body.theme-nordic h3,
+body.theme-nordic .section-title,
+body.theme-nordic .workflow-card h3,
+body.theme-nordic .variant-card h3 {
+  color: #f4f4f7 !important;
+}
+body.theme-nordic p,
+body.theme-nordic .hero-subtitle,
+body.theme-nordic .workflow-card p {
+  color: #a1a1aa !important;
+}
+
+/* Primary actions */
+body.theme-nordic .primary-action-btn {
+  background: linear-gradient(135deg, #c58f5c 0%, #a27244 100%) !important;
+  color: #050505 !important;
+  border: none !important;
+  font-weight: 600 !important;
+  box-shadow: 0 4px 15px rgba(197, 143, 92, 0.3) !important;
+}
+body.theme-nordic .primary-action-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #d39f6f 0%, #b27f4e 100%) !important;
+  box-shadow: 0 6px 20px rgba(197, 143, 92, 0.45) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* AB Test Simulator Elements */
+body.theme-nordic .ab-test-selector-nav {
+  background: rgba(24, 24, 28, 0.8) !important;
+  border: 1px solid rgba(197, 143, 92, 0.15) !important;
+  border-radius: 20px !important;
+}
+body.theme-nordic .ab-nav-btn {
+  color: #a1a1aa !important;
+  border-radius: 15px !important;
+}
+body.theme-nordic .ab-nav-btn.active {
+  background: #c58f5c !important;
+  color: #050505 !important;
+  font-weight: 600 !important;
+}
+body.theme-nordic .ab-nav-btn:hover:not(.active) {
+  background: rgba(197, 143, 92, 0.1) !important;
+  color: #f4f4f7 !important;
+}
+
+/* Winner decorations */
+body.theme-nordic .winner-ribbon {
+  background: #c58f5c !important;
+  color: #050505 !important;
+  font-weight: 700 !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 12px rgba(197, 143, 92, 0.3) !important;
+}
+body.theme-nordic .variant-card.winner {
+  border-color: #c58f5c !important;
+  box-shadow: 0 0 25px rgba(197, 143, 92, 0.25) !important;
+}
+
+/* Simulator product layout */
+body.theme-nordic .product-mock {
+  background: #141416 !important;
+  border-color: rgba(197, 143, 92, 0.15) !important;
+}
+body.theme-nordic .btn-control {
+  background: rgba(40, 40, 45, 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: #71717a !important;
+  border-radius: 6px !important;
+}
+body.theme-nordic .btn-challenger {
+  background: #c58f5c !important;
+  color: #050505 !important;
+  font-weight: 700 !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 12px rgba(197, 143, 92, 0.25) !important;
+}
+body.theme-nordic .btn-challenger:hover {
+  background: #d39f6f !important;
+  box-shadow: 0 6px 15px rgba(197, 143, 92, 0.4) !important;
+}
+body.theme-nordic .btn-control:hover {
+  background: rgba(50, 50, 55, 0.8) !important;
+  color: #a1a1aa !important;
+}
+body.theme-nordic .trust-badge-pill {
+  background: rgba(197, 143, 92, 0.1) !important;
+  border: 1px solid rgba(197, 143, 92, 0.2) !important;
+  color: #c58f5c !important;
+  border-radius: 4px !important;
+}
+
+/* Synergy Mapping */
+body.theme-nordic .synergy-card {
+  background: rgba(18, 18, 22, 0.95) !important;
+  border: 1px solid rgba(197, 143, 92, 0.15) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6) !important;
+}
+body.theme-nordic .orchestration-map {
+  background: rgba(10, 10, 12, 0.8) !important;
+  border: 1px solid rgba(197, 143, 92, 0.1) !important;
+  border-radius: 8px !important;
+}
+body.theme-nordic .human-node .node-avatar {
+  background: #c58f5c !important;
+  color: #050505 !important;
+  border-radius: 50% !important;
+}
+body.theme-nordic .ai-node .node-avatar {
+  background: #ffa000 !important;
+  color: #050505 !important;
+  border-radius: 50% !important;
+}
+body.theme-nordic .pulse-line {
+  background: rgba(197, 143, 92, 0.15) !important;
+}
+body.theme-nordic .pulse-line::after {
+  background: linear-gradient(90deg, transparent, #c58f5c, #ffa000, transparent) !important;
+}
+body.theme-nordic .pipe-label {
+  color: #a1a1aa !important;
+}
+body.theme-nordic .synergy-para.sub {
+  border-left: 2px solid #c58f5c !important;
+}
+
+/* Mock Graphics Inside simulations */
+body.theme-nordic .website-hero-mock {
+  background: #0d0d0f !important;
+  border: 1px solid rgba(197, 143, 92, 0.2) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+}
+body.theme-nordic .hero-web-header {
+  background: #141416 !important;
+  border-bottom: 1px solid rgba(197, 143, 92, 0.15) !important;
+}
+body.theme-nordic .web-url {
+  color: #a1a1aa !important;
+  background: rgba(30, 30, 35, 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  border-radius: 4px !important;
+}
+body.theme-nordic .web-url.text-accent {
+  color: #c58f5c !important;
+}
+body.theme-nordic .mock-bar {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-radius: 4px !important;
+}
+body.theme-nordic .mock-btn-flat {
+  background: rgba(40, 40, 45, 0.6) !important;
+  color: #a1a1aa !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 4px !important;
+}
+body.theme-nordic .mock-btn-gradient {
+  background: #c58f5c !important;
+  color: #050505 !important;
+  border-radius: 4px !important;
+}
+body.theme-nordic .mock-mini-badge {
+  background: rgba(197, 143, 92, 0.15) !important;
+  color: #c58f5c !important;
+  border: 1px solid rgba(197, 143, 92, 0.3) !important;
+  border-radius: 4px !important;
+}
+body.theme-nordic .flat-mock-image {
+  border: 1px dashed rgba(197, 143, 92, 0.3) !important;
+  background: rgba(18, 18, 22, 0.5) !important;
+  border-radius: 6px !important;
+}
+body.theme-nordic .flat-image-frame {
+  color: #71717a !important;
+}
+body.theme-nordic .saas-mock .stat-card {
+  background: #141416 !important;
+  border: 1px solid rgba(197, 143, 92, 0.1) !important;
+}
+body.theme-nordic .saas-mock .stat-card.highlight {
+  border-color: rgba(197, 143, 92, 0.3) !important;
+  box-shadow: 0 4px 12px rgba(197, 143, 92, 0.1) !important;
+}
+body.theme-nordic .iso-layer {
+  border: 1px solid rgba(197, 143, 92, 0.15) !important;
+  border-radius: 6px !important;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4) !important;
+}
+body.theme-nordic .iso-layer.layer-1 {
+  background: rgba(197, 143, 92, 0.15) !important;
+}
+body.theme-nordic .iso-layer.layer-2 {
+  background: rgba(255, 90, 9, 0.15) !important;
+}
+body.theme-nordic .iso-layer.layer-3 {
+  background: rgba(18, 18, 22, 0.9) !important;
+}
+body.theme-nordic .iso-chart-bar {
+  background: #c58f5c !important;
+}
+body.theme-nordic .iso-floating-sphere {
+  background: #ffa000 !important;
+  box-shadow: 0 0 15px rgba(255, 160, 0, 0.4) !important;
+}
+body.theme-nordic .progress-days {
+  color: #c58f5c !important;
+  background: rgba(197, 143, 92, 0.1) !important;
+  border: 1px solid rgba(197, 143, 92, 0.2) !important;
+}
