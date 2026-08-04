@@ -579,42 +579,157 @@ function toggleProject(card, e) {
   }
 })();
 
-// ── Testimonial Carousel ──
-let currentTestimonial = 0;
-const testimonialCards = document.querySelectorAll('.testimonial-card');
-const dotsContainer = document.getElementById('testimonialDots');
+// ── Wall of Recommendations Data & Modal Handlers ──
+const recommendationsData = {
+  cc: {
+    initials: 'CC',
+    avatarClass: 'avatar-cc',
+    name: 'Christopher Clarke',
+    role: 'Assistant Vice President, Corporate Marketing &middot; EmblemHealth',
+    relationship: 'Executive Leadership',
+    fullText: [
+      "Youssef played a critical and highly valued role in supporting my team’s advertising/marketing efforts to drive patient volume for AdvantageCare Physicians and membership levels for EmblemHealth.",
+      "Youssef possesses a rare blend of attributes: technical expertise; a strategic mindset; and an ability to convey complex concepts to non-technical leaders and colleagues so that they understand how his efforts will help them achieve their goals. Youssef routinely stepped in as the voice of reason and clarity when conversations or projects had become unfocused. He also mines experiences from his past roles and can transform and leverage them to meet new objectives. Youssef always brings with him a confident, inquisitive, and calming presence. Managers value his maturity, sterling work ethic, and reliability, and Youssef’s colleagues appreciate his smarts, grounding presence, and positive energy."
+    ]
+  },
+  ce: {
+    initials: 'CE',
+    avatarClass: 'avatar-ce',
+    name: 'Cate Engerrand',
+    role: 'Director, Marketing Intelligence &middot; EmblemHealth',
+    relationship: 'Department Director',
+    fullText: [
+      "I led a Marketing Intelligence team with competencies across Research, Advanced Analytics and Marketing Performance at the EmblemHealth Family of Companies. Youssef came into a complex environment across the healthcare system and was able to quickly bring his skills to make a significant impact to our Marketing performance team.",
+      "<strong>Notable projects include:</strong>",
+      "<ul><li>Leading the charge on recommending and updating our Paid Search strategy to allocate spend into most successful keywords and audience targets.</li><li>Recommending a new UX design on our Find Care tool for our Primary and Specialty Care Provider offices (ACPNY) which led to improvements in both member and provider satisfaction.</li><li>Led the ongoing tracking of website performance for 13 health & wellness retail locations (EmblemHealth Neighborhood Care) that helped improve website traffic but even more important, foot traffic.</li></ul>",
+      "Not only did he step in to lead important overhauls, but he was a strong team player who brought a level of confidence and accountability given his background to support across a plethora of competencies. I highly recommend Youssef."
+    ]
+  },
+  kn: {
+    initials: 'KN',
+    avatarClass: 'avatar-kn',
+    name: 'Kyle Nowinski',
+    role: 'Senior Analytics Specialist &middot; EmblemHealth',
+    relationship: 'Direct Manager',
+    fullText: [
+      "I had the pleasure of working with and managing Youssef McCarthy from Nov 2023 to Jan 2025 and am happy to provide this letter of recommendation. During his employment at EmblemHealth his input was always welcomed and sought after on everything from new project to a fresh set of eyes on routine reporting. I have no doubts that Youssef would make a welcome addition to any team.",
+      "He has a wonderful ability to synthesis data and manage the myriad of problems that arise in any professional endeavor. The strategies he helped craft are still in use at EmblemHealth and I suspect will be for some time to come. Youssef was instrumental in setting up and steering our 2025 annual campaign, getting involved in everything from landing page design, to keyword strategy for search engine marketing, to building and monitoring performance dashboards.",
+      "In addition to his professional contributions, Youssef is also a reliable and cordial team member. He is a joy to work with and maintains a pleasant professional demeanor regardless of the work environment. I truly believe he would be a valued asset at any company."
+    ]
+  },
+  am: {
+    initials: 'AM',
+    avatarClass: 'avatar-am',
+    name: 'Andrea Mendes',
+    role: 'Former Digital Sales Director &middot; Adtaxi.com',
+    relationship: 'Former Direct Manager',
+    fullText: [
+      "I have had the pleasure of working with Youssef the past few years. He is a bright young man who is highly skilled in many areas of digital marketing especially in Google Analytics. In his role at Adtaxi.com, he spent a good part of the day troubleshooting for many problems that arose from several different platforms and operating systems we used, Salesforce being the most recent CRM we used.",
+      "I hired Youssef along with another manager who he directly reported to for a while and I know that manager would highly recommend Youssef as well. His strong communication skills and problem solving skills plus attention to detail were top notch. Our company made some changes in our department last summer and as a result Youssef was aligned under my leadership and I can’t say enough about how he helped shape our new team to be the very best in the NorthEast for Adtaxi.com.",
+      "Youssef was also given accolades from our corporate office for getting involved in many projects. He went over and above to build and deliver Google Data Studio dashboards for all our clients without even being asked, and our clients were very impressed and so were we. He would get direct calls from our clients, when usually the communication procedure went through the sales executive. He has that kind of rapport and they counted on him immensely.",
+      "Another quality that Youssef has is that he really cares about the clients and their business, he spent many hours with me and my sales staff sitting in meetings with clients and understanding their challenges, goals, and struggles, and he was quick to lend a hand, provide direction on which way was the best, backed up with data to support what he was recommending.",
+      "Youssef has my highest recommendation, and I am happy to furnish more details if you would like additional information. If he is applying to your company, look no further. He is a keeper and I would hire him back in a second if I am ever given the chance to work with him again."
+    ]
+  },
+  jl: {
+    initials: 'JL',
+    avatarClass: 'avatar-jl',
+    name: 'Jacob Loeb',
+    role: 'Regional Operations Director &middot; Media News Group',
+    relationship: 'Direct Supervisor',
+    fullText: [
+      "I would like to recommend Youssef McCarthy as a candidate for a position with your organization. I directly supervised Youssef while he was the Lead Digital Account Strategist at Media News Group’s Northeast Region between 2018 & 2020. Youssef did an exemplary job while in this position and demonstrated the critical skill that would make him an excellent employee for your company.",
+      "During that timeframe Youssef was the lead Strategist on a digital operations team that fulfilled local digital campaigns for 7 daily newspaper websites, all advanced digital campaigns including Google Search Engine marketing, Programmatic display & Facebook. Youssef was an indispensable part of my team during this time frame. His ability to use critical thinking helped the company reorganize a shorted staffed department by creating efficiencies in the workflow, allowing us to operate at the same capacity that we had while full staffed.",
+      "He has excellent verbal and written communication skills and can accomplish any task with little supervision in either an office or work from home setting.",
+      "Youssef McCarthy would add tremendous value to any company, and I recommend him for any position that he chooses to pursue."
+    ]
+  },
+  da: {
+    initials: 'DA',
+    avatarClass: 'avatar-da',
+    name: 'Domenic Armano',
+    role: 'Senior Analytics & Platform Project Manager &middot; Potpourri Group',
+    relationship: 'Project Manager',
+    fullText: [
+      "I would like to recommend Youssef McCarthy as a digital marketer or any computer system support role.",
+      "Youssef reported to me at Potpourri Group from August to December 2016 in a part-time temporary role. In this role he collected data from recorded user tests and collect and report on KPI's related to the fifteen websites that are part of our portfolio.",
+      "I thoroughly enjoyed my time working with Youssef, and came to know him as a very valuable asset to any team. He is honest, dependable, and incredibly hard-working. What impressed me the most however, was his relentless pursuit of more knowledge, wanting to go above and beyond, doing more than he was asked consistently, and never being intimidated by challenges and obstacles he encountered. One such example, was work Youssef completed on a shopper's experience test. I was looking for Youssef to provide me some specific examples of the product detail page experience and some data points that might shed light on upcoming trends; Youssef created a report projecting transaction growth based on the improvement of specific pain points in the product detail page that would lead to more conversions, and the probable impact on conversion rates.",
+      "Without a doubt, I confidently recommend Youssef to be a part of any eCommerce or IT team. As a driven and motivated employee and an all-around great person, I know that he will make a positive, productive impact to any organization."
+    ]
+  }
+};
 
-// Create dots
-if (dotsContainer) {
-  testimonialCards.forEach((_, i) => {
-    const dot = document.createElement('div');
-    dot.className = 'testimonial-dot' + (i === 0 ? ' active' : '');
-    dot.addEventListener('click', () => goToTestimonial(i));
-    dotsContainer.appendChild(dot);
+function openRecommendationModal(id) {
+  const data = recommendationsData[id];
+  if (!data) return;
+
+  const overlay = document.getElementById('recModalOverlay');
+  const avatar = document.getElementById('recModalAvatar');
+  const name = document.getElementById('recModalName');
+  const role = document.getElementById('recModalRole');
+  const relationship = document.getElementById('recModalRelationship');
+  const body = document.getElementById('recModalBody');
+
+  if (avatar) {
+    avatar.textContent = data.initials;
+    avatar.className = `rec-modal-avatar ${data.avatarClass}`;
+  }
+  if (name) name.textContent = data.name;
+  if (role) role.innerHTML = data.role;
+  if (relationship) relationship.textContent = data.relationship;
+
+  if (body) {
+    body.innerHTML = data.fullText.map(para => `<p>${para}</p>`).join('');
+  }
+
+  if (overlay) {
+    overlay.classList.add('active');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  if (window.UISounds && typeof UISounds.pop === 'function') {
+    UISounds.pop();
+  }
+
+  if (window.dataLayer) {
+    window.dataLayer.push({
+      'event': 'recommendation_modal_open',
+      'author_name': data.name,
+      'author_role': data.role.replace('&middot;', '-'),
+      'page_section': 'recommendations_wall'
+    });
+  }
+}
+
+function closeRecommendationModal() {
+  const overlay = document.getElementById('recModalOverlay');
+  if (overlay) {
+    overlay.classList.remove('active');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+  if (window.UISounds && typeof UISounds.click === 'function') {
+    UISounds.click();
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const overlay = document.getElementById('recModalOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        closeRecommendationModal();
+      }
+    });
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeRecommendationModal();
+    }
   });
-}
-
-function goToTestimonial(index) {
-  testimonialCards.forEach(c => c.classList.remove('active'));
-  document.querySelectorAll('.testimonial-dot').forEach(d => d.classList.remove('active'));
-  currentTestimonial = index;
-  testimonialCards[currentTestimonial].classList.add('active');
-  document.querySelectorAll('.testimonial-dot')[currentTestimonial].classList.add('active');
-}
-
-function changeTestimonial(dir, manual) {
-  if (testimonialCards.length === 0) return;
-  let next = currentTestimonial + dir;
-  if (next < 0) next = testimonialCards.length - 1;
-  if (next >= testimonialCards.length) next = 0;
-  goToTestimonial(next);
-  if (manual) UISounds.slide();
-}
-
-// Auto-rotate testimonials (silent)
-if (testimonialCards.length > 0) {
-  setInterval(() => changeTestimonial(1, false), 6000);
-}
+});
 
 // ── Copy to Clipboard ──
 function copyText(text, btn) {

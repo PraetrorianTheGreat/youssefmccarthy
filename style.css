@@ -930,49 +930,355 @@ section { padding: 100px 40px; max-width: 1200px; margin: 0 auto; }
 /* ── Particle Canvas ── */
 #particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
 
-/* ── Testimonials ── */
-.testimonials-carousel { max-width: 700px; margin: 0 auto; position: relative; }
-.testimonial-track { position: relative; min-height: 320px; overflow: visible; margin-bottom: 16px; }
-.testimonial-card {
-  position: absolute; inset: 0; padding: 40px; border-radius: var(--radius);
-  background: var(--bg-card); border: 1px solid var(--border-glass);
-  backdrop-filter: blur(10px);
-  opacity: 0; transform: translateX(40px) scale(0.97);
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  pointer-events: none;
-  display: flex; flex-direction: column;
+/* ── Wall of Recommendations Grid ── */
+.recommendations-wall {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  max-width: 1240px;
+  margin: 40px auto 0;
+  align-items: stretch;
 }
-.testimonial-card.active { opacity: 1; transform: translateX(0) scale(1); pointer-events: auto; }
-.testimonial-quote {
-  font-size: 1.05rem; line-height: 1.9; color: var(--text-secondary);
-  font-style: italic; margin-bottom: 24px;
-  border-left: 3px solid var(--accent); padding-left: 20px;
+
+.recommendation-card {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius);
+  padding: 32px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.recommendation-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gradient-1);
+  opacity: 0.6;
+  transition: var(--transition);
+}
+
+.recommendation-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(59, 130, 246, 0.35);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4), var(--shadow-glow);
+}
+
+.recommendation-card:hover::before {
+  opacity: 1;
+  height: 3px;
+}
+
+.card-header-badge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.card-company-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--accent-light);
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+.card-quote-mark {
+  font-size: 2.2rem;
+  line-height: 1;
+  color: var(--accent);
+  opacity: 0.3;
+  font-family: Georgia, serif;
+}
+
+.recommendation-card .testimonial-quote {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  font-style: italic;
+  margin-bottom: 24px;
+  border-left: 3px solid var(--accent);
+  padding-left: 16px;
   flex: 1;
 }
-.testimonial-author { display: flex; align-items: center; gap: 14px; margin-top: auto; }
+
+.card-footer-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
 .testimonial-avatar {
-  width: 48px; height: 48px; border-radius: 50%;
-  background: var(--gradient-1); display: flex; align-items: center; justify-content: center;
-  font-weight: 800; font-size: 0.85rem; color: white; flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: white;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
-.testimonial-name { font-weight: 700; font-size: 0.95rem; }
-.testimonial-role { font-size: 0.8rem; color: var(--text-muted); }
-.testimonial-controls { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 24px; position: relative; z-index: 2; }
-.testimonial-btn {
-  background: var(--bg-glass); border: 1px solid var(--border-glass);
-  color: var(--text-primary); cursor: pointer; font-size: 1rem;
-  width: 40px; height: 40px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
+
+.avatar-cc { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+.avatar-ce { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
+.avatar-kn { background: linear-gradient(135deg, #06b6d4, #0e7490); }
+.avatar-am { background: linear-gradient(135deg, #ec4899, #be185d); }
+.avatar-jl { background: linear-gradient(135deg, #10b981, #047857); }
+.avatar-da { background: linear-gradient(135deg, #f59e0b, #b45309); }
+
+.author-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+}
+
+.testimonial-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.testimonial-role {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.35;
+}
+
+.relationship-tag {
+  font-size: 0.72rem;
+  color: var(--accent-light);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 2px;
+  font-weight: 500;
+}
+
+.card-action-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.rec-read-more-btn {
+  background: var(--bg-glass);
+  border: 1px solid var(--border-glass);
+  color: var(--text-primary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   transition: var(--transition);
+  width: 100%;
+  justify-content: center;
 }
-.testimonial-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
-.testimonial-dots { display: flex; gap: 8px; }
-.testimonial-dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--text-muted); cursor: pointer;
+
+.rec-read-more-btn:hover {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+  box-shadow: 0 4px 15px var(--accent-glow);
+}
+
+.rec-read-more-btn i {
+  font-size: 0.75rem;
+  transition: transform 0.2s ease;
+}
+
+.rec-read-more-btn:hover i {
+  transform: translateX(4px);
+}
+
+/* ── Modal Expander Styling ── */
+.rec-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(10, 14, 26, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.rec-modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.rec-modal-container {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius);
+  width: 100%;
+  max-width: 720px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: var(--shadow-lg), 0 0 50px rgba(59, 130, 246, 0.15);
+  transform: scale(0.92) translateY(20px);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.rec-modal-overlay.active .rec-modal-container {
+  transform: scale(1) translateY(0);
+}
+
+.rec-modal-close {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-glass);
+  color: var(--text-secondary);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 1.4rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: var(--transition);
+  z-index: 10;
 }
-.testimonial-dot.active { background: var(--accent); transform: scale(1.3); }
+
+.rec-modal-close:hover {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+.rec-modal-header {
+  padding: 28px 32px 20px;
+  border-bottom: 1px solid var(--border-glass);
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.rec-modal-avatar {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1rem;
+  color: white;
+  flex-shrink: 0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.rec-modal-author-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-right: 32px;
+}
+
+.rec-modal-name {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.rec-modal-role {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.rec-modal-relationship {
+  font-size: 0.78rem;
+  color: var(--accent-light);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.rec-modal-body {
+  padding: 28px 32px;
+  overflow-y: auto;
+  font-size: 0.98rem;
+  line-height: 1.85;
+  color: var(--text-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.rec-modal-body p {
+  margin: 0;
+}
+
+.rec-modal-body ul {
+  margin: 8px 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rec-modal-body li {
+  color: var(--text-secondary);
+}
+
+.rec-modal-footer {
+  padding: 18px 32px;
+  border-top: 1px solid var(--border-glass);
+  background: rgba(10, 14, 26, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+.rec-modal-close-btn {
+  padding: 8px 24px;
+  font-size: 0.88rem;
+}
 
 /* ── Copy Button ── */
 .copy-btn {
@@ -1129,33 +1435,56 @@ section { padding: 100px 40px; max-width: 1200px; margin: 0 auto; }
   .edu-degree { font-size: 1rem; }
   .edu-school { font-size: 0.85rem; }
 
-  /* Testimonials - flow layout to prevent overlap */
-  .testimonial-track { position: relative; min-height: auto; }
-  .testimonial-card {
-    position: relative; inset: auto;
-    display: none; flex-direction: column;
-    padding: 24px; box-sizing: border-box;
-    opacity: 0; transform: none;
+  /* Recommendations Wall Responsive Layout */
+  @media (max-width: 991px) {
+    .recommendations-wall {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      padding: 0 16px;
+    }
   }
-  .testimonial-card.active {
-    display: flex; opacity: 1; transform: none;
-    animation: fadeInCard 0.4s ease forwards;
+
+  @media (max-width: 639px) {
+    .recommendations-wall {
+      grid-template-columns: 1fr;
+      gap: 16px;
+      padding: 0 12px;
+    }
+    .recommendation-card {
+      padding: 24px 20px;
+    }
+    .rec-modal-container {
+      max-height: 90vh;
+    }
+    .rec-modal-header {
+      padding: 20px 20px 16px;
+      gap: 12px;
+    }
+    .rec-modal-avatar {
+      width: 42px;
+      height: 42px;
+      font-size: 0.85rem;
+    }
+    .rec-modal-name {
+      font-size: 1.05rem;
+    }
+    .rec-modal-role {
+      font-size: 0.8rem;
+    }
+    .rec-modal-body {
+      padding: 20px;
+      font-size: 0.9rem;
+      line-height: 1.75;
+    }
+    .rec-modal-footer {
+      padding: 14px 20px;
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .rec-pdf-download-btn, .rec-modal-close-btn {
+      justify-content: center;
+    }
   }
-  @keyframes fadeInCard {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .testimonial-quote {
-    font-size: 0.88rem; line-height: 1.75; padding-left: 14px;
-    margin-bottom: 20px; border-left-width: 2px; flex: 1;
-  }
-  .testimonial-author { margin-top: auto; padding-top: 12px; }
-  .testimonial-avatar { width: 36px; height: 36px; font-size: 0.7rem; }
-  .testimonial-name { font-size: 0.82rem; }
-  .testimonial-role { font-size: 0.7rem; }
-  .testimonial-controls { margin-top: 20px; }
-  .testimonial-btn { width: 40px; height: 40px; font-size: 1rem; }
-  .testimonial-dot { width: 10px; height: 10px; }
 
   /* Contact */
   .contact-grid { gap: 24px; }
@@ -1290,23 +1619,25 @@ body.light-theme .path-card { background: rgba(255,255,255,0.9); }
 /* --- FLOATING CTA --- */
 .ds-floating-cta {
     position: fixed;
-    bottom: 32px;
-    right: 32px;
-    background-color: #0056b3; /* Change this hex to match your brand's primary color */
+    bottom: 28px;
+    right: 30px;
+    background: var(--gradient-1);
     color: #ffffff;
-    padding: 12px 24px;
+    padding: 0 24px;
+    height: 56px;
     border-radius: 50px;
-    font-weight: bold;
-    font-size: 1rem;
+    font-weight: 700;
+    font-size: 0.95rem;
     text-decoration: none;
-    display: flex;
+    display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
-    box-shadow: 0 4px 15px rgba(0, 86, 179, 0.3);
+    box-shadow: 0 8px 25px var(--accent-glow);
     z-index: 9999;
     opacity: 0;
     transform: translateY(20px);
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     pointer-events: none;
 }
 .ds-floating-cta.ds-visible {
@@ -1315,9 +1646,8 @@ body.light-theme .path-card { background: rgba(255,255,255,0.9); }
     pointer-events: auto;
 }
 .ds-floating-cta:hover {
-    background-color: #004494;
-    box-shadow: 0 6px 20px rgba(0, 86, 179, 0.4);
-    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(59, 130, 246, 0.4);
+    transform: translateY(-3px) scale(1.02);
     color: #ffffff;
 }
 
@@ -1676,15 +2006,15 @@ body.light-theme .path-card { background: rgba(255,255,255,0.9); }
 ════════════════════════════════════════════════ */
 .ai-widget-container {
   position: fixed;
-  bottom: 30px;
+  bottom: 28px;
   left: 30px;
   z-index: 10000;
   font-family: 'Inter', sans-serif;
 }
 
 .ai-widget-toggle {
-  width: 60px;
-  height: 60px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   background: var(--gradient-1);
   border: none;
@@ -1987,8 +2317,17 @@ body.light-theme .path-card { background: rgba(255,255,255,0.9); }
 }
 
 @media (max-width: 600px) {
-  .ai-widget-container { bottom: 20px; left: 20px; }
-  .ai-chat-window { width: calc(100vw - 40px); bottom: 70px; height: 420px; }
+  .ai-widget-container { bottom: 20px; left: 16px; }
+  .ai-widget-toggle { width: 48px; height: 48px; }
+  .ds-floating-cta {
+    bottom: 20px;
+    right: 16px;
+    height: 48px;
+    padding: 0 16px;
+    font-size: 0.82rem;
+    gap: 6px;
+  }
+  .ai-chat-window { width: calc(100vw - 32px); bottom: 76px; height: 420px; }
 }
 
 /* ── Quick Telemetry Status Ribbon ── */

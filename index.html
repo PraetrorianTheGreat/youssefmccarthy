@@ -36,6 +36,7 @@
   }
   </script>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%230a0e1a' width='100' height='100' rx='20'/%3E%3Ctext y='72' x='10' font-size='60' font-family='Arial' font-weight='900' fill='%233b82f6'%3EYM%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
@@ -1171,41 +1172,166 @@
       </div>
     </section>
 
-    <!-- Testimonials -->
+    <!-- Recommendations Wall -->
     <section id="testimonials">
       <div class="section-header reveal">
         <div class="section-label">Recommendations</div>
-        <h2 class="section-title">What Leaders Say</h2>
+        <h2 class="section-title">What Leaders &amp; Colleagues Say</h2>
+        <p class="section-subtitle" style="color: var(--text-muted); max-width: 650px; margin: 12px auto 0; font-size: 0.95rem;">Endorsements from executives, directors, and senior analytics teammates across healthcare, media, and digital marketing.</p>
       </div>
-      <div class="testimonials-carousel" id="testimonialCarousel">
-        <div class="testimonial-track">
-          <div class="testimonial-card active">
-            <div class="testimonial-quote">&ldquo;Youssef possesses a rare blend of attributes: technical expertise, a strategic mindset, and an ability to convey complex concepts to non-technical leaders. He routinely stepped in as the voice of reason and clarity when projects had become unfocused.&rdquo;</div>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar">CC</div>
-              <div><div class="testimonial-name">Christopher Clarke</div><div class="testimonial-role">AVP, Corporate Marketing &middot; EmblemHealth</div></div>
-            </div>
+
+      <div class="recommendations-wall" id="recommendationsWall">
+        
+        <!-- Recommendation 1: Christopher Clarke -->
+        <div class="recommendation-card reveal" data-rec-id="cc">
+          <div class="card-header-badge">
+            <span class="card-company-badge">EmblemHealth</span>
+            <span class="card-quote-mark">&ldquo;</span>
           </div>
-          <div class="testimonial-card">
-            <div class="testimonial-quote">&ldquo;Youssef came into a complex environment across the healthcare system and was able to quickly bring his skills to make a significant impact. Not only did he lead important overhauls, but he was a strong team player who brought confidence and accountability.&rdquo;</div>
+          <div class="testimonial-quote">&ldquo;Youssef possesses a rare blend of attributes: technical expertise, a strategic mindset, and an ability to convey complex concepts to non-technical leaders. He routinely stepped in as the voice of reason and clarity when projects had become unfocused.&rdquo;</div>
+          <div class="card-footer-meta">
             <div class="testimonial-author">
-              <div class="testimonial-avatar">CE</div>
-              <div><div class="testimonial-name">Cate Engerrand</div><div class="testimonial-role">Director, Marketing Intelligence &middot; EmblemHealth</div></div>
+              <div class="testimonial-avatar avatar-cc">CC</div>
+              <div class="author-details">
+                <div class="testimonial-name">Christopher Clarke</div>
+                <div class="testimonial-role">AVP, Corporate Marketing &middot; EmblemHealth</div>
+                <div class="relationship-tag"><i class="fa-solid fa-user-shield"></i> Executive Leadership</div>
+              </div>
             </div>
-          </div>
-          <div class="testimonial-card">
-            <div class="testimonial-quote">&ldquo;His input was always welcomed and sought after on everything from new projects to routine reporting. The strategies he helped craft are still in use at EmblemHealth. He is a joy to work with and would be a valued asset at any company.&rdquo;</div>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar">KN</div>
-              <div><div class="testimonial-name">Kyle Nowinski</div><div class="testimonial-role">Senior Analytics Specialist &middot; EmblemHealth</div></div>
+            <div class="card-action-row">
+              <button class="rec-read-more-btn" onclick="openRecommendationModal('cc')">
+                <span>Read Full Letter</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
             </div>
           </div>
         </div>
-        <div class="testimonial-controls">
-          <button class="testimonial-btn" onclick="changeTestimonial(-1,true)">&larr;</button>
-          <div class="testimonial-dots" id="testimonialDots"></div>
-          <button class="testimonial-btn" onclick="changeTestimonial(1,true)">&rarr;</button>
+
+        <!-- Recommendation 2: Cate Engerrand -->
+        <div class="recommendation-card reveal" data-rec-id="ce">
+          <div class="card-header-badge">
+            <span class="card-company-badge">EmblemHealth</span>
+            <span class="card-quote-mark">&ldquo;</span>
+          </div>
+          <div class="testimonial-quote">&ldquo;Youssef came into a complex environment across the healthcare system and was able to quickly bring his skills to make a significant impact. Not only did he lead important overhauls, but he was a strong team player who brought confidence and accountability.&rdquo;</div>
+          <div class="card-footer-meta">
+            <div class="testimonial-author">
+              <div class="testimonial-avatar avatar-ce">CE</div>
+              <div class="author-details">
+                <div class="testimonial-name">Cate Engerrand</div>
+                <div class="testimonial-role">Director, Marketing Intelligence &middot; EmblemHealth</div>
+                <div class="relationship-tag"><i class="fa-solid fa-sitemap"></i> Department Director</div>
+              </div>
+            </div>
+            <div class="card-action-row">
+              <button class="rec-read-more-btn" onclick="openRecommendationModal('ce')">
+                <span>Read Full Letter</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
         </div>
+
+        <!-- Recommendation 3: Kyle Nowinski -->
+        <div class="recommendation-card reveal" data-rec-id="kn">
+          <div class="card-header-badge">
+            <span class="card-company-badge">EmblemHealth</span>
+            <span class="card-quote-mark">&ldquo;</span>
+          </div>
+          <div class="testimonial-quote">&ldquo;His input was always welcomed and sought after on everything from new projects to routine reporting. The strategies he helped craft are still in use at EmblemHealth. He is a joy to work with and would be a valued asset at any company.&rdquo;</div>
+          <div class="card-footer-meta">
+            <div class="testimonial-author">
+              <div class="testimonial-avatar avatar-kn">KN</div>
+              <div class="author-details">
+                <div class="testimonial-name">Kyle Nowinski</div>
+                <div class="testimonial-role">Senior Analytics Specialist &middot; EmblemHealth</div>
+                <div class="relationship-tag"><i class="fa-solid fa-user-group"></i> Direct Manager</div>
+              </div>
+            </div>
+            <div class="card-action-row">
+              <button class="rec-read-more-btn" onclick="openRecommendationModal('kn')">
+                <span>Read Full Letter</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recommendation 4: Andrea Mendes -->
+        <div class="recommendation-card reveal" data-rec-id="am">
+          <div class="card-header-badge">
+            <span class="card-company-badge">Adtaxi.com</span>
+            <span class="card-quote-mark">&ldquo;</span>
+          </div>
+          <div class="testimonial-quote">&ldquo;He went over and above to build and deliver Google Data Studio dashboards for all our clients without even being asked, and our clients were very impressed... He is a keeper and I would hire him back in a second.&rdquo;</div>
+          <div class="card-footer-meta">
+            <div class="testimonial-author">
+              <div class="testimonial-avatar avatar-am">AM</div>
+              <div class="author-details">
+                <div class="testimonial-name">Andrea Mendes</div>
+                <div class="testimonial-role">Former Digital Sales Director &middot; Adtaxi.com</div>
+                <div class="relationship-tag"><i class="fa-solid fa-user-group"></i> Former Direct Manager</div>
+              </div>
+            </div>
+            <div class="card-action-row">
+              <button class="rec-read-more-btn" onclick="openRecommendationModal('am')">
+                <span>Read Full Letter</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recommendation 5: Jacob Loeb -->
+        <div class="recommendation-card reveal" data-rec-id="jl">
+          <div class="card-header-badge">
+            <span class="card-company-badge">Media News Group</span>
+            <span class="card-quote-mark">&ldquo;</span>
+          </div>
+          <div class="testimonial-quote">&ldquo;Youssef was an indispensable part of my team... His ability to use critical thinking helped the company reorganize a short-staffed department by creating efficiencies in the workflow, allowing us to operate at the same capacity.&rdquo;</div>
+          <div class="card-footer-meta">
+            <div class="testimonial-author">
+              <div class="testimonial-avatar avatar-jl">JL</div>
+              <div class="author-details">
+                <div class="testimonial-name">Jacob Loeb</div>
+                <div class="testimonial-role">Regional Operations Director &middot; Media News Group</div>
+                <div class="relationship-tag"><i class="fa-solid fa-user-check"></i> Direct Supervisor</div>
+              </div>
+            </div>
+            <div class="card-action-row">
+              <button class="rec-read-more-btn" onclick="openRecommendationModal('jl')">
+                <span>Read Full Letter</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recommendation 6: Domenic Armano -->
+        <div class="recommendation-card reveal" data-rec-id="da">
+          <div class="card-header-badge">
+            <span class="card-company-badge">Potpourri Group</span>
+            <span class="card-quote-mark">&ldquo;</span>
+          </div>
+          <div class="testimonial-quote">&ldquo;What impressed me the most was his relentless pursuit of more knowledge, wanting to go above and beyond consistently... Youssef created a report projecting transaction growth based on improving pain points to drive higher conversions.&rdquo;</div>
+          <div class="card-footer-meta">
+            <div class="testimonial-author">
+              <div class="testimonial-avatar avatar-da">DA</div>
+              <div class="author-details">
+                <div class="testimonial-name">Domenic Armano</div>
+                <div class="testimonial-role">Senior Analytics &amp; Platform PM &middot; Potpourri Group</div>
+                <div class="relationship-tag"><i class="fa-solid fa-diagram-project"></i> Project Manager</div>
+              </div>
+            </div>
+            <div class="card-action-row">
+              <button class="rec-read-more-btn" onclick="openRecommendationModal('da')">
+                <span>Read Full Letter</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -1503,6 +1629,27 @@ document.addEventListener("DOMContentLoaded", function() {
           <svg viewBox="0 0 24 24" width="16" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
         </button>
       </form>
+    </div>
+  </div>
+
+  <!-- Recommendation Expander Modal -->
+  <div class="rec-modal-overlay" id="recModalOverlay" aria-hidden="true" role="dialog" aria-labelledby="recModalName">
+    <div class="rec-modal-container" role="document">
+      <button class="rec-modal-close" onclick="closeRecommendationModal()" aria-label="Close modal">&times;</button>
+      <div class="rec-modal-header">
+        <div class="rec-modal-avatar" id="recModalAvatar">CC</div>
+        <div class="rec-modal-author-info">
+          <h3 class="rec-modal-name" id="recModalName">Christopher Clarke</h3>
+          <div class="rec-modal-role" id="recModalRole">Assistant Vice President, Corporate Marketing &middot; EmblemHealth</div>
+          <div class="rec-modal-relationship" id="recModalRelationship">Executive Leadership</div>
+        </div>
+      </div>
+      <div class="rec-modal-body" id="recModalBody">
+        <!-- Letter text injected via JS -->
+      </div>
+      <div class="rec-modal-footer">
+        <button class="btn btn-secondary rec-modal-close-btn" onclick="closeRecommendationModal()">Close</button>
+      </div>
     </div>
   </div>
 
