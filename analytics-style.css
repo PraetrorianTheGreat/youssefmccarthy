@@ -914,4 +914,21 @@ body.light-theme .btn-source-link:hover {
   }
 }
 
+@media (max-width: 380px) {
+  .dashboard-action-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .action-bar-left {
+    justify-content: center;
+  }
+  .action-bar-right {
+    justify-content: space-between;
+  }
+  .iframe-viewport-wrapper {
+    aspect-ratio: 3 / 4;
+  }
+}
+
+
 

@@ -10753,7 +10753,7 @@ body.theme-nordic .nav .nav-cta {
 }
 body.theme-nordic .nav .nav-cta:hover {
   background: rgba(197, 143, 92, 0.1) !important;
-  border-color: #c58f5c !important;
+  color: #c58f5c !important;
   transform: translateY(-1px) !important;
 }
 
@@ -11030,6 +11030,201 @@ body.theme-nordic .iso-layer.layer-1 {
   background: rgba(197, 143, 92, 0.15) !important;
 }
 body.theme-nordic .iso-layer.layer-2 {
+body.theme-nordic h1,
+body.theme-nordic h2,
+body.theme-nordic h3,
+body.theme-nordic .section-title,
+body.theme-nordic .workflow-card h3,
+body.theme-nordic .variant-card h3 {
+  color: #f4f4f7 !important;
+}
+body.theme-nordic p,
+body.theme-nordic .hero-subtitle,
+body.theme-nordic .workflow-card p {
+  color: #a1a1aa !important;
+}
+
+/* Primary actions */
+body.theme-nordic .primary-action-btn {
+  background: linear-gradient(135deg, #c58f5c 0%, #a27244 100%) !important;
+  color: #050505 !important;
+  border: none !important;
+  font-weight: 600 !important;
+  box-shadow: 0 4px 15px rgba(197, 143, 92, 0.3) !important;
+}
+body.theme-nordic .primary-action-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #d39f6f 0%, #b27f4e 100%) !important;
+  box-shadow: 0 6px 20px rgba(197, 143, 92, 0.45) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* AB Test Simulator Elements */
+body.theme-nordic .ab-test-selector-nav {
+  background: rgba(24, 24, 28, 0.8) !important;
+  border: 1px solid rgba(197, 143, 92, 0.15) !important;
+  border-radius: 20px !important;
+}
+body.theme-nordic .ab-nav-btn {
+  color: #a1a1aa !important;
+  border-radius: 15px !important;
+}
+body.theme-nordic .ab-nav-btn.active {
+  background: #c58f5c !important;
+  color: #050505 !important;
+  font-weight: 600 !important;
+}
+body.theme-nordic .ab-nav-btn:hover:not(.active) {
+  background: rgba(197, 143, 92, 0.1) !important;
+  color: #f4f4f7 !important;
+}
+
+/* Winner decorations */
+body.theme-nordic .winner-ribbon {
+  background: #c58f5c !important;
+  color: #050505 !important;
+  font-weight: 700 !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 12px rgba(197, 143, 92, 0.3) !important;
+}
+body.theme-nordic .variant-card.winner {
+  border-color: #c58f5c !important;
+  box-shadow: 0 0 25px rgba(197, 143, 92, 0.25) !important;
+}
+
+/* Simulator product layout */
+body.theme-nordic .product-mock {
+  background: #141416 !important;
+  border-color: rgba(197, 143, 92, 0.15) !important;
+}
+body.theme-nordic .btn-control {
+  background: rgba(40, 40, 45, 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: #71717a !important;
+  border-radius: 6px !important;
+}
+body.theme-nordic .btn-challenger {
+  background: #c58f5c !important;
+  color: #050505 !important;
+  font-weight: 700 !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 12px rgba(197, 143, 92, 0.25) !important;
+}
+body.theme-nordic .btn-challenger:hover {
+  background: #d39f6f !important;
+  box-shadow: 0 6px 15px rgba(197, 143, 92, 0.4) !important;
+}
+body.theme-nordic .btn-control:hover {
+  background: rgba(50, 50, 55, 0.8) !important;
+  color: #a1a1aa !important;
+}
+body.theme-nordic .trust-badge-pill {
+  background: rgba(197, 143, 92, 0.1) !important;
+  border: 1px solid rgba(197, 143, 92, 0.2) !important;
+  color: #c58f5c !important;
+  border-radius: 4px !important;
+}
+
+/* Synergy Mapping */
+body.theme-nordic .synergy-card {
+  background: rgba(18, 18, 22, 0.95) !important;
+  border: 1px solid rgba(197, 143, 92, 0.15) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6) !important;
+}
+body.theme-nordic .orchestration-map {
+  background: rgba(10, 10, 12, 0.8) !important;
+  border: 1px solid rgba(197, 143, 92, 0.1) !important;
+  border-radius: 8px !important;
+}
+body.theme-nordic .human-node .node-avatar {
+  background: #c58f5c !important;
+  color: #050505 !important;
+  border-radius: 50% !important;
+}
+body.theme-nordic .ai-node .node-avatar {
+  background: #ffa000 !important;
+  color: #050505 !important;
+  border-radius: 50% !important;
+}
+body.theme-nordic .pulse-line {
+  background: rgba(197, 143, 92, 0.15) !important;
+}
+body.theme-nordic .pulse-line::after {
+  background: linear-gradient(90deg, transparent, #c58f5c, #ffa000, transparent) !important;
+}
+body.theme-nordic .pipe-label {
+  color: #a1a1aa !important;
+}
+body.theme-nordic .synergy-para.sub {
+  border-left: 2px solid #c58f5c !important;
+}
+
+/* Mock Graphics Inside simulations */
+body.theme-nordic .website-hero-mock {
+  background: #0d0d0f !important;
+  border: 1px solid rgba(197, 143, 92, 0.2) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+}
+body.theme-nordic .hero-web-header {
+  background: #141416 !important;
+  border-bottom: 1px solid rgba(197, 143, 92, 0.15) !important;
+}
+body.theme-nordic .web-url {
+  color: #a1a1aa !important;
+  background: rgba(30, 30, 35, 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  border-radius: 4px !important;
+}
+body.theme-nordic .web-url.text-accent {
+  color: #c58f5c !important;
+}
+body.theme-nordic .mock-bar {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-radius: 4px !important;
+}
+body.theme-nordic .mock-btn-flat {
+  background: rgba(40, 40, 45, 0.6) !important;
+  color: #a1a1aa !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 4px !important;
+}
+body.theme-nordic .mock-btn-gradient {
+  background: #c58f5c !important;
+  color: #050505 !important;
+  border-radius: 4px !important;
+}
+body.theme-nordic .mock-mini-badge {
+  background: rgba(197, 143, 92, 0.15) !important;
+  color: #c58f5c !important;
+  border: 1px solid rgba(197, 143, 92, 0.3) !important;
+  border-radius: 4px !important;
+}
+body.theme-nordic .flat-mock-image {
+  border: 1px dashed rgba(197, 143, 92, 0.3) !important;
+  background: rgba(18, 18, 22, 0.5) !important;
+  border-radius: 6px !important;
+}
+body.theme-nordic .flat-image-frame {
+  color: #71717a !important;
+}
+body.theme-nordic .saas-mock .stat-card {
+  background: #141416 !important;
+  border: 1px solid rgba(197, 143, 92, 0.1) !important;
+}
+body.theme-nordic .saas-mock .stat-card.highlight {
+  border-color: rgba(197, 143, 92, 0.3) !important;
+  box-shadow: 0 4px 12px rgba(197, 143, 92, 0.1) !important;
+}
+body.theme-nordic .iso-layer {
+  border: 1px solid rgba(197, 143, 92, 0.15) !important;
+  border-radius: 6px !important;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4) !important;
+}
+body.theme-nordic .iso-layer.layer-1 {
+  background: rgba(197, 143, 92, 0.15) !important;
+}
+body.theme-nordic .iso-layer.layer-2 {
   background: rgba(255, 90, 9, 0.15) !important;
 }
 body.theme-nordic .iso-layer.layer-3 {
@@ -11039,11 +11234,29 @@ body.theme-nordic .iso-chart-bar {
   background: #c58f5c !important;
 }
 body.theme-nordic .iso-floating-sphere {
-  background: #ffa000 !important;
-  box-shadow: 0 0 15px rgba(255, 160, 0, 0.4) !important;
+  background: #c58f5c !important;
+  border-radius: 50% !important;
+  box-shadow: 0 0 20px rgba(197, 143, 92, 0.4) !important;
 }
 body.theme-nordic .progress-days {
   color: #c58f5c !important;
   background: rgba(197, 143, 92, 0.1) !important;
   border: 1px solid rgba(197, 143, 92, 0.2) !important;
+  padding: 4px 8px !important;
+  border-radius: 4px !important;
+}
+
+/* ── Mobile Responsiveness Refinements for Collaboration Page ── */
+@media (max-width: 480px) {
+  .hero-collaboration-title { font-size: 1.8rem !important; }
+  .ab-test-selector-nav { flex-wrap: wrap !important; gap: 6px !important; }
+  .selector-tab { flex: 1 1 100% !important; text-align: center !important; }
+  .simulation-view-container, .variants-row { flex-direction: column !important; }
+  .variant-card { width: 100% !important; }
+  .code-preview-pane { max-height: 250px !important; font-size: 0.75rem !important; }
+}
+
+@media (max-width: 380px) {
+  .hero-collaboration-title { font-size: 1.5rem !important; }
+  .telemetry-chip { font-size: 0.65rem !important; padding: 4px 8px !important; }
 }

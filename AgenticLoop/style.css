@@ -104,6 +104,27 @@ body::before {
   align-items: center;
 }
 
+.nav-logo {
+  font-family: var(--font-sans, sans-serif);
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: -0.5px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  cursor: pointer;
+}
+.nav-logo span {
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.nav-logo:hover {
+  transform: scale(1.08);
+  opacity: 0.9;
+}
+
 .masthead__title {
   font-family: var(--font-sans);
   font-size: 0.95rem;
@@ -1173,3 +1194,15 @@ body::before {
   opacity: 1;
   transform: translateY(0);
 }
+
+@media (max-width: 480px) {
+  .hero-title { font-size: 1.8rem; }
+  .architecture-grid, .loop-cards-grid { grid-template-columns: 1fr; gap: 16px; }
+  .nav-container { padding: 0 12px; }
+}
+
+@media (max-width: 380px) {
+  .hero-title { font-size: 1.5rem; }
+  .btn { padding: 8px 12px; font-size: 0.8rem; }
+}
+
