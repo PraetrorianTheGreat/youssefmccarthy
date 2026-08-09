@@ -363,12 +363,19 @@ document.querySelectorAll('.skill-category').forEach(el => skillObserver.observe
 function toggleTimeline(card) {
   const expand = card.querySelector('.timeline-expand');
   const toggle = card.querySelector('.timeline-toggle');
+  if (!expand) return;
   const isOpen = expand.classList.contains('open');
   expand.classList.toggle('open');
-  toggle.textContent = isOpen ? 'Show more \u2193' : 'Show less \u2191';
-  isOpen ? UISounds.collapse() : UISounds.expand();
+  if (toggle) {
+    toggle.textContent = isOpen ? 'Show more \u2193' : 'Show less \u2191';
+  }
+  if (typeof UISounds !== 'undefined') {
+    isOpen ? UISounds.collapse() : UISounds.expand();
+  }
+  const companyEl = card.querySelector('.timeline-company') || card.querySelector('.company-name');
+  const companyName = companyEl ? companyEl.textContent.trim() : 'Company';
   trackEvent('experience_toggle', { 
-    company: card.querySelector('.timeline-company').textContent,
+    company: companyName,
     action: isOpen ? 'collapse' : 'expand' 
   });
 }
