@@ -1587,33 +1587,40 @@ body.light-theme .path-card { background: rgba(255,255,255,0.9); }
 /* --- TRUST BANNER --- */
 .ds-trust-banner {
     width: 100%;
-    padding: 20px 0;
-    background: rgba(0, 0, 0, 0.03); /* Subtle blend with your existing bg */
-    border-top: 1px solid rgba(0,0,0,0.05);
-    border-bottom: 1px solid rgba(0,0,0,0.05);
+    padding: 30px 20px;
+    background: var(--bg-card);
+    border-top: 1px solid var(--border-glass);
+    border-bottom: 1px solid var(--border-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     text-align: center;
-    margin-bottom: 40px;
+    margin: 40px auto 60px;
+    position: relative;
+    box-shadow: var(--shadow-lg);
+    z-index: 10;
 }
 .ds-trust-title {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: #666; /* Adjust to match your existing text colors */
-    margin-bottom: 10px;
-    font-weight: 600;
+    letter-spacing: 3px;
+    color: var(--accent-light);
+    margin-bottom: 15px;
+    font-weight: 700;
 }
 .ds-trust-badges {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 15px;
+    gap: 20px;
     flex-wrap: wrap;
-    font-size: 0.95rem;
-    color: #333;
-    font-weight: 500;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    font-weight: 600;
 }
 .ds-dot {
-    color: #aaa;
+    color: var(--accent);
+    font-size: 1.2rem;
+    text-shadow: 0 0 10px var(--accent-glow);
 }
 
 /* --- FLOATING CTA --- */
@@ -3670,3 +3677,52 @@ body.light-theme .teaser-terminal .terminal-blur-mask {
   }
 }
 
+/* ── Teaser Blocks for Multi-Page Layout ── */
+.teaser-block {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 60px;
+  align-items: center;
+  padding: 60px;
+  max-width: 1200px;
+  margin: 0 auto 60px auto;
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition);
+}
+.teaser-block:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-glow);
+  border-color: var(--accent-glow);
+}
+.teaser-block::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(59,130,246,0.08), transparent 70%);
+  pointer-events: none;
+}
+.teaser-content {
+  position: relative; z-index: 1;
+}
+.teaser-visual {
+  position: relative; z-index: 1;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.teaser-visual img {
+  display: block;
+  transition: var(--transition);
+}
+.teaser-block:hover .teaser-visual img {
+  transform: scale(1.02);
+}
+@media (max-width: 900px) {
+  .teaser-block {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 40px 5%;
+  }
+}

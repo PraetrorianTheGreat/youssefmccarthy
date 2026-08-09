@@ -1,0 +1,480 @@
+<!-- Version 1.0.2 - Editorial Integration Final -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-M686VJGG');</script>
+  <!-- End Google Tag Manager -->
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Youssef McCarthy | Projects</title>
+  
+  <meta name="description" content="Youssef McCarthy — 14+ years of proven digital analytics, agentic AI strategy, and CRO leadership. Available for Director-level roles and enterprise SMB consulting. Multi-model AI orchestration, Adobe & GA4 expert, and experimentation specialist based in Massachusetts.">
+  <meta name="keywords" content="Digital Analytics AI Strategist, Agentic AI Workflow Consultant, CRO Experimentation Lead, Enterprise Data Analytics Boston, Adobe Target GA4 Architect, Multi-Model AI Orchestration, Remote Digital Analytics Director">
+  
+  <!-- Open Graph / Social Meta Tags -->
+  <meta property="og:title" content="Youssef McCarthy | Digital Analytics & AI Strategist">
+  <meta property="og:description" content="Enterprise analytics, CRO leadership, and agentic AI automation expert based in Massachusetts.">
+  <meta property="og:type" content="website">
+  
+  <!-- JSON-LD Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Youssef McCarthy",
+    "jobTitle": "Digital Analytics & AI Strategist",
+    "url": "https://praetrorianthegreat.github.io/youssefmccarthy/",
+    "sameAs": [],
+    "alumniOf": "University of Massachusetts",
+    "knowsAbout": ["Digital Analytics", "CRO", "Artificial Intelligence", "Google Analytics 4", "Adobe Target"]
+  }
+  </script>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%230a0e1a' width='100' height='100' rx='20'/%3E%3Ctext y='72' x='10' font-size='60' font-family='Arial' font-weight='900' fill='%233b82f6'%3EYM%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="style.css?v=5">
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M686VJGG"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  
+  <!-- Reading Progress Bar -->
+  <div class="reading-progress-container">
+    <div class="reading-progress-bar" id="readingProgressBar"></div>
+  </div>
+  <div class="page-loader" id="pageLoader">
+    <div class="loader-content">
+      <div class="loader-logo">YM</div>
+      <div class="loader-bar"><div class="loader-progress"></div></div>
+    </div>
+  </div>
+
+  <canvas id="particles"></canvas>
+  <div class="bg-grid"></div>
+  <div class="bg-orbs"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
+
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <div class="nav-logo"><span>YM</span></div>
+    <div class="theme-switch-wrapper">
+      <span class="theme-icon">&#9790; Dark</span>
+      <label class="theme-switch" for="themeToggle">
+        <input type="checkbox" id="themeToggle">
+        <span class="slider"></span>
+      </label>
+      <span class="theme-icon">&#9788; Light</span>
+    </div>
+    <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">&#9776;</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="experience.html">Experience</a></li>
+      <li><a href="projects.html" class="active">Projects</a></li>
+      <li><a href="analytics.html">Live Dashboard</a></li>
+      <li><a href="collaboration.html">UX Collaboration</a></li>
+      <li><a href="editorials.html">Editorials</a></li>
+      <li><a href="skills.html">Skills</a></li>
+      <li><a href="education.html">Education</a></li>
+    </ul>
+  </nav>
+
+  <main>
+<section id="projects">
+      <div class="section-header reveal">
+        <div class="section-label">Case Studies</div>
+        <h2 class="section-title">Featured Projects</h2>
+        <p class="section-subtitle">Real-world impact — filter, search, or switch layout views to explore each initiative</p>
+      </div>
+
+      <!-- Quick Summary Metrics Bar -->
+      <div class="projects-summary-bar reveal">
+        <div class="summary-chip">
+          <span class="chip-num" id="projectCountDisplay">5</span>
+          <span class="chip-label">Featured Case Studies</span>
+        </div>
+        <div class="summary-chip">
+          <span class="chip-num">2,400x</span>
+          <span class="chip-label">Peak ROI Multiplier</span>
+        </div>
+        <div class="summary-chip">
+          <span class="chip-num">3</span>
+          <span class="chip-label">Core Verticals</span>
+        </div>
+        <div class="summary-chip">
+          <span class="chip-num">100%</span>
+          <span class="chip-label">Data-Driven UX</span>
+        </div>
+      </div>
+
+      <!-- Interactive Controls Toolbar -->
+      <div class="projects-toolbar reveal">
+        <div class="projects-filter-tabs" id="projectFilterTabs" role="tablist" aria-label="Project categories">
+          <button class="filter-tab active" data-filter="all" role="tab" aria-selected="true">
+            All Case Studies <span class="filter-count">5</span>
+          </button>
+          <button class="filter-tab" data-filter="healthcare" role="tab" aria-selected="false">
+            Healthcare & Digital Health <span class="filter-count">3</span>
+          </button>
+          <button class="filter-tab" data-filter="omnichannel" role="tab" aria-selected="false">
+            Omnichannel & Growth <span class="filter-count">1</span>
+          </button>
+          <button class="filter-tab" data-filter="monetization" role="tab" aria-selected="false">
+            Monetization & Tech <span class="filter-count">1</span>
+          </button>
+        </div>
+
+        <div class="projects-toolbar-actions">
+          <div class="projects-search-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="projectSearchInput" placeholder="Search by keyword, tag, company..." aria-label="Search projects">
+            <button id="clearProjectSearch" class="clear-search-btn" title="Clear search" style="display:none;">✕</button>
+          </div>
+          <div class="projects-view-toggle">
+            <button class="view-btn active" data-view="grid" title="Grid View" aria-label="Grid View">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+              <span>Grid</span>
+            </button>
+            <button class="view-btn" data-view="list" title="Compact List View" aria-label="Compact List View">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+              <span>List</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- No Match Message -->
+      <div id="noProjectsMessage" class="no-projects-msg" style="display: none;">
+        <div class="no-projects-icon">🔍</div>
+        <h4>No matching case studies found</h4>
+        <p>Try searching for a different keyword or clear your filter parameters.</p>
+        <button class="btn btn-secondary btn-sm" id="resetProjectFiltersBtn">Reset All Filters</button>
+      </div>
+
+      <div class="projects-grid" id="projectsContainer">
+        <!-- Project 1: Essential Plan -->
+        <div class="project-card reveal" 
+             data-category="healthcare" 
+             data-company="emblemhealth"
+             data-tags="sem seo cro ux optimization a/b testing essential plan health emblemhealth"
+             onclick="toggleProject(this, event)">
+          <div class="project-cover">
+            <img src="img/project_essential_plan.png" alt="Essential Plan Digital Transformation case study visual" loading="lazy" />
+            <div class="project-cover-overlay"></div>
+          </div>
+          <div class="project-card-header">
+            <span class="project-badge impact">High Impact</span>
+            <div class="project-inline-result">🏆 2,400x Monthly Call Vol Return</div>
+          </div>
+          <div class="project-title">Essential Plan Digital Transformation: UX, SEO & SEM Strategy</div>
+          <div class="project-company">EmblemHealth · 2022 — 2025</div>
+          <p class="project-desc">Spearheaded digital strategy and UX overhaul for the "Essential Plan" — a $0 premium health program for low- to moderate-income NY State residents. Maximized high-quality leads by aligning SEM, organic SEO, and a frictionless user journey on the conversion landing page.</p>
+          <div class="project-details">
+            <div class="project-detail-section">
+              <h4>Data-Driven Strategy & Cross-Functional Collaboration</h4>
+              <ul>
+                <li>Partnered with Project Manager Aaron Brickman for agile execution and closed-loop feedback</li>
+                <li>Collaborated with call center managers to secure end-to-end analytical data bridging digital and call outcomes</li>
+                <li>Worked with UX/UI Designer Jennifer Wien and developers Anano Nadareishvili & Kevin Mitchell to revamp the conversion page</li>
+                <li>Teamed with Content Specialist Dana Linett-Silber on targeted SEO updates for high-intent organic traffic</li>
+                <li>Restructured SEM campaigns to drive high-value traffic, lowering bounce rates and improving ad quality scores</li>
+              </ul>
+            </div>
+            <div class="project-result">🏆 2,400x Multiplier Return on Call Volume Monthly</div>
+          </div>
+          <div class="project-tags">
+            <span class="project-tag" data-tag="sem">SEM</span>
+            <span class="project-tag" data-tag="seo">SEO</span>
+            <span class="project-tag" data-tag="cro">CRO</span>
+            <span class="project-tag" data-tag="ux optimization">UX Optimization</span>
+            <span class="project-tag" data-tag="a/b testing">A/B Testing</span>
+          </div>
+          <button class="project-toggle">Expand Case Study →</button>
+        </div>
+
+        <!-- Project 2: ACP -->
+        <div class="project-card reveal" 
+             data-category="healthcare" 
+             data-company="emblemhealth"
+             data-tags="ux research digital transformation healthcare analytics advantagecare physicians zocdoc"
+             onclick="toggleProject(this, event)">
+          <div class="project-cover">
+            <img src="img/project_acp.png" alt="AdvantageCare Physicians digital experience revamp" loading="lazy" />
+            <div class="project-cover-overlay"></div>
+          </div>
+          <div class="project-card-header">
+            <span class="project-badge ux">UX Transformation</span>
+            <div class="project-inline-result">🏆 ZocDoc-Caliber Platform</div>
+          </div>
+          <div class="project-title">Digital Experience Revamp for AdvantageCare Physicians</div>
+          <div class="project-company">EmblemHealth · Jun 2023 — Jun 2025</div>
+          <p class="project-desc">Transformed the AdvantageCare Physicians digital patient journey from a traditional, high-friction appointment process to a highly intuitive, "ZocDoc-like" platform empowering patients to seamlessly find care and schedule appointments online.</p>
+          <div class="project-details">
+            <div class="project-detail-section">
+              <h4>Key Strategic Actions</h4>
+              <ul>
+                <li>Launched real-time, self-service scheduling with transparent availability — Jennifer Wien (UI/UX Designer) crafted the clean, accessible interface</li>
+                <li>Optimized the find-a-provider experience with advanced filtering by specialty, location, and insurance</li>
+                <li>Aligned digital transformation with corporate vision alongside Christopher Clarke (AVP of Corporate Marketing)</li>
+                <li>Kyle Nowinski (Senior Analytics Specialist) provided data-backed validation at every stage</li>
+                <li>Aaron Brickman (Project Manager) expertly managed cross-functional timelines and milestones</li>
+              </ul>
+            </div>
+            <div class="project-result">🏆 ZocDoc-Caliber Digital Patient Experience</div>
+          </div>
+          <div class="project-tags">
+            <span class="project-tag" data-tag="ux research">UX Research</span>
+            <span class="project-tag" data-tag="digital transformation">Digital Transformation</span>
+            <span class="project-tag" data-tag="healthcare">Healthcare</span>
+            <span class="project-tag" data-tag="analytics">Analytics</span>
+          </div>
+          <button class="project-toggle">Expand Case Study →</button>
+        </div>
+
+        <!-- Project 3: Neighborhood Care -->
+        <div class="project-card reveal" 
+             data-category="healthcare" 
+             data-company="emblemhealth"
+             data-tags="ux strategy community health digital journey neighborhood care"
+             onclick="toggleProject(this, event)">
+          <div class="project-cover">
+            <img src="img/project_neighborhood_care.png" alt="Neighborhood Care digital journey transformation" loading="lazy" />
+            <div class="project-cover-overlay"></div>
+          </div>
+          <div class="project-card-header">
+            <span class="project-badge strategy">Strategy</span>
+            <div class="project-inline-result">🏆 Modernized Community Care</div>
+          </div>
+          <div class="project-title">Transforming EmblemHealth's Neighborhood Care Digital Journey</div>
+          <div class="project-company">EmblemHealth · 2023</div>
+          <p class="project-desc">Led the end-to-end digital experience overhaul for EmblemHealth's "Neighborhood Care" — a network of in-person community service and wellness locations. Modernized the digital journey to seamlessly bridge online engagement with physical, in-person care.</p>
+          <div class="project-details">
+            <div class="project-detail-section">
+              <h4>Key Contributions</h4>
+              <ul>
+                <li>Redesigned the digital discovery journey for community service locations pre-Summer 2023 launch</li>
+                <li>Implemented analytics-driven improvements to scheduling, class registration, and resource accessibility</li>
+                <li>Created seamless bridge between online engagement and in-person care delivery</li>
+                <li>Continuously optimized based on engagement metrics, session data, and conversion tracking</li>
+              </ul>
+            </div>
+            <div class="project-result">🏆 Modernized Community Care Digital Experience</div>
+          </div>
+          <div class="project-tags">
+            <span class="project-tag" data-tag="ux strategy">UX Strategy</span>
+            <span class="project-tag" data-tag="community health">Community Health</span>
+            <span class="project-tag" data-tag="digital journey">Digital Journey</span>
+          </div>
+          <button class="project-toggle">Expand Case Study →</button>
+        </div>
+
+        <!-- Project 4: Omnichannel Financial -->
+        <div class="project-card reveal" 
+             data-category="omnichannel" 
+             data-company="adtaxi"
+             data-tags="omnichannel retargeting financial services attribution adtaxi"
+             onclick="toggleProject(this, event)">
+          <div class="project-cover">
+            <img src="img/project_omnichannel.png" alt="Omnichannel financial institution strategy overhaul" loading="lazy" />
+            <div class="project-cover-overlay"></div>
+          </div>
+          <div class="project-card-header">
+            <span class="project-badge impact">High Impact</span>
+            <div class="project-inline-result">🏆 Turnaround & Account Saved</div>
+          </div>
+          <div class="project-title">Omnichannel Strategy Overhaul for Financial Institution</div>
+          <div class="project-company">Adtaxi · Nov 2018 — May 2019</div>
+          <p class="project-desc">Spearheaded the turnaround of a critical financial institution account at risk of churning. Architected a multi-point digital strategy overhauling paid omnichannel presence and transforming the customer acquisition funnel.</p>
+          <div class="project-details">
+            <div class="project-detail-section">
+              <h4>Key Contributions</h4>
+              <ul>
+                <li>Conducted deep-dive audit of the end-to-end user journey identifying friction points across all touchpoints</li>
+                <li>Implemented conversion tracking and retargeting framework connecting ad spend to site journey actions</li>
+                <li>Ensured digital promotional material was readily available for delayed-action users who wanted to revisit monetary incentives later</li>
+                <li>Built comprehensive attribution model tracking repeated site visits and downstream conversions</li>
+              </ul>
+            </div>
+            <div class="project-result">🏆 Saved At-Risk Account & Stabilized Performance</div>
+          </div>
+          <div class="project-tags">
+            <span class="project-tag" data-tag="omnichannel">Omnichannel</span>
+            <span class="project-tag" data-tag="retargeting">Retargeting</span>
+            <span class="project-tag" data-tag="financial services">Financial Services</span>
+            <span class="project-tag" data-tag="attribution">Attribution</span>
+          </div>
+          <button class="project-toggle">Expand Case Study →</button>
+        </div>
+
+        <!-- Project 5: YouTube -->
+        <div class="project-card reveal" 
+             data-category="monetization" 
+             data-company="google"
+             data-tags="youtube monetization content strategy google video"
+             onclick="toggleProject(this, event)">
+          <div class="project-cover">
+            <img src="img/project_youtube.png" alt="YouTube content monetization at scale at Google" loading="lazy" />
+            <div class="project-cover-overlay"></div>
+          </div>
+          <div class="project-card-header">
+            <span class="project-badge strategy">Monetization</span>
+            <div class="project-inline-result">🏆 Scaled Platform Revenue</div>
+          </div>
+          <div class="project-title">Video/YouTube Content Monetization at Scale</div>
+          <div class="project-company">Google · Jan 2012 — Jan 2015</div>
+          <p class="project-desc">Managed the implementation and oversight of YouTube's various video content monetization strategies. Deployed software and data-driven recommendations to maximize revenue across high-volume digital content channels.</p>
+          <div class="project-details">
+            <div class="project-detail-section">
+              <h4>Key Contributions</h4>
+              <ul>
+                <li>Developed complex monetization strategies for high-volume digital content across YouTube and social media</li>
+                <li>Streamlined website creation workflows driving significant traffic increases</li>
+                <li>Collaborated with cross-functional engineering teams on traffic acquisition strategies</li>
+                <li>Applied foundational analytics to scale monetization and establish performance measurement frameworks</li>
+              </ul>
+            </div>
+            <div class="project-result">🏆 Scaled Platform Monetization & Traffic Growth</div>
+          </div>
+          <div class="project-tags">
+            <span class="project-tag" data-tag="youtube">YouTube</span>
+            <span class="project-tag" data-tag="monetization">Monetization</span>
+            <span class="project-tag" data-tag="content strategy">Content Strategy</span>
+            <span class="project-tag" data-tag="google">Google</span>
+          </div>
+          <button class="project-toggle">Expand Case Study →</button>
+        </div>
+      </div>
+    </section>
+</main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Youssef M. McCarthy &mdash; Built with precision and purpose.</p>
+  </footer>
+
+  <!-- Navigation/Tracking scripts specific to earlier iterations removed -->
+<!-- TEAM RECOMMENDATIONS: GA4 Tracking (Fixed to dataLayer) -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    window.dataLayer = window.dataLayer || [];
+
+    // 1. Track Resume Downloads
+    const resumeBtn = document.getElementById("download_resume_btn");
+    if(resumeBtn) {
+        resumeBtn.addEventListener("click", function() {
+            window.dataLayer.push({
+                'event': 'resume_download',
+                'file_name': 'youssef_mccarthy_resume',
+                'page_section': 'hero'
+            });
+        });
+    }
+
+    // 2. Track Contact Clicks
+    const contactBtn = document.getElementById("contact_me_btn");
+    if(contactBtn) {
+        contactBtn.addEventListener("click", function() {
+            window.dataLayer.push({
+                'event': 'cta_click',
+                'cta_name': 'contact_me',
+                'cta_location': 'hero',
+                'page_name': window.location.pathname
+            });
+        });
+    }
+
+    // 3. Track Project Card Interactions
+    const projectCards = document.querySelectorAll('.project-card');
+    projectCards.forEach(card => {
+        card.addEventListener('click', function() {
+            let titleEl = this.querySelector('.project-title');
+            let projectName = titleEl ? titleEl.innerText : 'Project';
+            window.dataLayer.push({
+                'event': 'project_card_click',
+                'project_title': projectName,
+                'project_index': Array.from(projectCards).indexOf(card),
+                'page_section': 'projects'
+            });
+        });
+    });
+});
+</script>
+
+  <!-- AI Chat Assistant Widget -->
+  <div class="ai-widget-container" id="aiWidget">
+    <button class="ai-widget-toggle" id="aiToggleBtn" aria-label="Open AI Assistant">
+      <span class="ai-icon">✨</span>
+      <span class="ai-pulse"></span>
+    </button>
+    <div class="ai-chat-window" id="aiChatWindow">
+      <div class="ai-chat-header">
+        <div class="ai-header-info">
+          <span class="ai-header-icon">🤖</span>
+          <div>
+            <h4>YM Agentic Assistant</h4>
+            <p>Direct Interactive Guide</p>
+          </div>
+        </div>
+        <button class="ai-close-btn" id="aiCloseBtn">&times;</button>
+      </div>
+      <div class="ai-chat-body" id="aiChatBody">
+        <div class="ai-message ai-system">
+          <p>Hi! I'm Youssef's strategic AI guide. Ask me anything about his GA4 metrics, CRO tests, agentic loop architectures, or download his resume directly. I can navigate you across his portfolio using direct jumping links!</p>
+        </div>
+      </div>
+      <!-- Sliding Prompts Carousel Banner -->
+      <div class="ai-prompts-carousel-container" id="aiPromptsCarousel">
+        <button type="button" class="ai-carousel-btn prev" id="aiCarouselPrev" aria-label="Previous Prompt">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <div class="ai-chat-prompts-viewport" id="aiChatPromptsViewport">
+          <div class="ai-chat-prompts-track" id="aiChatPromptsTrack">
+            <button type="button" class="ai-prompt-btn" data-query="ga4">📊 GA4 &amp; Analytics</button>
+            <button type="button" class="ai-prompt-btn" data-query="cro">📈 CRO Strategy</button>
+            <button type="button" class="ai-prompt-btn" data-query="ai">🤖 Agentic Loop</button>
+            <button type="button" class="ai-prompt-btn" data-query="local">🔒 Localist AI</button>
+            <button type="button" class="ai-prompt-btn" data-query="resume">📄 Download Resume</button>
+            <button type="button" class="ai-prompt-btn" data-query="contact">✉️ Hire Youssef</button>
+          </div>
+        </div>
+        <button type="button" class="ai-carousel-btn next" id="aiCarouselNext" aria-label="Next Prompt">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+      <form class="ai-chat-input-container" id="aiChatForm">
+        <input type="text" id="aiInputField" placeholder="Type a message or click a prompt..." autocomplete="off" required>
+        <button type="submit" id="aiSendBtn" aria-label="Send message">
+          <svg viewBox="0 0 24 24" width="16" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Recommendation Expander Modal -->
+  <div class="rec-modal-overlay" id="recModalOverlay" aria-hidden="true" role="dialog" aria-labelledby="recModalName">
+    <div class="rec-modal-container" role="document">
+      <button class="rec-modal-close" onclick="closeRecommendationModal()" aria-label="Close modal">&times;</button>
+      <div class="rec-modal-header">
+        <div class="rec-modal-avatar" id="recModalAvatar">CC</div>
+        <div class="rec-modal-author-info">
+          <h3 class="rec-modal-name" id="recModalName">Christopher Clarke</h3>
+          <div class="rec-modal-role" id="recModalRole">Assistant Vice President, Corporate Marketing &middot; EmblemHealth</div>
+          <div class="rec-modal-relationship" id="recModalRelationship">Executive Leadership</div>
+        </div>
+      </div>
+      <div class="rec-modal-body" id="recModalBody">
+        <!-- Letter text injected via JS -->
+      </div>
+      <div class="rec-modal-footer">
+        <button class="btn btn-secondary rec-modal-close-btn" onclick="closeRecommendationModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js?v=5"></script>
+</body>
+</html>
