@@ -76,16 +76,20 @@ body {
 
 /* Masthead (Sticky Glass Layout) */
 .masthead {
-  background: rgba(10, 10, 12, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  padding: 14px 0;
+  background: rgba(10, 10, 12, 0.45);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  height: 56px;
+  min-height: 56px;
+  display: flex;
+  align-items: center;
   position: sticky;
   top: 0;
   z-index: 100;
   border-bottom: 1px solid rgba(255, 107, 0, 0.25);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
   width: 100%;
+  box-sizing: border-box;
 }
 
 .masthead__inner {
@@ -95,6 +99,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .nav-logo {
@@ -119,12 +125,17 @@ body {
 }
 
 .masthead__title {
-  font-family: var(--font-sans);
-  font-weight: 800;
+  font-family: var(--font-sans, sans-serif);
   font-size: 0.85rem;
-  letter-spacing: 4px;
-  text-transform: uppercase;
+  font-weight: 700;
   color: var(--white);
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  line-height: 1;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .masthead__title span {
@@ -133,10 +144,19 @@ body {
 }
 
 .masthead__tag {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: 0.95rem;
+  font-family: var(--font-sans, sans-serif);
+  font-size: 0.68rem;
   color: var(--accent);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 600;
+  border: 1px solid rgba(255, 107, 0, 0.25);
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: rgba(255, 107, 0, 0.05);
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
 }
 
 /* Hero Section */
@@ -757,12 +777,6 @@ body {
     font-size: 17px !important;
   }
 
-  .masthead__inner {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 8px !important;
-  }
-
   .hero {
     padding-top: 36px !important;
     margin: 30px auto 20px !important;
@@ -918,29 +932,19 @@ body {
 .scroll-depth-main {
   background: var(--bg-panel, rgba(11, 15, 25, 0.92));
   border: 1px solid var(--border-strong, rgba(255, 107, 0, 0.4));
-  border-radius: 28px;
-  padding: 6px;
+  border-radius: 16px;
+  padding: 12px 14px;
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 107, 0, 0.2);
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 52px;
-  height: 52px;
-  overflow: hidden;
-  box-sizing: border-box;
-  cursor: pointer;
-  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1), height 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-radius 0.35s ease, padding 0.35s ease;
-}
-
-.scroll-depth-widget:hover .scroll-depth-main,
-.scroll-depth-widget.expanded .scroll-depth-main {
   width: 210px;
   height: auto;
-  padding: 14px 16px;
-  border-radius: 16px;
-  cursor: default;
+  overflow: hidden;
+  box-sizing: border-box;
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1), height 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-radius 0.35s ease, padding 0.35s ease;
 }
 
 .scroll-depth-header {
@@ -988,16 +992,11 @@ body {
 }
 
 .scroll-depth-info {
-  display: none;
+  display: flex;
   flex-direction: column;
   gap: 2px;
   min-width: 0;
   flex: 1;
-}
-
-.scroll-depth-widget:hover .scroll-depth-info,
-.scroll-depth-widget.expanded .scroll-depth-info {
-  display: flex;
 }
 
 .depth-section {
@@ -1017,7 +1016,7 @@ body {
 }
 
 .depth-outline-btn {
-  display: none;
+  display: flex;
   width: 100%;
   padding: 6px 10px;
   border-radius: 8px;
@@ -1034,9 +1033,32 @@ body {
   margin-top: 4px;
 }
 
-.scroll-depth-widget:hover .depth-outline-btn,
-.scroll-depth-widget.expanded .depth-outline-btn {
-  display: flex;
+/* Tablet & Mobile: Keep to just the compact percentage ring */
+@media (max-width: 1024px) {
+  .scroll-depth-main {
+    width: 52px !important;
+    height: 52px !important;
+    padding: 6px !important;
+    border-radius: 28px !important;
+    cursor: pointer !important;
+  }
+  .scroll-depth-info,
+  .depth-outline-btn {
+    display: none !important;
+  }
+  .scroll-depth-widget:hover .scroll-depth-main,
+  .scroll-depth-widget.expanded .scroll-depth-main {
+    width: 210px !important;
+    height: auto !important;
+    padding: 12px 14px !important;
+    border-radius: 16px !important;
+  }
+  .scroll-depth-widget:hover .scroll-depth-info,
+  .scroll-depth-widget.expanded .scroll-depth-info,
+  .scroll-depth-widget:hover .depth-outline-btn,
+  .scroll-depth-widget.expanded .depth-outline-btn {
+    display: flex !important;
+  }
 }
 
 .depth-outline-btn:hover {

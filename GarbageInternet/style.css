@@ -55,26 +55,31 @@ body {
 
 /* ── Masthead ─────────────────────────────────── */
 .masthead {
-  background: rgba(13, 27, 42, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  padding: 14px 0;
-  text-align: center;
+  background: rgba(13, 27, 42, 0.45);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  height: 56px;
+  min-height: 56px;
+  display: flex;
+  align-items: center;
   position: sticky;
   top: 0;
   z-index: 100;
   border-bottom: 1px solid rgba(196, 163, 90, 0.3);
   box-shadow: 0 4px 30px rgba(0,0,0,0.5);
   width: 100%;
+  box-sizing: border-box;
 }
 
 .masthead__inner {
-  max-width: var(--wide-max);
+  max-width: var(--wide-max, 1100px);
   margin: 0 auto;
   padding: 0 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .nav-logo {
@@ -99,21 +104,38 @@ body {
 }
 
 .masthead__title {
-  font-family: var(--font-serif);
-  font-size: 1.1rem;
+  font-family: var(--font-sans, sans-serif);
+  font-size: 0.85rem;
   font-weight: 700;
   color: var(--white);
-  letter-spacing: 3px;
+  letter-spacing: 2.5px;
   text-transform: uppercase;
+  line-height: 1;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.masthead__title span {
+  color: var(--accent);
+  font-weight: 900;
 }
 
 .masthead__tag {
-  font-family: var(--font-sans);
-  font-size: 0.7rem;
+  font-family: var(--font-sans, sans-serif);
+  font-size: 0.68rem;
   color: var(--accent);
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
   font-weight: 600;
+  border: 1px solid rgba(196, 163, 90, 0.25);
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: rgba(196, 163, 90, 0.05);
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
 }
 
 /* ── Hero Header ──────────────────────────────── */
@@ -839,29 +861,19 @@ body {
 .scroll-depth-main {
   background: var(--navy, #0D1B2A);
   border: 1px solid var(--accent, #C4A35A);
-  border-radius: 28px;
-  padding: 6px;
+  border-radius: 16px;
+  padding: 12px 14px;
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 15px rgba(196, 163, 90, 0.2);
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 52px;
-  height: 52px;
-  overflow: hidden;
-  box-sizing: border-box;
-  cursor: pointer;
-  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1), height 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-radius 0.35s ease, padding 0.35s ease;
-}
-
-.scroll-depth-widget:hover .scroll-depth-main,
-.scroll-depth-widget.expanded .scroll-depth-main {
   width: 210px;
   height: auto;
-  padding: 14px 16px;
-  border-radius: 16px;
-  cursor: default;
+  overflow: hidden;
+  box-sizing: border-box;
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1), height 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-radius 0.35s ease, padding 0.35s ease;
 }
 
 .scroll-depth-header {
@@ -909,16 +921,11 @@ body {
 }
 
 .scroll-depth-info {
-  display: none;
+  display: flex;
   flex-direction: column;
   gap: 2px;
   min-width: 0;
   flex: 1;
-}
-
-.scroll-depth-widget:hover .scroll-depth-info,
-.scroll-depth-widget.expanded .scroll-depth-info {
-  display: flex;
 }
 
 .depth-section {
@@ -938,7 +945,7 @@ body {
 }
 
 .depth-outline-btn {
-  display: none;
+  display: flex;
   width: 100%;
   padding: 6px 10px;
   border-radius: 8px;
@@ -955,9 +962,32 @@ body {
   margin-top: 4px;
 }
 
-.scroll-depth-widget:hover .depth-outline-btn,
-.scroll-depth-widget.expanded .depth-outline-btn {
-  display: flex;
+/* Tablet & Mobile: Keep to just the compact percentage ring */
+@media (max-width: 1024px) {
+  .scroll-depth-main {
+    width: 52px !important;
+    height: 52px !important;
+    padding: 6px !important;
+    border-radius: 28px !important;
+    cursor: pointer !important;
+  }
+  .scroll-depth-info,
+  .depth-outline-btn {
+    display: none !important;
+  }
+  .scroll-depth-widget:hover .scroll-depth-main,
+  .scroll-depth-widget.expanded .scroll-depth-main {
+    width: 210px !important;
+    height: auto !important;
+    padding: 12px 14px !important;
+    border-radius: 16px !important;
+  }
+  .scroll-depth-widget:hover .scroll-depth-info,
+  .scroll-depth-widget.expanded .scroll-depth-info,
+  .scroll-depth-widget:hover .depth-outline-btn,
+  .scroll-depth-widget.expanded .depth-outline-btn {
+    display: flex !important;
+  }
 }
 
 .depth-outline-btn:hover {
