@@ -1963,20 +1963,20 @@ section { padding: 100px 40px; max-width: 1200px; margin: 0 auto; }
 .theme-switch input:disabled + .slider { opacity: 0.5; cursor: not-allowed; }
 
 /* ── Light Theme ── */
-body.light-theme { --bg-primary: #f8fafc; --bg-secondary: #e2e8f0; --bg-card: rgba(255,255,255,0.85); --bg-glass: rgba(0,0,0,0.03); --border-glass: rgba(0,0,0,0.1); --text-primary: #0f172a; --text-secondary: #475569; --text-muted: #94a3b8; }
-body.light-theme .nav { background: rgba(248,250,252,0.9); }
-body.light-theme .nav.scrolled { background: rgba(248,250,252,0.97); }
+body.light-theme { --bg-primary: #ebf0f5; --bg-secondary: #dce3ea; --bg-card: rgba(245,248,250,0.85); --bg-glass: rgba(0,0,0,0.04); --border-glass: rgba(0,0,0,0.12); --text-primary: #0f172a; --text-secondary: #475569; --text-muted: #718096; }
+body.light-theme .nav { background: rgba(235,240,245,0.9); }
+body.light-theme .nav.scrolled { background: rgba(235,240,245,0.97); }
 body.light-theme .bg-grid { background-image: linear-gradient(rgba(59,130,246,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,0.05) 1px, transparent 1px); }
 body.light-theme .orb-1 { background: rgba(59,130,246,0.08); }
 body.light-theme .orb-2 { background: rgba(139,92,246,0.06); }
 body.light-theme .orb-3 { background: rgba(6,182,212,0.05); }
 body.light-theme .timeline-dot { box-shadow: 0 0 0 4px var(--bg-primary), 0 0 0 6px var(--accent); }
-body.light-theme .hero-float-card { background: rgba(255,255,255,0.95); }
-body.light-theme .form-group input, body.light-theme .form-group textarea { background: rgba(255,255,255,0.8); }
-body.light-theme .skill-bar { background: rgba(0,0,0,0.06); }
-body.light-theme ::-webkit-scrollbar-track { background: #f8fafc; }
-body.light-theme .service-dropdown { background-color: rgba(255,255,255,0.8); border-color: rgba(0,0,0,0.12); color: #0f172a; }
-body.light-theme .service-dropdown option { background: #f8fafc; color: #0f172a; }
+body.light-theme .hero-float-card { background: rgba(255,255,255,0.85); }
+body.light-theme .form-group input, body.light-theme .form-group textarea { background: rgba(255,255,255,0.7); }
+body.light-theme .skill-bar { background: rgba(0,0,0,0.08); }
+body.light-theme ::-webkit-scrollbar-track { background: #ebf0f5; }
+body.light-theme .service-dropdown { background-color: rgba(245,248,250,0.8); border-color: rgba(0,0,0,0.15); color: #0f172a; }
+body.light-theme .service-dropdown option { background: #ebf0f5; color: #0f172a; }
 body.light-theme .feature-item { background: rgba(0,0,0,0.03); border-color: rgba(0,0,0,0.06); }
 body.light-theme .path-card { background: rgba(255,255,255,0.9); }
 
@@ -4169,4 +4169,3 @@ body.light-theme .teaser-terminal .terminal-blur-mask {
     max-width: 1360px;
   }
 }
-

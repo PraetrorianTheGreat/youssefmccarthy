@@ -206,21 +206,8 @@ class Particle {
     
     if (isHomepage) {
       if (isProfileVisible && profilePicWrapper) {
-        targetElement = profilePicWrapper;
-        
-        // Slowly form over 9 seconds (200% slower than 3 seconds), after a 1.5 second delay
-        if (timeSec < 1.5) {
-          customEffectStrength = 0;
-        } else if (timeSec < 10.5) {
-          // Easing function for smooth transition
-          const t = (timeSec - 1.5) / 9.0;
-          customEffectStrength = t * t * (3 - 2 * t); // smoothstep
-        } else {
-          customEffectStrength = 1;
-        }
-        
-        if (this.isCircler) this.isTargetingProfile = true;
-        
+        // Disabled targeting profile picture to use the Tube Cursor effect instead
+        // targetElement = profilePicWrapper; 
       } else if (interactiveCard) {
         const rect = interactiveCard.getBoundingClientRect();
         // Check if the interactive card is in the main view area
@@ -325,7 +312,7 @@ class Particle {
            this.assignedAngle = Math.random() * Math.PI * 2;
         }
         // Slowly move them around the border over time
-        this.assignedAngle += 0.01;
+        this.assignedAngle += 0.001; // Dramatically lowered speed
         angle = this.assignedAngle;
         
         // Trace the rectangular border of the card
@@ -343,17 +330,13 @@ class Particle {
         const dx = borderX - this.x;
         const dy = borderY - this.y;
         
-        // Shaking effect on the border
-        const shakeForceX = (Math.random() - 0.5) * 10 * effectStrength;
-        const shakeForceY = (Math.random() - 0.5) * 10 * effectStrength;
-        
         if (effectStrength >= 0.99) {
-          // Hard lock to target to prevent scrolling lag + apply shake
-          this.x = borderX + shakeForceX;
-          this.y = borderY + shakeForceY;
+          // Hard lock to target to prevent scrolling lag
+          this.x = borderX;
+          this.y = borderY;
         } else {
-          this.x += dx * 0.1 * effectStrength + shakeForceX;
-          this.y += dy * 0.1 * effectStrength + shakeForceY;
+          this.x += dx * 0.1 * effectStrength;
+          this.y += dy * 0.1 * effectStrength;
         }
       }
       
@@ -387,34 +370,16 @@ class Particle {
     ctx.beginPath();
     
     if (this.isTargetingProfile && this.isCircler && this.targetStrength > 0) {
-      // Create a large soft glowing backdrop behind the profile picture
-      const backdropSize = this.size * 20; // Large size for aura effect
-      const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, backdropSize);
-      
-      // Fade in the aura based on targetStrength
-      gradient.addColorStop(0, `rgba(${this.specialColor}, ${this.opacity * 0.5 * this.targetStrength})`);
-      gradient.addColorStop(0.5, `rgba(${this.specialColor}, ${this.opacity * 0.15 * this.targetStrength})`);
-      gradient.addColorStop(1, `rgba(${this.specialColor}, 0)`);
-      
-      ctx.fillStyle = gradient;
-      ctx.arc(this.x, this.y, backdropSize, 0, Math.PI * 2);
-      ctx.fill();
-      
-      // Draw the normal blue particle underneath
-      ctx.beginPath();
-      ctx.fillStyle = `rgba(59, 130, 246, ${this.opacity})`;
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fill();
-      
-      // Draw a small bright core for the particle itself, fading in
-      ctx.beginPath();
-      ctx.fillStyle = `rgba(${this.specialColor}, ${this.opacity * 0.9 * this.targetStrength})`;
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      // Draw as large colored blobs for the liquid effect
+      const blobRadius = this.size * 3.5; 
+      ctx.fillStyle = `rgba(${this.specialColor}, 0.95)`;
+      ctx.arc(this.x, this.y, blobRadius, 0, Math.PI * 2);
       ctx.fill();
     } else if (this.isTargetingCard && this.isCircler) {
-      // Highlight green for interactive card
-      ctx.fillStyle = `rgba(16, 185, 129, ${this.opacity})`;
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      // Draw as large colored blobs for the liquid effect (Green for interactive card)
+      const blobRadius = this.size * 1.5; // Thinner blobs
+      ctx.fillStyle = `rgba(16, 185, 129, 0.95)`;
+      ctx.arc(this.x, this.y, blobRadius, 0, Math.PI * 2);
       ctx.fill();
     } else {
       // Default normal blue particle
@@ -444,62 +409,46 @@ class Particle {
         const p1 = particles[i];
         const p2 = particles[j];
         
-        // Use an extremely large radius for profile particles to allow cross-sphere connections
-        const isNeuralNetwork = (p1.isTargetingProfile && p2.isTargetingProfile && p1.targetStrength > 0.8 && p2.targetStrength > 0.8);
-        const maxDist = isNeuralNetwork ? 800 : 100;
+        // Normal radius for connections
+        const maxDist = 100;
         
         // Quick distance check before sqrt
         if (Math.abs(dx) > maxDist || Math.abs(dy) > maxDist) continue;
         
         const dist = Math.sqrt(dx * dx + dy * dy);
         
-        if (isNeuralNetwork) {
-          const isLongDistance = dist > 150;
-          
-          // Seed based on particle pair and current time chunk (100ms) to make flashes last a few frames
-          const timeChunk = Math.floor(time / 100);
-          const seed = i * 1337 + j + timeChunk;
-          const pseudoRandom = Math.abs(Math.sin(seed) * 10000) % 1;
-          
-          // Cross-sphere connections are rare, local ones flash more often.
-          // Reduced frequency to 10% of original.
-          const isFlashing = pseudoRandom > (isLongDistance ? 0.9998 : 0.995);
-          
-          // Only draw long distance connections when they flash (data transmission)
-          if (isLongDistance && !isFlashing) continue;
-          
-          ctx.beginPath();
-          ctx.moveTo(p1.x, p1.y);
-          
-          // Draw jagged electricity line instead of straight line
-          const segments = isLongDistance ? 15 : 5;
-          for (let k = 1; k <= segments; k++) {
-            const t = k / segments;
-            const x = p1.x + (p2.x - p1.x) * t;
-            const y = p1.y + (p2.y - p1.y) * t;
-            
-            if (k < segments) {
-               // Add a random offset perpendicular to the line
-               const offset = (Math.random() - 0.5) * (isFlashing ? 20 : 5);
-               // perpendicular vector is (-dy, dx) normalized
-               const perpX = (-dy / dist) * offset;
-               const perpY = (dx / dist) * offset;
-               ctx.lineTo(x + perpX, y + perpY);
-            } else {
-               ctx.lineTo(x, y); // end at exactly p2
-            }
+        // Connect profile particles of the SAME color with a thick bridge to create a liquid/metaball effect
+        if (p1.isTargetingProfile && p2.isTargetingProfile && p1.targetStrength > 0.8 && p2.targetStrength > 0.8) {
+          if (p1.specialColor === p2.specialColor && dist < 60) {
+            ctx.beginPath();
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+            // Thick bridge to merge the blobs seamlessly
+            const thickness = (1 - dist / 60) * (p1.size * 3.5 + p2.size * 3.5);
+            ctx.strokeStyle = `rgba(${p1.specialColor}, 0.95)`;
+            ctx.lineWidth = Math.max(1, thickness);
+            ctx.lineCap = 'round';
+            ctx.stroke();
           }
-          
-          // Long distance uses solid flash intensity, short distance fades with distance normally
-          const baseIntensity = isFlashing ? 0.8 : 0.2 * (1 - dist / 150);
-          // Dim cross-sphere lines slightly so they don't overpower the portrait
-          const intensity = isLongDistance ? baseIntensity * 0.5 : baseIntensity; 
-          
-          ctx.strokeStyle = `rgba(${p1.specialColor}, ${intensity})`;
-          ctx.lineWidth = isFlashing ? (isLongDistance ? 1.5 : 1.5) : 0.8;
-          ctx.stroke();
-          
-        } else if (dist < 100) {
+          continue;
+        }
+        
+        // Connect interactive card particles with a thick green bridge for a liquid effect
+        if (p1.isTargetingCard && p2.isTargetingCard && p1.targetStrength > 0.8 && p2.targetStrength > 0.8) {
+          if (dist < 60) {
+            ctx.beginPath();
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+            const thickness = (1 - dist / 60) * (p1.size * 1.5 + p2.size * 1.5); // Thinner bridges
+            ctx.strokeStyle = `rgba(16, 185, 129, 0.95)`;
+            ctx.lineWidth = Math.max(1, thickness);
+            ctx.lineCap = 'round';
+            ctx.stroke();
+          }
+          continue;
+        }
+        
+        if (dist < 100) {
           // Default connection
           ctx.beginPath();
           ctx.moveTo(p1.x, p1.y);
