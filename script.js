@@ -393,8 +393,23 @@ class Particle {
   // Increased particle count for better twirling effect
   for (let i = 0; i < 150; i++) particles.push(new Particle());
 
+  let isCanvasVisible = true;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const wasVisible = isCanvasVisible;
+      isCanvasVisible = entry.isIntersecting;
+      // Restart loop if it becomes visible again
+      if (isCanvasVisible && !wasVisible) {
+        animateParticles();
+      }
+    });
+  });
+  observer.observe(canvas);
+
   let startTime = Date.now();
   function animateParticles() {
+    if (!isCanvasVisible) return;
+
     const time = Date.now() - startTime;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     

@@ -9,17 +9,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
     camera.position.z = 200;
 
+    const isMobile = window.innerWidth < 768;
     const renderer = new THREE.WebGLRenderer({
         canvas: canvas,
         alpha: true,
-        antialias: true,
+        antialias: !isMobile, // Turn off antialiasing on mobile for performance
         powerPreference: "high-performance"
     });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 2));
     renderer.setSize(window.innerWidth, window.innerHeight);
 
     // --- Particle Configuration ---
-    const particleCount = 4000;
+    const particleCount = isMobile ? 1500 : 4000;
     
     // Arrays for different states
     const chaosPositions = new Float32Array(particleCount * 3);
@@ -166,17 +167,32 @@ document.addEventListener("DOMContentLoaded", () => {
     const destinationPositions = new Float32Array(particleCount * 3);
     
     // Helper to get WebGL coords from DOM element
+    // Cache layout metrics to avoid thrashing in requestAnimationFrame
+    let cachedProfileRect = null;
+    let isProfileVisibleCached = true;
+    let needsLayoutUpdate = true;
+
+    // Update layout metrics on scroll or resize
+    const updateLayoutMetrics = () => {
+        needsLayoutUpdate = true;
+    };
+    window.addEventListener('scroll', updateLayoutMetrics, { passive: true });
+    window.addEventListener('resize', updateLayoutMetrics, { passive: true });
+
     function updateTargetPosition() {
         const profilePicWrapper = document.querySelector('.hero-photo-wrapper');
         if (!profilePicWrapper) return false;
         
-        const rect = profilePicWrapper.getBoundingClientRect();
-        const isVisible = rect.bottom > 0 && rect.top < window.innerHeight;
+        if (needsLayoutUpdate) {
+            cachedProfileRect = profilePicWrapper.getBoundingClientRect();
+            isProfileVisibleCached = cachedProfileRect.bottom > 0 && cachedProfileRect.top < window.innerHeight;
+            needsLayoutUpdate = false;
+        }
         
-        if (isVisible) {
+        if (isProfileVisibleCached) {
             // Map DOM center to normalized device coordinates
-            const ndcX = (rect.left + rect.width / 2) / window.innerWidth * 2 - 1;
-            const ndcY = -(rect.top + rect.height / 2) / window.innerHeight * 2 + 1;
+            const ndcX = (cachedProfileRect.left + cachedProfileRect.width / 2) / window.innerWidth * 2 - 1;
+            const ndcY = -(cachedProfileRect.top + cachedProfileRect.height / 2) / window.innerHeight * 2 + 1;
             
             const vector = new THREE.Vector3(ndcX, ndcY, 0.5);
             vector.unproject(camera);

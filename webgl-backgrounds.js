@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const particlesCanvas = document.getElementById('particles');
     const bgGrid = document.querySelector('.bg-grid');
     
+    let isAnimating = false;
     if (toggleBtn) {
         toggleBtn.addEventListener('click', () => {
             if (currentMode === 'original') {
@@ -47,6 +48,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 canvas.style.display = 'block';
                 if (particlesCanvas) particlesCanvas.style.opacity = '0';
                 if (bgGrid) bgGrid.style.opacity = '0';
+                
+                // Restart animation loop
+                if (!isAnimating) {
+                    isAnimating = true;
+                    animate();
+                }
             } else {
                 currentMode = 'original';
                 toggleText.textContent = 'Try New Background';
@@ -66,11 +73,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Animation Loop ---
     function animate() {
-        requestAnimationFrame(animate);
-        
         if (currentMode === 'original') {
-            return; // Don't waste CPU if hidden
+            isAnimating = false;
+            return; // Completely stop loop
         }
+        
+        requestAnimationFrame(animate);
         
         const elapsedTime = clock.getElapsedTime();
 
@@ -91,5 +99,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    animate();
+    if (currentMode === 'wireframe') {
+        isAnimating = true;
+        animate();
+    }
 });

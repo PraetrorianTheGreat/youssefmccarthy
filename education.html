@@ -288,51 +288,7 @@
 
   <!-- Navigation/Tracking scripts specific to earlier iterations removed -->
 <!-- TEAM RECOMMENDATIONS: GA4 Tracking (Fixed to dataLayer) -->
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    window.dataLayer = window.dataLayer || [];
-
-    // 1. Track Resume Downloads
-    const resumeBtn = document.getElementById("download_resume_btn");
-    if(resumeBtn) {
-        resumeBtn.addEventListener("click", function() {
-            window.dataLayer.push({
-                'event': 'resume_download',
-                'file_name': 'youssef_mccarthy_resume',
-                'page_section': 'hero'
-            });
-        });
-    }
-
-    // 2. Track Contact Clicks
-    const contactBtn = document.getElementById("contact_me_btn");
-    if(contactBtn) {
-        contactBtn.addEventListener("click", function() {
-            window.dataLayer.push({
-                'event': 'cta_click',
-                'cta_name': 'contact_me',
-                'cta_location': 'hero',
-                'page_name': window.location.pathname
-            });
-        });
-    }
-
-    // 3. Track Project Card Interactions
-    const projectCards = document.querySelectorAll('.project-card');
-    projectCards.forEach(card => {
-        card.addEventListener('click', function() {
-            let titleEl = this.querySelector('.project-title');
-            let projectName = titleEl ? titleEl.innerText : 'Project';
-            window.dataLayer.push({
-                'event': 'project_card_click',
-                'project_title': projectName,
-                'project_index': Array.from(projectCards).indexOf(card),
-                'page_section': 'projects'
-            });
-        });
-    });
-});
-</script>
+<script src="tracking.js"></script>
 
   <!-- AI Chat Assistant Widget -->
   <div class="ai-widget-container" id="aiWidget">
