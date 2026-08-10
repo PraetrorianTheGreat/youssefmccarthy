@@ -158,19 +158,214 @@ if (canvas) {
 
 class Particle {
   constructor() {
+    // 70% of particles are selected to circle the profile picture
+    this.isCircler = Math.random() > 0.3;
     this.reset();
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
   }
   reset() {
     this.x = Math.random() * canvas.width;
     this.y = Math.random() * canvas.height;
-    this.baseX = this.x;
-    this.baseY = this.y;
     this.size = Math.random() * 2 + 0.5;
-    this.speedX = (Math.random() - 0.5) * 0.3;
-    this.speedY = (Math.random() - 0.5) * 0.3;
-    this.opacity = Math.random() * 0.4 + 0.1;
+    this.speedX = (Math.random() - 0.5) * 0.4;
+    this.speedY = (Math.random() - 0.5) * 0.4;
+    this.opacity = Math.random() * 0.5 + 0.2;
+    
+    if (this.isCircler) {
+      // Dynamic colors for circling particles (blue, green, purple, amber, pink)
+      const colors = ['59, 130, 246', '16, 185, 129', '139, 92, 246', '245, 158, 11', '236, 72, 153'];
+      this.specialColor = colors[Math.floor(Math.random() * colors.length)];
+      // Dynamic analytics shapes
+      const shapes = ['plus', 'bar', 'node', 'bracket', 'circle'];
+      this.specialShape = shapes[Math.floor(Math.random() * shapes.length)];
+    }
+    this.isTargetingProfile = false;
   }
-  update() {
+  update(time) {
+    const timeSec = time * 0.001;
+    
+    // Cycle every 10 seconds for 4 seconds of animation
+    const cycle = timeSec % 10;
+    let effectStrength = 0;
+    if (cycle > 5 && cycle < 9) {
+       effectStrength = Math.sin((cycle - 5) / 4 * Math.PI); // 0 to 1 back to 0
+    }
+    
+    const profilePicWrapper = document.querySelector('.hero-photo-wrapper');
+    const interactiveCard = document.getElementById('interactive-experience-card');
+    const profilePicRect = profilePicWrapper ? profilePicWrapper.getBoundingClientRect() : null;
+    const isProfileVisible = profilePicRect && profilePicRect.bottom > -100; // Keep tracking even if mostly scrolled off
+    const isHomepage = window.location.pathname === '/' || window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('youssefmccarthy/');
+    
+    let targetElement = null;
+    let isContinuous = false;
+    let customEffectStrength = null;
+    this.isTargetingProfile = false;
+    this.isTargetingCard = false;
+    
+    if (isHomepage) {
+      if (isProfileVisible && profilePicWrapper) {
+        targetElement = profilePicWrapper;
+        
+        // Slowly form over 9 seconds (200% slower than 3 seconds), after a 1.5 second delay
+        if (timeSec < 1.5) {
+          customEffectStrength = 0;
+        } else if (timeSec < 10.5) {
+          // Easing function for smooth transition
+          const t = (timeSec - 1.5) / 9.0;
+          customEffectStrength = t * t * (3 - 2 * t); // smoothstep
+        } else {
+          customEffectStrength = 1;
+        }
+        
+        if (this.isCircler) this.isTargetingProfile = true;
+        
+      } else if (interactiveCard) {
+        const rect = interactiveCard.getBoundingClientRect();
+        // Check if the interactive card is in the main view area
+        if (rect.top < window.innerHeight * 0.8 && rect.bottom > window.innerHeight * 0.2) {
+          targetElement = interactiveCard;
+          isContinuous = true;
+          if (this.isCircler) this.isTargetingCard = true;
+        }
+      }
+    }
+    
+    if (customEffectStrength !== null) {
+      effectStrength = customEffectStrength;
+    } else if (isContinuous) {
+      effectStrength = 1; // Continuous movement for the card
+    }
+    
+    this.targetStrength = effectStrength; // Store for fading in draw()
+    
+    if (this.isCircler && targetElement && effectStrength > 0) {
+      const rect = targetElement.getBoundingClientRect();
+      const targetX = rect.left + rect.width / 2;
+      const targetY = rect.top + rect.height / 2;
+      
+      let targetRadius;
+      let angle;
+      
+      if (targetElement === profilePicWrapper) {
+        // Evenly distribute particles along the circular border
+        // Use an assigned angle so particles spread out evenly
+        if (this.assignedAngle === undefined) {
+           this.assignedAngle = Math.random() * Math.PI * 2;
+        }
+        // Slowly move them around the circle over time
+        this.assignedAngle += 0.002; // Slower orbit speed
+        angle = this.assignedAngle;
+        
+        targetRadius = (Math.max(rect.width, rect.height) / 2) * 1.5;
+        
+        // Morphing shapes every 5 seconds
+        const cycleLength = 5.0;
+        const transitionLength = 1.0; // 1 second to morph
+        
+        const shapeIndex = Math.floor(timeSec / cycleLength);
+        const nextShapeIndex = shapeIndex + 1;
+        
+        const timeInCycle = timeSec % cycleLength;
+        const morphProgress = Math.max(0, (timeInCycle - (cycleLength - transitionLength)) / transitionLength);
+        
+        // Smoothstep easing for morph
+        const morph = morphProgress * morphProgress * (3 - 2 * morphProgress);
+        
+        const getShapeCoords = (type, angle, radius) => {
+           const shapes = 4;
+           type = type % shapes;
+           if (type === 0) { // Circle
+             return { x: Math.cos(angle) * radius, y: Math.sin(angle) * radius };
+           } else if (type === 1) { // 5-petal Flower / Star
+             const r = radius * (0.8 + 0.3 * Math.sin(5 * angle));
+             return { x: Math.cos(angle) * r, y: Math.sin(angle) * r };
+           } else if (type === 2) { // Diamond / Square-ish
+             const absCos = Math.abs(Math.cos(angle)) || 0.001;
+             const absSin = Math.abs(Math.sin(angle)) || 0.001;
+             const r = radius * 0.9 * Math.min(1 / absCos, 1 / absSin);
+             return { x: Math.cos(angle) * r, y: Math.sin(angle) * r };
+           } else { // Infinity / Lemniscate
+             const scale = radius * 1.3;
+             const den = 1 + Math.sin(angle) * Math.sin(angle);
+             const x = (scale * Math.cos(angle)) / den;
+             const y = (scale * Math.sin(angle) * Math.cos(angle)) / den;
+             return { x, y };
+           }
+        };
+
+        const shape1 = getShapeCoords(shapeIndex, angle, targetRadius);
+        const shape2 = getShapeCoords(nextShapeIndex, angle, targetRadius);
+        
+        const targetOffsetX = shape1.x * (1 - morph) + shape2.x * morph;
+        const targetOffsetY = shape1.y * (1 - morph) + shape2.y * morph;
+        
+        // Target position on the morphed border
+        const circleX = targetX + targetOffsetX;
+        const circleY = targetY + targetOffsetY;
+        
+        // Move towards target position on border
+        const dx = circleX - this.x;
+        const dy = circleY - this.y;
+        
+        if (effectStrength >= 0.99) {
+          // Hard lock to target to prevent scrolling lag
+          this.x = circleX;
+          this.y = circleY;
+        } else {
+          this.x += dx * 0.1 * effectStrength;
+          this.y += dy * 0.1 * effectStrength;
+        }
+        
+      } else {
+        // Evenly distribute shaking particles along the rectangular border
+        // Use an assigned angle so particles spread out evenly
+        if (this.assignedAngle === undefined) {
+           this.assignedAngle = Math.random() * Math.PI * 2;
+        }
+        // Slowly move them around the border over time
+        this.assignedAngle += 0.01;
+        angle = this.assignedAngle;
+        
+        // Trace the rectangular border of the card
+        const halfW = rect.width / 2;
+        const halfH = rect.height / 2;
+        const absCos = Math.abs(Math.cos(angle)) || 0.001;
+        const absSin = Math.abs(Math.sin(angle)) || 0.001;
+        targetRadius = Math.min(halfW / absCos, halfH / absSin) + 20; // 20px padding outside the border
+        
+        // Target position on the border
+        const borderX = targetX + Math.cos(angle) * targetRadius;
+        const borderY = targetY + Math.sin(angle) * targetRadius;
+        
+        // Move towards target position on border
+        const dx = borderX - this.x;
+        const dy = borderY - this.y;
+        
+        // Shaking effect on the border
+        const shakeForceX = (Math.random() - 0.5) * 10 * effectStrength;
+        const shakeForceY = (Math.random() - 0.5) * 10 * effectStrength;
+        
+        if (effectStrength >= 0.99) {
+          // Hard lock to target to prevent scrolling lag + apply shake
+          this.x = borderX + shakeForceX;
+          this.y = borderY + shakeForceY;
+        } else {
+          this.x += dx * 0.1 * effectStrength + shakeForceX;
+          this.y += dy * 0.1 * effectStrength + shakeForceY;
+        }
+      }
+      
+    } else {
+      // Default twirl behavior (flow field)
+      const fieldX = Math.sin(this.y * 0.005 + timeSec) * 2.5 + Math.cos(this.x * 0.005 - timeSec) * 1.5;
+      const fieldY = Math.cos(this.x * 0.005 + timeSec) * 2.5 + Math.sin(this.y * 0.005 - timeSec) * 1.5;
+      
+      this.x += this.speedX + fieldX * effectStrength * 0.5;
+      this.y += this.speedY + fieldY * effectStrength * 0.5;
+    }
+    
     // Mouse repulsion
     const dx = mouse.x - this.x;
     const dy = mouse.y - this.y;
@@ -181,39 +376,141 @@ class Particle {
       this.x -= dx * force * 0.03;
       this.y -= dy * force * 0.03;
     }
-    this.x += this.speedX;
-    this.y += this.speedY;
-    if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
+    
+    // Wrap around screen gracefully
+    if (this.x < -10) this.x = canvas.width + 10;
+    if (this.x > canvas.width + 10) this.x = -10;
+    if (this.y < -10) this.y = canvas.height + 10;
+    if (this.y > canvas.height + 10) this.y = -10;
   }
   draw() {
     ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(59, 130, 246, ${this.opacity})`;
-    ctx.fill();
+    
+    if (this.isTargetingProfile && this.isCircler && this.targetStrength > 0) {
+      // Create a large soft glowing backdrop behind the profile picture
+      const backdropSize = this.size * 20; // Large size for aura effect
+      const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, backdropSize);
+      
+      // Fade in the aura based on targetStrength
+      gradient.addColorStop(0, `rgba(${this.specialColor}, ${this.opacity * 0.5 * this.targetStrength})`);
+      gradient.addColorStop(0.5, `rgba(${this.specialColor}, ${this.opacity * 0.15 * this.targetStrength})`);
+      gradient.addColorStop(1, `rgba(${this.specialColor}, 0)`);
+      
+      ctx.fillStyle = gradient;
+      ctx.arc(this.x, this.y, backdropSize, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Draw the normal blue particle underneath
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(59, 130, 246, ${this.opacity})`;
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Draw a small bright core for the particle itself, fading in
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(${this.specialColor}, ${this.opacity * 0.9 * this.targetStrength})`;
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fill();
+    } else if (this.isTargetingCard && this.isCircler) {
+      // Highlight green for interactive card
+      ctx.fillStyle = `rgba(16, 185, 129, ${this.opacity})`;
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fill();
+    } else {
+      // Default normal blue particle
+      ctx.fillStyle = `rgba(59, 130, 246, ${this.opacity})`;
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fill();
+    }
   }
 }
 
-  for (let i = 0; i < 60; i++) particles.push(new Particle());
+  // Increased particle count for better twirling effect
+  for (let i = 0; i < 150; i++) particles.push(new Particle());
 
+  let startTime = Date.now();
   function animateParticles() {
+    const time = Date.now() - startTime;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach(p => { p.update(); p.draw(); });
+    
+    particles.forEach(p => { p.update(time); p.draw(); });
+    
     // Draw connections
     for (let i = 0; i < particles.length; i++) {
       for (let j = i + 1; j < particles.length; j++) {
         const dx = particles[i].x - particles[j].x;
         const dy = particles[i].y - particles[j].y;
+        
+        const p1 = particles[i];
+        const p2 = particles[j];
+        
+        // Use an extremely large radius for profile particles to allow cross-sphere connections
+        const isNeuralNetwork = (p1.isTargetingProfile && p2.isTargetingProfile && p1.targetStrength > 0.8 && p2.targetStrength > 0.8);
+        const maxDist = isNeuralNetwork ? 800 : 100;
+        
+        // Quick distance check before sqrt
+        if (Math.abs(dx) > maxDist || Math.abs(dy) > maxDist) continue;
+        
         const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 120) {
+        
+        if (isNeuralNetwork) {
+          const isLongDistance = dist > 150;
+          
+          // Seed based on particle pair and current time chunk (100ms) to make flashes last a few frames
+          const timeChunk = Math.floor(time / 100);
+          const seed = i * 1337 + j + timeChunk;
+          const pseudoRandom = Math.abs(Math.sin(seed) * 10000) % 1;
+          
+          // Cross-sphere connections are rare, local ones flash more often.
+          // Reduced frequency to 10% of original.
+          const isFlashing = pseudoRandom > (isLongDistance ? 0.9998 : 0.995);
+          
+          // Only draw long distance connections when they flash (data transmission)
+          if (isLongDistance && !isFlashing) continue;
+          
           ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = `rgba(59, 130, 246, ${0.06 * (1 - dist / 120)})`;
+          ctx.moveTo(p1.x, p1.y);
+          
+          // Draw jagged electricity line instead of straight line
+          const segments = isLongDistance ? 15 : 5;
+          for (let k = 1; k <= segments; k++) {
+            const t = k / segments;
+            const x = p1.x + (p2.x - p1.x) * t;
+            const y = p1.y + (p2.y - p1.y) * t;
+            
+            if (k < segments) {
+               // Add a random offset perpendicular to the line
+               const offset = (Math.random() - 0.5) * (isFlashing ? 20 : 5);
+               // perpendicular vector is (-dy, dx) normalized
+               const perpX = (-dy / dist) * offset;
+               const perpY = (dx / dist) * offset;
+               ctx.lineTo(x + perpX, y + perpY);
+            } else {
+               ctx.lineTo(x, y); // end at exactly p2
+            }
+          }
+          
+          // Long distance uses solid flash intensity, short distance fades with distance normally
+          const baseIntensity = isFlashing ? 0.8 : 0.2 * (1 - dist / 150);
+          // Dim cross-sphere lines slightly so they don't overpower the portrait
+          const intensity = isLongDistance ? baseIntensity * 0.5 : baseIntensity; 
+          
+          ctx.strokeStyle = `rgba(${p1.specialColor}, ${intensity})`;
+          ctx.lineWidth = isFlashing ? (isLongDistance ? 1.5 : 1.5) : 0.8;
+          ctx.stroke();
+          
+        } else if (dist < 100) {
+          // Default connection
+          ctx.beginPath();
+          ctx.moveTo(p1.x, p1.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.strokeStyle = `rgba(59, 130, 246, ${0.08 * (1 - dist / 100)})`;
           ctx.lineWidth = 0.5;
           ctx.stroke();
         }
       }
     }
+    
     // Mouse glow
     if (mouse.x > 0 && mouse.y > 0) {
       const gradient = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 100);

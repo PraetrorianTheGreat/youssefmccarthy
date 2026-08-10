@@ -56,9 +56,19 @@
     </div>
   </div>
 
+    <!-- WebGL Background -->
+  <canvas id="webgl-bg" style="display: none;"></canvas>
   <canvas id="particles"></canvas>
   <div class="bg-grid"></div>
   <div class="bg-orbs"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
+  
+  <!-- WebGL Background Toggle -->
+  <div class="webgl-toggle-container">
+    <button id="webgl-toggle-btn" class="webgl-toggle-btn" aria-label="Toggle Background Style">
+      <span class="webgl-toggle-text">Try new background</span>
+    </button>
+    <div class="webgl-caution">Caution: Performance heavy</div>
+  </div>
 
   <!-- Navigation -->
   <nav class="nav" id="nav">
@@ -80,7 +90,7 @@
       <li><a href="collaboration.html">UX Collaboration</a></li>
       <li><a href="editorials.html">Editorials</a></li>
       <li><a href="skills.html">Skills</a></li>
-      <li><a href="education.html" class="active">Education</a></li>
+      <li><a href="education.html" class="active">Education &amp; Recommendations</a></li>
     </ul>
   </nav>
 
@@ -91,11 +101,21 @@
         <h2 class="section-title">Academic Background</h2>
       </div>
       <div class="edu-card reveal">
-        <div class="edu-icon">🎓</div>
-        <div>
-          <div class="edu-degree">Bachelor's Degree in Business Administration</div>
-          <div class="edu-school">University of Massachusetts</div>
-          <div class="edu-year">Graduated May 2017</div>
+        <div class="edu-content-left">
+          <div class="edu-icon">🎓</div>
+          <div>
+            <div class="edu-degree">Bachelor's Degree in Business Administration</div>
+            <div class="edu-school">University of Massachusetts</div>
+            <div class="edu-year">Graduated May 2018</div>
+            <div class="edu-awards">
+              <span class="award-badge carnegie"><i class="fa-solid fa-award"></i> Carnegie R1 Doctoral Univ</span>
+              <span class="award-badge fulbright"><i class="fa-solid fa-globe"></i> Fulbright Top Producer</span>
+              <span class="award-badge"><i class="fa-solid fa-medal"></i> Top NE Public Research</span>
+            </div>
+          </div>
+        </div>
+        <div class="edu-image-right">
+          <img src="img/manning.jpg" alt="Manning School of Business - Pulichino Tong Business Center" loading="lazy">
         </div>
       </div>
     </section>
@@ -385,6 +405,10 @@ document.addEventListener("DOMContentLoaded", function() {
     </div>
   </div>
 
+    <!-- Three.js for WebGL Backgrounds -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="webgl-backgrounds.js"></script>
+  
   <script src="script.js?v=5"></script>
 </body>
 </html>

@@ -33,9 +33,19 @@
     </div>
   </div>
 
+    <!-- WebGL Background -->
+  <canvas id="webgl-bg" style="display: none;"></canvas>
   <canvas id="particles"></canvas>
   <div class="bg-grid"></div>
   <div class="bg-orbs"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
+  
+  <!-- WebGL Background Toggle -->
+  <div class="webgl-toggle-container">
+    <button id="webgl-toggle-btn" class="webgl-toggle-btn" aria-label="Toggle Background Style">
+      <span class="webgl-toggle-text">Try new background</span>
+    </button>
+    <div class="webgl-caution">Caution: Performance heavy</div>
+  </div>
 
   <nav class="nav" id="nav">
     <a href="index.html" class="nav-logo" style="text-decoration:none;" aria-label="Homepage"><span>YM</span></a>
@@ -58,7 +68,7 @@
       <li><a href="collaboration.html" class="active">UX Collaboration</a></li>
       <li><a href="editorials.html">Editorials</a></li>
       <li><a href="skills.html">Skills</a></li>
-      <li><a href="education.html">Education</a></li>
+      <li><a href="education.html">Education &amp; Recommendations</a></li>
     </ul>
   </nav>
 

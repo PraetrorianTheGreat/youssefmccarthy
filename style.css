@@ -44,6 +44,100 @@ body {
 ::-webkit-scrollbar-track { background: var(--bg-primary); }
 ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
 
+/* ── WebGL Background ── */
+#webgl-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.webgl-toggle-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.webgl-caution {
+  font-size: 0.65rem;
+  color: var(--accent);
+  opacity: 0.8;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding-right: 4px;
+}
+
+.webgl-toggle-btn {
+  background: rgba(10, 14, 26, 0.8);
+  color: var(--text-primary);
+  padding: 10px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  position: relative;
+  overflow: hidden;
+  border: none; /* Use pseudo-element for border */
+}
+
+.webgl-toggle-btn::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(transparent, transparent, transparent, var(--accent));
+  animation: spinGlow 4s linear infinite;
+  z-index: 0;
+}
+
+.webgl-toggle-btn::after {
+  content: '';
+  position: absolute;
+  inset: 1px; /* the border thickness */
+  background: rgba(10, 14, 26, 0.95);
+  border-radius: 19px;
+  z-index: 1;
+}
+
+.webgl-toggle-text {
+  position: relative;
+  z-index: 2;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.75rem;
+}
+
+@keyframes spinGlow {
+  100% { transform: rotate(360deg); }
+}
+
+.webgl-toggle-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px var(--accent-glow);
+}
+
+.webgl-toggle-btn:hover::before {
+  animation-duration: 1.5s;
+}
+
 /* ── Animated Background ── */
 .bg-grid {
   position: fixed; inset: 0; z-index: 0; pointer-events: none;
@@ -1022,13 +1116,51 @@ section { padding: 100px 40px; max-width: 1200px; margin: 0 auto; }
 .edu-card {
   padding: 40px; border-radius: var(--radius);
   background: var(--bg-card); border: 1px solid var(--border-glass);
-  display: flex; gap: 24px; align-items: center;
-  max-width: 600px; margin: 0 auto;
+  display: flex; gap: 32px; align-items: center; justify-content: space-between;
+  max-width: 950px; margin: 0 auto;
+}
+.edu-content-left {
+  display: flex; gap: 24px; align-items: flex-start; flex: 1;
+}
+.edu-image-right {
+  flex: 0 0 350px;
+  height: 220px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  display: flex;
+}
+.edu-image-right img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.edu-card:hover .edu-image-right img {
+  transform: scale(1.05);
 }
 .edu-icon { font-size: 3rem; }
 .edu-degree { font-size: 1.2rem; font-weight: 700; }
 .edu-school { color: var(--accent-light); font-weight: 600; font-size: 0.95rem; }
 .edu-year { color: var(--text-muted); font-size: 0.85rem; }
+.edu-awards {
+  display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; justify-content: flex-start;
+}
+.award-badge {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 10px 16px; border-radius: 12px; font-size: 0.95rem;
+  font-weight: 700; color: var(--accent-light);
+  background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.3);
+  box-shadow: 0 4px 15px rgba(59,130,246,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.award-badge i { font-size: 1.2rem; }
+.award-badge:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(59,130,246,0.2); }
+.award-badge.carnegie { color: #f59e0b; background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.3); box-shadow: 0 4px 15px rgba(245, 158, 11, 0.1); }
+.award-badge.carnegie:hover { box-shadow: 0 6px 20px rgba(245, 158, 11, 0.2); }
+.award-badge.fulbright { color: #10b981; background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.3); box-shadow: 0 4px 15px rgba(16, 185, 129, 0.1); }
+.award-badge.fulbright:hover { box-shadow: 0 6px 20px rgba(16, 185, 129, 0.2); }
 
 /* ── Engagement Zone (Visually Distinct) ── */
 .engagement-zone {
@@ -1691,7 +1823,10 @@ section { padding: 100px 40px; max-width: 1200px; margin: 0 auto; }
   .skill-name { font-size: 0.8rem; }
 
   /* Education */
-  .edu-card { padding: 24px; gap: 16px; flex-direction: column; text-align: center; }
+  .edu-card { padding: 24px; gap: 20px; flex-direction: column; text-align: center; justify-content: center; }
+  .edu-content-left { flex-direction: column; align-items: center; text-align: center; }
+  .edu-awards { justify-content: center; }
+  .edu-image-right { flex: 0 0 auto; width: 100%; height: 160px; }
   .edu-icon { font-size: 2.2rem; }
   .edu-degree { font-size: 1rem; }
   .edu-school { font-size: 0.85rem; }

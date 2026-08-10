@@ -56,9 +56,20 @@
     </div>
   </div>
 
+  <!-- WebGL Background -->
+  <canvas id="webgl-bg" style="display: none;"></canvas>
   <canvas id="particles"></canvas>
   <div class="bg-grid"></div>
   <div class="bg-orbs"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
+  
+  <!-- WebGL Background Toggle -->
+  <div class="webgl-toggle-container">
+    <button id="webgl-toggle-btn" class="webgl-toggle-btn" aria-label="Toggle Background Style">
+      <span class="webgl-toggle-text">Try new background</span>
+    </button>
+    <div class="webgl-caution">Caution: Performance heavy</div>
+  </div>
+
 
   <!-- Navigation -->
   <nav class="nav" id="nav">
@@ -80,7 +91,7 @@
       <li><a href="collaboration.html">UX Collaboration</a></li>
       <li><a href="editorials.html">Editorials</a></li>
       <li><a href="skills.html">Skills</a></li>
-      <li><a href="education.html">Education</a></li>
+      <li><a href="education.html">Education &amp; Recommendations</a></li>
     </ul>
   </nav>
 
@@ -88,7 +99,6 @@
     <!-- Hero -->
     <section class="hero" id="hero">
       <div class="hero-content">
-        <div class="hero-badge"><span class="dot"></span> Open to Opportunities</div>
         <h1>Youssef M.<br><span class="gradient">McCarthy</span></h1>
         <p class="hero-subtitle">Adobe & Google Analytics Expert | AI Strategy & Automation | Marketing Intelligence & ROI Optimization</p>
         <div class="hero-stats">
@@ -216,7 +226,7 @@
     <!-- Projects -->
     
 
-    <section class="teaser-block reveal">
+    <section class="teaser-block reveal" id="interactive-experience-card">
         <div class="teaser-content">
             <div class="section-label" style="color: var(--success); text-shadow: 0 0 10px rgba(16, 185, 129, 0.4);">Interactive Experience</div>
             <h2 class="section-title">Live Marketing Intelligence Showcase</h2>
@@ -378,6 +388,10 @@ document.addEventListener("DOMContentLoaded", function() {
     </div>
   </div>
 
+  <!-- Three.js for WebGL Backgrounds -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="webgl-backgrounds.js"></script>
+  
   <script src="script.js?v=5"></script>
 </body>
 </html>
