@@ -202,24 +202,22 @@ document.addEventListener('DOMContentLoaded', () => {
   const iframe = document.getElementById('dashboardIframe');
   const loader = document.getElementById('skeletonLoader');
   if (iframe && loader) {
-    // Timeout backup to remove skeleton loader if Looker Studio takes more than 10s or has blocks
-    const backupTimeout = setTimeout(() => {
-      if (!iframe.classList.contains('loaded')) {
+    let revealed = false;
+    const revealDashboard = () => {
+      if (!revealed) {
+        revealed = true;
         loader.classList.add('fade-out');
         iframe.classList.add('loaded');
-        console.warn('Iframe load fallback triggered');
+        if (typeof UISounds !== 'undefined' && UISounds.chime) UISounds.chime();
       }
-    }, 10000);
-
-    iframe.onload = () => {
-      clearTimeout(backupTimeout);
-      setTimeout(() => {
-        loader.classList.add('fade-out');
-        iframe.classList.add('loaded');
-        UISounds.chime();
-        trackEvent('iframe_loaded_successfully', { source: 'LookerStudio' });
-      }, 500); // Small delay for visual fluid transition
     };
+
+    iframe.addEventListener('load', () => {
+      setTimeout(revealDashboard, 300);
+    });
+
+    // Fallback reveal after 1.8s so Looker Studio displays seamlessly
+    setTimeout(revealDashboard, 1800);
   }
 
   // ── Interactive Dashboard Controls ──

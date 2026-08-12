@@ -13,65 +13,70 @@ document.addEventListener("DOMContentLoaded", () => {
     const renderer = new THREE.WebGLRenderer({
         canvas: canvas,
         alpha: true,
-        antialias: !isMobile, // Turn off antialiasing on mobile for performance
+        antialias: !isMobile,
         powerPreference: "high-performance"
     });
     renderer.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 2));
     renderer.setSize(window.innerWidth, window.innerHeight);
 
     // --- Particle Configuration ---
-    const particleCount = isMobile ? 1500 : 4000;
+    const particleCount = isMobile ? 2000 : 5000;
     
-    // Arrays for different states
+    // Arrays for different 3D shapes
     const chaosPositions = new Float32Array(particleCount * 3);
     const spherePositions = new Float32Array(particleCount * 3);
     const helixPositions = new Float32Array(particleCount * 3);
+    const repligenPositions = new Float32Array(particleCount * 3);
+    const tesseractPositions = new Float32Array(particleCount * 3);
+    const trefoilPositions = new Float32Array(particleCount * 3);
+    const mobiusPositions = new Float32Array(particleCount * 3);
+    const icosahedronPositions = new Float32Array(particleCount * 3);
     const scrollSpiralPositions = new Float32Array(particleCount * 3);
-    const gridPositions = new Float32Array(particleCount * 3);
     
-    // The current active positions we render
+    // Active rendering arrays
     const currentPositions = new Float32Array(particleCount * 3);
-    
-    // Arrays to hold colors and sizes
     const colors = new Float32Array(particleCount * 3);
     const sizes = new Float32Array(particleCount);
+    const pIds = new Float32Array(particleCount);
     
+    // Sparkling Vibrant Color Palette
     const colorPalette = [
-        new THREE.Color('#3b82f6'), // Blue
-        new THREE.Color('#10b981'), // Green
-        new THREE.Color('#8b5cf6'), // Purple
-        new THREE.Color('#f59e0b'), // Amber
-        new THREE.Color('#ec4899')  // Pink
+        new THREE.Color('#38bdf8'), // Repligen Cyan
+        new THREE.Color('#0088ff'), // Electric Blue
+        new THREE.Color('#34d399'), // Emerald Sparkle
+        new THREE.Color('#a855f7'), // Quantum Purple
+        new THREE.Color('#f43f5e'), // Sparkling Pink
+        new THREE.Color('#fbbf24')  // Radiant Gold
     ];
 
-    // Initialize shapes
+    // Initialize base shapes
     for (let i = 0; i < particleCount; i++) {
         const i3 = i * 3;
+        pIds[i] = i;
         
         // 1. Chaos (Scattered across the screen)
         chaosPositions[i3] = (Math.random() - 0.5) * 600;
         chaosPositions[i3 + 1] = (Math.random() - 0.5) * 600;
         chaosPositions[i3 + 2] = (Math.random() - 0.5) * 600;
         
-        // Start out as chaos
         currentPositions[i3] = chaosPositions[i3];
         currentPositions[i3 + 1] = chaosPositions[i3 + 1];
         currentPositions[i3 + 2] = chaosPositions[i3 + 2];
 
-        // 2. Sphere (Golden spiral distribution)
+        // 2. Sphere (Golden ratio distribution behind profile photo)
         const phi = Math.acos(-1 + (2 * i) / particleCount);
         const theta = Math.sqrt(particleCount * Math.PI) * phi;
-        const radius = 35 + Math.random() * 5; // Radius around profile pic
+        const radius = 36 + Math.random() * 6;
         
         spherePositions[i3] = radius * Math.cos(theta) * Math.sin(phi);
         spherePositions[i3 + 1] = radius * Math.sin(theta) * Math.sin(phi);
         spherePositions[i3 + 2] = radius * Math.cos(phi);
 
-        // 3. Helix
-        const helixRadius = 25;
-        const helixHeight = 80;
-        const t = i / particleCount; // 0 to 1
-        const angle = t * Math.PI * 20; // Multiple turns
+        // 3. Helix (Bioprocessing Strand)
+        const helixRadius = 26;
+        const helixHeight = 84;
+        const t = i / particleCount;
+        const angle = t * Math.PI * 22;
         const hY = (t - 0.5) * helixHeight;
         
         helixPositions[i3] = helixRadius * Math.cos(angle);
@@ -79,10 +84,10 @@ document.addEventListener("DOMContentLoaded", () => {
         helixPositions[i3 + 2] = helixRadius * Math.sin(angle);
         
         // 4. Scroll Spiral (Large vortex)
-        const scrollSpiralRadius = 100 + Math.random() * 80; // Wide radius to wrap content
-        const scrollSpiralHeight = 800; // Taller than screen
+        const scrollSpiralRadius = 100 + Math.random() * 80;
+        const scrollSpiralHeight = 800;
         const st = i / particleCount;
-        const sAngle = st * Math.PI * 40; // Lots of turns
+        const sAngle = st * Math.PI * 40;
         const sY = (st - 0.5) * scrollSpiralHeight;
         
         scrollSpiralPositions[i3] = scrollSpiralRadius * Math.cos(sAngle);
@@ -95,46 +100,294 @@ document.addEventListener("DOMContentLoaded", () => {
         colors[i3 + 1] = color.g;
         colors[i3 + 2] = color.b;
         
-        sizes[i] = Math.random() * 2 + 1.0;
+        sizes[i] = Math.random() * 2.2 + 1.2;
     }
 
-    // --- Shader Material ---
-    // Using a custom shader to give a soft, glowing, anti-aliased dot look
+    // --- Complex 3D Shape Generators ---
+
+    // 1. Quantum Tesseract (4D Hypercube Projection)
+    function initTesseractPositions() {
+        const vertices4D = [];
+        for (let i = 0; i < 16; i++) {
+            vertices4D.push([
+                (i & 1) ? 1 : -1,
+                (i & 2) ? 1 : -1,
+                (i & 4) ? 1 : -1,
+                (i & 8) ? 1 : -1
+            ]);
+        }
+        
+        const edges = [];
+        for (let a = 0; a < 16; a++) {
+            for (let b = a + 1; b < 16; b++) {
+                let diff = 0;
+                for (let k = 0; k < 4; k++) {
+                    if (vertices4D[a][k] !== vertices4D[b][k]) diff++;
+                }
+                if (diff === 1) edges.push([a, b]);
+            }
+        }
+
+        const project4Dto3D = (v4) => {
+            const w = 2.4 / (3.2 - v4[3] * 0.45);
+            return {
+                x: v4[0] * w * 26,
+                y: v4[1] * w * 26,
+                z: v4[2] * w * 26
+            };
+        };
+
+        const edgePoints = [];
+        edges.forEach(([a, b]) => {
+            const pA = project4Dto3D(vertices4D[a]);
+            const pB = project4Dto3D(vertices4D[b]);
+            const steps = Math.floor(particleCount / edges.length);
+            for (let s = 0; s < steps; s++) {
+                const f = s / steps;
+                edgePoints.push({
+                    x: pA.x + (pB.x - pA.x) * f,
+                    y: pA.y + (pB.y - pA.y) * f,
+                    z: pA.z + (pB.z - pA.z) * f
+                });
+            }
+        });
+
+        for (let i = 0; i < particleCount; i++) {
+            const i3 = i * 3;
+            if (edgePoints.length > 0) {
+                const pt = edgePoints[i % edgePoints.length];
+                tesseractPositions[i3] = pt.x + (Math.random() - 0.5) * 0.8;
+                tesseractPositions[i3 + 1] = pt.y + (Math.random() - 0.5) * 0.8;
+                tesseractPositions[i3 + 2] = pt.z + (Math.random() - 0.5) * 0.8;
+            }
+        }
+    }
+
+    // 2. Trefoil Knot Spiral Ring
+    function initTrefoilPositions() {
+        for (let i = 0; i < particleCount; i++) {
+            const i3 = i * 3;
+            const t = (i / particleCount) * Math.PI * 2;
+            const scale = 13.5;
+            
+            const x = scale * (Math.sin(t) + 2 * Math.sin(2 * t));
+            const y = scale * (Math.cos(t) - 2 * Math.cos(2 * t));
+            const z = scale * (-Math.sin(3 * t));
+            
+            const strandAngle = (i % 3) * (Math.PI * 2 / 3) + t * 12;
+            const rOffset = 3.2;
+            
+            trefoilPositions[i3] = x + Math.cos(strandAngle) * rOffset;
+            trefoilPositions[i3 + 1] = y + Math.sin(strandAngle) * rOffset;
+            trefoilPositions[i3 + 2] = z + (Math.random() - 0.5) * 1.5;
+        }
+    }
+
+    // 3. Mobius Ribbon Lattice
+    function initMobiusPositions() {
+        const R = 34;
+        for (let i = 0; i < particleCount; i++) {
+            const i3 = i * 3;
+            const u = (i / particleCount) * Math.PI * 2;
+            const v = ((i % 80) / 80 - 0.5) * 18;
+            
+            mobiusPositions[i3] = (R + v * Math.cos(u / 2)) * Math.cos(u);
+            mobiusPositions[i3 + 1] = (R + v * Math.cos(u / 2)) * Math.sin(u);
+            mobiusPositions[i3 + 2] = v * Math.sin(u / 2);
+        }
+    }
+
+    // 4. Geodesic Icosahedron Neural Network
+    function initIcosahedronPositions() {
+        const phi = (1 + Math.sqrt(5)) / 2;
+        const r = 38;
+        const verts = [
+            [-1, phi, 0], [1, phi, 0], [-1, -phi, 0], [1, -phi, 0],
+            [0, -1, phi], [0, 1, phi], [0, -1, -phi], [0, 1, -phi],
+            [phi, 0, -1], [phi, 0, 1], [-phi, 0, -1], [-phi, 0, 1]
+        ].map(v => {
+            const len = Math.hypot(...v);
+            return [v[0] / len * r, v[1] / len * r, v[2] / len * r];
+        });
+
+        const edges = [];
+        for (let a = 0; a < 12; a++) {
+            for (let b = a + 1; b < 12; b++) {
+                const dist = Math.hypot(verts[a][0] - verts[b][0], verts[a][1] - verts[b][1], verts[a][2] - verts[b][2]);
+                if (dist < r * 1.25) edges.push([verts[a], verts[b]]);
+            }
+        }
+
+        const pts = [];
+        edges.forEach(([vA, vB]) => {
+            const steps = Math.floor((particleCount * 0.75) / edges.length);
+            for (let s = 0; s < steps; s++) {
+                const f = s / steps;
+                pts.push({
+                    x: vA[0] + (vB[0] - vA[0]) * f,
+                    y: vA[1] + (vB[1] - vA[1]) * f,
+                    z: vA[2] + (vB[2] - vA[2]) * f
+                });
+            }
+        });
+
+        for (let i = 0; i < particleCount; i++) {
+            const i3 = i * 3;
+            if (i < pts.length) {
+                icosahedronPositions[i3] = pts[i].x + (Math.random() - 0.5) * 0.8;
+                icosahedronPositions[i3 + 1] = pts[i].y + (Math.random() - 0.5) * 0.8;
+                icosahedronPositions[i3 + 2] = pts[i].z + (Math.random() - 0.5) * 0.8;
+            } else {
+                const u = Math.random();
+                const v = Math.random();
+                const theta = u * 2.0 * Math.PI;
+                const phiAngle = Math.acos(2.0 * v - 1.0);
+                const nR = 14 + Math.random() * 4;
+                icosahedronPositions[i3] = nR * Math.sin(phiAngle) * Math.cos(theta);
+                icosahedronPositions[i3 + 1] = nR * Math.sin(phiAngle) * Math.sin(theta);
+                icosahedronPositions[i3 + 2] = nR * Math.cos(phiAngle);
+            }
+        }
+    }
+
+    // 5. Repligen Logo Shape Generator
+    function initRepligenPositions() {
+        const offCanvas = document.createElement('canvas');
+        offCanvas.width = 800;
+        offCanvas.height = 200;
+        const offCtx = offCanvas.getContext('2d');
+
+        offCtx.fillStyle = '#000000';
+        offCtx.fillRect(0, 0, offCanvas.width, offCanvas.height);
+
+        offCtx.strokeStyle = '#FFFFFF';
+        offCtx.lineWidth = 14;
+        offCtx.beginPath();
+        offCtx.arc(100, 100, 60, 0, Math.PI * 2);
+        offCtx.stroke();
+
+        offCtx.beginPath();
+        offCtx.arc(100, 100, 28, 0, Math.PI * 2);
+        offCtx.stroke();
+
+        offCtx.font = '900 72px "Poppins", "Inter", "Arial Black", sans-serif';
+        offCtx.textAlign = 'left';
+        offCtx.lineWidth = 6;
+        offCtx.strokeStyle = '#FFFFFF';
+        offCtx.strokeText('REPLIGEN', 190, 122);
+        offCtx.fillStyle = '#FFFFFF';
+        offCtx.fillText('REPLIGEN', 190, 122);
+
+        const imgData = offCtx.getImageData(0, 0, offCanvas.width, offCanvas.height);
+        const coords = [];
+        
+        for (let y = 0; y < offCanvas.height; y += 2) {
+            for (let x = 0; x < offCanvas.width; x += 2) {
+                const idx = (y * offCanvas.width + x) * 4;
+                if (imgData.data[idx] > 100) {
+                    coords.push({
+                        x: (x - offCanvas.width / 2) * 0.092,
+                        y: -(y - offCanvas.height / 2) * 0.092
+                    });
+                }
+            }
+        }
+
+        for (let i = 0; i < particleCount; i++) {
+            const i3 = i * 3;
+            if (coords.length > 0) {
+                const pt = coords[Math.floor((i / particleCount) * coords.length)];
+                repligenPositions[i3] = pt.x + (Math.random() - 0.5) * 0.2;
+                repligenPositions[i3 + 1] = pt.y + (Math.random() - 0.5) * 0.2;
+                repligenPositions[i3 + 2] = (Math.random() - 0.5) * 2;
+            } else {
+                repligenPositions[i3] = (Math.random() - 0.5) * 30;
+                repligenPositions[i3 + 1] = (Math.random() - 0.5) * 10;
+                repligenPositions[i3 + 2] = 0;
+            }
+        }
+
+        const img = new Image();
+        img.src = 'img/repligen-logo.svg';
+        img.onload = () => {
+            offCtx.fillStyle = '#000000';
+            offCtx.fillRect(0, 0, offCanvas.width, offCanvas.height);
+            offCtx.drawImage(img, 40, 19, 720, 162);
+            
+            const updatedImgData = offCtx.getImageData(0, 0, offCanvas.width, offCanvas.height);
+            const exactCoords = [];
+            for (let y = 0; y < offCanvas.height; y += 2) {
+                for (let x = 0; x < offCanvas.width; x += 2) {
+                    const idx = (y * offCanvas.width + x) * 4;
+                    if (updatedImgData.data[idx + 3] > 80 && (updatedImgData.data[idx] > 30 || updatedImgData.data[idx + 1] > 30 || updatedImgData.data[idx + 2] > 30)) {
+                        exactCoords.push({
+                            x: (x - offCanvas.width / 2) * 0.090,
+                            y: -(y - offCanvas.height / 2) * 0.090
+                        });
+                    }
+                }
+            }
+            if (exactCoords.length > 0) {
+                for (let i = 0; i < particleCount; i++) {
+                    const i3 = i * 3;
+                    const pt = exactCoords[Math.floor((i / particleCount) * exactCoords.length)];
+                    repligenPositions[i3] = pt.x + (Math.random() - 0.5) * 0.15;
+                    repligenPositions[i3 + 1] = pt.y + (Math.random() - 0.5) * 0.15;
+                    repligenPositions[i3 + 2] = (Math.random() - 0.5) * 2;
+                }
+                if (currentShape === 'repligen') {
+                    switchShape('repligen');
+                }
+            }
+        };
+    }
+
+    // Initialize all 3D complex shape arrays
+    initTesseractPositions();
+    initTrefoilPositions();
+    initMobiusPositions();
+    initIcosahedronPositions();
+    initRepligenPositions();
+
+    // --- Custom Shader Material with Twinkling / Sparkling Effects ---
     const vertexShader = `
         attribute float size;
         attribute vec3 color;
+        attribute float pId;
+        uniform float uTime;
         varying vec3 vColor;
+        varying float vSparkle;
         varying float vDepth;
         void main() {
             vColor = color;
             vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
             vDepth = mvPosition.z;
-            gl_PointSize = size * (300.0 / -mvPosition.z);
+            
+            float sparkle = 0.5 + 0.5 * sin(uTime * 3.8 + pId * 13.37);
+            vSparkle = sparkle;
+
+            float dynamicSize = size * (0.85 + 0.45 * sparkle);
+            gl_PointSize = dynamicSize * (320.0 / -mvPosition.z);
             gl_Position = projectionMatrix * mvPosition;
         }
     `;
 
     const fragmentShader = `
         varying vec3 vColor;
+        varying float vSparkle;
         varying float vDepth;
         void main() {
-            // Circle distance
             vec2 xy = gl_PointCoord.xy - vec2(0.5);
             float ll = length(xy);
             if(ll > 0.5) discard;
             
-            // Soft edge (glow)
-            float alpha = smoothstep(0.5, 0.1, ll);
-            
-            // Depth fading: Fade out particles that are further back
-            // Camera is at z=200. Center is ~ -200 depth.
-            // Fade out beyond -250, fully bright at -150.
+            float alpha = smoothstep(0.5, 0.08, ll);
             float depthAlpha = smoothstep(-350.0, -100.0, vDepth);
             
-            // Make particles darker in the back to simulate wrapping
-            vec3 finalColor = vColor * (0.2 + 0.8 * depthAlpha);
+            vec3 sparkleColor = mix(vColor, vec3(1.0, 1.0, 1.0), vSparkle * 0.45);
+            vec3 finalColor = sparkleColor * (0.35 + 0.85 * depthAlpha) + vec3(vSparkle * 0.12);
             
-            gl_FragColor = vec4(finalColor, alpha * depthAlpha * 0.9);
+            gl_FragColor = vec4(finalColor, alpha * depthAlpha * (0.75 + 0.25 * vSparkle));
         }
     `;
 
@@ -142,10 +395,14 @@ document.addEventListener("DOMContentLoaded", () => {
     geometry.setAttribute('position', new THREE.BufferAttribute(currentPositions, 3));
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
     geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+    geometry.setAttribute('pId', new THREE.BufferAttribute(pIds, 1));
 
     const material = new THREE.ShaderMaterial({
         vertexShader: vertexShader,
         fragmentShader: fragmentShader,
+        uniforms: {
+            uTime: { value: 0 }
+        },
         transparent: true,
         depthWrite: false,
         blending: THREE.AdditiveBlending
@@ -154,25 +411,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const particleSystem = new THREE.Points(geometry, material);
     scene.add(particleSystem);
     
-    // Group used to position the structured shapes over the profile picture
     const targetGroup = new THREE.Group();
     scene.add(targetGroup);
 
     // --- Animation State ---
     let time = 0;
-    let currentShape = 'chaos'; // 'chaos', 'sphere', 'helix'
-    let progress = 0;
+    let currentShape = 'chaos';
     
-    // We use a shadow array to represent the final destination of the lerp
     const destinationPositions = new Float32Array(particleCount * 3);
     
-    // Helper to get WebGL coords from DOM element
-    // Cache layout metrics to avoid thrashing in requestAnimationFrame
     let cachedProfileRect = null;
     let isProfileVisibleCached = true;
     let needsLayoutUpdate = true;
 
-    // Update layout metrics on scroll or resize
     const updateLayoutMetrics = () => {
         needsLayoutUpdate = true;
     };
@@ -182,25 +433,29 @@ document.addEventListener("DOMContentLoaded", () => {
     function updateTargetPosition() {
         const profilePicWrapper = document.querySelector('.hero-photo-wrapper');
         if (!profilePicWrapper) return false;
-        
-        if (needsLayoutUpdate) {
-            cachedProfileRect = profilePicWrapper.getBoundingClientRect();
-            isProfileVisibleCached = cachedProfileRect.bottom > 0 && cachedProfileRect.top < window.innerHeight;
-            needsLayoutUpdate = false;
-        }
-        
-        if (isProfileVisibleCached) {
-            // Map DOM center to normalized device coordinates
-            const ndcX = (cachedProfileRect.left + cachedProfileRect.width / 2) / window.innerWidth * 2 - 1;
-            const ndcY = -(cachedProfileRect.top + cachedProfileRect.height / 2) / window.innerHeight * 2 + 1;
-            
+
+        const rect = profilePicWrapper.getBoundingClientRect();
+        // Check if profile picture is anywhere in the viewport
+        const isVisible = rect.bottom > 0 && rect.top < window.innerHeight;
+
+        if (isVisible) {
+            // Live DOM coordinates: pin particle target directly onto profile photo wrapper
+            const centerX = rect.left + rect.width / 2;
+            let targetY = rect.top + rect.height / 2;
+            if (currentShape === 'repligen') {
+                targetY = rect.bottom + 55; // Positioned directly underneath profile photo wrapper
+            }
+
+            const ndcX = (centerX / window.innerWidth) * 2 - 1;
+            const ndcY = -(targetY / window.innerHeight) * 2 + 1;
+
             const vector = new THREE.Vector3(ndcX, ndcY, 0.5);
             vector.unproject(camera);
             const dir = vector.sub(camera.position).normalize();
-            // Project out to a reasonable z distance
-            const distance = (0 - camera.position.z) / dir.z; 
+            const distance = (0 - camera.position.z) / dir.z;
             const pos = camera.position.clone().add(dir.multiplyScalar(distance));
-            
+
+            // Pin 3D group directly to profile picture element
             targetGroup.position.copy(pos);
             return true;
         }
@@ -210,14 +465,19 @@ document.addEventListener("DOMContentLoaded", () => {
     function switchShape(newShape) {
         currentShape = newShape;
         
-        // Copy the chosen shape into our destination array
         let sourceArray = chaosPositions;
         if (newShape === 'sphere') sourceArray = spherePositions;
         if (newShape === 'helix') sourceArray = helixPositions;
+        if (newShape === 'tesseract') sourceArray = tesseractPositions;
+        if (newShape === 'trefoil') sourceArray = trefoilPositions;
+        if (newShape === 'mobius') sourceArray = mobiusPositions;
+        if (newShape === 'icosahedron') sourceArray = icosahedronPositions;
+        if (newShape === 'repligen') sourceArray = repligenPositions;
         if (newShape === 'scrollSpiral') sourceArray = scrollSpiralPositions;
+        if (!sourceArray) sourceArray = spherePositions;
         
-        // If it's a structured shape, we also add the offset of the target group
-        // If it's chaos, they exist in global space
+        updateTargetPosition();
+
         for (let i = 0; i < particleCount * 3; i+=3) {
             if (newShape === 'chaos') {
                 destinationPositions[i] = sourceArray[i];
@@ -231,23 +491,39 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Initial shape
-    switchShape('chaos');
+    // Initial shape on page load: Repligen Logo
+    switchShape('repligen');
 
     let isProfileVisible = true;
-    let justLostProfile = false;
 
-    // Cycle through shapes every few seconds
-    setInterval(() => {
+    // Alternating sequence starting with Repligen Logo and returning to Repligen between each complex object
+    const shapesList = [
+        'repligen',    // 1. Initial Load: Repligen Logo
+        'tesseract',   // 2. Quantum Tesseract
+        'repligen',    // 3. Return to Repligen
+        'trefoil',     // 4. Bio-Helix Trefoil Knot
+        'repligen',    // 5. Return to Repligen
+        'icosahedron', // 6. Geodesic Neural Lattice
+        'repligen',    // 7. Return to Repligen
+        'mobius',      // 8. Mobius Ribbon Lattice
+        'repligen',    // 9. Return to Repligen
+        'sphere',      // 10. Orbital Analytics Ring
+        'repligen',    // 11. Return to Repligen
+        'helix'        // 12. Bioprocessing Strand
+    ];
+    let shapeIndex = 0;
+
+    function cycleNextShape() {
+        shapeIndex = (shapeIndex + 1) % shapesList.length;
+        switchShape(shapesList[shapeIndex]);
+    }
+
+    let cycleInterval = setInterval(() => {
         isProfileVisible = updateTargetPosition();
-        
         if (isProfileVisible) {
-            const shapes = ['sphere', 'helix'];
-            // Pick a random structured shape
-            const next = shapes[Math.floor(Math.random() * shapes.length)];
-            switchShape(next);
+            cycleNextShape();
         }
-    }, 4000);
+    }, 16000);
 
     // Track scroll to manage vortex transition
     document.addEventListener('scroll', () => {
@@ -255,23 +531,17 @@ document.addEventListener("DOMContentLoaded", () => {
         isProfileVisible = updateTargetPosition();
         
         if (wasVisible && !isProfileVisible) {
-            // Explode into chaos briefly
             switchShape('chaos');
-            
-            // Then form the scroll spiral
             setTimeout(() => {
                 if (!isProfileVisible) {
-                    // Reset target group to center of screen for the vortex
                     targetGroup.position.set(0, 0, 0);
                     switchShape('scrollSpiral');
                 }
-            }, 800); // 800ms explosion
+            }, 800);
         } else if (!wasVisible && isProfileVisible) {
-            // Returning to profile pic
-            switchShape('sphere');
+            switchShape(shapesList[shapeIndex]);
         }
     });
-
 
     // Mouse interaction for subtle parallax
     let mouseX = 0;
@@ -292,8 +562,8 @@ document.addEventListener("DOMContentLoaded", () => {
         
         const delta = clock.getDelta();
         time += delta;
+        material.uniforms.uTime.value = time;
 
-        // Smooth mouse follow for camera
         mouseX += (targetMouseX - mouseX) * 0.05;
         mouseY += (targetMouseY - mouseY) * 0.05;
         
@@ -301,64 +571,60 @@ document.addEventListener("DOMContentLoaded", () => {
         camera.position.y += (-mouseY - camera.position.y) * 0.05;
         camera.lookAt(scene.position);
         
-        // Continuous rotation for structured shapes
         if (currentShape !== 'chaos') {
-            // Slowly rotate the target positions to create a living effect
             if (currentShape === 'scrollSpiral') {
-                // Slight parallax based on scroll
                 targetGroup.position.y = (window.scrollY * 0.05);
                 targetGroup.position.x = 0;
             } else {
-                updateTargetPosition(); // Keep it pinned to the DOM element
+                updateTargetPosition();
             }
             
-            // Add scroll to timeOffset for the spiral so it spins as you scroll
             const scrollRot = currentShape === 'scrollSpiral' ? window.scrollY * 0.002 : 0;
-            const timeOffset = time * 0.5 + scrollRot;
+            const timeOffset = time * 0.35 + scrollRot;
             
-            // Re-calculate destinations with rotation
             let sourceArray = chaosPositions;
             if (currentShape === 'sphere') sourceArray = spherePositions;
             if (currentShape === 'helix') sourceArray = helixPositions;
+            if (currentShape === 'tesseract') sourceArray = tesseractPositions;
+            if (currentShape === 'trefoil') sourceArray = trefoilPositions;
+            if (currentShape === 'mobius') sourceArray = mobiusPositions;
+            if (currentShape === 'icosahedron') sourceArray = icosahedronPositions;
+            if (currentShape === 'repligen') sourceArray = repligenPositions;
             if (currentShape === 'scrollSpiral') sourceArray = scrollSpiralPositions;
+            if (!sourceArray) sourceArray = spherePositions;
             
             for (let i = 0; i < particleCount; i++) {
                 const i3 = i * 3;
                 
-                // Original local coords
                 let x = sourceArray[i3];
                 let y = sourceArray[i3+1];
                 let z = sourceArray[i3+2];
                 
-                // Rotate around Y axis
                 const cosT = Math.cos(timeOffset);
                 const sinT = Math.sin(timeOffset);
                 
-                const rotX = x * cosT - z * sinT;
-                const rotZ = x * sinT + z * cosT;
+                // ABSOLUTELY NO ROTATION for Repligen shape! Upright, flat, static, readable!
+                const rotX = currentShape === 'repligen' ? x : (x * cosT - z * sinT);
+                const rotZ = currentShape === 'repligen' ? z : (x * sinT + z * cosT);
                 
-                // Add group offset
                 destinationPositions[i3] = rotX + targetGroup.position.x;
                 destinationPositions[i3+1] = y + targetGroup.position.y;
                 destinationPositions[i3+2] = rotZ + targetGroup.position.z;
             }
         }
         
-        // Lerp all particles towards their destination
+        // Silky smooth particle lerp
         const positions = geometry.attributes.position.array;
-        
-        // The lerp factor (smoothness)
-        const lerpFactor = 0.03; 
+        const lerpFactor = 0.016; 
         
         for (let i = 0; i < particleCount * 3; i+=3) {
-            // Apply a slight organic drift to the destination
-            const driftX = Math.sin(time * 0.5 + i) * 2;
-            const driftY = Math.cos(time * 0.4 + i) * 2;
-            const driftZ = Math.sin(time * 0.3 + i) * 2;
+            const driftX = Math.sin(time * 0.6 + i) * 1.2;
+            const driftY = Math.cos(time * 0.5 + i) * 1.2;
+            const driftZ = Math.sin(time * 0.4 + i) * 1.2;
             
-            const destX = destinationPositions[i] + (currentShape === 'chaos' ? driftX : driftX * 0.2);
-            const destY = destinationPositions[i+1] + (currentShape === 'chaos' ? driftY : driftY * 0.2);
-            const destZ = destinationPositions[i+2] + (currentShape === 'chaos' ? driftZ : driftZ * 0.2);
+            const destX = destinationPositions[i] + (currentShape === 'chaos' ? driftX : driftX * 0.15);
+            const destY = destinationPositions[i+1] + (currentShape === 'chaos' ? driftY : driftY * 0.15);
+            const destZ = destinationPositions[i+2] + (currentShape === 'chaos' ? driftZ : driftZ * 0.15);
             
             positions[i] += (destX - positions[i]) * lerpFactor;
             positions[i+1] += (destY - positions[i+1]) * lerpFactor;
@@ -366,16 +632,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         
         geometry.attributes.position.needsUpdate = true;
-
         renderer.render(scene, camera);
     }
 
     animate();
 
-    // --- Resize Handler ---
     window.addEventListener('resize', () => {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
+        updateTargetPosition();
     });
 });
