@@ -1054,25 +1054,29 @@ const aiPrompts = document.querySelectorAll('.ai-prompt-btn');
 const aiChatForm = document.getElementById('aiChatForm');
 const aiInputField = document.getElementById('aiInputField');
 
-  const aiWidgetBadge = document.getElementById('aiWidgetBadge');
-
-  if (aiToggleBtn && aiChatWindow) {
-    // Toggle Window via button or badge
-    const toggleChat = () => {
-      aiChatWindow.classList.toggle('open');
-      UISounds.click();
-      trackEvent('ai_widget_toggle', { action: aiChatWindow.classList.contains('open') ? 'open' : 'close' });
-    };
-
-    aiToggleBtn.addEventListener('click', toggleChat);
-    if (aiWidgetBadge) {
-      aiWidgetBadge.addEventListener('click', toggleChat);
+if (aiToggleBtn && aiChatWindow) {
+  aiToggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    aiChatWindow.classList.toggle('open');
+    if (typeof UISounds !== 'undefined' && UISounds.click) {
+      try { UISounds.click(); } catch(err) {}
     }
+    if (typeof trackEvent === 'function') {
+      try { trackEvent('ai_widget_toggle', { action: aiChatWindow.classList.contains('open') ? 'open' : 'close' }); } catch(err) {}
+    }
+  });
 
-    aiCloseBtn.addEventListener('click', () => {
+  if (aiCloseBtn) {
+    aiCloseBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
       aiChatWindow.classList.remove('open');
-      UISounds.collapse();
+      if (typeof UISounds !== 'undefined' && UISounds.collapse) {
+        try { UISounds.collapse(); } catch(err) {}
+      }
     });
+  }
+}
+
 
 
   // Overhauled Multi-Page AI Copilot & Intelligent Knowledge Engine
@@ -1468,13 +1472,11 @@ const aiInputField = document.getElementById('aiInputField');
             }, 2200);
           }
         } else if (!href.startsWith('http') && !href.startsWith('mailto:') && href.endsWith('.pdf')) {
-          UISounds.confirm();
         }
       }
     }
   });
 
-}
 
 // ── Live Marketing Intelligence Showcase Teaser Module ──
 (function() {
