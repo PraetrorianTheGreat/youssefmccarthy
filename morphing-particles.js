@@ -455,18 +455,12 @@ document.addEventListener("DOMContentLoaded", () => {
     let cachedHeroElem = null;
 
     function getHeroElem(isMobileOrTablet) {
-        if (isMobileOrTablet && currentShape === 'repligen') {
-            if (!cachedResumeBtn) {
-                cachedResumeBtn = document.querySelector('#download_resume_btn') || document.querySelector('.cta-container');
-            }
-            return cachedResumeBtn;
-        } else {
-            if (!cachedPhotoWrapper) {
-                cachedPhotoWrapper = document.querySelector('.hero-photo-wrapper');
-            }
-            return cachedPhotoWrapper;
+        if (!cachedPhotoWrapper) {
+            cachedPhotoWrapper = document.querySelector('.hero-photo-wrapper') || document.querySelector('.hero-content');
         }
+        return cachedPhotoWrapper;
     }
+
 
     function updateTargetPosition() {
         // Mobile/Tablet responsive check (screens <= 1180px or touch tablets)
