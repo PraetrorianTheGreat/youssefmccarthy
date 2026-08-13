@@ -532,46 +532,69 @@ document.querySelectorAll('.nav-links a').forEach(link => {
   });
 });
 
-// ── Theme Toggle & Color Spectrum Background Engine ──
+// ── Theme Toggle & Expanded Color Spectrum Studio Engine ──
 const themeToggle = document.getElementById('themeToggle');
 const bgHueSlider = document.getElementById('bgHueSlider');
+const bgHueSliderModal = document.getElementById('bgHueSliderModal');
+const bgSatSlider = document.getElementById('bgSatSlider');
+const bgLightSlider = document.getElementById('bgLightSlider');
 
-const applyBgHue = (hue) => {
-  const h = parseInt(hue, 10) || 220;
+const hueReadout = document.getElementById('hueReadout');
+const modalHueVal = document.getElementById('modalHueVal');
+const modalSatVal = document.getElementById('modalSatVal');
+const modalLightVal = document.getElementById('modalLightVal');
+
+const spectrumStudioToggle = document.getElementById('spectrumStudioToggle');
+const spectrumStudioPopover = document.getElementById('spectrumStudioPopover');
+const studioCloseBtn = document.getElementById('studioCloseBtn');
+const studioResetBtn = document.getElementById('studioResetBtn');
+const swatchBtns = document.querySelectorAll('.swatch-btn');
+
+let currentHue = parseInt(localStorage.getItem('ym_bg_hue') || '220', 10);
+let currentSat = parseInt(localStorage.getItem('ym_bg_sat') || '45', 10);
+let currentLight = parseInt(localStorage.getItem('ym_bg_light') || '7', 10);
+
+const applyColorStudioState = (h, s, l) => {
+  currentHue = parseInt(h, 10);
+  currentSat = parseInt(s, 10);
+  currentLight = parseInt(l, 10);
+
   const isLight = document.body.classList.contains('light-theme');
   
-  if (isLight) {
-    const primaryHsl = `hsl(${h}, 30%, 96%)`;
-    const secondaryHsl = `hsl(${(h + 30) % 360}, 35%, 90%)`;
-    const accentHsl = `hsl(${h}, 80%, 45%)`;
-    const accentLightHsl = `hsl(${h}, 85%, 35%)`;
-    const accentGlowHsl = `hsla(${h}, 80%, 45%, 0.25)`;
+  // Adjust lightness bounds for light theme
+  const effectiveLight = isLight ? Math.max(currentLight, 88) : currentLight;
+  
+  const primaryHsl = `hsl(${currentHue}, ${currentSat}%, ${effectiveLight}%)`;
+  const secondaryHsl = `hsl(${(currentHue + 35) % 360}, ${Math.min(currentSat + 10, 100)}%, ${Math.min(effectiveLight + 5, 95)}%)`;
+  const accentHsl = `hsl(${currentHue}, 85%, ${isLight ? '45%' : '60%'})`;
+  const accentLightHsl = `hsl(${currentHue}, 90%, ${isLight ? '35%' : '75%'})`;
+  const accentGlowHsl = `hsla(${currentHue}, 85%, 60%, 0.35)`;
 
-    document.documentElement.style.setProperty('--bg-primary', primaryHsl);
-    document.documentElement.style.setProperty('--bg-secondary', secondaryHsl);
-    document.documentElement.style.setProperty('--accent', accentHsl);
-    document.documentElement.style.setProperty('--accent-light', accentLightHsl);
-    document.documentElement.style.setProperty('--accent-glow', accentGlowHsl);
-  } else {
-    const primaryHsl = `hsl(${h}, 45%, 7%)`;
-    const secondaryHsl = `hsl(${(h + 40) % 360}, 50%, 12%)`;
-    const accentHsl = `hsl(${h}, 85%, 60%)`;
-    const accentLightHsl = `hsl(${h}, 90%, 75%)`;
-    const accentGlowHsl = `hsla(${h}, 85%, 60%, 0.35)`;
-
-    document.documentElement.style.setProperty('--bg-primary', primaryHsl);
-    document.documentElement.style.setProperty('--bg-secondary', secondaryHsl);
-    document.documentElement.style.setProperty('--accent', accentHsl);
-    document.documentElement.style.setProperty('--accent-light', accentLightHsl);
-    document.documentElement.style.setProperty('--accent-glow', accentGlowHsl);
-  }
+  document.documentElement.style.setProperty('--bg-primary', primaryHsl);
+  document.documentElement.style.setProperty('--bg-secondary', secondaryHsl);
+  document.documentElement.style.setProperty('--accent', accentHsl);
+  document.documentElement.style.setProperty('--accent-light', accentLightHsl);
+  document.documentElement.style.setProperty('--accent-glow', accentGlowHsl);
 
   document.body.style.background = `var(--bg-primary)`;
-  localStorage.setItem('ym_bg_hue', h);
+
+  // Update UI slider controls & text readouts
+  if (bgHueSlider) bgHueSlider.value = currentHue;
+  if (bgHueSliderModal) bgHueSliderModal.value = currentHue;
+  if (bgSatSlider) bgSatSlider.value = currentSat;
+  if (bgLightSlider) bgLightSlider.value = currentLight;
+
+  if (hueReadout) hueReadout.innerText = `${currentHue}°`;
+  if (modalHueVal) modalHueVal.innerText = `${currentHue}°`;
+  if (modalSatVal) modalSatVal.innerText = `${currentSat}%`;
+  if (modalLightVal) modalLightVal.innerText = `${currentLight}%`;
+
+  localStorage.setItem('ym_bg_hue', currentHue);
+  localStorage.setItem('ym_bg_sat', currentSat);
+  localStorage.setItem('ym_bg_light', currentLight);
 };
 
-const savedHue = localStorage.getItem('ym_bg_hue') || '220';
-
+// Initialize theme on page load
 if (themeToggle) {
   const savedTheme = localStorage.getItem('portfolio-theme');
   if (savedTheme === 'light') {
@@ -586,29 +609,84 @@ if (themeToggle) {
     const isLight = themeToggle.checked;
     document.body.classList.toggle('light-theme', isLight);
     localStorage.setItem('portfolio-theme', isLight ? 'light' : 'dark');
-    UISounds.toggle();
-    trackEvent('theme_change', { theme: isLight ? 'light' : 'dark' });
-    const currentHue = bgHueSlider ? bgHueSlider.value : (localStorage.getItem('ym_bg_hue') || '220');
-    applyBgHue(currentHue);
+    if (typeof UISounds !== 'undefined' && UISounds.toggle) UISounds.toggle();
+    if (typeof trackEvent === 'function') trackEvent('theme_change', { theme: isLight ? 'light' : 'dark' });
+    applyColorStudioState(currentHue, currentSat, currentLight);
   });
 }
 
-if (bgHueSlider) {
-  bgHueSlider.value = savedHue;
-  applyBgHue(savedHue);
+// Apply studio state
+applyColorStudioState(currentHue, currentSat, currentLight);
 
-  bgHueSlider.addEventListener('input', (e) => {
-    applyBgHue(e.target.value);
+// Handle Studio Popover Toggle
+if (spectrumStudioToggle && spectrumStudioPopover) {
+  spectrumStudioToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    spectrumStudioPopover.classList.toggle('open');
+    if (typeof UISounds !== 'undefined' && UISounds.click) UISounds.click();
   });
 
-  bgHueSlider.addEventListener('change', (e) => {
-    if (typeof trackEvent === 'function') {
-      try { trackEvent('spectrum_hue_change', { hue: e.target.value }); } catch(err) {}
+  if (studioCloseBtn) {
+    studioCloseBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      spectrumStudioPopover.classList.remove('open');
+    });
+  }
+
+  document.addEventListener('click', (e) => {
+    if (spectrumStudioPopover.classList.contains('open') && !spectrumStudioPopover.contains(e.target) && !spectrumStudioToggle.contains(e.target)) {
+      spectrumStudioPopover.classList.remove('open');
     }
   });
-} else {
-  applyBgHue(savedHue);
 }
+
+// Inline Hue Slider Handler
+if (bgHueSlider) {
+  bgHueSlider.addEventListener('input', (e) => {
+    applyColorStudioState(e.target.value, currentSat, currentLight);
+  });
+}
+
+// Modal Hue Slider Handler
+if (bgHueSliderModal) {
+  bgHueSliderModal.addEventListener('input', (e) => {
+    applyColorStudioState(e.target.value, currentSat, currentLight);
+  });
+}
+
+// Modal Saturation Handler
+if (bgSatSlider) {
+  bgSatSlider.addEventListener('input', (e) => {
+    applyColorStudioState(currentHue, e.target.value, currentLight);
+  });
+}
+
+// Modal Lightness/Depth Handler
+if (bgLightSlider) {
+  bgLightSlider.addEventListener('input', (e) => {
+    applyColorStudioState(currentHue, currentSat, e.target.value);
+  });
+}
+
+// Preset Swatch Clicks
+swatchBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const h = btn.dataset.hue;
+    const s = btn.dataset.sat;
+    const l = btn.dataset.light;
+    applyColorStudioState(h, s, l);
+    if (typeof UISounds !== 'undefined' && UISounds.confirm) UISounds.confirm();
+  });
+});
+
+// Reset Button Click
+if (studioResetBtn) {
+  studioResetBtn.addEventListener('click', () => {
+    applyColorStudioState(220, 45, 7);
+    if (typeof UISounds !== 'undefined' && UISounds.click) UISounds.click();
+  });
+}
+
 
 
 // ── Scroll Reveal Animations (Staggered with Failsafe) ──
