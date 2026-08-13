@@ -532,8 +532,46 @@ document.querySelectorAll('.nav-links a').forEach(link => {
   });
 });
 
-// ── Theme Toggle ──
+// ── Theme Toggle & Color Spectrum Background Engine ──
 const themeToggle = document.getElementById('themeToggle');
+const bgHueSlider = document.getElementById('bgHueSlider');
+
+const applyBgHue = (hue) => {
+  const h = parseInt(hue, 10) || 220;
+  const isLight = document.body.classList.contains('light-theme');
+  
+  if (isLight) {
+    const primaryHsl = `hsl(${h}, 30%, 96%)`;
+    const secondaryHsl = `hsl(${(h + 30) % 360}, 35%, 90%)`;
+    const accentHsl = `hsl(${h}, 80%, 45%)`;
+    const accentLightHsl = `hsl(${h}, 85%, 35%)`;
+    const accentGlowHsl = `hsla(${h}, 80%, 45%, 0.25)`;
+
+    document.documentElement.style.setProperty('--bg-primary', primaryHsl);
+    document.documentElement.style.setProperty('--bg-secondary', secondaryHsl);
+    document.documentElement.style.setProperty('--accent', accentHsl);
+    document.documentElement.style.setProperty('--accent-light', accentLightHsl);
+    document.documentElement.style.setProperty('--accent-glow', accentGlowHsl);
+  } else {
+    const primaryHsl = `hsl(${h}, 45%, 7%)`;
+    const secondaryHsl = `hsl(${(h + 40) % 360}, 50%, 12%)`;
+    const accentHsl = `hsl(${h}, 85%, 60%)`;
+    const accentLightHsl = `hsl(${h}, 90%, 75%)`;
+    const accentGlowHsl = `hsla(${h}, 85%, 60%, 0.35)`;
+
+    document.documentElement.style.setProperty('--bg-primary', primaryHsl);
+    document.documentElement.style.setProperty('--bg-secondary', secondaryHsl);
+    document.documentElement.style.setProperty('--accent', accentHsl);
+    document.documentElement.style.setProperty('--accent-light', accentLightHsl);
+    document.documentElement.style.setProperty('--accent-glow', accentGlowHsl);
+  }
+
+  document.body.style.background = `var(--bg-primary)`;
+  localStorage.setItem('ym_bg_hue', h);
+};
+
+const savedHue = localStorage.getItem('ym_bg_hue') || '220';
+
 if (themeToggle) {
   const savedTheme = localStorage.getItem('portfolio-theme');
   if (savedTheme === 'light') {
@@ -550,8 +588,28 @@ if (themeToggle) {
     localStorage.setItem('portfolio-theme', isLight ? 'light' : 'dark');
     UISounds.toggle();
     trackEvent('theme_change', { theme: isLight ? 'light' : 'dark' });
+    const currentHue = bgHueSlider ? bgHueSlider.value : (localStorage.getItem('ym_bg_hue') || '220');
+    applyBgHue(currentHue);
   });
 }
+
+if (bgHueSlider) {
+  bgHueSlider.value = savedHue;
+  applyBgHue(savedHue);
+
+  bgHueSlider.addEventListener('input', (e) => {
+    applyBgHue(e.target.value);
+  });
+
+  bgHueSlider.addEventListener('change', (e) => {
+    if (typeof trackEvent === 'function') {
+      try { trackEvent('spectrum_hue_change', { hue: e.target.value }); } catch(err) {}
+    }
+  });
+} else {
+  applyBgHue(savedHue);
+}
+
 
 // ── Scroll Reveal Animations (Staggered with Failsafe) ──
 const revealElements = document.querySelectorAll('.reveal, .timeline-item');

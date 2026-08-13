@@ -1962,6 +1962,77 @@ section { padding: 100px 40px; max-width: 1200px; margin: 0 auto; }
 .theme-switch .slider:hover { border-color: var(--accent); }
 .theme-switch input:disabled + .slider { opacity: 0.5; cursor: not-allowed; }
 
+/* ── Color Spectrum Slider ── */
+.color-spectrum-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-glass);
+  padding: 3px 8px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.color-spectrum-wrapper:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+
+.spectrum-icon {
+  font-size: 0.85rem;
+  line-height: 1;
+  user-select: none;
+}
+
+.spectrum-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 80px;
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(to right, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000);
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease;
+}
+
+.spectrum-slider:hover {
+  transform: scaleY(1.2);
+}
+
+.spectrum-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid #0a0e1a;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.8), 0 0 8px var(--accent);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.spectrum-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.25);
+}
+
+.spectrum-slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid #0a0e1a;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.8), 0 0 8px var(--accent);
+  cursor: pointer;
+}
+
+
 /* ── Light Theme ── */
 body.light-theme { --bg-primary: #ebf0f5; --bg-secondary: #dce3ea; --bg-card: rgba(245,248,250,0.85); --bg-glass: rgba(0,0,0,0.04); --border-glass: rgba(0,0,0,0.12); --text-primary: #0f172a; --text-secondary: #475569; --text-muted: #718096; }
 body.light-theme .nav { background: rgba(235,240,245,0.9); }
