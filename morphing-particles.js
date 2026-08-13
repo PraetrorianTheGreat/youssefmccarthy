@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
         antialias: !isMobile,
         powerPreference: "high-performance"
     });
-    renderer.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 1.5));
     renderer.setSize(window.innerWidth, window.innerHeight);
 
     // --- Particle Configuration ---
@@ -32,6 +32,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const mobiusPositions = new Float32Array(particleCount * 3);
     const icosahedronPositions = new Float32Array(particleCount * 3);
     const scrollSpiralPositions = new Float32Array(particleCount * 3);
+    const twirlPositions = new Float32Array(particleCount * 3);
+    const explosionVelocities = new Float32Array(particleCount * 3);
+    let isExploding = false;
+    let explosionTimer = null;
     
     // Active rendering arrays
     const currentPositions = new Float32Array(particleCount * 3);
@@ -342,12 +346,31 @@ document.addEventListener("DOMContentLoaded", () => {
         };
     }
 
+    // 6. 3D Twirling Ribbon Vortex Generator
+    function initTwirlPositions() {
+        const numStrands = 6;
+        for (let i = 0; i < particleCount; i++) {
+            const i3 = i * 3;
+            const t = i / particleCount;
+            const strand = i % numStrands;
+            
+            const y = (t - 0.5) * 880;
+            const angle = t * Math.PI * 32 + (strand * (Math.PI * 2 / numStrands));
+            const radius = 42 + Math.sin(t * Math.PI * 10) * 22 + (Math.random() - 0.5) * 10;
+            
+            twirlPositions[i3] = radius * Math.cos(angle);
+            twirlPositions[i3 + 1] = y;
+            twirlPositions[i3 + 2] = radius * Math.sin(angle);
+        }
+    }
+
     // Initialize all 3D complex shape arrays
     initTesseractPositions();
     initTrefoilPositions();
     initMobiusPositions();
     initIcosahedronPositions();
     initRepligenPositions();
+    initTwirlPositions();
 
     // --- Custom Shader Material with Twinkling / Sparkling Effects ---
     const vertexShader = `
@@ -424,26 +447,53 @@ document.addEventListener("DOMContentLoaded", () => {
     let isProfileVisibleCached = true;
     let needsLayoutUpdate = true;
 
-    const updateLayoutMetrics = () => {
-        needsLayoutUpdate = true;
-    };
-    window.addEventListener('scroll', updateLayoutMetrics, { passive: true });
-    window.addEventListener('resize', updateLayoutMetrics, { passive: true });
+    // --- Cached DOM Elements & Rect Measurements for Zero Reflow Thrashing ---
+    let cachedResumeBtn = null;
+    let cachedPhotoWrapper = null;
+    let cachedRectTime = 0;
+    let cachedRect = null;
+    let cachedHeroElem = null;
+
+    function getHeroElem(isMobileOrTablet) {
+        if (isMobileOrTablet && currentShape === 'repligen') {
+            if (!cachedResumeBtn) {
+                cachedResumeBtn = document.querySelector('#download_resume_btn') || document.querySelector('.cta-container');
+            }
+            return cachedResumeBtn;
+        } else {
+            if (!cachedPhotoWrapper) {
+                cachedPhotoWrapper = document.querySelector('.hero-photo-wrapper');
+            }
+            return cachedPhotoWrapper;
+        }
+    }
 
     function updateTargetPosition() {
-        const profilePicWrapper = document.querySelector('.hero-photo-wrapper');
-        if (!profilePicWrapper) return false;
+        // Mobile/Tablet responsive check (screens <= 1180px or touch tablets)
+        const isMobileOrTablet = window.innerWidth <= 1180 || ('ontouchstart' in window && window.innerWidth <= 1280);
+        const heroElem = getHeroElem(isMobileOrTablet);
 
-        const rect = profilePicWrapper.getBoundingClientRect();
-        // Check if profile picture is anywhere in the viewport
+        if (!heroElem) return false;
+
+        // Cache rect for 1 frame (16ms) or update on layout event to eliminate forced layout reflows
+        const now = performance.now();
+        if (!cachedRect || heroElem !== cachedHeroElem || needsLayoutUpdate || (now - cachedRectTime > 16)) {
+            cachedRect = heroElem.getBoundingClientRect();
+            cachedRectTime = now;
+            cachedHeroElem = heroElem;
+            needsLayoutUpdate = false;
+        }
+
+        const rect = cachedRect;
+        // Element is visible if its bottom edge is below top of viewport, and top edge is within viewport
         const isVisible = rect.bottom > 0 && rect.top < window.innerHeight;
 
         if (isVisible) {
-            // Live DOM coordinates: pin particle target directly onto profile photo wrapper
             const centerX = rect.left + rect.width / 2;
             let targetY = rect.top + rect.height / 2;
+
             if (currentShape === 'repligen') {
-                targetY = rect.bottom + 55; // Positioned directly underneath profile photo wrapper
+                targetY = isMobileOrTablet ? (rect.bottom + 50) : (rect.bottom + 55);
             }
 
             const ndcX = (centerX / window.innerWidth) * 2 - 1;
@@ -455,12 +505,16 @@ document.addEventListener("DOMContentLoaded", () => {
             const distance = (0 - camera.position.z) / dir.z;
             const pos = camera.position.clone().add(dir.multiplyScalar(distance));
 
-            // Pin 3D group directly to profile picture element
             targetGroup.position.copy(pos);
             return true;
         }
+
         return false;
     }
+
+
+
+
 
     function switchShape(newShape) {
         currentShape = newShape;
@@ -473,7 +527,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (newShape === 'mobius') sourceArray = mobiusPositions;
         if (newShape === 'icosahedron') sourceArray = icosahedronPositions;
         if (newShape === 'repligen') sourceArray = repligenPositions;
-        if (newShape === 'scrollSpiral') sourceArray = scrollSpiralPositions;
+        if (newShape === 'scrollSpiral' || newShape === 'twirlVortex') sourceArray = twirlPositions;
         if (!sourceArray) sourceArray = spherePositions;
         
         updateTargetPosition();
@@ -491,8 +545,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Initial shape on page load: Repligen Logo
-    switchShape('repligen');
+    // --- Page Load Initial State: Start SCATTERED, then assemble into Repligen Logo ---
+    switchShape('chaos');
+
+    // Trigger assembly after 700ms pause to clearly show scattered state on load
+    setTimeout(() => {
+        switchShape('repligen');
+    }, 700);
+
 
     let isProfileVisible = true;
 
@@ -525,23 +585,46 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }, 16000);
 
-    // Track scroll to manage vortex transition
+    // Explosive dispersion trigger when particles exit hero viewport
+    function triggerExplosion() {
+        isExploding = true;
+        switchShape('chaos');
+        
+        // Generate high-velocity radial explosion vectors
+        for (let i = 0; i < particleCount; i++) {
+            const i3 = i * 3;
+            const angle = Math.random() * Math.PI * 2;
+            const phi = Math.random() * Math.PI;
+            const speed = 18.0 + Math.random() * 28.0;
+            
+            explosionVelocities[i3] = speed * Math.sin(phi) * Math.cos(angle);
+            explosionVelocities[i3 + 1] = speed * Math.cos(phi);
+            explosionVelocities[i3 + 2] = speed * Math.sin(phi) * Math.sin(angle);
+        }
+
+        if (explosionTimer) clearTimeout(explosionTimer);
+        explosionTimer = setTimeout(() => {
+            isExploding = false;
+            targetGroup.position.set(0, 0, 0);
+            switchShape('twirlVortex');
+        }, 500);
+    }
+
+    // Track scroll to manage explosion and continuous twirling vortex
     document.addEventListener('scroll', () => {
         const wasVisible = isProfileVisible;
         isProfileVisible = updateTargetPosition();
         
         if (wasVisible && !isProfileVisible) {
-            switchShape('chaos');
-            setTimeout(() => {
-                if (!isProfileVisible) {
-                    targetGroup.position.set(0, 0, 0);
-                    switchShape('scrollSpiral');
-                }
-            }, 800);
+            triggerExplosion();
         } else if (!wasVisible && isProfileVisible) {
+            isExploding = false;
+            if (explosionTimer) clearTimeout(explosionTimer);
             switchShape(shapesList[shapeIndex]);
         }
     });
+
+
 
     // Mouse interaction for subtle parallax
     let mouseX = 0;
@@ -554,11 +637,17 @@ document.addEventListener("DOMContentLoaded", () => {
         targetMouseY = (e.clientY - window.innerHeight / 2) * 0.05;
     });
 
-    // --- Render Loop ---
+    // --- Render Loop & Tab Visibility Throttling ---
     const clock = new THREE.Clock();
+    let isAppHidden = false;
+
+    document.addEventListener('visibilitychange', () => {
+        isAppHidden = document.hidden;
+    });
 
     function animate() {
         requestAnimationFrame(animate);
+        if (isAppHidden) return; // Save 100% CPU/GPU resources when tab is backgrounded
         
         const delta = clock.getDelta();
         time += delta;
@@ -571,51 +660,87 @@ document.addEventListener("DOMContentLoaded", () => {
         camera.position.y += (-mouseY - camera.position.y) * 0.05;
         camera.lookAt(scene.position);
         
-        if (currentShape !== 'chaos') {
-            if (currentShape === 'scrollSpiral') {
-                targetGroup.position.y = (window.scrollY * 0.05);
-                targetGroup.position.x = 0;
+        if (isExploding) {
+            // Apply explosion burst velocity directly to current positions for dynamic shattering effect
+            const positions = geometry.attributes.position.array;
+            for (let i = 0; i < particleCount * 3; i += 3) {
+                positions[i] += explosionVelocities[i] * delta * 45;
+                positions[i + 1] += explosionVelocities[i + 1] * delta * 45;
+                positions[i + 2] += explosionVelocities[i + 2] * delta * 45;
+            }
+            geometry.attributes.position.needsUpdate = true;
+        } else if (currentShape !== 'chaos') {
+            const isWidescreen = (window.innerWidth / window.innerHeight) >= 1.5;
+
+            if (currentShape === 'twirlVortex' || currentShape === 'scrollSpiral') {
+                const scrollY = window.scrollY;
+                targetGroup.position.x = Math.sin(time * 0.4) * 12;
+                targetGroup.position.y = Math.cos(time * 0.3) * 8;
+                targetGroup.position.z = 0;
+
+                const twirlSpeed = time * 0.95 + scrollY * 0.0028;
+                const shapeScale = isWidescreen ? 1.8 : 1.0;
+
+                for (let i = 0; i < particleCount; i++) {
+                    const i3 = i * 3;
+                    
+                    const baseY = twirlPositions[i3 + 1] * shapeScale;
+                    const baseR = Math.hypot(twirlPositions[i3], twirlPositions[i3 + 2]) * shapeScale;
+                    const rWave = Math.sin(baseY * 0.02 + time * 2.2) * 14;
+                    const finalR = baseR + rWave;
+                    
+                    const baseAngle = Math.atan2(twirlPositions[i3 + 2], twirlPositions[i3]);
+                    const currentAngle = baseAngle + twirlSpeed + (baseY * 0.004);
+                    
+                    const rotX = finalR * Math.cos(currentAngle);
+                    const rotZ = finalR * Math.sin(currentAngle);
+                    const rotY = baseY + Math.sin(time * 1.8 + i * 0.15) * 4;
+
+                    destinationPositions[i3] = rotX + targetGroup.position.x;
+                    destinationPositions[i3 + 1] = rotY + targetGroup.position.y;
+                    destinationPositions[i3 + 2] = rotZ + targetGroup.position.z;
+                }
             } else {
                 updateTargetPosition();
-            }
-            
-            const scrollRot = currentShape === 'scrollSpiral' ? window.scrollY * 0.002 : 0;
-            const timeOffset = time * 0.35 + scrollRot;
-            
-            let sourceArray = chaosPositions;
-            if (currentShape === 'sphere') sourceArray = spherePositions;
-            if (currentShape === 'helix') sourceArray = helixPositions;
-            if (currentShape === 'tesseract') sourceArray = tesseractPositions;
-            if (currentShape === 'trefoil') sourceArray = trefoilPositions;
-            if (currentShape === 'mobius') sourceArray = mobiusPositions;
-            if (currentShape === 'icosahedron') sourceArray = icosahedronPositions;
-            if (currentShape === 'repligen') sourceArray = repligenPositions;
-            if (currentShape === 'scrollSpiral') sourceArray = scrollSpiralPositions;
-            if (!sourceArray) sourceArray = spherePositions;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const i3 = i * 3;
                 
-                let x = sourceArray[i3];
-                let y = sourceArray[i3+1];
-                let z = sourceArray[i3+2];
+                const timeOffset = time * 0.35;
+                let sourceArray = chaosPositions;
+                if (currentShape === 'sphere') sourceArray = spherePositions;
+                if (currentShape === 'helix') sourceArray = helixPositions;
+                if (currentShape === 'tesseract') sourceArray = tesseractPositions;
+                if (currentShape === 'trefoil') sourceArray = trefoilPositions;
+                if (currentShape === 'mobius') sourceArray = mobiusPositions;
+                if (currentShape === 'icosahedron') sourceArray = icosahedronPositions;
+                if (currentShape === 'repligen') sourceArray = repligenPositions;
+                if (!sourceArray) sourceArray = spherePositions;
                 
-                const cosT = Math.cos(timeOffset);
-                const sinT = Math.sin(timeOffset);
-                
-                // ABSOLUTELY NO ROTATION for Repligen shape! Upright, flat, static, readable!
-                const rotX = currentShape === 'repligen' ? x : (x * cosT - z * sinT);
-                const rotZ = currentShape === 'repligen' ? z : (x * sinT + z * cosT);
-                
-                destinationPositions[i3] = rotX + targetGroup.position.x;
-                destinationPositions[i3+1] = y + targetGroup.position.y;
-                destinationPositions[i3+2] = rotZ + targetGroup.position.z;
+                const shapeScale = (isWidescreen && currentShape !== 'repligen') ? 2.0 : 1.0;
+
+                for (let i = 0; i < particleCount; i++) {
+                    const i3 = i * 3;
+                    
+                    let x = sourceArray[i3] * shapeScale;
+                    let y = sourceArray[i3+1] * shapeScale;
+                    let z = sourceArray[i3+2] * shapeScale;
+                    
+                    const cosT = Math.cos(timeOffset);
+                    const sinT = Math.sin(timeOffset);
+                    
+                    // ABSOLUTELY NO ROTATION for Repligen shape! Upright, flat, static, readable!
+                    const rotX = currentShape === 'repligen' ? x : (x * cosT - z * sinT);
+                    const rotZ = currentShape === 'repligen' ? z : (x * sinT + z * cosT);
+                    
+                    destinationPositions[i3] = rotX + targetGroup.position.x;
+                    destinationPositions[i3+1] = y + targetGroup.position.y;
+                    destinationPositions[i3+2] = rotZ + targetGroup.position.z;
+                }
             }
         }
+
         
         // Silky smooth particle lerp
         const positions = geometry.attributes.position.array;
-        const lerpFactor = 0.016; 
+        const lerpFactor = currentShape === 'repligen' ? 0.022 : 0.018; 
         
         for (let i = 0; i < particleCount * 3; i+=3) {
             const driftX = Math.sin(time * 0.6 + i) * 1.2;

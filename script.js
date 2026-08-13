@@ -1054,51 +1054,214 @@ const aiPrompts = document.querySelectorAll('.ai-prompt-btn');
 const aiChatForm = document.getElementById('aiChatForm');
 const aiInputField = document.getElementById('aiInputField');
 
-if (aiToggleBtn && aiChatWindow) {
-  // Toggle Window
-  aiToggleBtn.addEventListener('click', () => {
-    aiChatWindow.classList.toggle('open');
-    UISounds.click();
-    trackEvent('ai_widget_toggle', { action: aiChatWindow.classList.contains('open') ? 'open' : 'close' });
-  });
+  const aiWidgetBadge = document.getElementById('aiWidgetBadge');
 
-  aiCloseBtn.addEventListener('click', () => {
-    aiChatWindow.classList.remove('open');
-    UISounds.collapse();
-  });
+  if (aiToggleBtn && aiChatWindow) {
+    // Toggle Window via button or badge
+    const toggleChat = () => {
+      aiChatWindow.classList.toggle('open');
+      UISounds.click();
+      trackEvent('ai_widget_toggle', { action: aiChatWindow.classList.contains('open') ? 'open' : 'close' });
+    };
 
-  // Intelligent Conversational Response Database & Matching Engine
+    aiToggleBtn.addEventListener('click', toggleChat);
+    if (aiWidgetBadge) {
+      aiWidgetBadge.addEventListener('click', toggleChat);
+    }
+
+    aiCloseBtn.addEventListener('click', () => {
+      aiChatWindow.classList.remove('open');
+      UISounds.collapse();
+    });
+
+
+  // Overhauled Multi-Page AI Copilot & Intelligent Knowledge Engine
   function getBotResponse(userText) {
     const query = userText.toLowerCase().trim();
     
-    // Keyword Matching Rules
-    if (query === 'ga4' || query.includes('analytics') || query.includes('data') || query.includes('tracking') || query.includes('measurement') || query.includes('tag')) {
-      return "Youssef McCarthy is an enterprise Analytics Authority with 14+ years of hands-on experience in GA4, tag audits, GTM data layer design, and advanced path analysis. He designs clean taxonomy blueprints that turn unstructured noise into raw strategic power.<br><br>Explore his active work in the <a href='#analytics' class='chat-link'>Analytics &amp; Intelligence section</a>.";
+    // 1. Navigation / Directory Requests
+    if (query === 'navigate' || query.includes('navigation') || query.includes('where is') || query.includes('site map') || query.includes('pages') || query.includes('directory') || query.includes('go to') || query.includes('sections') || query.includes('find')) {
+      return `🗺️ <strong>Site Navigation Map</strong><br>I can guide you directly to any page or section across Youssef's portfolio:<br>
+      <div class="chat-nav-group">
+        <a href="index.html" class="chat-nav-btn">🏠 Home Overview</a>
+        <a href="experience.html" class="chat-nav-btn">💼 Career Experience</a>
+        <a href="projects.html" class="chat-nav-btn">🚀 High-Impact Projects</a>
+        <a href="analytics.html" class="chat-nav-btn">📊 Live Analytics Hub</a>
+        <a href="collaboration.html" class="chat-nav-btn">🎨 Strategic UX Synergy</a>
+        <a href="editorials.html" class="chat-nav-btn">📝 Thought Leadership</a>
+        <a href="skills.html" class="chat-nav-btn">🛠️ Technical Tech Stack</a>
+        <a href="education.html" class="chat-nav-btn">🎓 Education &amp; Testimonials</a>
+        <a href="Youssef_McCarthy_Resume.pdf" download class="chat-nav-btn">📄 Download Resume PDF</a>
+      </div>`;
     }
-    if (query === 'cro' || query.includes('testing') || query.includes('experiment') || query.includes('ab') || query.includes('conversion') || query.includes('multivariate') || query.includes('auditing')) {
-      return "Youssef has led conversion optimization lifecycles for major agencies, specializing in cognitive UX audits, heatmapping, and rigorous multivariate testing. His scientific experiments focus on removing digital checkout friction.<br><br>Explore his methodology in the <a href='#experience' class='chat-link'>Experience timeline</a> or examine his <a href='#projects' class='chat-link'>Case Studies</a>.";
+
+    // 2. GA4 & Analytics Architecture
+    if (query === 'ga4' || query.includes('analytics') || query.includes('tracking') || query.includes('measurement') || query.includes('gtm') || query.includes('data layer') || query.includes('taxonomy') || query.includes('bigquery') || query.includes('attribution')) {
+      return `📊 <strong>Analytics &amp; Measurement Architecture</strong><br>
+      Youssef McCarthy is an enterprise <strong>Analytics Director &amp; Architect</strong> with 14+ years of hands-on mastery in GA4, Adobe Analytics, custom GTM data layer design, BigQuery ELT pipelines, and multi-channel attribution.<br><br>
+      • <strong>Taxonomy Audits:</strong> Eliminates data debt and cleans fragmented event parameters.<br>
+      • <strong>Server-Side Tagging:</strong> First-party tracking resilience against ad blockers and ITP limits.<br>
+      • <strong>BigQuery &amp; SQL:</strong> Advanced path analysis, cohort retention, and raw log queries.<br>
+      <div class="chat-nav-group">
+        <a href="analytics.html" class="chat-nav-btn">📊 Open Live Dashboard</a>
+        <a href="projects.html#ga4" class="chat-nav-btn">🚀 GA4 Case Studies</a>
+        <a href="skills.html" class="chat-nav-btn">🛠️ Analytics Tech Stack</a>
+      </div>`;
     }
-    if (query === 'ai' || query.includes('agent') || query.includes('loop') || query.includes('orchestration') || query.includes('autonomous') || query.includes('cognitive') || query.includes('fleet')) {
-      return "Youssef engineered the <strong>Agentic Loop Architecture</strong>, which runs an automated multi-agent virtual war room (featuring custom Data Scientist, UX, and CRO agents) validating visitor behavior and auto-deploying UX recommendations.<br><br>Read the premium case study: <a href='./AgenticLoop/index.html' class='chat-link'>The Agentic Loop Case Study</a>.";
+
+    // 3. CRO & A/B Testing
+    if (query === 'cro' || query.includes('testing') || query.includes('experiment') || query.includes('a/b') || query.includes('multivariate') || query.includes('conversion') || query.includes('optimizely') || query.includes('vwo') || query.includes('friction') || query.includes('checkout') || query.includes('hotjar')) {
+      return `📈 <strong>Conversion Rate Optimization &amp; Experimentation</strong><br>
+      Youssef has led full-lifecycle CRO programs across major agencies and health enterprise brands:<br><br>
+      • <strong>Scientific A/B &amp; MVT:</strong> Hypothesis generation, Bayesian/Frequentist significance models, and Optimizely/VWO executions.<br>
+      • <strong>Cognitive UX Audits:</strong> Heatmapping, session replay analysis (Hotjar/Clarity), and Hick's Law checkout friction removal.<br>
+      • <strong>Proven Impact:</strong> Engineered CRO overhauls yielding 300%+ ROAS gains and major transaction uplifts.<br>
+      <div class="chat-nav-group">
+        <a href="projects.html#cro" class="chat-nav-btn">🚀 View CRO Case Studies</a>
+        <a href="collaboration.html" class="chat-nav-btn">🎨 Interactive UX Synergy</a>
+        <a href="experience.html" class="chat-nav-btn">💼 Career Experience</a>
+      </div>`;
     }
-    if (query === 'local' || query.includes('localist') || query.includes('onprem') || query.includes('hardware') || query.includes('privacy') || query.includes('security') || query.includes('sovereignty') || query.includes('dhh') || query.includes('server')) {
-      return "Youssef advocates for on-premises hardware repatriation, inspired by DHH and Hugging Face. He hosts fine-tuned open-weights models locally to eliminate unpredictable token subscription taxes and protect corporate database privacy.<br><br>Read the full essay: <a href='./LocalAI/index.html' class='chat-link'>The Localist Manifesto</a>.";
+
+    // 4. Agentic AI & AI Automation
+    if (query === 'ai' || query.includes('agent') || query.includes('loop') || query.includes('orchestration') || query.includes('claude') || query.includes('gemini') || query.includes('gpt') || query.includes('llama') || query.includes('autonomous') || query.includes('virtual war room')) {
+      return `🤖 <strong>Agentic AI &amp; Automated Virtual War Room</strong><br>
+      Youssef engineered the <strong>Agentic Loop Architecture</strong> — an autonomous multi-agent virtual war room that coordinates specialized LLM agents (Data Scientist, UX Designer, CRO Specialist) to analyze user telemetry and auto-deploy recommendations.<br><br>
+      • <strong>Frontier LLM Routing:</strong> Dynamic task routing across Claude 3.7, Gemini 1.5, GPT-4o, and Llama 3.<br>
+      • <strong>Automated Analytics:</strong> Agents digest GA4 raw logs, write SQL queries, and draft CRO hypotheses in real time.<br>
+      <div class="chat-nav-group">
+        <a href="editorials.html" class="chat-nav-btn">📝 Read Agentic Loop Essay</a>
+        <a href="skills.html" class="chat-nav-btn">🛠️ AI Tech Stack</a>
+        <a href="projects.html" class="chat-nav-btn">🚀 AI Case Studies</a>
+      </div>`;
     }
-    if (query === 'resume' || query.includes('cv') || query.includes('pdf') || query.includes('download') || query.includes('background') || query.includes('experience')) {
-      return "Youssef has over 14 years of digital strategy experience spanning analytics engineering, client growth, and AI-led automation. You can review his full corporate timeline or download his formal resume:<br><br>⬇️ <a href='./Youssef_McCarthy_Resume.pdf' download class='chat-link'>Download Resume PDF</a><br>📂 Explore his <a href='#experience' class='chat-link'>Experience Timeline</a>.";
+
+    // 5. Localist AI & Data Privacy
+    if (query === 'local' || query.includes('localist') || query.includes('privacy') || query.includes('sovereignty') || query.includes('onprem') || query.includes('hardware') || query.includes('open-weights') || query.includes('dhh') || query.includes('server')) {
+      return `🔒 <strong>The Localist AI Manifesto &amp; Privacy</strong><br>
+      Youssef is a pioneer in <strong>local open-weights AI deployment</strong> and hardware repatriation (inspired by DHH and Hugging Face):<br><br>
+      • <strong>Data Sovereignty:</strong> Hosts fine-tuned open-weights models locally to guarantee zero corporate database leakage.<br>
+      • <strong>Zero Token Tax:</strong> Eliminates unpredictable monthly API charges with dedicated local hardware.<br>
+      <div class="chat-nav-group">
+        <a href="editorials.html" class="chat-nav-btn">📝 Read Localist Essay</a>
+        <a href="skills.html" class="chat-nav-btn">🛠️ Infrastructure Tech Stack</a>
+      </div>`;
     }
-    if (query === 'contact' || query.includes('hire') || query.includes('consulting') || query.includes('advisory') || query.includes('meet') || query.includes('email') || query.includes('work') || query.includes('message')) {
-      return "You can partner with Youssef for strategic GA4/CRO audits, custom agentic loop development, or private local AI implementations.<br><br>✉️ Send a message: <a href='#contact' class='chat-link'>Contact Youssef McCarthy</a><br>💼 View his <a href='#consulting' class='chat-link'>Consulting &amp; Advisory Panel</a>.";
+
+    // 6. Career & Experience Timeline
+    if (query === 'experience' || query.includes('emblem') || query.includes('c-4') || query.includes('timeline') || query.includes('career') || query.includes('history') || query.includes('leadership') || query.includes('management') || query.includes('budget') || query.includes('background')) {
+      return `💼 <strong>14+ Years Career Leadership Timeline</strong><br>
+      Youssef McCarthy's leadership record spans high-stakes enterprise health brands and digital agencies:<br><br>
+      • <strong>EmblemHealth:</strong> Assistant Vice President, Corporate Marketing &amp; Analytics — directed multi-million dollar budgets, cross-channel attribution, and agency teams.<br>
+      • <strong>C-4 Analytics:</strong> Analytics Lead / Architect — built automated client reporting hubs, CRO testing frameworks, and multi-channel attribution suites.<br>
+      <div class="chat-nav-group">
+        <a href="experience.html" class="chat-nav-btn">💼 Open Career Experience Page</a>
+        <a href="education.html" class="chat-nav-btn">🎓 View Testimonials</a>
+        <a href="Youssef_McCarthy_Resume.pdf" download class="chat-nav-btn">📄 Download Resume PDF</a>
+      </div>`;
     }
-    if (query.includes('hello') || query.includes('hi ') || query.startsWith('hi') || query.includes('hey') || query.includes('greetings') || query.includes('yo') || query.includes('bot') || query.includes('welcome')) {
-      return "Hello! I'm Youssef's AI strategy assistant. You can ask me custom questions about his GA4 consulting, CRO optimization, the Agentic Loop, or the Localist hardware architecture. I'll provide direct linking maps to guide you around!";
+
+    // 7. Case Studies & Projects
+    if (query === 'projects' || query.includes('case study') || query.includes('portfolio') || query.includes('churn') || query.includes('roas') || query.includes('campaign') || query.includes('work')) {
+      return `🚀 <strong>High-Impact Case Studies &amp; Portfolio Projects</strong><br>
+      Explore Youssef's verified analytics and growth projects:<br><br>
+      • <strong>GA4 Server-Side Multi-Channel Overhaul:</strong> Unified 12+ touchpoints into a real-time data layer.<br>
+      • <strong>Predictive Churn Model:</strong> Machine learning model predicting high-value subscription churn.<br>
+      • <strong>300%+ ROAS CRO Campaign:</strong> Checkout funnel restructuring driven by Bayesian A/B testing.<br>
+      <div class="chat-nav-group">
+        <a href="projects.html" class="chat-nav-btn">🚀 View All Case Studies</a>
+        <a href="analytics.html" class="chat-nav-btn">📊 Launch Live Dashboard</a>
+      </div>`;
     }
-    if (query.includes('help') || query.includes('menu') || query.includes('options') || query.includes('prompt') || query.includes('capabilities')) {
-      return "I can navigate you to any section of Youssef's portfolio! Try asking me about:<br>• <strong>Analytics</strong> &mdash; 'Tell me about your GA4 experience'<br>• <strong>CRO</strong> &mdash; 'How do you run A/B testing?'<br>• <strong>Agentic AI</strong> &mdash; 'What is the Agentic Loop?'<br>• <strong>Local AI</strong> &mdash; 'Tell me about local server security'<br>• <strong>Resume</strong> &mdash; 'Can I download your CV?'<br>• <strong>Consulting</strong> &mdash; 'How do I hire you?'";
+
+    // 8. Live Interactive Dashboard
+    if (query === 'dashboard' || query.includes('looker') || query.includes('live') || query.includes('telemetry') || query.includes('metrics') || query.includes('data studio') || query.includes('hub')) {
+      return `📊 <strong>Live Marketing Intelligence Showcase</strong><br>
+      Experience Youssef's interactive Looker Studio / GA4 telemetry hub directly on the site:<br><br>
+      • Real-time multi-channel traffic distribution, conversion pathways, and device split.<br>
+      • E-commerce item velocity diagnostics and CRO strategic playbooks.<br>
+      <div class="chat-nav-group">
+        <a href="analytics.html" class="chat-nav-btn">🚀 Launch Live Analytics Hub</a>
+      </div>`;
     }
-    
-    // Default response fallback
-    return "That is an interesting question! I am specialized in Youssef's professional history, GA4/CRO expertise, and custom AI implementations. Please ask me about his <strong>analytics</strong>, <strong>testing</strong>, <strong>Agentic Loop</strong>, or <strong>local servers</strong>, or download his <a href='./Youssef_McCarthy_Resume.pdf' download class='chat-link'>Resume PDF</a>!";
+
+    // 9. UX Collaboration & Design Systems
+    if (query === 'collab' || query.includes('collaboration') || query.includes('synergy') || query.includes('design system') || query.includes('cyber') || query.includes('brutalism') || query.includes('ux') || query.includes('paradigm')) {
+      return `🎨 <strong>Strategic UX Synergy &amp; Design Systems</strong><br>
+      Experience the continuous feedback loop between analytics and design:<br><br>
+      • <strong>5 Dynamic Design Systems:</strong> Instantly morph the entire layout across Cyber Neon, Minimalist Glass, Brutalism, Corporate Dark, and Warm Editorial.<br>
+      • Interactive A/B test simulator demonstrating statistical power and conversion uplift.<br>
+      <div class="chat-nav-group">
+        <a href="collaboration.html" class="chat-nav-btn">🎨 Open UX Collaboration Hub</a>
+      </div>`;
+    }
+
+    // 10. Technical Skills & Tech Stack
+    if (query === 'skills' || query.includes('stack') || query.includes('tech') || query.includes('tools') || query.includes('languages') || query.includes('python') || query.includes('sql') || query.includes('react') || query.includes('node') || query.includes('adobe') || query.includes('google')) {
+      return `🛠️ <strong>Comprehensive Technical Stack</strong><br>
+      • <strong>Analytics &amp; Data:</strong> GA4, GTM (Client &amp; Server-side), Adobe Analytics, Adobe Target, BigQuery, SQL.<br>
+      • <strong>Agentic AI:</strong> Claude 3.7, Gemini 1.5 Pro, GPT-4o, Llama 3, LangChain, Multi-Agent Architecture.<br>
+      • <strong>CRO &amp; Research:</strong> Optimizely, VWO, Hotjar, Microsoft Clarity, UserTesting.<br>
+      • <strong>Engineering &amp; Cloud:</strong> Python, Node.js, React, HTML5/CSS3, Three.js, GCP.<br>
+      <div class="chat-nav-group">
+        <a href="skills.html" class="chat-nav-btn">🛠️ View Full Skills Matrix</a>
+        <a href="experience.html" class="chat-nav-btn">💼 View Experience</a>
+      </div>`;
+    }
+
+    // 11. Education & Recommendations
+    if (query === 'education' || query.includes('umass') || query.includes('degree') || query.includes('certification') || query.includes('recommend') || query.includes('testimonial') || query.includes('clarke') || query.includes('praise')) {
+      return `🎓 <strong>Education &amp; Executive Testimonials</strong><br>
+      • <strong>Education:</strong> University of Massachusetts (UMass) academic background.<br>
+      • <strong>Certifications:</strong> Google Analytics Certified, Enterprise Data Strategy, Advanced CRO.<br>
+      • <strong>Executive Praise:</strong> Read full recommendation letters from Christopher Clarke (Assistant Vice President, EmblemHealth) and corporate C-suite leadership.<br>
+      <div class="chat-nav-group">
+        <a href="education.html" class="chat-nav-btn">🎓 View Recommendations &amp; Education</a>
+      </div>`;
+    }
+
+    // 12. Resume PDF Download
+    if (query === 'resume' || query.includes('cv') || query.includes('pdf') || query.includes('download')) {
+      return `📄 <strong>Youssef McCarthy — Formal Resume</strong><br>
+      Download Youssef's official executive resume or inspect his detailed career timeline online:<br>
+      <div class="chat-nav-group">
+        <a href="Youssef_McCarthy_Resume.pdf" download class="chat-nav-btn">⬇️ Download Resume PDF</a>
+        <a href="experience.html" class="chat-nav-btn">💼 View Online Career Timeline</a>
+      </div>`;
+    }
+
+    // 13. Contact & Hiring Intent
+    if (query === 'contact' || query.includes('hire') || query.includes('consulting') || query.includes('reach') || query.includes('email') || query.includes('meet') || query.includes('advisory') || query.includes('message')) {
+      return `✉️ <strong>Connect &amp; Partner with Youssef</strong><br>
+      Youssef is available for Director-level Analytics &amp; AI strategy roles, as well as enterprise CRO advisory consulting:<br>
+      <div class="chat-nav-group">
+        <a href="mailto:youssef.mccarthy@example.com" class="chat-nav-btn">✉️ Send Direct Email</a>
+        <a href="https://linkedin.com/in/youssefmccarthy" target="_blank" rel="noopener" class="chat-nav-btn">🔗 Connect on LinkedIn</a>
+        <a href="Youssef_McCarthy_Resume.pdf" download class="chat-nav-btn">📄 Download Resume PDF</a>
+      </div>`;
+    }
+
+    // 14. Greetings & Orientation
+    if (query.includes('hello') || query.includes('hi ') || query.startsWith('hi') || query.includes('hey') || query.includes('greetings') || query.includes('welcome') || query.includes('copilot') || query.includes('bot')) {
+      return `Hello! 👋 I'm Youssef's <strong>Site-Wide AI Copilot</strong>.<br><br>
+      How can I assist you today? You can ask me about his 14+ years in digital analytics, CRO experimentation, the Agentic Loop, or click any page below to navigate directly:<br>
+      <div class="chat-nav-group">
+        <a href="navigate" class="chat-nav-btn">🗺️ Site Navigation Map</a>
+        <a href="analytics.html" class="chat-nav-btn">📊 Live Dashboard</a>
+        <a href="experience.html" class="chat-nav-btn">💼 Career Experience</a>
+        <a href="Youssef_McCarthy_Resume.pdf" download class="chat-nav-btn">📄 Resume PDF</a>
+      </div>`;
+    }
+
+    // 15. Default Intelligent Fallback
+    return `I am specialized in Youssef's portfolio, analytics architecture, CRO testing, and AI implementations! Here are some recommended areas to explore:<br>
+    <div class="chat-nav-group">
+      <a href="navigate" class="chat-nav-btn">🗺️ Site Navigation Map</a>
+      <a href="analytics.html" class="chat-nav-btn">📊 Live Dashboard</a>
+      <a href="experience.html" class="chat-nav-btn">💼 Career Timeline</a>
+      <a href="projects.html" class="chat-nav-btn">🚀 Case Studies</a>
+      <a href="Youssef_McCarthy_Resume.pdf" download class="chat-nav-btn">📄 Download Resume</a>
+    </div>`;
   }
 
   // Handle Response Generation with pulsing Typing Indicator
@@ -1121,7 +1284,7 @@ if (aiToggleBtn && aiChatWindow) {
     aiChatBody.scrollTop = aiChatBody.scrollHeight;
 
     // 3. Process & Display System Response
-    const responseDelay = 800 + Math.random() * 600; // Realistic human-like cognitive lag
+    const responseDelay = 500 + Math.random() * 400; // Fast responsive cognitive lag
     setTimeout(() => {
       // Remove typing bubble
       if (typingIndicator.parentNode) {
@@ -1277,32 +1440,40 @@ if (aiToggleBtn && aiChatWindow) {
     });
   }
 
-  // Handle delegate clicks on inside-chat navigation hyperlinks
+  // Handle delegate clicks on inside-chat navigation hyperlinks & action buttons
   aiChatBody.addEventListener('click', (e) => {
-    const link = e.target.closest('.chat-link');
+    const link = e.target.closest('.chat-link') || e.target.closest('.chat-nav-btn');
     if (link) {
       const href = link.getAttribute('href');
-      if (href && href.startsWith('#')) {
-        e.preventDefault();
-        
-        // Collapse Chat Assistant Widget for visibility
-        aiChatWindow.classList.remove('open');
-        UISounds.collapse();
-        
-        // Find and smooth scroll to targeted section
-        const targetEl = document.querySelector(href);
-        if (targetEl) {
-          targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (href) {
+        if (href === 'navigate') {
+          e.preventDefault();
+          handleResponse('Show Site Navigation Map', 'navigate');
+        } else if (href.startsWith('#')) {
+          e.preventDefault();
           
-          // Trigger the pulse glow on section
-          targetEl.classList.add('section-highlight');
-          setTimeout(() => {
-            targetEl.classList.remove('section-highlight');
-          }, 2200);
+          // Collapse Chat Assistant Widget for visibility
+          aiChatWindow.classList.remove('open');
+          UISounds.collapse();
+          
+          // Find and smooth scroll to targeted section
+          const targetEl = document.querySelector(href);
+          if (targetEl) {
+            targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Trigger the pulse glow on section
+            targetEl.classList.add('section-highlight');
+            setTimeout(() => {
+              targetEl.classList.remove('section-highlight');
+            }, 2200);
+          }
+        } else if (!href.startsWith('http') && !href.startsWith('mailto:') && href.endsWith('.pdf')) {
+          UISounds.confirm();
         }
       }
     }
   });
+
 }
 
 // ── Live Marketing Intelligence Showcase Teaser Module ──
