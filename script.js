@@ -532,8 +532,20 @@ document.querySelectorAll('.nav-links a').forEach(link => {
   });
 });
 
-// ── Theme Toggle ──
+// ── Theme Toggle & Storage Purge ──
+try {
+  localStorage.removeItem('ym_bg_hue');
+  localStorage.removeItem('ym_bg_sat');
+  localStorage.removeItem('ym_bg_light');
+  document.documentElement.style.removeProperty('--bg-primary');
+  document.documentElement.style.removeProperty('--bg-secondary');
+  document.documentElement.style.removeProperty('--accent');
+  document.documentElement.style.removeProperty('--accent-light');
+  document.documentElement.style.removeProperty('--accent-glow');
+} catch (e) {}
+
 const themeToggle = document.getElementById('themeToggle');
+
 if (themeToggle) {
   const savedTheme = localStorage.getItem('portfolio-theme');
   if (savedTheme === 'light') {
