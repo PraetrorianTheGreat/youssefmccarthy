@@ -532,69 +532,8 @@ document.querySelectorAll('.nav-links a').forEach(link => {
   });
 });
 
-// ── Theme Toggle & Expanded Color Spectrum Studio Engine ──
+// ── Theme Toggle ──
 const themeToggle = document.getElementById('themeToggle');
-const bgHueSlider = document.getElementById('bgHueSlider');
-const bgHueSliderModal = document.getElementById('bgHueSliderModal');
-const bgSatSlider = document.getElementById('bgSatSlider');
-const bgLightSlider = document.getElementById('bgLightSlider');
-
-const hueReadout = document.getElementById('hueReadout');
-const modalHueVal = document.getElementById('modalHueVal');
-const modalSatVal = document.getElementById('modalSatVal');
-const modalLightVal = document.getElementById('modalLightVal');
-
-const spectrumStudioToggle = document.getElementById('spectrumStudioToggle');
-const spectrumStudioPopover = document.getElementById('spectrumStudioPopover');
-const studioCloseBtn = document.getElementById('studioCloseBtn');
-const studioResetBtn = document.getElementById('studioResetBtn');
-const swatchBtns = document.querySelectorAll('.swatch-btn');
-
-let currentHue = parseInt(localStorage.getItem('ym_bg_hue') || '220', 10);
-let currentSat = parseInt(localStorage.getItem('ym_bg_sat') || '45', 10);
-let currentLight = parseInt(localStorage.getItem('ym_bg_light') || '7', 10);
-
-const applyColorStudioState = (h, s, l) => {
-  currentHue = parseInt(h, 10);
-  currentSat = parseInt(s, 10);
-  currentLight = parseInt(l, 10);
-
-  const isLight = document.body.classList.contains('light-theme');
-  
-  // Adjust lightness bounds for light theme
-  const effectiveLight = isLight ? Math.max(currentLight, 88) : currentLight;
-  
-  const primaryHsl = `hsl(${currentHue}, ${currentSat}%, ${effectiveLight}%)`;
-  const secondaryHsl = `hsl(${(currentHue + 35) % 360}, ${Math.min(currentSat + 10, 100)}%, ${Math.min(effectiveLight + 5, 95)}%)`;
-  const accentHsl = `hsl(${currentHue}, 85%, ${isLight ? '45%' : '60%'})`;
-  const accentLightHsl = `hsl(${currentHue}, 90%, ${isLight ? '35%' : '75%'})`;
-  const accentGlowHsl = `hsla(${currentHue}, 85%, 60%, 0.35)`;
-
-  document.documentElement.style.setProperty('--bg-primary', primaryHsl);
-  document.documentElement.style.setProperty('--bg-secondary', secondaryHsl);
-  document.documentElement.style.setProperty('--accent', accentHsl);
-  document.documentElement.style.setProperty('--accent-light', accentLightHsl);
-  document.documentElement.style.setProperty('--accent-glow', accentGlowHsl);
-
-  document.body.style.background = `var(--bg-primary)`;
-
-  // Update UI slider controls & text readouts
-  if (bgHueSlider) bgHueSlider.value = currentHue;
-  if (bgHueSliderModal) bgHueSliderModal.value = currentHue;
-  if (bgSatSlider) bgSatSlider.value = currentSat;
-  if (bgLightSlider) bgLightSlider.value = currentLight;
-
-  if (hueReadout) hueReadout.innerText = `${currentHue}°`;
-  if (modalHueVal) modalHueVal.innerText = `${currentHue}°`;
-  if (modalSatVal) modalSatVal.innerText = `${currentSat}%`;
-  if (modalLightVal) modalLightVal.innerText = `${currentLight}%`;
-
-  localStorage.setItem('ym_bg_hue', currentHue);
-  localStorage.setItem('ym_bg_sat', currentSat);
-  localStorage.setItem('ym_bg_light', currentLight);
-};
-
-// Initialize theme on page load
 if (themeToggle) {
   const savedTheme = localStorage.getItem('portfolio-theme');
   if (savedTheme === 'light') {
@@ -611,81 +550,9 @@ if (themeToggle) {
     localStorage.setItem('portfolio-theme', isLight ? 'light' : 'dark');
     if (typeof UISounds !== 'undefined' && UISounds.toggle) UISounds.toggle();
     if (typeof trackEvent === 'function') trackEvent('theme_change', { theme: isLight ? 'light' : 'dark' });
-    applyColorStudioState(currentHue, currentSat, currentLight);
   });
 }
 
-// Apply studio state
-applyColorStudioState(currentHue, currentSat, currentLight);
-
-// Handle Studio Popover Toggle
-if (spectrumStudioToggle && spectrumStudioPopover) {
-  spectrumStudioToggle.addEventListener('click', (e) => {
-    e.stopPropagation();
-    spectrumStudioPopover.classList.toggle('open');
-    if (typeof UISounds !== 'undefined' && UISounds.click) UISounds.click();
-  });
-
-  if (studioCloseBtn) {
-    studioCloseBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      spectrumStudioPopover.classList.remove('open');
-    });
-  }
-
-  document.addEventListener('click', (e) => {
-    if (spectrumStudioPopover.classList.contains('open') && !spectrumStudioPopover.contains(e.target) && !spectrumStudioToggle.contains(e.target)) {
-      spectrumStudioPopover.classList.remove('open');
-    }
-  });
-}
-
-// Inline Hue Slider Handler
-if (bgHueSlider) {
-  bgHueSlider.addEventListener('input', (e) => {
-    applyColorStudioState(e.target.value, currentSat, currentLight);
-  });
-}
-
-// Modal Hue Slider Handler
-if (bgHueSliderModal) {
-  bgHueSliderModal.addEventListener('input', (e) => {
-    applyColorStudioState(e.target.value, currentSat, currentLight);
-  });
-}
-
-// Modal Saturation Handler
-if (bgSatSlider) {
-  bgSatSlider.addEventListener('input', (e) => {
-    applyColorStudioState(currentHue, e.target.value, currentLight);
-  });
-}
-
-// Modal Lightness/Depth Handler
-if (bgLightSlider) {
-  bgLightSlider.addEventListener('input', (e) => {
-    applyColorStudioState(currentHue, currentSat, e.target.value);
-  });
-}
-
-// Preset Swatch Clicks
-swatchBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    const h = btn.dataset.hue;
-    const s = btn.dataset.sat;
-    const l = btn.dataset.light;
-    applyColorStudioState(h, s, l);
-    if (typeof UISounds !== 'undefined' && UISounds.confirm) UISounds.confirm();
-  });
-});
-
-// Reset Button Click
-if (studioResetBtn) {
-  studioResetBtn.addEventListener('click', () => {
-    applyColorStudioState(220, 45, 7);
-    if (typeof UISounds !== 'undefined' && UISounds.click) UISounds.click();
-  });
-}
 
 
 

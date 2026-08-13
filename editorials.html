@@ -81,57 +81,7 @@
       </label>
       <span class="theme-icon">&#9788; Light</span>
     </div>
-    <div class="color-spectrum-wrapper" title="Adjust Background Color Spectrum">
-      <button type="button" class="spectrum-toggle-btn" id="spectrumStudioToggle" aria-label="Open Custom Color Studio">
-        <span class="spectrum-icon" aria-hidden="true">🎨</span>
-      </button>
-      <input type="range" id="bgHueSlider" min="0" max="360" value="220" class="spectrum-slider" aria-label="Background Color Spectrum Hue Slider">
-      <span class="hue-readout" id="hueReadout">220°</span>
 
-      <!-- Floating Custom Color Studio Popover -->
-      <div class="spectrum-studio-popover" id="spectrumStudioPopover">
-        <div class="studio-header">
-          <span>🎨 Color Spectrum Studio</span>
-          <button type="button" class="studio-close-btn" id="studioCloseBtn">&times;</button>
-        </div>
-        <div class="studio-body">
-          <div class="studio-control-group">
-            <div class="studio-label-row">
-              <label for="bgHueSliderModal">Color Hue</label>
-              <span id="modalHueVal">220°</span>
-            </div>
-            <input type="range" id="bgHueSliderModal" min="0" max="360" value="220" class="spectrum-slider modal-slider" style="width:100%;">
-          </div>
-
-          <div class="studio-control-group">
-            <div class="studio-label-row">
-              <label for="bgSatSlider">Saturation / Vibrancy</label>
-              <span id="modalSatVal">45%</span>
-            </div>
-            <input type="range" id="bgSatSlider" min="10" max="100" value="45" class="studio-range-slider">
-          </div>
-
-          <div class="studio-control-group">
-            <div class="studio-label-row">
-              <label for="bgLightSlider">Background Depth</label>
-              <span id="modalLightVal">7%</span>
-            </div>
-            <input type="range" id="bgLightSlider" min="3" max="35" value="7" class="studio-range-slider">
-          </div>
-
-          <div class="studio-swatches-title">Preset Theme Palettes</div>
-          <div class="studio-swatches-grid">
-            <button type="button" class="swatch-btn" data-hue="220" data-sat="45" data-light="7" style="background: hsl(220, 50%, 15%); border-color: hsl(220, 85%, 60%);">🌌 Slate</button>
-            <button type="button" class="swatch-btn" data-hue="270" data-sat="60" data-light="8" style="background: hsl(270, 50%, 15%); border-color: hsl(270, 85%, 60%);">💜 Violet</button>
-            <button type="button" class="swatch-btn" data-hue="190" data-sat="70" data-light="7" style="background: hsl(190, 50%, 15%); border-color: hsl(190, 85%, 60%);">⚡ Cyan</button>
-            <button type="button" class="swatch-btn" data-hue="150" data-sat="55" data-light="6" style="background: hsl(150, 50%, 15%); border-color: hsl(150, 85%, 60%);">🌲 Emerald</button>
-            <button type="button" class="swatch-btn" data-hue="25" data-sat="65" data-light="8" style="background: hsl(25, 50%, 15%); border-color: hsl(25, 85%, 60%);">🔥 Amber</button>
-            <button type="button" class="swatch-btn" data-hue="340" data-sat="60" data-light="8" style="background: hsl(340, 50%, 15%); border-color: hsl(340, 85%, 60%);">💖 Rose</button>
-          </div>
-          <button type="button" class="studio-reset-btn" id="studioResetBtn">🔄 Reset Default Palette</button>
-        </div>
-      </div>
-    </div>
 
 
     <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">&#9776;</button>
