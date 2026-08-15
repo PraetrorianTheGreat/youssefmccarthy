@@ -55,7 +55,7 @@ export function Metrics() {
             Services & <span className="gradient-text">Impact</span>
           </h2>
           <p className="text-text-muted text-lg">
-            Consulting structures designed for enterprise scaling and rapid go-to-market execution.
+            Architectural frameworks designed for enterprise scaling, analytics governance, and rapid go-to-market execution.
           </p>
         </div>
 

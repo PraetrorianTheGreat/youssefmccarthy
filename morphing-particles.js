@@ -10,17 +10,20 @@ document.addEventListener("DOMContentLoaded", () => {
     camera.position.z = 200;
 
     const isMobile = window.innerWidth < 768;
+    const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
+    const isMobileOrTablet = isMobile || isTablet;
+
     const renderer = new THREE.WebGLRenderer({
         canvas: canvas,
         alpha: true,
-        antialias: !isMobile,
+        antialias: !isMobileOrTablet,
         powerPreference: "high-performance"
     });
-    renderer.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 1.5));
+    renderer.setPixelRatio(isMobileOrTablet ? 1 : Math.min(window.devicePixelRatio, 1.5));
     renderer.setSize(window.innerWidth, window.innerHeight);
 
-    // --- Particle Configuration ---
-    const particleCount = isMobile ? 2000 : 5000;
+    // --- Particle Configuration (Optimized particle count for mobile and tablet performance) ---
+    const particleCount = isMobile ? 600 : (isTablet ? 1200 : 5000);
     
     // Arrays for different 3D shapes
     const chaosPositions = new Float32Array(particleCount * 3);

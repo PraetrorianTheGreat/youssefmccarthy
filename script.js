@@ -1,9 +1,17 @@
-// ── Premium UI Sound Engine (Microsoft Fluent-Inspired) ──
-const UISounds = (() => {
+// ── Premium Luxury Sound Engine (Bespoke Glass & Silk Synthesis) ──
+window.UISounds = window.UISounds || (() => {
   let ctx;
+  let soundMuted = false;
+  let lastPlayTime = 0;
+
   const getCtx = () => {
-    if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
-    if (ctx.state === 'suspended') ctx.resume();
+    if (!ctx) {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (AudioCtx) ctx = new AudioCtx();
+    }
+    if (ctx && ctx.state === 'suspended') {
+      ctx.resume().catch(() => {});
+    }
     return ctx;
   };
 
@@ -12,69 +20,198 @@ const UISounds = (() => {
     getCtx();
     document.removeEventListener('click', unlock);
     document.removeEventListener('touchstart', unlock);
+    document.removeEventListener('keydown', unlock);
   };
-  document.addEventListener('click', unlock);
-  document.addEventListener('touchstart', unlock);
+  document.addEventListener('click', unlock, { passive: true });
+  document.addEventListener('touchstart', unlock, { passive: true });
+  document.addEventListener('keydown', unlock, { passive: true });
 
-  function play(freq, duration, type = 'sine', vol = 0.25, detune = 0) {
+  // Luxury Tone Generator: Dual-oscillator with dynamic lowpass filtering & silky envelope
+  function playLuxuryNote(c, freq, duration, vol = 0.07, overtoneRatio = 1.5, overtoneVol = 0.18) {
+    try {
+      const now = c.currentTime;
+      // Main fundamental oscillator
+      const osc1 = c.createOscillator();
+      osc1.type = 'sine';
+      osc1.frequency.setValueAtTime(freq, now);
+
+      // Crystalline overtone oscillator
+      const osc2 = c.createOscillator();
+      osc2.type = 'sine';
+      osc2.frequency.setValueAtTime(freq * overtoneRatio, now);
+
+      // Mix gain for overtone
+      const gain2 = c.createGain();
+      gain2.gain.setValueAtTime(overtoneVol, now);
+      osc2.connect(gain2);
+
+      // Main Gain Envelope with smooth attack & exponential decay
+      const mainGain = c.createGain();
+      mainGain.gain.setValueAtTime(0.0001, now);
+      mainGain.gain.linearRampToValueAtTime(vol, now + 0.012); // Soft 12ms attack
+      mainGain.gain.exponentialRampToValueAtTime(0.0001, now + duration); // Smooth decay
+
+      // Dynamic Lowpass Filter (simulates acoustic material damping)
+      const filter = c.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(2400, now);
+      filter.frequency.exponentialRampToValueAtTime(600, now + duration);
+      filter.Q.value = 0.5;
+
+      osc1.connect(mainGain);
+      gain2.connect(mainGain);
+      mainGain.connect(filter);
+      filter.connect(c.destination);
+
+      osc1.start(now);
+      osc2.start(now);
+      osc1.stop(now + duration);
+      osc2.stop(now + duration);
+    } catch(e) {}
+  }
+
+  function play(freq, duration, vol = 0.07, overtoneRatio = 1.5, overtoneVol = 0.18) {
+    if (soundMuted) return;
+    const now = Date.now();
+    if (now - lastPlayTime < 35) return; // Debounce rapid double-triggers
+    lastPlayTime = now;
+
     try {
       const c = getCtx();
-      if (c.state === 'suspended') c.resume();
-      const osc = c.createOscillator();
-      const gain = c.createGain();
-      const filter = c.createBiquadFilter();
-      osc.type = type;
-      osc.frequency.value = freq;
-      osc.detune.value = detune;
-      filter.type = 'lowpass';
-      filter.frequency.value = 3000;
-      filter.Q.value = 0.7;
-      gain.gain.setValueAtTime(0, c.currentTime);
-      gain.gain.linearRampToValueAtTime(vol, c.currentTime + 0.02);
-      gain.gain.exponentialRampToValueAtTime(0.001, c.currentTime + duration);
-      osc.connect(filter);
-      filter.connect(gain);
-      gain.connect(c.destination);
-      osc.start(c.currentTime);
-      osc.stop(c.currentTime + duration);
+      if (!c) return;
+      if (c.state === 'suspended') {
+        c.resume().then(() => playLuxuryNote(c, freq, duration, vol, overtoneRatio, overtoneVol)).catch(() => {});
+      } else {
+        playLuxuryNote(c, freq, duration, vol, overtoneRatio, overtoneVol);
+      }
     } catch(e) {}
   }
 
   return {
-    // Warm tap — nav links, general buttons (C4 note)
-    click: () => play(262, 0.18, 'sine', 0.15),
-    // Gentle two-note chime — page load (C4 → E4)
+    isMuted: () => soundMuted,
+    setMuted: (val) => { soundMuted = !!val; },
+    toggleMute: () => { soundMuted = !soundMuted; return soundMuted; },
+
+    // Silky Glass Tap (F5 - 698.46 Hz)
+    click: () => play(698.46, 0.12, 0.07, 1.5, 0.18),
+
+    // Opulent Boutique Chime (Eb5 → Ab5 → C6)
     chime: () => {
-      play(262, 0.25, 'sine', 0.14);
-      setTimeout(() => play(330, 0.25, 'sine', 0.11), 100);
+      if (soundMuted) return;
+      const c = getCtx();
+      if (!c) return;
+      playLuxuryNote(c, 622.25, 0.45, 0.06, 2.0, 0.15); // Eb5
+      setTimeout(() => playLuxuryNote(c, 830.61, 0.45, 0.05, 1.5, 0.15), 110); // Ab5
+      setTimeout(() => playLuxuryNote(c, 1046.50, 0.55, 0.04, 1.5, 0.12), 220); // C6
     },
-    // Mellow toggle snap (D4)
-    toggle: () => play(294, 0.14, 'sine', 0.15, 3),
-    // Card expand — warm rising interval (G3 → C4)
+
+    // Velvet Pop / Modal (C5 → G5)
+    pop: () => {
+      if (soundMuted) return;
+      const c = getCtx();
+      if (!c) return;
+      playLuxuryNote(c, 523.25, 0.18, 0.07, 1.5, 0.15);
+      setTimeout(() => playLuxuryNote(c, 783.99, 0.22, 0.06, 1.5, 0.15), 60);
+    },
+
+    // Silk Snap / Toggle (Ab5 → Bb5)
+    toggle: () => {
+      if (soundMuted) return;
+      const c = getCtx();
+      if (!c) return;
+      playLuxuryNote(c, 830.61, 0.10, 0.08, 1.33, 0.2);
+      setTimeout(() => playLuxuryNote(c, 932.33, 0.12, 0.06, 1.5, 0.15), 45);
+    },
+
+    // Polished Glass Expand (F5 → A5 → C6)
     expand: () => {
-      play(196, 0.3, 'sine', 0.12);
-      setTimeout(() => play(262, 0.25, 'sine', 0.1), 120);
+      if (soundMuted) return;
+      const c = getCtx();
+      if (!c) return;
+      playLuxuryNote(c, 698.46, 0.25, 0.06, 1.5, 0.15);
+      setTimeout(() => playLuxuryNote(c, 880.00, 0.25, 0.05, 1.5, 0.12), 80);
+      setTimeout(() => playLuxuryNote(c, 1046.50, 0.30, 0.04, 1.5, 0.10), 160);
     },
-    // Card collapse — gentle descend (C4 → G3)
+
+    // Polished Glass Collapse (C6 → F5)
     collapse: () => {
-      play(262, 0.2, 'sine', 0.12);
-      setTimeout(() => play(196, 0.25, 'sine', 0.1), 100);
+      if (soundMuted) return;
+      const c = getCtx();
+      if (!c) return;
+      playLuxuryNote(c, 1046.50, 0.20, 0.06, 1.5, 0.15);
+      setTimeout(() => playLuxuryNote(c, 698.46, 0.25, 0.05, 1.5, 0.12), 80);
     },
-    // Copy confirmation — soft double chime (E4 → G4)
+
+    // Bespoke Confirmation (Ab5 → Eb6)
     confirm: () => {
-      play(330, 0.15, 'sine', 0.14);
-      setTimeout(() => play(392, 0.2, 'sine', 0.11), 110);
+      if (soundMuted) return;
+      const c = getCtx();
+      if (!c) return;
+      playLuxuryNote(c, 830.61, 0.20, 0.08, 1.5, 0.2);
+      setTimeout(() => playLuxuryNote(c, 1244.51, 0.30, 0.07, 1.5, 0.15), 90);
     },
-    // Back to top — ascending C major triad (C4 → E4 → G4)
+
+    // Celestial Ascend (Eb5 → G5 → Bb5 → Eb6)
     ascend: () => {
-      play(262, 0.18, 'sine', 0.12);
-      setTimeout(() => play(330, 0.18, 'sine', 0.1), 100);
-      setTimeout(() => play(392, 0.22, 'sine', 0.08), 200);
+      if (soundMuted) return;
+      const c = getCtx();
+      if (!c) return;
+      playLuxuryNote(c, 622.25, 0.20, 0.06, 1.5, 0.15);
+      setTimeout(() => playLuxuryNote(c, 783.99, 0.20, 0.05, 1.5, 0.15), 70);
+      setTimeout(() => playLuxuryNote(c, 932.33, 0.22, 0.05, 1.5, 0.12), 140);
+      setTimeout(() => playLuxuryNote(c, 1244.51, 0.35, 0.04, 1.5, 0.10), 210);
     },
-    // Testimonial slide — gentle tick (A3)
-    slide: () => play(220, 0.12, 'sine', 0.13),
+
+    // Gentle Slide Tick (F5)
+    slide: () => play(698.46, 0.10, 0.05, 1.5, 0.15),
+
+    // Feather-light Touch Hover (C6 - 1046.5 Hz at 0.015 vol)
+    hover: () => play(1046.50, 0.04, 0.02, 1.5, 0.10),
   };
 })();
+var UISounds = window.UISounds;
+
+// ── Universal Interactive Sound Feedback Delegate ──
+document.addEventListener('click', function(e) {
+  if (e._soundPlayed) return;
+
+  const target = e.target.closest(
+    'button, a, input[type="button"], input[type="submit"], input[type="checkbox"], input[type="radio"], ' +
+    'select, .btn, .chip, .tag, .editorial-tag, .editorial-card, .editorial-content, .editorial-footer, .view-article, ' +
+    '.tag-chip, .project-card, .experience-card, .rec-card, .accordion-header, .tab-btn, .filter-btn, ' +
+    '.skills-category-btn, .theme-btn, .ai-prompt-btn, .chat-nav-btn, .sound-toggle-btn, .webgl-toggle-btn, ' +
+    '.modal-close, .close-btn, .drawer-item, .audio-trigger, .sticky-cta, [role="button"], [data-sound], [onclick]'
+  );
+
+  if (!target) return;
+
+  const customSound = target.getAttribute('data-sound');
+  if (customSound === 'none') return;
+
+  e._soundPlayed = true;
+
+  if (customSound && typeof UISounds[customSound] === 'function') {
+    UISounds[customSound]();
+    return;
+  }
+
+  if (target.matches('input[type="checkbox"], input[type="radio"], .theme-btn, .theme-toggle, #themeToggle, #webgl-toggle-btn, .sound-toggle-btn, .switch')) {
+    UISounds.toggle();
+  } else if (target.matches('.modal-close, .close-btn, #aiCloseBtn, #closeDrawerBtn')) {
+    UISounds.collapse();
+  } else if (target.matches('.rec-card, .modal-trigger, #aiToggleBtn')) {
+    UISounds.pop();
+  } else if (target.matches('.copy-btn, .confirm-btn, .add-to-cart-btn, .express-pay-btn, .btn-primary')) {
+    UISounds.confirm();
+  } else if (target.matches('#backToTop, .back-to-top')) {
+    UISounds.ascend();
+  } else if (target.matches('.accordion-header, .expandable-card, .collapsible-toggle, .depth-outline-btn')) {
+    const isExpanded = target.classList.contains('active') || target.getAttribute('aria-expanded') === 'true';
+    isExpanded ? UISounds.collapse() : UISounds.expand();
+  } else {
+    UISounds.click();
+  }
+}, true);
 
 // ── Google Analytics / GTM Event Tracking ──
 const trackEvent = (name, params = {}) => {
@@ -390,8 +527,9 @@ class Particle {
   }
 }
 
-  // Increased particle count for better twirling effect
-  for (let i = 0; i < 150; i++) particles.push(new Particle());
+  // Reduced particle count on mobile & tablet for optimized rendering performance
+  const targetParticleCount = window.innerWidth < 768 ? 40 : (window.innerWidth < 1024 ? 65 : 150);
+  for (let i = 0; i < targetParticleCount; i++) particles.push(new Particle());
 
   let isCanvasVisible = true;
   const observer = new IntersectionObserver((entries) => {
@@ -1042,12 +1180,7 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
   });
 });
 
-// ── CV Download Tracking ──
-document.querySelectorAll('a[download]').forEach(link => {
-  link.addEventListener('click', () => {
-    trackEvent('cv_download', { file_name: link.getAttribute('href') });
-  });
-});
+
 
 // ── Reading Progress Bar ──
 window.addEventListener('scroll', () => {
@@ -1094,12 +1227,29 @@ if (aiToggleBtn && aiChatWindow) {
 
 
 
+  // Helper to identify editorial / essay queries for follow-up thumbnail cards
+  function isEditorialQuery(text) {
+    if (!text) return false;
+    const q = text.toLowerCase().trim();
+    return q === 'editorials' || q === 'editorial' || q === 'essays' || q === 'essay' ||
+           q.includes('editorials') || q.includes('editorial') || q.includes('essay') ||
+           q.includes('thought leadership') || q.includes('article') || q.includes('publication') ||
+           q.includes('localist') || q.includes('local ai') || q.includes('agentic loop') ||
+           q.includes('garbage internet') || q.includes('slop') || q.includes('writing');
+  }
+
   // Overhauled Multi-Page AI Copilot & Intelligent Knowledge Engine
   function getBotResponse(userText) {
     const query = userText.toLowerCase().trim();
+
+    // 0. Editorials & Thought Leadership Direct Query
+    if (query === 'editorials' || query === 'editorial' || query.includes('essay') || query.includes('thought leadership') || query.includes('article') || query.includes('publication') || query.includes('writing')) {
+      return `📝 <strong>Thought Leadership &amp; Strategic Essays</strong><br>
+      Youssef McCarthy writes extensively on localized AI infrastructure, multi-agent orchestration, and digital anthropology. Here are his featured publications:`;
+    }
     
-    // 1. Navigation / Directory Requests
-    if (query === 'navigate' || query.includes('navigation') || query.includes('where is') || query.includes('site map') || query.includes('pages') || query.includes('directory') || query.includes('go to') || query.includes('sections') || query.includes('find')) {
+    // 1. Navigation Overview Map
+    if (query === 'navigate' || query === 'map' || query.includes('menu') || query.includes('pages') || query.includes('where') || query.includes('site map')) {
       return `🗺️ <strong>Site Navigation Map</strong><br>I can guide you directly to any page or section across Youssef's portfolio:<br>
       <div class="chat-nav-group">
         <a href="index.html" class="chat-nav-btn">🏠 Home Overview</a>
@@ -1110,7 +1260,6 @@ if (aiToggleBtn && aiChatWindow) {
         <a href="editorials.html" class="chat-nav-btn">📝 Thought Leadership</a>
         <a href="skills.html" class="chat-nav-btn">🛠️ Technical Tech Stack</a>
         <a href="education.html" class="chat-nav-btn">🎓 Education &amp; Testimonials</a>
-        <a href="Youssef_McCarthy_Resume.pdf" download class="chat-nav-btn">📄 Download Resume PDF</a>
       </div>`;
     }
 
@@ -1176,7 +1325,7 @@ if (aiToggleBtn && aiChatWindow) {
       <div class="chat-nav-group">
         <a href="experience.html" class="chat-nav-btn">💼 Open Career Experience Page</a>
         <a href="education.html" class="chat-nav-btn">🎓 View Testimonials</a>
-        <a href="Youssef_McCarthy_Resume.pdf" download class="chat-nav-btn">📄 Download Resume PDF</a>
+        <a href="skills.html" class="chat-nav-btn">🛠️ View Tech Stack</a>
       </div>`;
     }
 
@@ -1239,24 +1388,22 @@ if (aiToggleBtn && aiChatWindow) {
       </div>`;
     }
 
-    // 12. Resume PDF Download
+    // 12. Career Timeline Redirect
     if (query === 'resume' || query.includes('cv') || query.includes('pdf') || query.includes('download')) {
-      return `📄 <strong>Youssef McCarthy — Formal Resume</strong><br>
-      Download Youssef's official executive resume or inspect his detailed career timeline online:<br>
+      return `💼 <strong>Youssef McCarthy — Career Experience</strong><br>
+      Explore Youssef's 14+ years of proven leadership in digital analytics, CRO experimentation, and agentic AI strategy:<br>
       <div class="chat-nav-group">
-        <a href="Youssef_McCarthy_Resume.pdf" download class="chat-nav-btn">⬇️ Download Resume PDF</a>
         <a href="experience.html" class="chat-nav-btn">💼 View Online Career Timeline</a>
+        <a href="skills.html" class="chat-nav-btn">🛠️ Technical Tech Stack</a>
       </div>`;
     }
 
-    // 13. Contact & Hiring Intent
+    // 13. Contact & Connectivity
     if (query === 'contact' || query.includes('hire') || query.includes('consulting') || query.includes('reach') || query.includes('email') || query.includes('meet') || query.includes('advisory') || query.includes('message')) {
-      return `✉️ <strong>Connect &amp; Partner with Youssef</strong><br>
-      Youssef is available for Director-level Analytics &amp; AI strategy roles, as well as enterprise CRO advisory consulting:<br>
+      return `✉️ <strong>Connect with Youssef McCarthy</strong><br>
+      Feel free to connect directly on LinkedIn:<br>
       <div class="chat-nav-group">
-        <a href="mailto:youssef.mccarthy@example.com" class="chat-nav-btn">✉️ Send Direct Email</a>
-        <a href="https://linkedin.com/in/youssefmccarthy" target="_blank" rel="noopener" class="chat-nav-btn">🔗 Connect on LinkedIn</a>
-        <a href="Youssef_McCarthy_Resume.pdf" download class="chat-nav-btn">📄 Download Resume PDF</a>
+        <a href="https://www.linkedin.com/in/youssef-mccarthy/" target="_blank" rel="noopener" class="chat-nav-btn">🔗 Connect on LinkedIn</a>
       </div>`;
     }
 
@@ -1268,7 +1415,7 @@ if (aiToggleBtn && aiChatWindow) {
         <a href="navigate" class="chat-nav-btn">🗺️ Site Navigation Map</a>
         <a href="analytics.html" class="chat-nav-btn">📊 Live Dashboard</a>
         <a href="experience.html" class="chat-nav-btn">💼 Career Experience</a>
-        <a href="Youssef_McCarthy_Resume.pdf" download class="chat-nav-btn">📄 Resume PDF</a>
+        <a href="projects.html" class="chat-nav-btn">🚀 Case Studies</a>
       </div>`;
     }
 
@@ -1279,7 +1426,7 @@ if (aiToggleBtn && aiChatWindow) {
       <a href="analytics.html" class="chat-nav-btn">📊 Live Dashboard</a>
       <a href="experience.html" class="chat-nav-btn">💼 Career Timeline</a>
       <a href="projects.html" class="chat-nav-btn">🚀 Case Studies</a>
-      <a href="Youssef_McCarthy_Resume.pdf" download class="chat-nav-btn">📄 Download Resume</a>
+      <a href="skills.html" class="chat-nav-btn">🛠️ Technical Tech Stack</a>
     </div>`;
   }
 
@@ -1322,6 +1469,66 @@ if (aiToggleBtn && aiChatWindow) {
       aiChatBody.scrollTop = aiChatBody.scrollHeight;
       
       trackEvent('ai_chat_interaction', { input: inputText, matchKey: searchKey });
+
+      // 4. Trigger Second Message: Editorial Layout with Thumbnails for Editorial Queries
+      if (isEditorialQuery(searchKey)) {
+        setTimeout(() => {
+          const secondTyping = document.createElement('div');
+          secondTyping.className = 'ai-message ai-system typing';
+          secondTyping.innerHTML = '<span class="thinking-text" style="color:var(--text-muted); opacity:0.6; font-style:italic;">Loading editorial previews...</span>';
+          aiChatBody.appendChild(secondTyping);
+          aiChatBody.scrollTop = aiChatBody.scrollHeight;
+
+          setTimeout(() => {
+            if (secondTyping.parentNode) {
+              secondTyping.parentNode.removeChild(secondTyping);
+            }
+            const basePath = (window.location.pathname.includes('/LocalAI/') || window.location.pathname.includes('/AgenticLoop/') || window.location.pathname.includes('/GarbageInternet/')) ? '../' : '';
+
+            const secondMsg = document.createElement('div');
+            secondMsg.className = 'ai-message ai-system ai-editorials-card-message';
+            secondMsg.innerHTML = `
+              <strong>📚 Featured Editorial Publications</strong>
+              <div class="ai-editorials-card-list">
+                <a href="${basePath}LocalAI/index.html" class="ai-editorial-item">
+                  <img src="${basePath}LocalAI/images/local_ai_server.png" alt="The Localist Manifesto" class="ai-editorial-thumb" />
+                  <div class="ai-editorial-info">
+                    <div class="ai-editorial-tag-label">AI Infrastructure &bull; 12 Min</div>
+                    <div class="ai-editorial-item-title">The Localist Manifesto</div>
+                    <div class="ai-editorial-item-desc">Why cloud AI is a financial trap &amp; on-prem local models win.</div>
+                  </div>
+                  <span class="ai-editorial-item-arrow">&rarr;</span>
+                </a>
+
+                <a href="${basePath}AgenticLoop/index.html" class="ai-editorial-item">
+                  <img src="${basePath}AgenticLoop/images/agentic_loop.png" alt="The Agentic Loop" class="ai-editorial-thumb" />
+                  <div class="ai-editorial-info">
+                    <div class="ai-editorial-tag-label">AI Orchestration &bull; 12 Min</div>
+                    <div class="ai-editorial-item-title">The Agentic Loop</div>
+                    <div class="ai-editorial-item-desc">Replicating agency synergy with collaborative AI teams.</div>
+                  </div>
+                  <span class="ai-editorial-item-arrow">&rarr;</span>
+                </a>
+
+                <a href="${basePath}GarbageInternet/index.html" class="ai-editorial-item">
+                  <img src="${basePath}GarbageInternet/images/hero.png" alt="The Garbage Internet" class="ai-editorial-thumb" />
+                  <div class="ai-editorial-info">
+                    <div class="ai-editorial-tag-label">Digital Anthropology &bull; 15 Min</div>
+                    <div class="ai-editorial-item-title">The Garbage Internet</div>
+                    <div class="ai-editorial-item-desc">The 'Slop Era' and the systematic decline of human knowledge.</div>
+                  </div>
+                  <span class="ai-editorial-item-arrow">&rarr;</span>
+                </a>
+              </div>
+            `;
+            aiChatBody.appendChild(secondMsg);
+            if (typeof UISounds !== 'undefined' && UISounds.pop) {
+              UISounds.pop();
+            }
+            aiChatBody.scrollTop = aiChatBody.scrollHeight;
+          }, 450);
+        }, 400);
+      }
     }, responseDelay);
   }
 

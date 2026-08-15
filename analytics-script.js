@@ -1,65 +1,148 @@
-// ── Premium UI Sound Engine (Microsoft Fluent-Inspired) ──
-const UISounds = (() => {
-  let ctx;
-  const getCtx = () => {
-    if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
-    if (ctx.state === 'suspended') ctx.resume();
-    return ctx;
-  };
+// ── Premium Luxury Sound Engine (Bespoke Glass & Silk Synthesis) ──
+if (typeof window.UISounds === 'undefined') {
+  window.UISounds = (() => {
+    let ctx;
+    let soundMuted = false;
+    let lastPlayTime = 0;
 
-  const unlock = () => {
-    getCtx();
-    document.removeEventListener('click', unlock);
-    document.removeEventListener('touchstart', unlock);
-  };
-  document.addEventListener('click', unlock);
-  document.addEventListener('touchstart', unlock);
+    const getCtx = () => {
+      if (!ctx) {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (AudioCtx) ctx = new AudioCtx();
+      }
+      if (ctx && ctx.state === 'suspended') ctx.resume().catch(() => {});
+      return ctx;
+    };
 
-  function play(freq, duration, type = 'sine', vol = 0.25, detune = 0) {
-    try {
-      const c = getCtx();
-      if (c.state === 'suspended') c.resume();
-      const osc = c.createOscillator();
-      const gain = c.createGain();
-      const filter = c.createBiquadFilter();
-      osc.type = type;
-      osc.frequency.value = freq;
-      osc.detune.value = detune;
-      filter.type = 'lowpass';
-      filter.frequency.value = 3000;
-      filter.Q.value = 0.7;
-      gain.gain.setValueAtTime(0, c.currentTime);
-      gain.gain.linearRampToValueAtTime(vol, c.currentTime + 0.02);
-      gain.gain.exponentialRampToValueAtTime(0.001, c.currentTime + duration);
-      osc.connect(filter);
-      filter.connect(gain);
-      gain.connect(c.destination);
-      osc.start(c.currentTime);
-      osc.stop(c.currentTime + duration);
-    } catch(e) {}
-  }
+    const unlock = () => {
+      getCtx();
+      document.removeEventListener('click', unlock);
+      document.removeEventListener('touchstart', unlock);
+      document.removeEventListener('keydown', unlock);
+    };
+    document.addEventListener('click', unlock, { passive: true });
+    document.addEventListener('touchstart', unlock, { passive: true });
+    document.addEventListener('keydown', unlock, { passive: true });
 
-  return {
-    click: () => play(262, 0.18, 'sine', 0.15),
-    chime: () => {
-      play(262, 0.25, 'sine', 0.14);
-      setTimeout(() => play(330, 0.25, 'sine', 0.11), 100);
-    },
-    toggle: () => play(294, 0.14, 'sine', 0.15, 3),
-    expand: () => {
-      play(196, 0.3, 'sine', 0.12);
-      setTimeout(() => play(262, 0.25, 'sine', 0.1), 120);
-    },
-    collapse: () => {
-      play(262, 0.2, 'sine', 0.12);
-      setTimeout(() => play(196, 0.25, 'sine', 0.1), 100);
-    },
-    confirm: () => {
-      play(330, 0.15, 'sine', 0.14);
-      setTimeout(() => play(392, 0.2, 'sine', 0.11), 110);
+    function playLuxuryNote(c, freq, duration, vol = 0.07, overtoneRatio = 1.5, overtoneVol = 0.18) {
+      try {
+        const now = c.currentTime;
+        const osc1 = c.createOscillator();
+        osc1.type = 'sine';
+        osc1.frequency.setValueAtTime(freq, now);
+
+        const osc2 = c.createOscillator();
+        osc2.type = 'sine';
+        osc2.frequency.setValueAtTime(freq * overtoneRatio, now);
+
+        const gain2 = c.createGain();
+        gain2.gain.setValueAtTime(overtoneVol, now);
+        osc2.connect(gain2);
+
+        const mainGain = c.createGain();
+        mainGain.gain.setValueAtTime(0.0001, now);
+        mainGain.gain.linearRampToValueAtTime(vol, now + 0.012);
+        mainGain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+        const filter = c.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(2400, now);
+        filter.frequency.exponentialRampToValueAtTime(600, now + duration);
+        filter.Q.value = 0.5;
+
+        osc1.connect(mainGain);
+        gain2.connect(mainGain);
+        mainGain.connect(filter);
+        filter.connect(c.destination);
+
+        osc1.start(now);
+        osc2.start(now);
+        osc1.stop(now + duration);
+        osc2.stop(now + duration);
+      } catch(e) {}
     }
-  };
-})();
+
+    function play(freq, duration, vol = 0.07, overtoneRatio = 1.5, overtoneVol = 0.18) {
+      if (soundMuted) return;
+      const now = Date.now();
+      if (now - lastPlayTime < 35) return;
+      lastPlayTime = now;
+
+      try {
+        const c = getCtx();
+        if (!c) return;
+        if (c.state === 'suspended') {
+          c.resume().then(() => playLuxuryNote(c, freq, duration, vol, overtoneRatio, overtoneVol)).catch(() => {});
+        } else {
+          playLuxuryNote(c, freq, duration, vol, overtoneRatio, overtoneVol);
+        }
+      } catch(e) {}
+    }
+
+    return {
+      isMuted: () => soundMuted,
+      setMuted: (val) => { soundMuted = !!val; },
+      toggleMute: () => { soundMuted = !soundMuted; return soundMuted; },
+      click: () => play(698.46, 0.12, 0.07, 1.5, 0.18),
+      chime: () => {
+        if (soundMuted) return;
+        const c = getCtx();
+        if (!c) return;
+        playLuxuryNote(c, 622.25, 0.45, 0.06, 2.0, 0.15);
+        setTimeout(() => playLuxuryNote(c, 830.61, 0.45, 0.05, 1.5, 0.15), 110);
+        setTimeout(() => playLuxuryNote(c, 1046.50, 0.55, 0.04, 1.5, 0.12), 220);
+      },
+      pop: () => {
+        if (soundMuted) return;
+        const c = getCtx();
+        if (!c) return;
+        playLuxuryNote(c, 523.25, 0.18, 0.07, 1.5, 0.15);
+        setTimeout(() => playLuxuryNote(c, 783.99, 0.22, 0.06, 1.5, 0.15), 60);
+      },
+      toggle: () => {
+        if (soundMuted) return;
+        const c = getCtx();
+        if (!c) return;
+        playLuxuryNote(c, 830.61, 0.10, 0.08, 1.33, 0.2);
+        setTimeout(() => playLuxuryNote(c, 932.33, 0.12, 0.06, 1.5, 0.15), 45);
+      },
+      expand: () => {
+        if (soundMuted) return;
+        const c = getCtx();
+        if (!c) return;
+        playLuxuryNote(c, 698.46, 0.25, 0.06, 1.5, 0.15);
+        setTimeout(() => playLuxuryNote(c, 880.00, 0.25, 0.05, 1.5, 0.12), 80);
+        setTimeout(() => playLuxuryNote(c, 1046.50, 0.30, 0.04, 1.5, 0.10), 160);
+      },
+      collapse: () => {
+        if (soundMuted) return;
+        const c = getCtx();
+        if (!c) return;
+        playLuxuryNote(c, 1046.50, 0.20, 0.06, 1.5, 0.15);
+        setTimeout(() => playLuxuryNote(c, 698.46, 0.25, 0.05, 1.5, 0.12), 80);
+      },
+      confirm: () => {
+        if (soundMuted) return;
+        const c = getCtx();
+        if (!c) return;
+        playLuxuryNote(c, 830.61, 0.20, 0.08, 1.5, 0.2);
+        setTimeout(() => playLuxuryNote(c, 1244.51, 0.30, 0.07, 1.5, 0.15), 90);
+      },
+      ascend: () => {
+        if (soundMuted) return;
+        const c = getCtx();
+        if (!c) return;
+        playLuxuryNote(c, 622.25, 0.20, 0.06, 1.5, 0.15);
+        setTimeout(() => playLuxuryNote(c, 783.99, 0.20, 0.05, 1.5, 0.15), 70);
+        setTimeout(() => playLuxuryNote(c, 932.33, 0.22, 0.05, 1.5, 0.12), 140);
+        setTimeout(() => playLuxuryNote(c, 1244.51, 0.35, 0.04, 1.5, 0.10), 210);
+      },
+      slide: () => play(698.46, 0.10, 0.05, 1.5, 0.15),
+      hover: () => play(1046.50, 0.04, 0.02, 1.5, 0.10),
+    };
+  })();
+}
+var UISounds = window.UISounds;
 
 // ── Google Analytics / GTM Event Tracking ──
 const trackEvent = (name, params = {}) => {

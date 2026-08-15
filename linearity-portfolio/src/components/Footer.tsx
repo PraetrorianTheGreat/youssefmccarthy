@@ -43,13 +43,8 @@ export function Footer() {
             <h4 className="font-bold text-white mb-6">Connect</h4>
             <ul className="flex flex-col gap-3 text-sm text-text-muted">
               <li>
-                <a href="mailto:youssef@example.com" className="flex items-center gap-2 hover:text-white transition-colors">
-                  <Mail className="w-4 h-4" /> youssef@example.com
-                </a>
-              </li>
-              <li className="mt-4">
-                <a href="/Youssef_McCarthy_Resume.pdf" className="inline-block px-4 py-2 rounded-lg bg-white/10 text-white hover:bg-white/20 transition-colors text-xs font-semibold">
-                  Download Resume
+                <a href="mailto:youssefmccarthy@gmail.com" className="flex items-center gap-2 hover:text-white transition-colors">
+                  <Mail className="w-4 h-4" /> youssefmccarthy@gmail.com
                 </a>
               </li>
             </ul>

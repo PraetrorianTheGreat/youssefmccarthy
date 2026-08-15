@@ -51,17 +51,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // --- Page Specific Trackers (from previous inline scripts) ---
 
-    // Resume Downloads (Home Page)
-    const resumeBtn = document.getElementById("download_resume_btn");
-    if(resumeBtn) {
-        resumeBtn.addEventListener("click", function() {
-            window.dataLayer.push({
-                'event': 'resume_download',
-                'file_name': 'youssef_mccarthy_resume',
-                'page_section': 'hero'
-            });
-        });
-    }
+
 
     // Contact Clicks (Home Page)
     const contactBtn = document.getElementById("contact_me_btn");

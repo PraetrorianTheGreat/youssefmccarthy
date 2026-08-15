@@ -53,16 +53,10 @@ export function Navbar() {
           {/* CTA */}
           <div className="hidden md:flex items-center gap-4">
             <a 
-              href="mailto:youssef@example.com" 
-              className="px-5 py-2.5 rounded-full text-sm font-semibold bg-white/5 hover:bg-white/10 border border-white/10 transition-colors"
-            >
-              Get in Touch
-            </a>
-            <a 
-              href="/Youssef_McCarthy_Resume.pdf" 
+              href="mailto:youssefmccarthy@gmail.com" 
               className="px-5 py-2.5 rounded-full text-sm font-semibold bg-white text-black hover:bg-gray-200 transition-colors flex items-center gap-2"
             >
-              Resume <ChevronRight className="w-4 h-4" />
+              Get in Touch <ChevronRight className="w-4 h-4" />
             </a>
           </div>
 
@@ -97,10 +91,10 @@ export function Navbar() {
             ))}
             <hr className="border-white/10 my-2" />
             <a 
-              href="/Youssef_McCarthy_Resume.pdf" 
-              className="px-5 py-3 rounded-xl text-center font-semibold bg-white text-black w-full"
+              href="mailto:youssefmccarthy@gmail.com" 
+              className="px-5 py-3 rounded-xl text-center font-semibold bg-white text-black w-full block"
             >
-              Download Resume
+              Get in Touch
             </a>
           </motion.div>
         )}
