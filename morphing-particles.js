@@ -399,6 +399,7 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
 
     const fragmentShader = `
+        uniform float uWhiteProgress;
         varying vec3 vColor;
         varying float vSparkle;
         varying float vDepth;
@@ -410,7 +411,9 @@ document.addEventListener("DOMContentLoaded", () => {
             float alpha = smoothstep(0.5, 0.08, ll);
             float depthAlpha = smoothstep(-350.0, -100.0, vDepth);
             
-            vec3 sparkleColor = mix(vColor, vec3(1.0, 1.0, 1.0), vSparkle * 0.45);
+            vec3 targetWhite = vec3(1.0, 1.0, 1.0);
+            vec3 activeColor = mix(vColor, targetWhite, uWhiteProgress);
+            vec3 sparkleColor = mix(activeColor, vec3(1.0, 1.0, 1.0), vSparkle * 0.45);
             vec3 finalColor = sparkleColor * (0.35 + 0.85 * depthAlpha) + vec3(vSparkle * 0.12);
             
             gl_FragColor = vec4(finalColor, alpha * depthAlpha * (0.75 + 0.25 * vSparkle));
@@ -427,7 +430,8 @@ document.addEventListener("DOMContentLoaded", () => {
         vertexShader: vertexShader,
         fragmentShader: fragmentShader,
         uniforms: {
-            uTime: { value: 0 }
+            uTime: { value: 0 },
+            uWhiteProgress: { value: 0 }
         },
         transparent: true,
         depthWrite: false,
@@ -443,6 +447,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- Animation State ---
     let time = 0;
     let currentShape = 'chaos';
+    let currentWhiteProgress = 0;
     
     const destinationPositions = new Float32Array(particleCount * 3);
     
@@ -450,25 +455,43 @@ document.addEventListener("DOMContentLoaded", () => {
     let isProfileVisibleCached = true;
     let needsLayoutUpdate = true;
 
-    // --- Cached DOM Elements & Rect Measurements for Zero Reflow Thrashing ---
-    let cachedResumeBtn = null;
     let cachedPhotoWrapper = null;
+    let cachedStatsWrapper = null;
+    let cachedHeroContent = null;
+    let cachedHeroSection = null;
     let cachedRectTime = 0;
     let cachedRect = null;
     let cachedHeroElem = null;
 
-    function getHeroElem(isMobileOrTablet) {
-        if (!cachedPhotoWrapper) {
-            cachedPhotoWrapper = document.querySelector('.hero-photo-wrapper') || document.querySelector('.hero-content');
+    function getShapeScale(shape) {
+        const isWidescreen = (window.innerWidth / window.innerHeight) >= 1.5;
+        if (shape === 'repligen') {
+            if (window.innerWidth < 480) return 0.65;
+            if (window.innerWidth < 768) return 0.75;
+            if (window.innerWidth <= 1275) return 0.85;
+            return 1.0;
         }
-        return cachedPhotoWrapper;
+        if (isWidescreen) return 2.0;
+        if (window.innerWidth < 768) return 0.85;
+        return 1.0;
     }
 
+    function getTargetElement(shape, isMobileOrTablet) {
+        if (!cachedPhotoWrapper) cachedPhotoWrapper = document.querySelector('.hero-photo-wrapper');
+        if (!cachedStatsWrapper) cachedStatsWrapper = document.querySelector('.hero-stats');
+        if (!cachedHeroContent) cachedHeroContent = document.querySelector('.hero-content');
+        if (!cachedHeroSection) cachedHeroSection = document.querySelector('.hero');
+
+        if (shape === 'repligen' && isMobileOrTablet) {
+            return cachedStatsWrapper || cachedHeroContent || cachedHeroSection;
+        }
+        return cachedPhotoWrapper || cachedHeroContent || cachedHeroSection;
+    }
 
     function updateTargetPosition() {
-        // Mobile/Tablet responsive check (screens <= 1180px or touch tablets)
-        const isMobileOrTablet = window.innerWidth <= 1180 || ('ontouchstart' in window && window.innerWidth <= 1280);
-        const heroElem = getHeroElem(isMobileOrTablet);
+        // Mobile/Tablet responsive check (screens <= 1275px or touch tablets)
+        const isMobileOrTablet = window.innerWidth <= 1275 || ('ontouchstart' in window && window.innerWidth <= 1366);
+        const heroElem = getTargetElement(currentShape, isMobileOrTablet);
 
         if (!heroElem) return false;
 
@@ -483,14 +506,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const rect = cachedRect;
         // Element is visible if its bottom edge is below top of viewport, and top edge is within viewport
-        const isVisible = rect.bottom > 0 && rect.top < window.innerHeight;
+        const isVisible = rect.bottom > -100 && rect.top < window.innerHeight + 100;
 
         if (isVisible) {
-            const centerX = rect.left + rect.width / 2;
-            let targetY = rect.top + rect.height / 2;
+            let centerX, targetY;
 
             if (currentShape === 'repligen') {
-                targetY = isMobileOrTablet ? (rect.bottom + 50) : (rect.bottom + 55);
+                if (isMobileOrTablet) {
+                    // Positioned in the spacious whitespace area underneath the stats
+                    centerX = window.innerWidth / 2;
+                    const offset = window.innerWidth < 600 ? 68 : 75;
+                    targetY = rect.bottom + offset;
+                } else {
+                    // Desktop: positioned in open whitespace under the profile photo on the right
+                    centerX = rect.left + rect.width / 2;
+                    targetY = rect.bottom + 55;
+                }
+            } else {
+                centerX = rect.left + rect.width / 2;
+                targetY = rect.top + rect.height / 2;
             }
 
             const ndcX = (centerX / window.innerWidth) * 2 - 1;
@@ -509,10 +543,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return false;
     }
 
-
-
-
-
     function switchShape(newShape) {
         currentShape = newShape;
         
@@ -528,6 +558,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!sourceArray) sourceArray = spherePositions;
         
         updateTargetPosition();
+        const scale = getShapeScale(newShape);
 
         for (let i = 0; i < particleCount * 3; i+=3) {
             if (newShape === 'chaos') {
@@ -535,12 +566,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 destinationPositions[i+1] = sourceArray[i+1];
                 destinationPositions[i+2] = sourceArray[i+2];
             } else {
-                destinationPositions[i] = sourceArray[i] + targetGroup.position.x;
-                destinationPositions[i+1] = sourceArray[i+1] + targetGroup.position.y;
-                destinationPositions[i+2] = sourceArray[i+2] + targetGroup.position.z;
+                destinationPositions[i] = sourceArray[i] * scale + targetGroup.position.x;
+                destinationPositions[i+1] = sourceArray[i+1] * scale + targetGroup.position.y;
+                destinationPositions[i+2] = sourceArray[i+2] * scale + targetGroup.position.z;
             }
         }
     }
+
+    window.switchMorphingShape = switchShape;
 
     // --- Page Load Initial State: Start SCATTERED, then assemble into Repligen Logo ---
     switchShape('chaos');
@@ -650,6 +683,12 @@ document.addEventListener("DOMContentLoaded", () => {
         time += delta;
         material.uniforms.uTime.value = time;
 
+        // Smoothly transition particles to pure sparkling white when assembling into Repligen logo,
+        // and bloom back into vibrant multi-colors when morphing into other 3D shapes.
+        const targetWhiteProgress = currentShape === 'repligen' ? 1.0 : 0.0;
+        currentWhiteProgress += (targetWhiteProgress - currentWhiteProgress) * 0.045;
+        material.uniforms.uWhiteProgress.value = currentWhiteProgress;
+
         mouseX += (targetMouseX - mouseX) * 0.05;
         mouseY += (targetMouseY - mouseY) * 0.05;
         
@@ -711,7 +750,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (currentShape === 'repligen') sourceArray = repligenPositions;
                 if (!sourceArray) sourceArray = spherePositions;
                 
-                const shapeScale = (isWidescreen && currentShape !== 'repligen') ? 2.0 : 1.0;
+                const shapeScale = getShapeScale(currentShape);
 
                 for (let i = 0; i < particleCount; i++) {
                     const i3 = i * 3;
@@ -737,7 +776,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         // Silky smooth particle lerp
         const positions = geometry.attributes.position.array;
-        const lerpFactor = currentShape === 'repligen' ? 0.022 : 0.018; 
+        const lerpFactor = currentShape === 'repligen' ? 0.035 : 0.022; 
         
         for (let i = 0; i < particleCount * 3; i+=3) {
             const driftX = Math.sin(time * 0.6 + i) * 1.2;
@@ -763,6 +802,7 @@ document.addEventListener("DOMContentLoaded", () => {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
+        needsLayoutUpdate = true;
         updateTargetPosition();
     });
 });
