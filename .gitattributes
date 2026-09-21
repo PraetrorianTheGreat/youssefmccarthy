@@ -1,0 +1,14 @@
+# Keep text files stored with LF in the repository regardless of the editor
+# used locally. Without this, Windows editors save CRLF, every line reads as
+# changed, and a small edit turns into a whole-file merge conflict.
+* text=auto eol=lf
+
+# Already stored with CRLF; left as-is so this change doesn't rewrite it.
+collaboration-style.css -text
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.pdf binary
+*.mp3 binary

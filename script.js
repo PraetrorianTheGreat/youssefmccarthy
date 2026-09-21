@@ -1445,7 +1445,7 @@ if (aiToggleBtn && aiChatWindow) {
     // 2. Append Pulsing Typing Indicator
     const typingIndicator = document.createElement('div');
     typingIndicator.className = 'ai-message ai-system typing';
-    typingIndicator.innerHTML = '<span class="thinking-text" style="color:var(--text-muted); opacity:0.6; font-style:italic;">Thinking...</span>';
+    typingIndicator.innerHTML = '<span class="thinking-text" style="color:var(--text-muted); opacity:0.6; font-style:italic;">' + ((window.PortfolioI18n && window.PortfolioI18n.t('chat.thinking')) || 'Thinking...') + '</span>';
     aiChatBody.appendChild(typingIndicator);
     aiChatBody.scrollTop = aiChatBody.scrollHeight;
 
@@ -1475,7 +1475,7 @@ if (aiToggleBtn && aiChatWindow) {
         setTimeout(() => {
           const secondTyping = document.createElement('div');
           secondTyping.className = 'ai-message ai-system typing';
-          secondTyping.innerHTML = '<span class="thinking-text" style="color:var(--text-muted); opacity:0.6; font-style:italic;">Loading editorial previews...</span>';
+          secondTyping.innerHTML = '<span class="thinking-text" style="color:var(--text-muted); opacity:0.6; font-style:italic;">' + ((window.PortfolioI18n && window.PortfolioI18n.t('chat.loading_previews')) || 'Loading editorial previews...') + '</span>';
           aiChatBody.appendChild(secondTyping);
           aiChatBody.scrollTop = aiChatBody.scrollHeight;
 
