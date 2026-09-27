@@ -138,6 +138,15 @@ body {
   animation-duration: 1.5s;
 }
 
+/* Phones: the background toggle covered page content and other floating
+   controls, so it is hidden below 768px (the heavy WebGL background is a
+   desktop nicety; the default background stays on). */
+@media (max-width: 768px) {
+  .webgl-toggle-container {
+    display: none;
+  }
+}
+
 /* ── Animated Background ── */
 .bg-grid {
   position: fixed; inset: 0; z-index: 0; pointer-events: none;
