@@ -99,7 +99,7 @@
       'nav_home': 'Home', 'nav_about': 'About', 'nav_experience': 'Experience', 'nav_projects': 'Projects', 'nav_analytics': 'Live Dashboard', 'nav_collaboration': 'UX Collaboration', 'nav_editorials': 'Editorials', 'nav_skills': 'Skills', 'nav_education': 'Education & Recommendations',
       'theme.dark': 'Dark', 'theme.light': 'Light', 'bg.toggle': 'Try new background', 'bg.caution': 'Caution: Performance heavy',
       'lang.select': 'Select Language', 'lang.search_placeholder': 'Search language...',
-      'hero.badge': 'Biography & Strategy', 'hero.email_direct': 'Email Me Directly', 'hero.download_resume': 'Download Resume', 'hero.view_experience': 'View Work History', 'hero.explore_analytics': 'Explore Live Analytics', 'hero.read_case_study': 'Read Case Study',
+      'hero.badge': 'Biography & Strategy', 'hero.role': 'Senior Digital Experience Specialist at Repligen', 'hero.email_direct': 'Email Me Directly', 'hero.download_resume': 'Download Resume', 'hero.view_experience': 'View Work History', 'hero.explore_analytics': 'Explore Live Analytics', 'hero.read_case_study': 'Read Case Study',
       'cta.back_editorials': 'Back to Editorials', 'cta.listen_article': 'Listen to Article', 'cta.listen_case_study': 'Listen to Case Study', 'cta.close': 'Close',
       'editorial.masthead_tag': 'Strategy &mdash; Case Study', 'editorial.slop_tag': 'AI Strategy &mdash; Essay', 'editorial.local_tag': 'AI Engineering &mdash; Architecture'
     },
