@@ -2749,6 +2749,15 @@ body.light-theme .path-card { background: rgba(255,255,255,0.9); }
   transition: width 0.1s ease;
 }
 
+/* Phones and small tablets: the progress strip runs along the bottom edge of
+   the nav rather than on top of it (nav is 72px tall, 64px at 600px and below). */
+@media (max-width: 768px) {
+  .reading-progress-container { top: 72px; }
+}
+@media (max-width: 600px) {
+  .reading-progress-container { top: 64px; }
+}
+
 /* ════════════════════════════════════════════════
    AI CHAT ASSISTANT WIDGET
 ════════════════════════════════════════════════ */
