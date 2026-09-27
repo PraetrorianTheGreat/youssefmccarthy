@@ -782,6 +782,7 @@ function toggleTimeline(card) {
   expand.classList.toggle('open');
   if (toggle) {
     toggle.textContent = isOpen ? 'Show more \u2193' : 'Show less \u2191';
+    toggle.setAttribute('aria-expanded', String(!isOpen));
   }
   if (typeof UISounds !== 'undefined') {
     isOpen ? UISounds.collapse() : UISounds.expand();
@@ -806,12 +807,45 @@ function toggleProject(card, e) {
   const isOpen = details.classList.contains('open');
   details.classList.toggle('open');
   toggle.textContent = isOpen ? 'Expand Case Study \u2192' : 'Collapse \u2191';
+  toggle.setAttribute('aria-expanded', String(!isOpen));
   isOpen ? UISounds.collapse() : UISounds.expand();
   trackEvent('project_toggle', { 
     project: card.querySelector('.project-title')?.textContent || 'Project',
     action: isOpen ? 'collapse' : 'expand' 
   });
 }
+
+// ── Keyboard access for expandable cards ──
+// Each timeline and project card has a real <button> toggle inside it. Mark it
+// up as a disclosure (type, aria-expanded, aria-controls) for every card on the
+// page, including any added to the markup later. Enter/Space on the button fire
+// a click that bubbles to the card's onclick, so mouse and keyboard share one path.
+(function initCardDisclosures() {
+  let seq = 0;
+  function wire(card, panelSel, toggleSel, prefix) {
+    const panel = card.querySelector(panelSel);
+    const toggle = card.querySelector(toggleSel);
+    if (!panel || !toggle) return;
+    if (!panel.id) {
+      do { seq++; } while (document.getElementById(prefix + seq));
+      panel.id = prefix + seq;
+    }
+    toggle.setAttribute('type', 'button');
+    toggle.setAttribute('aria-controls', panel.id);
+    toggle.setAttribute('aria-expanded', String(panel.classList.contains('open')));
+  }
+  function setup() {
+    document.querySelectorAll('.timeline-card').forEach(card =>
+      wire(card, '.timeline-expand', '.timeline-toggle', 'timeline-details-'));
+    document.querySelectorAll('.project-card').forEach(card =>
+      wire(card, '.project-details', '.project-toggle', 'project-details-'));
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setup);
+  } else {
+    setup();
+  }
+})();
 
 // ── Interactive Projects Section Controller ──
 (function initProjectsSection() {

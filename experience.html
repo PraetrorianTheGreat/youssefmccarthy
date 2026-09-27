@@ -44,7 +44,7 @@
   </script>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%230a0e1a' width='100' height='100' rx='20'/%3E%3Ctext y='72' x='10' font-size='60' font-family='Arial' font-weight='900' fill='%233b82f6'%3EYM%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="style.css?v=6">
+  <link rel="stylesheet" href="style.css?v=7">
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
@@ -84,7 +84,7 @@
       <div class="theme-switch-wrapper">
         <span class="theme-icon">&#9790; Dark</span>
         <label class="theme-switch" for="themeToggle">
-          <input type="checkbox" id="themeToggle">
+          <input type="checkbox" id="themeToggle" aria-label="Light theme">
           <span class="slider"></span>
         </label>
         <span class="theme-icon">&#9788; Light</span>
@@ -137,14 +137,14 @@
                 <li>Designed and deployed advanced analytical reports and dynamic dashboards for digital marketing performance</li>
                 <li>Leveraged historical campaign data to forecast ROI and optimize resource allocation</li>
               </ul>
-              <div class="timeline-expand">
+              <div class="timeline-expand" id="timeline-details-1">
                 <ul class="timeline-bullets">
                   <li>Conducted rigorous SEM/SEO performance evaluations across multiple brands, informing customer journey optimization</li>
                   <li>Oversaw data validation and analysis for website optimization projects ensuring statistical significance for A/B testing</li>
                   <li>Introduced quarterly educational opportunities across the company on digital trends and tools</li>
                 </ul>
               </div>
-              <button class="timeline-toggle">Show more ↓</button>
+              <button type="button" class="timeline-toggle" aria-expanded="false" aria-controls="timeline-details-1">Show more ↓</button>
             </div>
 
             <!-- Desktop-Only Company Profile Panel -->
@@ -206,7 +206,7 @@
                 <li>Directed optimization and performance analysis of high-value digital advertising campaigns, maximizing ROAS</li>
                 <li>Architected comprehensive analytics tracking frameworks for multi-touch attribution</li>
               </ul>
-              <div class="timeline-expand">
+              <div class="timeline-expand" id="timeline-details-2">
                 <ul class="timeline-bullets">
                   <li>Cultivated long-term stakeholder relationships through consistent strategic consultation</li>
                   <li>Partnered with operations to iterate on campaign creative and structure, optimizing conversion pathways</li>
@@ -214,7 +214,7 @@
                   <li>Presented data-driven performance narratives as a core component of retention strategy</li>
                 </ul>
               </div>
-              <button class="timeline-toggle">Show more ↓</button>
+              <button type="button" class="timeline-toggle" aria-expanded="false" aria-controls="timeline-details-2">Show more ↓</button>
             </div>
 
             <!-- Desktop-Only Company Profile Panel -->
@@ -276,7 +276,7 @@
                 <li>Collaborated with Digital Sales Leaders to analyze high-potential prospects, maximizing pipeline volume</li>
                 <li>Acted as analytical SME during client consultations to frame solution opportunities</li>
               </ul>
-              <div class="timeline-expand">
+              <div class="timeline-expand" id="timeline-details-3">
                 <ul class="timeline-bullets">
                   <li>Developed robust campaign architecture and conceptual frameworks for high-value pitches</li>
                   <li>Directed optimization across a portfolio of top-tier digital advertising campaigns</li>
@@ -284,7 +284,7 @@
                   <li>Configured advanced analytics for conversion attribution models (post-click/post-view) and full ROAS</li>
                 </ul>
               </div>
-              <button class="timeline-toggle">Show more ↓</button>
+              <button type="button" class="timeline-toggle" aria-expanded="false" aria-controls="timeline-details-3">Show more ↓</button>
             </div>
 
             <!-- Desktop-Only Company Profile Panel -->
@@ -355,13 +355,13 @@
                 <li>Executed comprehensive usability testing across eCommerce platforms for UX optimization insights</li>
                 <li>Developed a daily analytics holiday tracker monitoring real-time product performance trends</li>
               </ul>
-              <div class="timeline-expand">
+              <div class="timeline-expand" id="timeline-details-4">
                 <ul class="timeline-bullets">
                   <li>Compiled end-of-month KPI reports identifying critical improvement opportunities for digital merchandising</li>
                   <li>Generated product performance and projection reports informing merchandising strategies</li>
                 </ul>
               </div>
-              <button class="timeline-toggle">Show more ↓</button>
+              <button type="button" class="timeline-toggle" aria-expanded="false" aria-controls="timeline-details-4">Show more ↓</button>
             </div>
 
             <!-- Desktop-Only Company Profile Panel -->
@@ -432,13 +432,13 @@
                 <li>Developed and executed complex monetization strategies for high-volume digital content across YouTube</li>
                 <li>Collaborated with cross-functional engineering and product teams on social media traffic acquisition</li>
               </ul>
-              <div class="timeline-expand">
+              <div class="timeline-expand" id="timeline-details-5">
                 <ul class="timeline-bullets">
                   <li>Streamlined website creation workflows, driving significant increases in qualified traffic volume</li>
                   <li>Applied foundational digital analytics principles to scale platform monetization and KPI tracking</li>
                 </ul>
               </div>
-              <button class="timeline-toggle">Show more ↓</button>
+              <button type="button" class="timeline-toggle" aria-expanded="false" aria-controls="timeline-details-5">Show more ↓</button>
             </div>
 
             <!-- Desktop-Only Company Profile Panel -->
@@ -543,7 +543,7 @@
         </button>
       </div>
       <form class="ai-chat-input-container" id="aiChatForm">
-        <input type="text" id="aiInputField" placeholder="Type a message or click a prompt..." data-i18n-placeholder="chat.placeholder" autocomplete="off" required>
+        <input type="text" id="aiInputField" aria-label="Message the site assistant" placeholder="Type a message or click a prompt..." data-i18n-placeholder="chat.placeholder" autocomplete="off" required>
         <button type="submit" id="aiSendBtn" aria-label="Send message">
           <svg viewBox="0 0 24 24" width="16" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
         </button>
@@ -577,6 +577,6 @@
   <script src="webgl-backgrounds.js"></script>
   
   <script src="i18n.js"></script>
-  <script src="script.js?v=7"></script>
+  <script src="script.js?v=8"></script>
 </body>
 </html>

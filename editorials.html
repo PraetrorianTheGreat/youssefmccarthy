@@ -84,7 +84,7 @@
       <div class="theme-switch-wrapper">
         <span class="theme-icon">&#9790; Dark</span>
         <label class="theme-switch" for="themeToggle">
-          <input type="checkbox" id="themeToggle">
+          <input type="checkbox" id="themeToggle" aria-label="Light theme">
           <span class="slider"></span>
         </label>
         <span class="theme-icon">&#9788; Light</span>
@@ -221,7 +221,7 @@
         </button>
       </div>
       <form class="ai-chat-input-container" id="aiChatForm">
-        <input type="text" id="aiInputField" placeholder="Type a message or click a prompt..." data-i18n-placeholder="chat.placeholder" autocomplete="off" required>
+        <input type="text" id="aiInputField" aria-label="Message the site assistant" placeholder="Type a message or click a prompt..." data-i18n-placeholder="chat.placeholder" autocomplete="off" required>
         <button type="submit" id="aiSendBtn" aria-label="Send message">
           <svg viewBox="0 0 24 24" width="16" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
         </button>
@@ -255,6 +255,6 @@
   <script src="webgl-backgrounds.js"></script>
   
   <script src="i18n.js"></script>
-  <script src="script.js?v=7"></script>
+  <script src="script.js?v=8"></script>
 </body>
 </html>

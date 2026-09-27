@@ -4761,6 +4761,15 @@ body.light-theme .editorial-lang-btn {
   border-radius: 8px;
 }
 
+/* Expand/collapse toggles on timeline and project cards: keyboard focus only,
+   so mouse users see no change. */
+.timeline-toggle:focus-visible,
+.project-toggle:focus-visible {
+  outline: 2px solid var(--lang-focus-ring);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
 /* Empty search result - a blank list leaves the user guessing */
 .lang-dropdown-empty {
   margin: 10px 4px 2px;
