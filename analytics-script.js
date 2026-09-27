@@ -145,13 +145,8 @@ if (typeof window.UISounds === 'undefined') {
 var UISounds = window.UISounds;
 
 // ── Google Analytics / GTM Event Tracking ──
-const trackEvent = (name, params = {}) => {
-  window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({
-    event: name,
-    ...params
-  });
-};
+// trackEvent is declared globally in script.js (loaded before this file);
+// redeclaring it here with const threw a SyntaxError and stopped this script.
 
 document.addEventListener('DOMContentLoaded', () => {
   // ── Particle System (Mouse-Reactive) ──

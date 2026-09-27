@@ -1667,7 +1667,7 @@ if (aiToggleBtn && aiChatWindow) {
   }
 
   // Handle delegate clicks on inside-chat navigation hyperlinks & action buttons
-  aiChatBody.addEventListener('click', (e) => {
+  if (aiChatBody) aiChatBody.addEventListener('click', (e) => {
     const link = e.target.closest('.chat-link') || e.target.closest('.chat-nav-btn');
     if (link) {
       const href = link.getAttribute('href');
