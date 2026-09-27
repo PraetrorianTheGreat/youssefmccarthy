@@ -87,7 +87,7 @@
         <button id="audioForward" title="Forward 10s"><svg viewBox="0 0 24 24" width="18"><path fill="currentColor" d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></button>
       </div>
     </div>
-    <audio id="hqAudio" src="images/narration.mp3" style="display:none"></audio>
+    <audio id="hqAudio" preload="none" style="display:none"></audio>
     <!-- Settings Menu -->
     <div class="audio-settings" id="audioSettings">
       <div class="audio-settings__group">
@@ -131,7 +131,7 @@
 
     <!-- Landfill image — floated left -->
     <figure class="inline-image inline-image--left fade-in">
-      <img src="images/landfill.png" alt="Abstract visualization of digital waste accumulating in layers">
+      <img src="images/landfill.png" alt="Abstract visualization of digital waste accumulating in layers" width="1024" height="1024" loading="lazy">
       <figcaption>Digital landfill: truth diluted beneath layers of automated noise.</figcaption>
     </figure>
 
@@ -169,7 +169,7 @@
 
     <!-- Divide image — floated right -->
     <figure class="inline-image inline-image--right fade-in">
-      <img src="images/divide.png" alt="Two people at a table with diverging digital experiences">
+      <img src="images/divide.png" alt="Two people at a table with diverging digital experiences" width="1024" height="1024" loading="lazy">
       <figcaption>A widening gap: Access is no longer the issue&mdash;quality is.</figcaption>
     </figure>
 
@@ -196,7 +196,7 @@
 
     <!-- Echo image — floated left -->
     <figure class="inline-image inline-image--left fade-in">
-      <img src="images/echo.png" alt="A figure trapped inside a sphere of recursive digital echoes">
+      <img src="images/echo.png" alt="A figure trapped inside a sphere of recursive digital echoes" width="1024" height="1024" loading="lazy">
       <figcaption>In isolation: Churning out noise for an audience of echoes.</figcaption>
     </figure>
 
@@ -463,42 +463,22 @@
     const AI_MP3 = 'images/narration.mp3';
     const HUMAN_MP3 = 'images/human_narration.mp3';
 
-    // Detection Logic
-    function checkSources() {
-      const cacheBust = '?t=' + Date.now();
-      
-      // Check for Human MP3 with cache busting
-      fetch(HUMAN_MP3 + cacheBust).then(res => {
-        if (res.ok) {
-          hasHuman = true;
-          srcHuman.style.opacity = '1';
-          // Auto-switch to Human if found
-          switchToHuman();
-        } else {
-          srcHuman.style.opacity = '0.3';
-          checkAI();
-        }
-      }).catch(() => checkAI());
+    // Both recordings ship in images/, so no network check is needed on load.
+    // The file is only attached to the <audio> element when the reader presses play.
+    let currentTrack = HUMAN_MP3;
+
+    function loadTrack() {
+      if (hqAudio.getAttribute('src') !== currentTrack) hqAudio.src = currentTrack;
     }
 
-    function checkAI() {
-      fetch(AI_MP3).then(res => {
-        if (res.ok) {
-          mode = 'hq';
-          hqAudio.src = AI_MP3;
-          voiceStatus.innerText = '✨ Neural AI HQ';
-          progressContainer.style.display = 'block';
-        } else {
-          mode = 'tts';
-          progressContainer.style.display = 'none';
-          populateVoices();
-        }
-      });
+    function checkSources() {
+      hasHuman = true;
+      switchToHuman();
     }
 
     function switchToHuman() {
       mode = 'human';
-      hqAudio.src = HUMAN_MP3;
+      currentTrack = HUMAN_MP3;
       srcHuman.classList.add('active');
       srcAI.classList.remove('active');
       voiceStatus.innerText = '👤 Human-Grade Voice';
@@ -509,7 +489,7 @@
     srcAI.addEventListener('click', () => {
       stopReading();
       mode = 'hq';
-      hqAudio.src = AI_MP3;
+      currentTrack = AI_MP3;
       srcAI.classList.add('active');
       srcHuman.classList.remove('active');
       voiceStatus.innerText = '✨ Neural AI HQ';
@@ -520,9 +500,6 @@
       if (hasHuman) {
         stopReading();
         switchToHuman();
-      } else {
-        alert("Looking for 'images/human_narration.mp3'...");
-        checkSources();
       }
     });
 
@@ -538,7 +515,7 @@
       if (mode === 'hq' || mode === 'human') {
         const rect = progressContainer.getBoundingClientRect();
         const pos = (e.clientX - rect.left) / rect.width;
-        hqAudio.currentTime = pos * hqAudio.duration;
+        if (isFinite(hqAudio.duration)) hqAudio.currentTime = pos * hqAudio.duration;
       }
     });
 
@@ -618,6 +595,7 @@
     function toggleReading() {
       if (!isPlaying) {
         if (mode === 'hq' || mode === 'human') {
+          loadTrack();
           hqAudio.playbackRate = currentSpeed;
           hqAudio.play();
         } else {

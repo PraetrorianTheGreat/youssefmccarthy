@@ -89,7 +89,8 @@
     </div>
     <!-- Settings Menu -->
     <div class="audio-settings" id="audioSettings">
-      <div class="audio-settings__group">
+      <!-- No recorded narration ships with this article, so the recorded-voice options stay hidden -->
+      <div class="audio-settings__group" id="narratorModeGroup" hidden>
         <label>Narrator Mode</label>
         <div class="audio-settings__toggle-group" style="display:flex; background:rgba(255,255,255,0.05); border-radius:8px; padding:2px; border:1px solid rgba(255,255,255,0.08);">
           <button id="srcAI" class="toggle-btn active" style="flex:1; border:none; background:none; color:var(--white); font-family:var(--font-sans); font-size:0.65rem; padding:6px; cursor:pointer; border-radius:6px; font-weight:700;">✨ SYSTEM AI</button>
@@ -523,11 +524,6 @@
       voiceStatus.innerText = '✨ AI System Voice';
       voiceGroup.style.display = 'block';
       progressContainer.style.display = 'none';
-    });
-
-    srcHuman.addEventListener('click', () => {
-      alert("A pre-recorded high-fidelity MP3 file was not found. Reverting to automated Web Speech TTS.");
-      mode = 'tts';
     });
 
     function populateVoices() {
