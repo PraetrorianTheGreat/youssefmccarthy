@@ -138,6 +138,15 @@ body {
   animation-duration: 1.5s;
 }
 
+/* Phones: the background toggle covered page content and other floating
+   controls, so it is hidden below 768px (the heavy WebGL background is a
+   desktop nicety; the default background stays on). */
+@media (max-width: 768px) {
+  .webgl-toggle-container {
+    display: none;
+  }
+}
+
 /* ── Animated Background ── */
 .bg-grid {
   position: fixed; inset: 0; z-index: 0; pointer-events: none;
@@ -2738,6 +2747,15 @@ body.light-theme .path-card { background: rgba(255,255,255,0.9); }
   background: var(--gradient-1);
   box-shadow: 0 0 10px var(--accent-glow);
   transition: width 0.1s ease;
+}
+
+/* Phones and small tablets: the progress strip runs along the bottom edge of
+   the nav rather than on top of it (nav is 72px tall, 64px at 600px and below). */
+@media (max-width: 768px) {
+  .reading-progress-container { top: 72px; }
+}
+@media (max-width: 600px) {
+  .reading-progress-container { top: 64px; }
 }
 
 /* ════════════════════════════════════════════════

@@ -1168,8 +1168,13 @@ body {
     width: calc(100vw - 24px) !important;
     left: 12px !important;
     right: 12px !important;
+    transform: none !important; /* left/right already centre it; translateX(-50%) pushed it half off-screen */
     padding: 12px 14px !important;
     box-sizing: border-box !important;
+  }
+  /* The wrapped mobile player is taller than the desktop -100px parking spot, so park it fully below the fold */
+  .audio-player:not(.active) {
+    bottom: -240px !important;
   }
   .audio-player__inner {
     flex-wrap: wrap !important;

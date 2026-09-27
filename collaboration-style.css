@@ -10793,6 +10793,19 @@ body.theme-nordic .progress-days {
     font-size: 0.72rem !important;
   }
 }
+
+/* Phones: keep one bottom-anchored control per side. The chat button owns the
+   bottom-left corner (left 16px, 52px wide), so the theme switcher capsule is
+   anchored bottom-right in the remaining width and scrolls horizontally. */
+@media (max-width: 768px) {
+  .global-theme-switcher {
+    left: auto !important;
+    right: 8px !important;
+    bottom: 20px !important;
+    transform: none !important;
+    max-width: calc(100vw - 92px) !important;
+  }
+}
 body.theme-nordic .theme-info-container {
   background: rgba(18, 18, 20, 0.95) !important;
   border: 1px solid rgba(197, 143, 92, 0.2) !important;
