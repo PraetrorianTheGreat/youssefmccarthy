@@ -2291,7 +2291,7 @@ body.theme-glass {
 
               linear-gradient(rgba(245, 245, 247, 0.85), rgba(245, 245, 247, 0.85)),
 
-              url('img/apple_glass_wallpaper.png') no-repeat center center fixed !important;
+              url('img/apple_glass_wallpaper.webp') no-repeat center center fixed !important;
 
   background-size: cover !important;
 

@@ -129,7 +129,10 @@
       <div class="hero-image">
         <div class="hero-photo-wrapper">
           <div class="hero-photo-ring"></div>
-          <img src="profile.png" alt="Youssef McCarthy" loading="eager" fetchpriority="high" />
+          <picture style="display:contents">
+            <source srcset="profile.webp" type="image/webp">
+            <img src="profile.png" alt="Youssef McCarthy" loading="eager" fetchpriority="high" width="632" height="632" />
+          </picture>
         </div>
         <div class="hero-float-card card-1"><span class="icon">🤖</span> AI Agent Builder</div>
         <div class="hero-float-card card-2"><span class="icon">📊</span> A/B Testing Expert</div>
