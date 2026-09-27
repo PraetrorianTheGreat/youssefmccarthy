@@ -920,6 +920,12 @@ body {
   }
 }
 
+/* Masthead fit on narrow phones: title + tag + language button need ~420px,
+   so drop the decorative category tag (the hero label repeats it). */
+@media (max-width: 430px) {
+  .masthead__tag { display: none; }
+}
+
 /* Clearfix Utility */
 .clearfix::after {
   content: "";
