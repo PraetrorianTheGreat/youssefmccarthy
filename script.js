@@ -1203,7 +1203,7 @@ function copyText(text, btn) {
 
 
 // ── Smooth scroll for nav links ──
-document.querySelectorAll('a[href^="#"]').forEach(link => {
+document.querySelectorAll('a[href^="#"]:not(.skip-link)').forEach(link => {
   link.addEventListener('click', e => {
     e.preventDefault();
     UISounds.click();
