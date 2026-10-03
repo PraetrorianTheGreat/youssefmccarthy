@@ -4949,6 +4949,8 @@ body.light-theme { --nav-panel-bg: #f5f8fa; --nav-panel-shadow: 0 12px 32px rgba
     border: 1px solid var(--border-glass); border-radius: 12px;
     box-shadow: var(--nav-panel-shadow);
   }
+  /* The last group sits at the edge of the bar: open its panel back towards the page */
+  .nav-group:last-child .nav-submenu { inset-inline-start: auto; inset-inline-end: 0; }
   /* Bridge the gap under the button so a hover-opened group survives the move */
   .nav-submenu::before { content: ''; position: absolute; left: 0; right: 0; top: -10px; height: 10px; }
 }
