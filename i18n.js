@@ -71,6 +71,7 @@
   // 2. High-Precision Curated UI Translation Dictionary
   const TRANSLATIONS = {
     en: {
+      'skip.content': 'Skip to content',
       "chat.greeting2": "Hello! 👋 I'm Youssef's <strong>Site-Wide AI Copilot</strong>.<br><br>\n          I can guide you through every page, provide deep analytical &amp; CRO insights, or navigate you directly anywhere on the site.",
       "chat.placeholder2": "Ask about navigation, GA4, CRO, career...",
       "chat.chip.navigate": "🗺️ Site Navigation",

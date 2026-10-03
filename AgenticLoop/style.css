@@ -1605,3 +1605,38 @@ html, body {
 }
 
 
+
+/* Skip link (WCAG 2.4.1 Bypass Blocks): visually hidden until keyboard focus */
+.skip-link {
+  position: absolute;
+  top: 0; left: 0;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  z-index: 100001;
+}
+.skip-link:focus,
+.skip-link:focus-visible {
+  position: fixed;
+  top: 12px; left: 12px;
+  width: auto; height: auto;
+  padding: 0.75rem 1.25rem;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  clip-path: none;
+  background: #ffffff;
+  color: #111111;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: underline;
+  border-radius: 8px;
+  outline: 3px solid #111111;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px #ffffff, 0 8px 24px rgba(0,0,0,0.5);
+}
+#main:focus { outline: none; }
