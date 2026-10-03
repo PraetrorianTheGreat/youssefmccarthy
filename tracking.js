@@ -20,8 +20,8 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    // 2. Outbound Links (e.g. LinkedIn, Email, Twitter)
-    const outboundLinks = document.querySelectorAll('a[target="_blank"], a[href^="mailto:"], a[href^="tel:"]');
+    // 2. Outbound Links
+    const outboundLinks = document.querySelectorAll('a[target="_blank"]');
     outboundLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             let href = this.getAttribute('href');
@@ -52,19 +52,6 @@ document.addEventListener("DOMContentLoaded", function() {
     // --- Page Specific Trackers (from previous inline scripts) ---
 
 
-
-    // Contact Clicks (Home Page)
-    const contactBtn = document.getElementById("contact_me_btn");
-    if(contactBtn) {
-        contactBtn.addEventListener("click", function() {
-            window.dataLayer.push({
-                'event': 'cta_click',
-                'cta_name': 'contact_me',
-                'cta_location': 'hero',
-                'page_name': window.location.pathname
-            });
-        });
-    }
 
     // Project Card Interactions
     const projectCards = document.querySelectorAll('.project-card');
