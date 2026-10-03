@@ -230,26 +230,7 @@ document.addEventListener('click', function(e) {
   const href = link.getAttribute('href') || '';
   const pageName = window.location.pathname;
 
-  // 1. Email Clicks
-  if (href.startsWith('mailto:')) {
-    trackEvent('email_click', {
-      email_target: href.replace('mailto:', ''),
-      page_name: pageName
-    });
-    return; // Continue default behavior
-  }
-
-  // 2. LinkedIn Clicks
-  if (href.includes('linkedin.com')) {
-    trackEvent('linkedin_click', {
-      link_url: href,
-      page_name: pageName
-    });
-    // Let it fall through in case we still want outbound click for it, but early return is safer to prevent duplicate events. Let's return.
-    return;
-  }
-
-  // 3. General Outbound Clicks
+  // 1. General Outbound Clicks
   if (href.startsWith('http') && !href.includes(window.location.hostname)) {
     let domain = '';
     try { domain = new URL(href).hostname; } catch(e) {}
@@ -1276,6 +1257,11 @@ if (aiToggleBtn && aiChatWindow) {
   function getBotResponse(userText) {
     const query = userText.toLowerCase().trim();
 
+    // 0. Contact, résumé & personal details: none are published on this site (owner's instruction)
+    if (/(?<![a-z0-9\u00c0-\u024f])(contact[a-z0-9\u00c0-\u024f]*|contrat[a-z0-9\u00c0-\u024f]*|hir(?:e|ed|es|ing)|consult[a-z0-9\u00c0-\u024f]*|reach|e-?mails?|g?mail|correo[a-z0-9\u00c0-\u024f]*|meet[a-z0-9\u00c0-\u024f]*|advisory|messages?|mensaje[a-z0-9\u00c0-\u024f]*|linkedin|phones?|telephone|tel[eé]fono[a-z0-9\u00c0-\u024f]*|celular|address[a-z0-9\u00c0-\u024f]*|direcci[oó]n[a-z0-9\u00c0-\u024f]*|connect[a-z0-9\u00c0-\u024f]*|cvs?|r[eé]sum[eé]s?|curr[ií]cul[a-z0-9\u00c0-\u024f]*|hoja de vida|pdf|download[a-z0-9\u00c0-\u024f]*|descarg[a-z0-9\u00c0-\u024f]*)(?![a-z0-9\u00c0-\u024f])/.test(query)) {
+      return `Youssef does not share contact details or a résumé on this site; his <a href="experience.html" class="chat-nav-btn">💼 Experience</a> and <a href="projects.html" class="chat-nav-btn">🚀 Projects</a> pages show his work.`;
+    }
+
     // 0. Editorials & Thought Leadership Direct Query
     if (query === 'editorials' || query === 'editorial' || query.includes('essay') || query.includes('thought leadership') || query.includes('article') || query.includes('publication') || query.includes('writing')) {
       return `📝 <strong>Thought Leadership &amp; Strategic Essays</strong><br>
@@ -1419,25 +1405,6 @@ if (aiToggleBtn && aiChatWindow) {
       • <strong>Executive Praise:</strong> Read full recommendation letters from Christopher Clarke (Assistant Vice President, EmblemHealth) and corporate C-suite leadership.<br>
       <div class="chat-nav-group">
         <a href="education.html" class="chat-nav-btn">🎓 View Recommendations &amp; Education</a>
-      </div>`;
-    }
-
-    // 12. Career Timeline Redirect
-    if (query === 'resume' || query.includes('cv') || query.includes('pdf') || query.includes('download')) {
-      return `💼 <strong>Youssef McCarthy — Career Experience</strong><br>
-      Explore Youssef's 14+ years of proven leadership in digital analytics, CRO experimentation, and agentic AI strategy:<br>
-      <div class="chat-nav-group">
-        <a href="experience.html" class="chat-nav-btn">💼 View Online Career Timeline</a>
-        <a href="skills.html" class="chat-nav-btn">🛠️ Technical Tech Stack</a>
-      </div>`;
-    }
-
-    // 13. Contact & Connectivity
-    if (query === 'contact' || query.includes('hire') || query.includes('consulting') || query.includes('reach') || query.includes('email') || query.includes('meet') || query.includes('advisory') || query.includes('message')) {
-      return `✉️ <strong>Connect with Youssef McCarthy</strong><br>
-      Feel free to connect directly on LinkedIn:<br>
-      <div class="chat-nav-group">
-        <a href="https://www.linkedin.com/in/youssef-mccarthy/" target="_blank" rel="noopener" class="chat-nav-btn">🔗 Connect on LinkedIn</a>
       </div>`;
     }
 
@@ -1727,7 +1694,6 @@ if (aiToggleBtn && aiChatWindow) {
               targetEl.classList.remove('section-highlight');
             }, 2200);
           }
-        } else if (!href.startsWith('http') && !href.startsWith('mailto:') && href.endsWith('.pdf')) {
         }
       }
     }

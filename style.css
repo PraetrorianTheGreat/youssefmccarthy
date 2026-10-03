@@ -2382,41 +2382,6 @@ body.light-theme .path-card { background: rgba(255,255,255,0.9); }
     text-shadow: 0 0 10px var(--accent-glow);
 }
 
-/* --- FLOATING CTA --- */
-.ds-floating-cta {
-    position: fixed;
-    bottom: 28px;
-    right: 30px;
-    background: var(--gradient-1);
-    color: #ffffff;
-    padding: 0 24px;
-    height: 56px;
-    border-radius: 50px;
-    font-weight: 700;
-    font-size: 0.95rem;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    box-shadow: 0 8px 25px var(--accent-glow);
-    z-index: 9999;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    pointer-events: none;
-}
-.ds-floating-cta.ds-visible {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-}
-.ds-floating-cta:hover {
-    box-shadow: 0 12px 30px rgba(59, 130, 246, 0.4);
-    transform: translateY(-3px) scale(1.02);
-    color: #ffffff;
-}
-
 /* ═══════════════════════════════════════════════════
    PDF UPGRADE: Ghost Button (SMB Hero CTA)
 ═══════════════════════════════════════════════════ */
