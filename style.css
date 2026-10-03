@@ -4888,3 +4888,113 @@ body.light-theme .editorial-lang-btn {
   box-shadow: 0 0 0 3px #ffffff, 0 8px 24px rgba(0,0,0,0.5);
 }
 #main:focus { outline: none; }
+
+/* ===========================================================================
+   Grouped navigation: About | Work | Editorials | Skills & Education.
+   Groups are disclosure buttons (aria-expanded/aria-controls) over plain lists
+   of links, not ARIA menus. A group's list shows while its button is expanded.
+   =========================================================================== */
+:root { --nav-panel-bg: #0a0e1a; --nav-panel-shadow: 0 12px 32px rgba(0,0,0,0.35); }
+body.light-theme { --nav-panel-bg: #f5f8fa; --nav-panel-shadow: 0 12px 32px rgba(15,23,42,0.12); }
+
+/* While a panel is open, lift the nav over page widgets that share its z-index
+   (e.g. the draggable glass lens on UX Collaboration) */
+.nav:has(.nav-group-btn[aria-expanded="true"]),
+.nav:has(.nav-links.open) { z-index: 1002; }
+.nav-group { position: relative; }
+.nav-group-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: none; border: 0; margin: 0; cursor: pointer;
+  font-family: inherit; font-size: 0.875rem; font-weight: 500; line-height: inherit;
+  color: var(--text-secondary); padding: 8px 16px; border-radius: 8px;
+  transition: var(--transition); position: relative;
+}
+.nav-group-btn:hover,
+.nav-group-btn[aria-expanded="true"],
+.nav-group-btn.active { color: var(--text-primary); background: var(--bg-glass); }
+.nav-group-btn.active::after {
+  content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%);
+  width: 20px; height: 2px; background: var(--accent); border-radius: 1px;
+}
+.nav-caret {
+  width: 6px; height: 6px; flex: none;
+  border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+  transform: translateY(-2px) rotate(45deg); transition: transform 0.2s ease;
+}
+.nav-group-btn[aria-expanded="true"] .nav-caret { transform: translateY(1px) rotate(225deg); }
+
+.nav-submenu { list-style: none; margin: 0; padding: 6px; display: none; }
+.nav-group-btn[aria-expanded="true"] + .nav-submenu { display: block; }
+.nav-submenu a { display: block; white-space: nowrap; }
+/* Current page inside a group: a leading bar instead of the centred underline */
+.nav-submenu a.active::after {
+  left: auto; inset-inline-start: 4px; bottom: auto; top: 50%;
+  transform: translateY(-50%); width: 3px; height: 16px;
+}
+.nav-submenu a[href="analytics.html"].active::after { display: none; }
+
+.nav-links a:focus-visible,
+.nav-group-btn:focus-visible,
+.mobile-toggle:focus-visible {
+  outline: 2px solid var(--lang-focus-ring);
+  outline-offset: 2px;
+}
+
+@media (min-width: 1276px) {
+  .nav-links { align-items: center; }
+  .nav-submenu {
+    position: absolute; top: calc(100% + 8px); inset-inline-start: 0; z-index: 1001;
+    min-width: 220px;
+    background: var(--nav-panel-bg);
+    border: 1px solid var(--border-glass); border-radius: 12px;
+    box-shadow: var(--nav-panel-shadow);
+  }
+  /* Bridge the gap under the button so a hover-opened group survives the move */
+  .nav-submenu::before { content: ''; position: absolute; left: 0; right: 0; top: -10px; height: 10px; }
+}
+@media (min-width: 1276px) and (max-width: 1400px) {
+  .nav-group-btn { padding: 8px 12px; }
+}
+
+/* Collapsed (hamburger) menu */
+@media (max-width: 1275px) {
+  .nav-links {
+    background: var(--nav-panel-bg);
+    max-height: calc(100vh - 72px); max-height: calc(100dvh - 72px);
+    overflow: auto; overscroll-behavior: contain;
+    /* A backdrop-filter nested inside the nav's own lets page text show through */
+    backdrop-filter: none; -webkit-backdrop-filter: none;
+  }
+  .nav-links a { display: block; }
+  .nav-group-btn.active::after { left: auto; inset-inline-start: 16px; transform: none; }
+  .nav-group-btn { width: 100%; justify-content: space-between; text-align: start; }
+  .nav-submenu {
+    padding: 2px 0 6px; margin-inline-start: 16px; padding-inline-start: 8px;
+    border-inline-start: 1px solid var(--border-glass);
+  }
+}
+@media (max-width: 600px) {
+  .nav-links {
+    background: var(--nav-panel-bg);
+    max-height: calc(100vh - 64px); max-height: calc(100dvh - 64px);
+    backdrop-filter: none; -webkit-backdrop-filter: none;
+  }
+  .nav-group-btn { padding: 12px 16px; font-size: 1rem; }
+}
+
+/* UX Collaboration themes force the nav's text colour; give the open panels a
+   matching surface (and focus ring) so the links stay legible. */
+body.theme-glass  { --nav-panel-bg: #ffffff; }
+body.theme-neu    { --nav-panel-bg: #e0e5ec; }
+body.theme-brutal { --nav-panel-bg: #ffffff; }
+body.theme-fluent { --nav-panel-bg: #202020; }
+body.theme-nordic { --nav-panel-bg: #0a0a0c; }
+body.theme-glass .nav, body.theme-neu .nav, body.theme-brutal .nav { --lang-focus-ring: #0f172a; }
+body.theme-brutal .nav-submenu { border: 3px solid #000; border-radius: 0; }
+body.theme-nordic .nav .nav-group-btn.active { color: #f4f4f7 !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-group-btn, .nav-caret, .nav-links a { transition: none !important; }
+  .nav-links a[href="analytics.html"].live-active::before,
+  .nav-links a[href="analytics.html"].active::before { animation: none; }
+}
