@@ -253,6 +253,27 @@ window.addEventListener('load', () => {
   }, 1400);
 });
 
+// ── Reduced Motion ──
+const reducedMotionQuery = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+function prefersReducedMotion() {
+  return !!(reducedMotionQuery && reducedMotionQuery.matches);
+}
+function onReducedMotionChange(fn) {
+  if (!reducedMotionQuery) return;
+  const handler = e => fn(e.matches);
+  if (reducedMotionQuery.addEventListener) reducedMotionQuery.addEventListener('change', handler);
+  else if (reducedMotionQuery.addListener) reducedMotionQuery.addListener(handler);
+}
+// GSAP (loaded on some pages) idles its ticker on requestAnimationFrame; rest it for reduced motion.
+// GSAP wakes the ticker by itself whenever a tween is created.
+function sleepIdleGsapTicker() {
+  if (!prefersReducedMotion() || !window.gsap || !gsap.ticker || !gsap.ticker.sleep) return;
+  const busy = gsap.globalTimeline && gsap.globalTimeline.getChildren && gsap.globalTimeline.getChildren().length;
+  if (!busy) gsap.ticker.sleep();
+}
+window.addEventListener('load', sleepIdleGsapTicker);
+onReducedMotionChange(sleepIdleGsapTicker);
+
 // ── Particle System (Mouse-Reactive) ──
 const canvas = document.getElementById('particles');
 let ctx;
@@ -513,27 +534,46 @@ class Particle {
   for (let i = 0; i < targetParticleCount; i++) particles.push(new Particle());
 
   let isCanvasVisible = true;
+  let particleRafId = null;
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       const wasVisible = isCanvasVisible;
       isCanvasVisible = entry.isIntersecting;
       // Restart loop if it becomes visible again
       if (isCanvasVisible && !wasVisible) {
-        animateParticles();
+        startParticleLoop();
       }
     });
   });
   observer.observe(canvas);
 
   let startTime = Date.now();
-  function animateParticles() {
-    if (!isCanvasVisible) return;
 
+  // Reduced motion: draw one still frame and run no loop (WCAG 2.2.2); follow live setting changes.
+  function startParticleLoop() {
+    if (particleRafId === null && isCanvasVisible && !prefersReducedMotion()) animateParticles();
+  }
+  function drawStaticParticles() {
+    if (particleRafId !== null) { cancelAnimationFrame(particleRafId); particleRafId = null; }
+    drawParticleFrame(false);
+  }
+  if (prefersReducedMotion()) drawParticleFrame(true); // same as the first animated frame
+  window.addEventListener('resize', () => { if (prefersReducedMotion()) drawParticleFrame(false); });
+  onReducedMotionChange(reduce => { if (reduce) drawStaticParticles(); else startParticleLoop(); });
+
+  function animateParticles() {
+    particleRafId = null;
+    if (!isCanvasVisible || prefersReducedMotion()) return;
+    drawParticleFrame(true);
+    particleRafId = requestAnimationFrame(animateParticles);
+  }
+
+  function drawParticleFrame(step) {
     const time = Date.now() - startTime;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    particles.forEach(p => { p.update(time); p.draw(); });
-    
+
+    particles.forEach(p => { if (step) p.update(time); p.draw(); });
+
     // Draw connections
     for (let i = 0; i < particles.length; i++) {
       for (let j = i + 1; j < particles.length; j++) {
@@ -602,9 +642,8 @@ class Particle {
       ctx.fillStyle = gradient;
       ctx.fillRect(mouse.x - 100, mouse.y - 100, 200, 200);
     }
-    requestAnimationFrame(animateParticles);
   }
-  animateParticles();
+  startParticleLoop();
 }
 
 // ── Navigation ──
@@ -802,6 +841,10 @@ function animateCounters() {
   statNumbers.forEach(el => {
     const target = parseInt(el.dataset.count);
     const suffix = el.dataset.suffix || '';
+    if (prefersReducedMotion()) {
+      el.textContent = target.toLocaleString() + suffix;
+      return;
+    }
     const duration = 2000;
     const start = performance.now();
     function step(now) {
