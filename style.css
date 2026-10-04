@@ -5000,3 +5000,39 @@ body.theme-nordic .nav .nav-group-btn.active { color: #f4f4f7 !important; }
   .nav-links a[href="analytics.html"].live-active::before,
   .nav-links a[href="analytics.html"].active::before { animation: none; }
 }
+
+/* ── Next-page card (end-of-page path between section pages) ── */
+.next-card { max-width: 1200px; margin: 0 auto; padding: 0 40px 64px; position: relative; z-index: 1; }
+.next-card a {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 28px; border-radius: var(--radius);
+  background: var(--bg-card); border: 1px solid var(--border-glass);
+  backdrop-filter: blur(10px);
+  transition: var(--transition); position: relative; overflow: hidden;
+  color: var(--text-primary); text-decoration: none;
+}
+.next-card a::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--gradient-1); opacity: 0; transition: var(--transition);
+}
+.next-card a:hover::before, .next-card a:focus-visible::before { opacity: 1; }
+.next-card a:hover, .next-card a:focus-visible { border-color: rgba(59,130,246,0.3); transform: translateY(-3px); box-shadow: var(--shadow-glow); }
+.next-card-text { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.next-card-label {
+  font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 3px; color: var(--accent-light);
+}
+.next-card-sep {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+.next-card-title { font-size: clamp(1.25rem, 2.2vw, 1.6rem); font-weight: 800; letter-spacing: -0.5px; overflow-wrap: anywhere; }
+.next-card-arrow { font-size: 1.5rem; color: var(--accent-light); flex-shrink: 0; transition: var(--transition); }
+[dir="rtl"] .next-card-arrow { transform: scaleX(-1); }
+.next-card a:hover .next-card-arrow { translate: 4px 0; }
+@media (max-width: 768px) {
+  .next-card { padding: 0 16px 40px; }
+}
+@media (max-width: 600px) { .next-card a { padding: 20px; } }
+@media (max-width: 380px) { .next-card a { padding: 14px 12px; } }
+body.light-theme .next-card-label, body.light-theme .next-card-arrow { color: #1d4ed8; }
