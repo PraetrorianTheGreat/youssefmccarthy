@@ -848,7 +848,7 @@ function animateCounters() {
     const duration = 2000;
     const start = performance.now();
     function step(now) {
-      const progress = Math.min((now - start) / duration, 1);
+      const progress = prefersReducedMotion() ? 1 : Math.min((now - start) / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
       const current = Math.floor(eased * target);
       el.textContent = current.toLocaleString() + (progress >= 1 ? suffix : '');
