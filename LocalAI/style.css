@@ -1602,3 +1602,125 @@ html, body {
   box-shadow: 0 0 0 3px #ffffff, 0 8px 24px rgba(0,0,0,0.5);
 }
 #main:focus { outline: none; }
+
+/* ===========================================================================
+   Site nav: a self-contained copy of the grouped site nav
+   (About | Work | Editorials | Skills & Education). Groups are disclosure
+   buttons (aria-expanded/aria-controls) over plain lists of links, not ARIA
+   menus. Everything is scoped to .site-nav; the root style.css is not loaded.
+   =========================================================================== */
+.site-nav {
+  --snav-bg: #0a0a0c;
+  --snav-panel: #0b0f19;
+  --snav-fg: #cbd5e1;
+  --snav-fg-strong: #ffffff;
+  --snav-accent: #ff6b00;
+  --snav-border: rgba(255, 107, 0, 0.25);
+  --snav-hover: rgba(255, 107, 0, 0.08);
+  position: relative;
+  z-index: 150;
+  background: var(--snav-bg);
+  border-bottom: 1px solid var(--snav-border);
+  font-family: var(--font-sans);
+  line-height: 1.4;
+}
+.site-nav__inner {
+  max-width: 1100px; height: 52px; margin: 0 auto; padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  box-sizing: border-box;
+}
+.site-nav__logo {
+  display: inline-flex; align-items: center; justify-content: center; flex: none;
+  width: 34px; height: 34px; border-radius: 8px; box-sizing: border-box;
+  border: 1px solid var(--snav-border); color: var(--snav-fg-strong);
+  font-size: 0.8rem; font-weight: 800; letter-spacing: 0.05em; text-decoration: none;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.site-nav__logo:hover { color: var(--snav-accent); border-color: var(--snav-accent); }
+.site-nav__links, .site-nav__submenu { list-style: none; margin: 0; padding: 0; }
+/* The essay's mobile rule for `ul li` (indent + gap) must not reach the nav */
+.site-nav li { margin: 0 !important; padding: 0 !important; word-break: normal !important; }
+.site-nav__links { display: flex; align-items: center; gap: 4px; }
+.site-nav__links a,
+.site-nav__group-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 14px; margin: 0; border: 0; border-radius: 8px; background: none; cursor: pointer;
+  color: var(--snav-fg); font-family: inherit; font-size: 0.875rem; font-weight: 500; line-height: 1.4;
+  text-decoration: none; transition: color 0.2s ease, background-color 0.2s ease;
+}
+.site-nav__links a:hover,
+.site-nav__group-btn:hover,
+.site-nav__group-btn[aria-expanded="true"] { color: var(--snav-fg-strong); background: var(--snav-hover); }
+.site-nav__links a.is-section { color: var(--snav-fg-strong); box-shadow: inset 0 -2px 0 var(--snav-accent); }
+.site-nav__caret {
+  width: 6px; height: 6px; flex: none;
+  border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+  transform: translateY(-2px) rotate(45deg); transition: transform 0.2s ease;
+}
+.site-nav__group-btn[aria-expanded="true"] .site-nav__caret { transform: translateY(1px) rotate(225deg); }
+.site-nav__group { position: relative; }
+.site-nav__submenu { display: none; padding: 6px; }
+.site-nav__group-btn[aria-expanded="true"] + .site-nav__submenu { display: block; }
+.site-nav__submenu a { display: block; white-space: nowrap; }
+.site-nav a:focus-visible,
+.site-nav button:focus-visible { outline: 2px solid var(--snav-accent); outline-offset: 2px; }
+.site-nav__toggle {
+  display: none; align-items: center; justify-content: center;
+  width: 40px; height: 40px; padding: 0; margin: 0; border-radius: 8px; cursor: pointer;
+  background: none; border: 1px solid var(--snav-border); color: var(--snav-fg-strong);
+  font-size: 1.25rem; line-height: 1;
+}
+@media (min-width: 761px) {
+  .site-nav__submenu {
+    position: absolute; top: calc(100% + 8px); inset-inline-start: 0; min-width: 220px;
+    background: var(--snav-panel); border: 1px solid var(--snav-border); border-radius: 12px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  }
+  /* The last group sits at the edge of the bar: open its panel back towards the page */
+  .site-nav__group:last-child .site-nav__submenu { inset-inline-start: auto; inset-inline-end: 0; }
+  /* Bridge the gap under the button so a hover-opened group survives the move */
+  .site-nav__submenu::before { content: ''; position: absolute; left: 0; right: 0; top: -10px; height: 10px; }
+}
+/* Collapsed (hamburger) menu */
+@media (max-width: 760px) {
+  .site-nav__inner { padding: 0 16px; }
+  .site-nav__toggle { display: inline-flex; }
+  .site-nav__links {
+    display: none; position: absolute; top: 100%; left: 0; right: 0;
+    flex-direction: column; align-items: stretch; gap: 0;
+    padding: 8px 16px 12px; box-sizing: border-box;
+    background: var(--snav-panel); border-bottom: 1px solid var(--snav-border);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+    max-height: calc(100vh - 52px); max-height: calc(100dvh - 52px);
+    overflow: auto; overscroll-behavior: contain;
+  }
+  .site-nav__links.open { display: flex; }
+  .site-nav__links a,
+  .site-nav__group-btn { display: flex; width: 100%; box-sizing: border-box; padding: 12px 16px; font-size: 1rem; }
+  .site-nav__group-btn { justify-content: space-between; text-align: start; }
+  .site-nav__links a.is-section { box-shadow: none; color: var(--snav-accent); }
+  .site-nav__submenu {
+    padding: 2px 0 6px; margin-inline-start: 16px; padding-inline-start: 8px;
+    border-inline-start: 1px solid var(--snav-border);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-nav__logo, .site-nav__links a, .site-nav__group-btn, .site-nav__caret { transition: none; }
+}
+
+/* ── Next essay card (end of the article) ─────── */
+.next-essay { margin: 3rem 0 0; }
+.next-essay__link {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 24px 28px; border-radius: 12px; text-decoration: none;
+  font-family: var(--font-sans); font-size: 1.05rem; font-weight: 600; line-height: 1.4;
+  color: var(--white);
+  background: linear-gradient(135deg, rgba(11, 15, 25, 0.9), rgba(4, 7, 12, 0.95));
+  border: 1px solid var(--border-strong);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.next-essay__link:hover { border-color: var(--accent); transform: translateY(-2px); }
+.next-essay__link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.next-essay__title { font-family: var(--font-serif); font-weight: 700; }
+.next-essay__arrow { color: var(--accent); flex: none; }
+@media (prefers-reduced-motion: reduce) { .next-essay__link { transition: none; } .next-essay__link:hover { transform: none; } }

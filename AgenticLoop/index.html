@@ -59,6 +59,34 @@
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
 
+  <!-- Site navigation: self-contained copy of the grouped site nav (styles in style.css, behaviour inline below) -->
+  <nav class="site-nav" id="siteNav" aria-label="Site">
+    <div class="site-nav__inner">
+      <a href="../" class="site-nav__logo" aria-label="Homepage"><span>YM</span></a>
+      <button type="button" class="site-nav__toggle" id="siteNavToggle" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">&#9776;</button>
+      <ul class="site-nav__links" id="navLinks">
+        <li><a href="../#about" data-i18n="nav_about">About</a></li>
+        <li class="site-nav__group">
+          <button type="button" class="site-nav__group-btn" id="navGroupWorkBtn" aria-expanded="false" aria-controls="navGroupWork"><span data-i18n="nav_work">Work</span><span class="site-nav__caret" aria-hidden="true"></span></button>
+          <ul class="site-nav__submenu" id="navGroupWork">
+            <li><a href="../experience.html" data-i18n="nav_experience">Experience</a></li>
+            <li><a href="../projects.html" data-i18n="nav_projects">Projects</a></li>
+            <li><a href="../analytics.html" data-i18n="nav_analytics">Live Dashboard</a></li>
+            <li><a href="../collaboration.html" data-i18n="nav_collaboration">UX Collaboration</a></li>
+          </ul>
+        </li>
+        <li><a href="../editorials.html" class="is-section" data-i18n="nav_editorials">Editorials</a></li>
+        <li class="site-nav__group">
+          <button type="button" class="site-nav__group-btn" id="navGroupSkillsBtn" aria-expanded="false" aria-controls="navGroupSkills"><span data-i18n="nav_skills_education">Skills &amp; Education</span><span class="site-nav__caret" aria-hidden="true"></span></button>
+          <ul class="site-nav__submenu" id="navGroupSkills">
+            <li><a href="../skills.html" data-i18n="nav_skills">Skills</a></li>
+            <li><a href="../education.html" data-i18n="nav_education">Education &amp; Recommendations</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
   <!-- Reading Progress -->
   <div class="progress-bar" id="progressBar"></div>
 
@@ -348,6 +376,11 @@
           <svg viewBox="0 0 24 24" width="20" style="fill:var(--bg);"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
         </a>
       </div>
+    </div>
+
+    <!-- Next essay -->
+    <div class="next-essay">
+      <a href="../GarbageInternet/" class="next-essay__link"><span><span data-i18n="editorial.next_essay">Next essay</span>: <span class="next-essay__title">The Garbage Internet</span></span><span class="next-essay__arrow" aria-hidden="true">&rarr;</span></a>
     </div>
 
   </article>
@@ -704,6 +737,82 @@
     <span class="sticky-cta__text">Back to Editorials</span>
   </a>
 
+  <script>
+    // Site nav groups: disclosure buttons (<button aria-expanded aria-controls>) over plain link lists,
+    // the same behaviour as the main site nav. Delegated to #navLinks so it survives the language switcher.
+    (function initSiteNav() {
+      var navList = document.getElementById('navLinks');
+      var toggle = document.getElementById('siteNavToggle');
+      if (!navList) return;
+      var desktopHover = window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 761px)');
+      function groupButtons() { return Array.prototype.slice.call(navList.querySelectorAll('.site-nav__group-btn')); }
+      function groupOf(el) { return el && el.closest ? el.closest('.site-nav__group') : null; }
+      function buttonOf(group) { return group.querySelector('.site-nav__group-btn'); }
+      function setGroup(btn, open, how) {
+        if (!btn) return;
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        if (open) btn.dataset.openedBy = how || 'click'; else delete btn.dataset.openedBy;
+      }
+      function closeGroups(except) { groupButtons().forEach(function (b) { if (b !== except) setGroup(b, false); }); }
+      function setMenu(open) {
+        navList.classList.toggle('open', open);
+        if (toggle) toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        if (!open) closeGroups();
+      }
+      // Click, Enter and Space (native button activation) toggle a group; a hover-opened group is pinned by a click.
+      navList.addEventListener('click', function (e) {
+        var btn = e.target.closest('.site-nav__group-btn');
+        if (btn) {
+          var isOpen = btn.getAttribute('aria-expanded') === 'true';
+          var hoverOpened = btn.dataset.openedBy === 'hover';
+          closeGroups(btn);
+          setGroup(btn, hoverOpened ? true : !isOpen, 'click');
+          return;
+        }
+        if (e.target.closest('a')) setMenu(false);
+      });
+      // Desktop mouse hover may open a group; leaving only closes groups that hover opened.
+      navList.addEventListener('pointerover', function (e) {
+        if (e.pointerType !== 'mouse' || !desktopHover.matches) return;
+        var group = groupOf(e.target);
+        if (!group) return;
+        var btn = buttonOf(group);
+        if (btn.getAttribute('aria-expanded') === 'true') return;
+        if (groupButtons().some(function (b) { return b !== btn && b.dataset.openedBy === 'click'; })) return;
+        closeGroups(btn);
+        setGroup(btn, true, 'hover');
+      });
+      navList.addEventListener('pointerout', function (e) {
+        if (e.pointerType !== 'mouse') return;
+        var group = groupOf(e.target);
+        if (!group || group.contains(e.relatedTarget)) return;
+        var btn = buttonOf(group);
+        if (btn.dataset.openedBy === 'hover') setGroup(btn, false);
+      });
+      // Focus leaving a group closes it.
+      navList.addEventListener('focusout', function (e) {
+        var group = groupOf(e.target);
+        if (!group || !e.relatedTarget || group.contains(e.relatedTarget)) return;
+        setGroup(buttonOf(group), false);
+      });
+      // Escape closes the open group and returns focus to its button; otherwise it closes the mobile menu.
+      document.addEventListener('keydown', function (e) {
+        if (e.key !== 'Escape') return;
+        var openBtn = groupButtons().filter(function (b) { return b.getAttribute('aria-expanded') === 'true'; })[0];
+        if (openBtn) {
+          var focusInside = groupOf(openBtn).contains(document.activeElement);
+          var byHover = openBtn.dataset.openedBy === 'hover';
+          setGroup(openBtn, false);
+          if (focusInside || !byHover) openBtn.focus();
+          return;
+        }
+        if (navList.classList.contains('open') && toggle) { setMenu(false); toggle.focus(); }
+      });
+      // A click or tap outside the nav closes any open group.
+      document.addEventListener('click', function (e) { if (!navList.contains(e.target)) closeGroups(); });
+      if (toggle) toggle.addEventListener('click', function () { setMenu(!navList.classList.contains('open')); });
+    })();
+  </script>
   <script src="../i18n.js"></script>
 </body>
 </html>

@@ -101,7 +101,7 @@
       'lang.select': 'Select Language', 'lang.search_placeholder': 'Search language...',
       'hero.badge': 'Biography & Strategy', 'hero.role': 'Senior Digital Experience Specialist at Repligen', 'hero.view_experience': 'View Work History', 'hero.explore_analytics': 'Explore Live Analytics', 'hero.read_case_study': 'Read Case Study',
       'cta.back_editorials': 'Back to Editorials', 'cta.listen_article': 'Listen to Article', 'cta.listen_case_study': 'Listen to Case Study', 'cta.close': 'Close',
-      'editorial.masthead_tag': 'Strategy &mdash; Case Study', 'editorial.slop_tag': 'AI Strategy &mdash; Essay', 'editorial.local_tag': 'AI Engineering &mdash; Architecture'
+      'editorial.masthead_tag': 'Strategy &mdash; Case Study', 'editorial.slop_tag': 'AI Strategy &mdash; Essay', 'editorial.local_tag': 'AI Engineering &mdash; Architecture', 'editorial.next_essay': 'Next essay'
     },
     es: {
       "chat.greeting2": "¡Hola! 👋 Soy el <strong>copiloto de IA</strong> de todo el sitio de Youssef.<br><br>\n          Puedo guiarte por cada página, darte análisis profundos de datos y CRO, o llevarte directamente a cualquier sección.",
@@ -133,7 +133,7 @@
       'lang.select': 'Seleccionar Idioma', 'lang.search_placeholder': 'Buscar idioma...',
       'hero.badge': 'Biografía y Estrategia', 'hero.view_experience': 'Ver Trayectoria', 'hero.explore_analytics': 'Explorar Analítica en Vivo', 'hero.read_case_study': 'Leer Estudio de Caso',
       'cta.back_editorials': 'Volver a Editoriales', 'cta.listen_article': 'Escuchar Artículo', 'cta.listen_case_study': 'Escuchar Estudio de Caso', 'cta.close': 'Cerrar',
-      'editorial.masthead_tag': 'Estrategia &mdash; Estudio de Caso', 'editorial.slop_tag': 'Estrategia IA &mdash; Ensayo', 'editorial.local_tag': 'Ingeniería IA &mdash; Arquitectura'
+      'editorial.masthead_tag': 'Estrategia &mdash; Estudio de Caso', 'editorial.slop_tag': 'Estrategia IA &mdash; Ensayo', 'editorial.local_tag': 'Ingeniería IA &mdash; Arquitectura', 'editorial.next_essay': 'Siguiente ensayo'
     },
     fr: {
       "chat.greeting2": "Bonjour ! 👋 Je suis le <strong>copilote IA</strong> de tout le site de Youssef.<br><br>\n          Je peux vous guider sur chaque page, fournir des analyses poussées et des insights CRO, ou vous emmener directement où vous voulez.",
@@ -165,7 +165,7 @@
       'lang.select': 'Choisir la Langue', 'lang.search_placeholder': 'Rechercher une langue...',
       'hero.badge': 'Biographie & Stratégie', 'hero.view_experience': 'Voir le Parcours', 'hero.explore_analytics': 'Explorer l\'Analytique', 'hero.read_case_study': 'Lire l\'Étude de Cas',
       'cta.back_editorials': 'Retour aux Éditoriaux', 'cta.listen_article': 'Écouter l\'Article', 'cta.listen_case_study': 'Écouter l\'Étude de Cas', 'cta.close': 'Fermer',
-      'editorial.masthead_tag': 'Stratégie &mdash; Étude de Cas', 'editorial.slop_tag': 'Stratégie IA &mdash; Essai', 'editorial.local_tag': 'Ingénierie IA &mdash; Architecture'
+      'editorial.masthead_tag': 'Stratégie &mdash; Étude de Cas', 'editorial.slop_tag': 'Stratégie IA &mdash; Essai', 'editorial.local_tag': 'Ingénierie IA &mdash; Architecture', 'editorial.next_essay': 'Essai suivant'
     },
     de: {
       "chat.greeting2": "Hallo! 👋 Ich bin Youssefs <strong>seitenweiter KI-Copilot</strong>.<br><br>\n          Ich führe Sie durch jede Seite, liefere tiefe Analytics- und CRO-Einblicke oder bringe Sie direkt ans Ziel.",
@@ -197,7 +197,7 @@
       'lang.select': 'Sprache Wählen', 'lang.search_placeholder': 'Sprache suchen...',
       'hero.badge': 'Biografie & Strategie', 'hero.view_experience': 'Werdegang Ansehen', 'hero.explore_analytics': 'Live-Analytik Erkunden', 'hero.read_case_study': 'Fallstudie Lesen',
       'cta.back_editorials': 'Zurück zu den Leitartikeln', 'cta.listen_article': 'Artikel Anhören', 'cta.listen_case_study': 'Fallstudie Anhören', 'cta.close': 'Schließen',
-      'editorial.masthead_tag': 'Strategie &mdash; Fallstudie', 'editorial.slop_tag': 'KI-Strategie &mdash; Essay', 'editorial.local_tag': 'KI-Engineering &mdash; Architektur'
+      'editorial.masthead_tag': 'Strategie &mdash; Fallstudie', 'editorial.slop_tag': 'KI-Strategie &mdash; Essay', 'editorial.local_tag': 'KI-Engineering &mdash; Architektur', 'editorial.next_essay': 'Nächster Essay'
     },
     zh: {
       "chat.greeting2": "你好！👋 我是 Youssef 的<strong>全站 AI 副驾</strong>。<br><br>\n          我可以带你浏览每个页面，提供深入的分析与 CRO 洞察，或直接跳转到站内任意位置。",
@@ -229,7 +229,7 @@
       'lang.select': '选择语言', 'lang.search_placeholder': '搜索语言...',
       'hero.badge': '个人经历与战略', 'hero.view_experience': '查看工作履历', 'hero.explore_analytics': '探索实时分析系统', 'hero.read_case_study': '阅读案例研究',
       'cta.back_editorials': '返回专栏目录', 'cta.listen_article': '收听文章朗读', 'cta.listen_case_study': '收听案例朗读', 'cta.close': '关闭',
-      'editorial.masthead_tag': '战略 &mdash; 案例研究', 'editorial.slop_tag': 'AI 战略 &mdash; 深度随笔', 'editorial.local_tag': 'AI 工程 &mdash; 系统架构'
+      'editorial.masthead_tag': '战略 &mdash; 案例研究', 'editorial.slop_tag': 'AI 战略 &mdash; 深度随笔', 'editorial.local_tag': 'AI 工程 &mdash; 系统架构', 'editorial.next_essay': '下一篇文章'
     },
     ja: {
       "chat.greeting2": "こんにちは！👋 Youssef の<strong>サイト全体 AI コパイロット</strong>です。<br><br>\n          各ページのご案内、分析や CRO の詳しい知見の提供、サイト内の任意の場所への直接移動ができます。",
@@ -261,7 +261,7 @@
       'lang.select': '言語を選択', 'lang.search_placeholder': '言語を検索...',
       'hero.badge': '経歴と戦略', 'hero.view_experience': '経歴を見る', 'hero.explore_analytics': 'ライブ分析を探索', 'hero.read_case_study': 'ケーススタディを読む',
       'cta.back_editorials': 'コラム一覧に戻る', 'cta.listen_article': '記事を音声で聴く', 'cta.listen_case_study': '事例を音声で聴く', 'cta.close': '閉じる',
-      'editorial.masthead_tag': '戦略 &mdash; ケーススタディ', 'editorial.slop_tag': 'AI戦略 &mdash; エッセイ', 'editorial.local_tag': 'AIエンジニアリング &mdash; アーキテクチャ'
+      'editorial.masthead_tag': '戦略 &mdash; ケーススタディ', 'editorial.slop_tag': 'AI戦略 &mdash; エッセイ', 'editorial.local_tag': 'AIエンジニアリング &mdash; アーキテクチャ', 'editorial.next_essay': '次のエッセイ'
     },
     ar: {
       "chat.greeting2": "مرحبًا! 👋 أنا <strong>مساعد الذكاء الاصطناعي</strong> لكامل موقع يوسف.<br><br>\n          يمكنني إرشادك في كل صفحة، وتقديم تحليلات ورؤى CRO معمّقة، أو نقلك مباشرة إلى أي قسم.",
@@ -293,7 +293,7 @@
       'lang.select': 'اختر اللغة', 'lang.search_placeholder': 'بحث عن لغة...',
       'hero.badge': 'السيرة الذاتية والاستراتيجية', 'hero.view_experience': 'عرض سجل الخبرات', 'hero.explore_analytics': 'استكشاف التحليلات المباشرة', 'hero.read_case_study': 'قراءة دراسة الحالة',
       'cta.back_editorials': 'العودة إلى المقالات', 'cta.listen_article': 'الاستماع للمقال', 'cta.listen_case_study': 'الاستماع لدراسة الحالة', 'cta.close': 'إغلاق',
-      'editorial.masthead_tag': 'استراتيجية &mdash; دراسة حالة', 'editorial.slop_tag': 'استراتيجية الذكاء الاصطناعي &mdash; مقال', 'editorial.local_tag': 'هندسة الذكاء الاصطناعي &mdash; البنية التقنية'
+      'editorial.masthead_tag': 'استراتيجية &mdash; دراسة حالة', 'editorial.slop_tag': 'استراتيجية الذكاء الاصطناعي &mdash; مقال', 'editorial.local_tag': 'هندسة الذكاء الاصطناعي &mdash; البنية التقنية', 'editorial.next_essay': 'المقال التالي'
     },
     pt: {
       "chat.greeting2": "Olá! 👋 Sou o <strong>copiloto de IA</strong> de todo o site do Youssef.<br><br>\n          Posso guiá-lo por cada página, trazer análises e insights de CRO aprofundados, ou levá-lo direto a qualquer seção.",
@@ -325,7 +325,7 @@
       'lang.select': 'Selecionar Idioma', 'lang.search_placeholder': 'Pesquisar idioma...',
       'hero.badge': 'Biografia e Estratégia', 'hero.view_experience': 'Ver Histórico Profissional', 'hero.explore_analytics': 'Explorar Métricas ao Vivo', 'hero.read_case_study': 'Ler Estudo de Caso',
       'cta.back_editorials': 'Voltar aos Editoriais', 'cta.listen_article': 'Ouvir Artigo', 'cta.listen_case_study': 'Ouvir Estudo de Caso', 'cta.close': 'Fechar',
-      'editorial.masthead_tag': 'Estratégia &mdash; Estudo de Caso', 'editorial.slop_tag': 'Estratégia de IA &mdash; Ensaio', 'editorial.local_tag': 'Engenharia de IA &mdash; Arquitetura'
+      'editorial.masthead_tag': 'Estratégia &mdash; Estudo de Caso', 'editorial.slop_tag': 'Estratégia de IA &mdash; Ensaio', 'editorial.local_tag': 'Engenharia de IA &mdash; Arquitetura', 'editorial.next_essay': 'Próximo ensaio'
     },
     ru: {
       "chat.greeting2": "Здравствуйте! 👋 Я <strong>ИИ-помощник</strong> по всему сайту Юсефа.<br><br>\n          Проведу вас по любой странице, дам глубокую аналитику и CRO-инсайты или переброшу прямо в нужный раздел.",
@@ -357,7 +357,7 @@
       'lang.select': 'Выбрать язык', 'lang.search_placeholder': 'Поиск языка...',
       'hero.badge': 'Биография и стратегия', 'hero.view_experience': 'Смотреть опыт работы', 'hero.explore_analytics': 'Открыть живую аналитику', 'hero.read_case_study': 'Читать кейс',
       'cta.back_editorials': 'Назад к статьям', 'cta.listen_article': 'Слушать статью', 'cta.listen_case_study': 'Слушать разбор кейса', 'cta.close': 'Закрыть',
-      'editorial.masthead_tag': 'Стратегия &mdash; Кейс-стади', 'editorial.slop_tag': 'AI Стратегия &mdash; Эссе', 'editorial.local_tag': 'AI Инженерия &mdash; Архитектура'
+      'editorial.masthead_tag': 'Стратегия &mdash; Кейс-стади', 'editorial.slop_tag': 'AI Стратегия &mdash; Эссе', 'editorial.local_tag': 'AI Инженерия &mdash; Архитектура', 'editorial.next_essay': 'Следующее эссе'
     },
     it: {
       "chat.greeting2": "Ciao! 👋 Sono il <strong>copilota IA</strong> dell'intero sito di Youssef.<br><br>\n          Posso guidarti in ogni pagina, offrire analisi e insight CRO approfonditi, o portarti direttamente ovunque nel sito.",
@@ -389,7 +389,7 @@
       'lang.select': 'Seleziona Lingua', 'lang.search_placeholder': 'Cerca lingua...',
       'hero.badge': 'Biografia e Strategia', 'hero.view_experience': 'Visualizza Esperienza', 'hero.explore_analytics': 'Esplora Analitica Live', 'hero.read_case_study': 'Leggi Caso Studio',
       'cta.back_editorials': 'Torna agli Editoriali', 'cta.listen_article': 'Ascolta Articolo', 'cta.listen_case_study': 'Ascolta Caso Studio', 'cta.close': 'Chiudi',
-      'editorial.masthead_tag': 'Strategia &mdash; Caso Studio', 'editorial.slop_tag': 'Strategia IA &mdash; Saggio', 'editorial.local_tag': 'Ingegneria IA &mdash; Architettura'
+      'editorial.masthead_tag': 'Strategia &mdash; Caso Studio', 'editorial.slop_tag': 'Strategia IA &mdash; Saggio', 'editorial.local_tag': 'Ingegneria IA &mdash; Architettura', 'editorial.next_essay': 'Prossimo saggio'
     },
     hi: {
       "chat.greeting2": "नमस्ते! 👋 मैं Youssef का <strong>पूरी साइट का AI सहपायलट</strong> हूँ।<br><br>\n          मैं आपको हर पेज पर मार्गदर्शन दे सकता हूँ, गहन एनालिटिक्स और CRO जानकारी दे सकता हूँ, या सीधे साइट के किसी भी हिस्से तक ले जा सकता हूँ।",
@@ -421,7 +421,7 @@
       'lang.select': 'भाषा चुनें', 'lang.search_placeholder': 'भाषा खोजें...',
       'hero.badge': 'जीवनी और रणनीति', 'hero.view_experience': 'अनुभव देखें', 'hero.explore_analytics': 'लाइव एनालिटिक्स देखें', 'hero.read_case_study': 'केस स्टडी पढ़ें',
       'cta.back_editorials': 'संपादकीय पर वापस जाएं', 'cta.listen_article': 'लेख सुनें', 'cta.listen_case_study': 'केस स्टडी सुनें', 'cta.close': 'बंद करें',
-      'editorial.masthead_tag': 'रणनीति &mdash; केस स्टडी', 'editorial.slop_tag': 'एआई रणनीति &mdash; निबंध', 'editorial.local_tag': 'एआई इंजीनियरिंग &mdash; आर्किटेक्चर'
+      'editorial.masthead_tag': 'रणनीति &mdash; केस स्टडी', 'editorial.slop_tag': 'एआई रणनीति &mdash; निबंध', 'editorial.local_tag': 'एआई इंजीनियरिंग &mdash; आर्किटेक्चर', 'editorial.next_essay': 'अगला निबंध'
     },
     ko: {
       "chat.greeting2": "안녕하세요! 👋 저는 Youssef의 <strong>사이트 전체 AI 코파일럿</strong>입니다.<br><br>\n          모든 페이지를 안내하고, 심층 분석과 CRO 인사이트를 제공하며, 사이트 어디로든 바로 이동해 드립니다.",
@@ -453,7 +453,7 @@
       'lang.select': '언어 선택', 'lang.search_placeholder': '언어 검색...',
       'hero.badge': '프로필 및 전략', 'hero.view_experience': '경력 사항 보기', 'hero.explore_analytics': '실시간 분석 보기', 'hero.read_case_study': '사례 연구 읽기',
       'cta.back_editorials': '칼럼 목록으로 돌아가기', 'cta.listen_article': '기사 오디오 듣기', 'cta.listen_case_study': '사례 연구 오디오 듣기', 'cta.close': '닫기',
-      'editorial.masthead_tag': '전략 &mdash; 사례 연구', 'editorial.slop_tag': 'AI 전략 &mdash; 에세이', 'editorial.local_tag': 'AI 엔지니어링 &mdash; 아키텍처'
+      'editorial.masthead_tag': '전략 &mdash; 사례 연구', 'editorial.slop_tag': 'AI 전략 &mdash; 에세이', 'editorial.local_tag': 'AI 엔지니어링 &mdash; 아키텍처', 'editorial.next_essay': '다음 에세이'
     }
   };
 
