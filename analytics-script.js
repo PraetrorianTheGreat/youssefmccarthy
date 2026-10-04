@@ -248,9 +248,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const mobileToggle = document.getElementById('mobileToggle');
   const navLinks = document.getElementById('navLinks');
   if (mobileToggle && navLinks) {
+    // script.js opens and closes the menu (and sets aria-expanded); toggling it here
+    // as well undid that on every tap, so this listener only records the event.
     mobileToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('open');
-      UISounds.click();
       trackEvent('mobile_nav_toggle', { action: navLinks.classList.contains('open') ? 'open' : 'close' });
     });
   }

@@ -609,47 +609,127 @@ class Particle {
 
 // ── Navigation ──
 const nav = document.getElementById('nav');
-const navLinks = document.querySelectorAll('.nav-links a:not(.nav-cta)');
 const sections = document.querySelectorAll('section');
 
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 50);
-  // Active section highlighting
+  // Which section is in view (used only for the Live Dashboard pulse on the home page).
+  // The current-page state (.active / aria-current) is set in the markup and is left alone.
   let current = '';
   sections.forEach(section => {
     const top = section.offsetTop - 150;
     if (window.scrollY >= top) current = section.getAttribute('id');
   });
 
-  // Find Live Dashboard nav link
-  const liveDashboardLink = Array.from(document.querySelectorAll('.nav-links a')).find(link => link.getAttribute('href') === 'analytics.html');
-
-  navLinks.forEach(link => {
-    link.classList.remove('active');
-    if (link.getAttribute('href') === '#' + current) link.classList.add('active');
-  });
-
+  const liveDashboardLink = document.querySelector('.nav-links a[href="analytics.html"]');
   if (liveDashboardLink) {
-    if (current === 'dashboard-teaser') {
-      liveDashboardLink.classList.add('live-active');
-    } else {
-      liveDashboardLink.classList.remove('live-active');
-    }
+    liveDashboardLink.classList.toggle('live-active', current === 'dashboard-teaser');
   }
 });
 
-// Mobile menu
-document.getElementById('mobileToggle').addEventListener('click', () => {
-  document.getElementById('navLinks').classList.toggle('open');
-  UISounds.click();
-});
-// Close mobile menu on link click
-document.querySelectorAll('.nav-links a').forEach(link => {
-  link.addEventListener('click', () => {
-    document.getElementById('navLinks').classList.remove('open');
-    UISounds.click();
+// Nav groups: disclosure buttons (<button aria-expanded aria-controls>) over plain link lists.
+// Wiring is delegated to #navLinks so it survives the language switcher re-rendering text.
+(function initNavGroups() {
+  const navList = document.getElementById('navLinks');
+  const mobileToggle = document.getElementById('mobileToggle');
+  if (!navList) return;
+
+  const desktopHover = window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 1276px)');
+  const groupButtons = () => Array.from(navList.querySelectorAll('.nav-group-btn'));
+  const groupOf = el => el && el.closest ? el.closest('.nav-group') : null;
+  const buttonOf = group => group.querySelector('.nav-group-btn');
+
+  function setGroup(btn, open, how) {
+    if (!btn) return;
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) btn.dataset.openedBy = how || 'click';
+    else delete btn.dataset.openedBy;
+  }
+  function closeGroups(except) {
+    groupButtons().forEach(b => { if (b !== except) setGroup(b, false); });
+  }
+  function setMobileMenu(open) {
+    navList.classList.toggle('open', open);
+    if (mobileToggle) mobileToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (!open) closeGroups();
+  }
+
+  // Click, Enter and Space (native button activation) toggle a group; a hover-opened
+  // group is pinned open by a click rather than closed by it.
+  navList.addEventListener('click', e => {
+    const btn = e.target.closest('.nav-group-btn');
+    if (btn) {
+      const isOpen = btn.getAttribute('aria-expanded') === 'true';
+      const hoverOpened = btn.dataset.openedBy === 'hover';
+      closeGroups(btn);
+      setGroup(btn, hoverOpened ? true : !isOpen, 'click');
+      return;
+    }
+    // A link was chosen (including one inside a group): close groups and the mobile menu.
+    if (e.target.closest('a')) {
+      setMobileMenu(false);
+      if (window.UISounds) UISounds.click();
+    }
   });
-});
+
+  // Desktop mouse hover may open a group; leaving only closes groups that hover opened.
+  navList.addEventListener('pointerover', e => {
+    if (e.pointerType !== 'mouse' || !desktopHover.matches) return;
+    const group = groupOf(e.target);
+    if (!group) return;
+    const btn = buttonOf(group);
+    if (btn.getAttribute('aria-expanded') === 'true') return;
+    if (groupButtons().some(b => b !== btn && b.dataset.openedBy === 'click')) return;
+    closeGroups(btn);
+    setGroup(btn, true, 'hover');
+  });
+  navList.addEventListener('pointerout', e => {
+    if (e.pointerType !== 'mouse') return;
+    const group = groupOf(e.target);
+    if (!group || group.contains(e.relatedTarget)) return;
+    const btn = buttonOf(group);
+    if (btn.dataset.openedBy === 'hover') setGroup(btn, false);
+  });
+
+  // Focus leaving a group closes it.
+  navList.addEventListener('focusout', e => {
+    const group = groupOf(e.target);
+    if (!group || (e.relatedTarget && group.contains(e.relatedTarget))) return;
+    if (!e.relatedTarget) return; // focus went to the page itself (e.g. a click); the outside-click handler covers it
+    setGroup(buttonOf(group), false);
+  });
+
+  // Escape closes the open group and returns focus to its button; otherwise it closes the mobile menu.
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Escape') return;
+    const openBtn = groupButtons().find(b => b.getAttribute('aria-expanded') === 'true');
+    if (openBtn) {
+      const focusInside = groupOf(openBtn).contains(document.activeElement);
+      const byHover = openBtn.dataset.openedBy === 'hover';
+      setGroup(openBtn, false);
+      // A group the mouse merely hovered open does not pull focus away from elsewhere.
+      if (focusInside || !byHover) openBtn.focus();
+      return;
+    }
+    if (navList.classList.contains('open') && mobileToggle) {
+      setMobileMenu(false);
+      mobileToggle.focus();
+    }
+  });
+
+  // A click or tap outside the nav closes any open group.
+  document.addEventListener('click', e => {
+    if (!navList.contains(e.target)) closeGroups();
+  });
+
+  // Mobile menu
+  if (mobileToggle) {
+    mobileToggle.addEventListener('click', () => {
+      setMobileMenu(!navList.classList.contains('open'));
+      UISounds.click();
+    });
+  }
+})();
 
 // ── Theme Toggle & Storage Purge ──
 try {
