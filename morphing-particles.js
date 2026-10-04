@@ -675,10 +675,39 @@ document.addEventListener("DOMContentLoaded", () => {
         isAppHidden = document.hidden;
     });
 
+    // Reduced motion: render one still frame and run no loop (WCAG 2.2.2); follow live setting changes.
+    const reducedMotion = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+    const prefersReduced = () => !!(reducedMotion && reducedMotion.matches);
+    let rafId = null;
+
+    function startLoop() {
+        if (rafId !== null || prefersReduced()) return;
+        clock.getDelta(); // drop the time spent paused so particles do not jump
+        animate();
+    }
+
+    if (reducedMotion) {
+        const onChange = () => {
+            if (prefersReduced()) {
+                if (rafId !== null) cancelAnimationFrame(rafId);
+                rafId = null;
+            } else {
+                startLoop();
+            }
+        };
+        if (reducedMotion.addEventListener) reducedMotion.addEventListener('change', onChange);
+        else if (reducedMotion.addListener) reducedMotion.addListener(onChange);
+    }
+
     function animate() {
-        requestAnimationFrame(animate);
+        rafId = null;
+        if (prefersReduced()) return;
+        rafId = requestAnimationFrame(animate);
         if (isAppHidden) return; // Save 100% CPU/GPU resources when tab is backgrounded
-        
+        renderFrame();
+    }
+
+    function renderFrame() {
         const delta = clock.getDelta();
         time += delta;
         material.uniforms.uTime.value = time;
@@ -796,7 +825,8 @@ document.addEventListener("DOMContentLoaded", () => {
         renderer.render(scene, camera);
     }
 
-    animate();
+    if (prefersReduced()) renderFrame(); // same as the first animated frame
+    else animate();
 
     window.addEventListener('resize', () => {
         camera.aspect = window.innerWidth / window.innerHeight;
@@ -804,5 +834,6 @@ document.addEventListener("DOMContentLoaded", () => {
         renderer.setSize(window.innerWidth, window.innerHeight);
         needsLayoutUpdate = true;
         updateTargetPosition();
+        if (prefersReduced()) renderer.render(scene, camera);
     });
 });

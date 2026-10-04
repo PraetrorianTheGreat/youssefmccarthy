@@ -214,15 +214,40 @@ document.addEventListener('DOMContentLoaded', () => {
       particles.push(new Particle());
     }
 
-    const animate = () => {
+    // Reduced motion: draw one still frame and run no loop (WCAG 2.2.2); follow live setting changes.
+    const reducedMotion = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+    const prefersReduced = () => !!(reducedMotion && reducedMotion.matches);
+    let rafId = null;
+
+    const drawFrame = (step) => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       particles.forEach(p => {
-        p.update();
+        if (step) p.update();
         p.draw();
       });
-      requestAnimationFrame(animate);
     };
-    animate();
+    const animate = () => {
+      rafId = null;
+      if (prefersReduced()) return;
+      drawFrame(true);
+      rafId = requestAnimationFrame(animate);
+    };
+    if (prefersReduced()) drawFrame(true); // same as the first animated frame
+    else animate();
+
+    window.addEventListener('resize', () => { if (prefersReduced()) drawFrame(false); });
+    if (reducedMotion) {
+      const onChange = () => {
+        if (prefersReduced()) {
+          if (rafId !== null) cancelAnimationFrame(rafId);
+          rafId = null;
+        } else if (rafId === null) {
+          animate();
+        }
+      };
+      if (reducedMotion.addEventListener) reducedMotion.addEventListener('change', onChange);
+      else if (reducedMotion.addListener) reducedMotion.addListener(onChange);
+    }
   }
 
   // ── Scroll Progress Bar ──

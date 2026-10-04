@@ -40,6 +40,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const bgGrid = document.querySelector('.bg-grid');
     
     let isAnimating = false;
+
+    // Reduced motion: render one still frame instead of a loop (WCAG 2.2.2), and follow live changes.
+    const reducedMotion = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+    const prefersReduced = () => !!(reducedMotion && reducedMotion.matches);
+    let rafId = null;
+
+    function startWireframe() {
+        if (currentMode !== 'wireframe') return;
+        if (prefersReduced()) {
+            renderFrame(0); // matches the first animated frame
+        } else if (!isAnimating) {
+            isAnimating = true;
+            animate();
+        }
+    }
+
+    if (reducedMotion) {
+        const onChange = () => {
+            if (prefersReduced()) {
+                if (rafId !== null) cancelAnimationFrame(rafId);
+                rafId = null;
+                isAnimating = false;
+            } else {
+                startWireframe();
+            }
+        };
+        if (reducedMotion.addEventListener) reducedMotion.addEventListener('change', onChange);
+        else if (reducedMotion.addListener) reducedMotion.addListener(onChange);
+    }
+
     if (toggleBtn) {
         toggleBtn.addEventListener('click', () => {
             if (currentMode === 'original') {
@@ -49,11 +79,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (particlesCanvas) particlesCanvas.style.opacity = '0';
                 if (bgGrid) bgGrid.style.opacity = '0';
                 
-                // Restart animation loop
-                if (!isAnimating) {
-                    isAnimating = true;
-                    animate();
-                }
+                // Restart animation loop (or draw a still frame for reduced motion)
+                startWireframe();
             } else {
                 currentMode = 'original';
                 toggleText.textContent = 'Try New Background';
@@ -69,19 +96,23 @@ document.addEventListener('DOMContentLoaded', () => {
         renderer.setSize(window.innerWidth, window.innerHeight);
         cameraWireframe.aspect = window.innerWidth / window.innerHeight;
         cameraWireframe.updateProjectionMatrix();
+        if (currentMode === 'wireframe' && prefersReduced()) renderer.render(sceneWireframe, cameraWireframe);
     });
 
     // --- Animation Loop ---
     function animate() {
-        if (currentMode === 'original') {
+        rafId = null;
+        if (currentMode === 'original' || prefersReduced()) {
             isAnimating = false;
             return; // Completely stop loop
         }
         
-        requestAnimationFrame(animate);
+        rafId = requestAnimationFrame(animate);
         
-        const elapsedTime = clock.getElapsedTime();
+        renderFrame(clock.getElapsedTime());
+    }
 
+    function renderFrame(elapsedTime) {
         if (currentMode === 'wireframe') {
             const positions = waveMesh.geometry.attributes.position;
             for (let i = 0; i < positions.count; i++) {
@@ -99,8 +130,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    if (currentMode === 'wireframe') {
-        isAnimating = true;
-        animate();
-    }
+    startWireframe();
 });
