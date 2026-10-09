@@ -7,23 +7,31 @@
 // triggers: do not rename events or parameters.
 // page_name is always window.location.pathname
 // (production example: "/youssefmccarthy/experience.html").
-// page_type is added to every push made by tracking.js (events 1a, 2,
+// page_type is added to every push made by tracking.js (events 1, 2,
 // 3, 4, 7, 8, 9, 10, 11): the <body data-page-type> value of the page, one of
 // "home", "section", "hub", "essay" ("unknown" if the attribute is
 // missing).
 // -------------------------------------------------------------------
-// 1. nav_click  (two senders push this name with different parameters)
-//    a) tracking.js, click on any link in the main nav (.nav-links a):
+// 1. nav_click  (tracking.js, click on any link in the main nav
+//    (.nav-links a); the only sender of this name)
 //       link_text   string  "Experience"  (link text, "Icon Link" if empty)
 //       link_url    string  "experience.html"  (raw href attribute)
 //       page_name   string  "/projects.html"
-//    b) script.js, click on an in-page anchor (a[href^="#"], not the
-//       skip link):
+//
+// 1b. in_page_nav  (script.js, click on an in-page anchor
+//    (a[href^="#"], not the skip link); formerly sent as nav_click)
 //       target      string  "#about"
 //
-// 2. outbound_link_click  (tracking.js, click on any a[target="_blank"])
-//       link_url    string  "https://shop.googlemerchandisestore.com/"  (raw href)
-//       page_name   string  "/experience.html"
+// 2. outbound_link_click  (tracking.js, click on any link whose host
+//    differs from location.host, http/https only, whatever its target;
+//    the only outbound click event: script.js no longer sends
+//    outbound_click)
+//       link_url     string  "https://shop.googlemerchandisestore.com/"
+//                            (resolved absolute URL)
+//       link_domain  string  "shop.googlemerchandisestore.com"
+//       link_text    string  "View source" (trimmed, at most 100 chars)
+//       page_type    string  "section"  (<body data-page-type>, see above)
+//       page_name    string  "/experience.html"
 //
 // 3. project_card_click  (tracking.js, click on a .project-card)
 //       project_title  string  "Digital Experience Revamp for AdvantageCare Physicians"
@@ -90,7 +98,7 @@
 //       page_type        string  "essay"  (constant)
 // -------------------------------------------------------------------
 // Note: script.js (trackEvent) and analytics-script.js also push other
-// UI events (e.g. outbound_click, theme_change, experience_toggle,
+// UI events (e.g. source_link_click, theme_change, experience_toggle,
 // project_toggle, projects_filter_update, copy_to_clipboard). They are
 // outside this file and not part of the schema above.
 // ===================================================================
@@ -150,18 +158,22 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    // 2. Outbound Links
-    const outboundLinks = document.querySelectorAll('a[target="_blank"]');
-    outboundLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            let href = this.getAttribute('href');
-            window.dataLayer.push({
-                'event': 'outbound_link_click',
-                'link_url': href,
-                'page_type': ymPageType,
-                'page_name': window.location.pathname
-            });
-        });
+    // 2. Outbound Links: any http(s) link whose host differs from
+    // location.host, delegated so links added later are covered too.
+    document.addEventListener('click', function(e) {
+        const link = e.target.closest ? e.target.closest('a[href]') : null;
+        if (!link) return;
+        if (link.protocol !== 'http:' && link.protocol !== 'https:') return;
+        if (!link.host || link.host === window.location.host) return;
+        const payload = {
+            'event': 'outbound_link_click',
+            'link_url': link.href,
+            'link_domain': link.hostname,
+            'link_text': (link.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 100),
+            'page_type': ymPageType,
+            'page_name': window.location.pathname
+        };
+        window.dataLayer.push(payload);
     });
 
     // 3. Interactive Toggles (e.g. WebGL toggle)
