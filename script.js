@@ -1019,7 +1019,8 @@ function toggleProject(card, e) {
       if (typeof trackEvent === 'function') {
         trackEvent('projects_filter_update', {
           category: activeCategory,
-          search: searchQuery,
+          has_search: searchQuery.trim().length > 0,
+          search_length: searchQuery.trim().length,
           tag: activeTag,
           visible_count: visibleCount
         });
@@ -1592,7 +1593,8 @@ if (aiToggleBtn && aiChatWindow) {
       UISounds.chime();
       aiChatBody.scrollTop = aiChatBody.scrollHeight;
       
-      trackEvent('ai_chat_interaction', { input: inputText, matchKey: searchKey });
+      // Never send typed chat text: only whether it came from a suggested prompt and that prompt's fixed key
+      trackEvent('ai_chat_interaction', queryKey ? { prompt_type: 'suggested', match_key: queryKey } : { prompt_type: 'typed' });
 
       // 4. Trigger Second Message: Editorial Layout with Thumbnails for Editorial Queries
       if (isEditorialQuery(searchKey)) {
