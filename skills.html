@@ -200,29 +200,6 @@
   </footer>
 
   <!-- Navigation/Tracking scripts specific to earlier iterations removed -->
-<!-- TEAM RECOMMENDATIONS: GA4 Tracking (Fixed to dataLayer) -->
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    window.dataLayer = window.dataLayer || [];
-
-
-
-    // 3. Track Project Card Interactions
-    const projectCards = document.querySelectorAll('.project-card');
-    projectCards.forEach(card => {
-        card.addEventListener('click', function() {
-            let titleEl = this.querySelector('.project-title');
-            let projectName = titleEl ? titleEl.innerText : 'Project';
-            window.dataLayer.push({
-                'event': 'project_card_click',
-                'project_title': projectName,
-                'project_index': Array.from(projectCards).indexOf(card),
-                'page_section': 'projects'
-            });
-        });
-    });
-});
-</script>
 
   <!-- AI Chat Assistant Widget -->
   <div class="ai-widget-container" id="aiWidget">
@@ -303,5 +280,6 @@ document.addEventListener("DOMContentLoaded", function() {
   
   <script src="i18n.js?v=3"></script>
   <script src="script.js?v=10"></script>
+  <script src="tracking.js"></script>
 </body>
 </html>
