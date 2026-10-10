@@ -9,8 +9,8 @@
 // (production example: "/youssefmccarthy/experience.html").
 // page_type is added to every push made by tracking.js (events 1a, 2,
 // 3, 4, 7, 8, 9, 10, 11): the <body data-page-type> value of the page, one of
-// "home", "section", "hub", "essay" ("unknown" if the attribute is
-// missing).
+// "home", "section", "hub", "essay", "error" ("unknown" if the
+// attribute is missing).
 // -------------------------------------------------------------------
 // 1. nav_click  (two senders push this name with different parameters)
 //    a) tracking.js, click on any link in the main nav (.nav-links a):
@@ -60,7 +60,8 @@
 //                              experience, projects, analytics,
 //                              collaboration, skills, education; "hub"
 //                              editorials.html; "essay" LocalAI,
-//                              AgenticLoop, GarbageInternet)
+//                              AgenticLoop, GarbageInternet; "error"
+//                              404.html)
 //       page_name      string  "/experience.html"
 //
 // 9. internal_link_click  (tracking.js, one delegated click listener;
@@ -93,6 +94,19 @@
 // UI events (e.g. outbound_click, theme_change, experience_toggle,
 // project_toggle, projects_filter_update, copy_to_clipboard). They are
 // outside this file and not part of the schema above.
+// -------------------------------------------------------------------
+// GA4 tags needed in Tag Manager (not in container v7)
+// These events are pushed but no GA4 event tag sends them yet:
+//   page_meta            page_type, page_name
+//   internal_link_click  link_type, link_url, page_type, page_name
+//   essay_progress       essay_id, percent, page_type
+//   essay_complete       essay_id, seconds_on_page, page_type
+//   page_not_found       missing_path, referrer_host  (pushed by an
+//                        inline script in 404.html, not this file)
+// page_type persists in the GTM data model after page_meta, so one
+// Data Layer Variable (page_type) can add it to every GA4 tag. On
+// 404.html page_not_found is pushed before page_meta, so page_type is
+// not yet set when that one event is processed.
 // ===================================================================
 
 // --- Page type: page_meta (once per page view) and internal_link_click ---
