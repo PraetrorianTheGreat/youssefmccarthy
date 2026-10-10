@@ -171,7 +171,8 @@
         <div class="projects-toolbar-actions">
           <div class="projects-search-wrap">
             <span class="search-icon">🔍</span>
-            <input type="text" id="projectSearchInput" placeholder="Search by keyword, tag, company..." aria-label="Search projects">
+            <!-- Id renamed so the Tag Manager custom HTML tag that pushes projects_search (container v7) cannot attach; it sent typed text to GA4. Safe to keep after that tag is deleted. -->
+            <input type="text" id="projectsSearchField" placeholder="Search by keyword, tag, company..." aria-label="Search projects">
             <button id="clearProjectSearch" class="clear-search-btn" title="Clear search" style="display:none;">✕</button>
           </div>
           <div class="projects-view-toggle">
