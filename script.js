@@ -222,26 +222,6 @@ const trackEvent = (name, params = {}) => {
   });
 };
 
-// ── Universal Event Tracking ──
-document.addEventListener('click', function(e) {
-  const link = e.target.closest('a');
-  if (!link) return;
-
-  const href = link.getAttribute('href') || '';
-  const pageName = window.location.pathname;
-
-  // 1. General Outbound Clicks
-  if (href.startsWith('http') && !href.includes(window.location.hostname)) {
-    let domain = '';
-    try { domain = new URL(href).hostname; } catch(e) {}
-    trackEvent('outbound_click', {
-      link_url: href,
-      link_text: link.textContent.trim(),
-      link_domain: domain,
-      page_location: window.location.href
-    });
-  }
-});
 // ── Page Loader ──
 window.addEventListener('load', () => {
   setTimeout(() => {
@@ -1313,7 +1293,7 @@ document.querySelectorAll('a[href^="#"]:not(.skip-link)').forEach(link => {
     e.preventDefault();
     UISounds.click();
     const href = link.getAttribute('href');
-    trackEvent('nav_click', { target: href });
+    trackEvent('in_page_nav', { target: href });
     const target = document.querySelector(href);
     if (target) target.scrollIntoView({ behavior: 'smooth' });
   });
