@@ -955,7 +955,7 @@ function toggleProject(card, e) {
 (function initProjectsSection() {
   function setup() {
     const filterTabs = document.querySelectorAll('#projectFilterTabs .filter-tab');
-    const searchInput = document.getElementById('projectSearchInput');
+    const searchInput = document.getElementById('projectsSearchField');
     const clearSearchBtn = document.getElementById('clearProjectSearch');
     const resetFiltersBtn = document.getElementById('resetProjectFiltersBtn');
     const viewButtons = document.querySelectorAll('.projects-view-toggle .view-btn');
