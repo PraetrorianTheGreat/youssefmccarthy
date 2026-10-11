@@ -1597,7 +1597,7 @@ if (aiToggleBtn && aiChatWindow) {
               <strong>📚 Featured Editorial Publications</strong>
               <div class="ai-editorials-card-list">
                 <a href="${basePath}LocalAI/index.html" class="ai-editorial-item">
-                  <picture style="display:contents"><source srcset="${basePath}LocalAI/images/local_ai_server.webp" type="image/webp"><img src="${basePath}LocalAI/images/local_ai_server.png" alt="The Localist Manifesto" class="ai-editorial-thumb" loading="lazy" decoding="async" /></picture>
+                  <picture style="display:contents"><source srcset="${basePath}LocalAI/images/local_ai_server.webp" type="image/webp"><img src="${basePath}LocalAI/images/local_ai_server.jpg" alt="The Localist Manifesto" class="ai-editorial-thumb" loading="lazy" decoding="async" /></picture>
                   <div class="ai-editorial-info">
                     <div class="ai-editorial-tag-label">AI Infrastructure &bull; 12 Min</div>
                     <div class="ai-editorial-item-title">The Localist Manifesto</div>
@@ -1607,7 +1607,7 @@ if (aiToggleBtn && aiChatWindow) {
                 </a>
 
                 <a href="${basePath}AgenticLoop/index.html" class="ai-editorial-item">
-                  <picture style="display:contents"><source srcset="${basePath}AgenticLoop/images/agentic_loop.webp" type="image/webp"><img src="${basePath}AgenticLoop/images/agentic_loop.png" alt="The Agentic Loop" class="ai-editorial-thumb" loading="lazy" decoding="async" /></picture>
+                  <picture style="display:contents"><source srcset="${basePath}AgenticLoop/images/agentic_loop.webp" type="image/webp"><img src="${basePath}AgenticLoop/images/agentic_loop.jpg" alt="The Agentic Loop" class="ai-editorial-thumb" loading="lazy" decoding="async" /></picture>
                   <div class="ai-editorial-info">
                     <div class="ai-editorial-tag-label">AI Orchestration &bull; 12 Min</div>
                     <div class="ai-editorial-item-title">The Agentic Loop</div>
@@ -1617,7 +1617,7 @@ if (aiToggleBtn && aiChatWindow) {
                 </a>
 
                 <a href="${basePath}GarbageInternet/index.html" class="ai-editorial-item">
-                  <picture style="display:contents"><source srcset="${basePath}GarbageInternet/images/hero.webp" type="image/webp"><img src="${basePath}GarbageInternet/images/hero.png" alt="The Garbage Internet" class="ai-editorial-thumb" loading="lazy" decoding="async" /></picture>
+                  <picture style="display:contents"><source srcset="${basePath}GarbageInternet/images/hero.webp" type="image/webp"><img src="${basePath}GarbageInternet/images/hero.jpg" alt="The Garbage Internet" class="ai-editorial-thumb" loading="lazy" decoding="async" /></picture>
                   <div class="ai-editorial-info">
                     <div class="ai-editorial-tag-label">Digital Anthropology &bull; 15 Min</div>
                     <div class="ai-editorial-item-title">The Garbage Internet</div>
