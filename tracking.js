@@ -1,5 +1,14 @@
 // tracking.js
 //
+// GTM LOAD GATE: the Tag Manager snippet in the <head> of each page
+// loads gtm.js (GTM-M686VJGG) only when ymGtmAllowed(location.hostname,
+// location.search) is true: hostname praetrorianthegreat.github.io, or
+// gtm=1 in the query string (override for tests, e.g.
+// http://localhost:8000/index.html?gtm=1). Elsewhere (local or branch
+// previews) the consent default and window.dataLayer pushes still run,
+// but no tag fires and nothing reaches GA4. The noscript iframe is not
+// gated. Keep the function identical on every page.
+//
 // ===================================================================
 // EVENT SCHEMA: every custom event this site pushes to window.dataLayer
 // (read by GTM container GTM-M686VJGG). Parameters below were checked
