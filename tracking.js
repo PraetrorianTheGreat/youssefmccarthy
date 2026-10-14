@@ -115,6 +115,9 @@
 // Data Layer Variable (page_type) can add it to every GA4 tag. On
 // 404.html page_not_found is pushed before page_meta, so page_type is
 // not yet set when that one event is processed.
+// Import file for these tags (plus outbound_link_click, in_page_nav and
+// copy_to_clipboard) and the page_type variable, with import steps:
+// .agents/gtm/ga4-missing-tags.json and .agents/gtm/README.md
 // ===================================================================
 
 // --- Page type: page_meta (once per page view) and internal_link_click ---
